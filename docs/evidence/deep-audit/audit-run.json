@@ -1,0 +1,71 @@
+{
+  "recorded_at_utc": "2026-11-16T15:15:22.234861+00:00",
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "run",
+        "scripts/verify.py",
+        "--services",
+        "--native",
+        "--output",
+        "docs/evidence/deep-audit/checks.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 229.711,
+      "output": "PASS uv run pytest -q\nPASS uv run python -m round_robin.export_contracts --check\nPASS node scripts/check_client.mjs\nPASS node --test scripts/frontend_coverage.test.mjs\nPASS uv run python -m experiments.evaluation validate\nPASS uv run python scripts/scenario_summary.py --check\nPASS pnpm typecheck\nPASS pnpm build\nPASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate\nPASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate\nPASS uv run pytest backend/tests/integration -q\nPASS uv run pytest backend/tests/test_fetcher_transport.py -q\nPASS uv run alembic upgrade head\nPASS uv run alembic check\nPASS pnpm test:e2e\nPASS docker image inspect round-robin-native-renderer:local --format {{.Id}}\nPASS uv run pytest backend/tests/integration/test_native_renderer.py -q\nEvidence saved to docs/evidence/deep-audit/checks.json\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "combine",
+        "--keep"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.136,
+      "output": "Combined 29 files, skipped 11\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "json",
+        "--keep-combined",
+        "-o",
+        "docs/evidence/deep-audit/python-coverage.json"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.696,
+      "output": "Combined 29 files, skipped 11\nWrote JSON report to docs/evidence/deep-audit/python-coverage.json\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "html",
+        "--keep-combined"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.719,
+      "output": "Combined 29 files, skipped 11\nWrote HTML report to .local/deep-audit/coverage/html/index.html\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/frontend_coverage.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.772,
+      "output": "{\n  \"report\": \"docs/evidence/deep-audit/frontend-coverage.json\",\n  \"output\": \".local/deep-audit/frontend-coverage\",\n  \"files\": 5,\n  \"unavailable_files\": 4,\n  \"metrics\": {\n    \"lines\": {\n      \"total\": 2765,\n      \"covered\": 2432,\n      \"skipped\": 0,\n      \"pct\": 87.95\n    },\n    \"statements\": {\n      \"total\": 2765,\n      \"covered\": 2432,\n      \"skipped\": 0,\n      \"pct\": 87.95\n    },\n    \"functions\": {\n      \"total\": 186,\n      \"covered\": 126,\n      \"skipped\": 0,\n      \"pct\": 67.74\n    },\n    \"branches\": {\n      \"total\": 951,\n      \"covered\": 860,\n      \"skipped\": 0,\n      \"pct\": 90.43\n    },\n    \"branchesTrue\": {\n      \"total\": 0,\n      \"covered\": 0,\n      \"skipped\": 0,\n      \"pct\": \"Unknown\"\n    }\n  },\n  \"source_function_totals\": {\n    \"inventoried\": 453,\n    \"mapped\": 104,\n    \"uncovered_mapped\": 29,\n    \"unmapped\": 349\n  },\n  \"accepted_bundles\": 69,\n  \"skipped_entries\": 0\n}\n"
+    }
+  ],
+  "restart_passed": true,
+  "all_checks_passed": true,
+  "paid_provider_calls": 0
+}

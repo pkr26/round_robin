@@ -1,0 +1,166 @@
+AUDIT REMEDIATION — 2026-11-16
+
+All 27 confirmed findings (RR-001 through RR-027) from the two audits are fixed.
+Added 95 regression cases. Final validation: 2014 backend tests passed with no failures or skips; 247 frontend tests passed; 33 connected browser journeys passed; 45 native JavaScript tests and 3 coverage utility tests passed.
+
+Validation and evidence
+-----------------------
+The unchanged coverage gate passes for all 18 services: each exceeds 95% line and branch coverage. Source and verification-input manifests match the final workspace.
+Frontend source coverage: 100% lines, 96.12% branches. Native JavaScript coverage: 100% lines and branches. See validation/backend/service-coverage.json for every service.
+TypeScript checks, production build, generated contract checks, migration upgrade/drift checks, evaluation fixtures and scenario summaries passed. The simulated experiment batch was replayed against the same isolated journal without executing new attempts.
+Service coverage includes actual disposable PostgreSQL locking/races, Redis/Celery workers, broker fault tests, native-renderer Docker isolation, loopback TLS deadline tests, hosted login contention and backup/deletion races in both orders.
+The connected browser full run passed 32/33; the remaining new calculator journey passed after its fixture stopped reusing one source reference for unrelated costs. Production source was unchanged between those browser runs. The later SVG correction has its own actual Chromium regression in the backend native integration lane.
+The first instrumentation run passed 2000 tests and exposed one existing development-supervisor fixture that inherited the verifier SQLite configuration. That fixture now supplies its own mocked development targets; the final complete backend run is green. The diagnostic failure remains archived separately.
+Browser-backed review also caught and fixed the remaining SVG fallback-font and fractional-advance issues; trusted embedded font plus explicit text lengths now match validated bounds. Long S/W/i labels and whitespace are exercised. The SVG sandbox still blocks scripts, remote images and remote fonts.
+
+Scope and practical limits
+--------------------------
+No paid upstream provider calls were made. Provider wire contracts and failure paths used controlled adapters or loopback servers; live provider behavior and real hosted identity-provider deployment were not exercised.
+No database migration is required. Existing development services were not restarted. Restart backend/workers through the normal development workflow to load the changed Python code.
+The original documented readiness limitation remains: user-entered costs are not independently verified. This was explicitly excluded from the confirmed defects; no conservative evidence gate was weakened.
+This closes the 27 confirmed findings and does not claim that testing proves the absence of all other defects.
+
+Files
+-----
+closures.json maps every finding to its implementation and regression tests.
+changes.patch and changes.json contain the complete code/test/contract delta against the snapshot taken before this remediation; the workspace has no Git repository.
+validation-summary.json records the final test counts, scope and coverage result.
+validation/ retains complete passing backend evidence, browser results, frontend/native coverage and the earlier diagnostic failure.
+
+Issue-by-issue closure
+----------------------
+RR-001 [P1] Mandatory Anthropic image critic sends a schema the provider rejects
+  Use a shared provider wire-schema transformer for image and text structured outputs, retaining strict local response validation.
+  Code: backend/src/round_robin/providers/structured.py, backend/src/round_robin/providers/images.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_anthropic_critic_wire_subset_preserves_full_local_validation
+
+RR-002 [P1] Generation timeout spends the protected time for mandatory reviews
+  Reserve time for outstanding required critics and persistence before authorizing generation or another critic. Admission includes the actual request allowance.
+  Code: backend/src/round_robin/worker/image_tasks.py, backend/src/round_robin/visual/iterations.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_generation_and_each_critic_leave_the_other_required_work_time
+
+RR-003 [P1] Raster dimension validation can permanently break visual history
+  Reject new images with either axis over 8192 before commit. Keep previously saved wide images readable under the pixel-area bound, with an actionable preflight blocker.
+  Code: backend/src/round_robin/visual/assets.py, backend/src/round_robin/visual/views.py, backend/src/round_robin/api/visual.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_out_of_axis_upload_is_rejected_without_breaking_history, backend/tests/test_visual_audit_fixes.py::test_legacy_wide_image_remains_readable_with_an_actionable_preflight_blocker
+
+RR-004 [P1] Reloaded uncommitted private commands have no recovery path
+  Add an owner-serialized durable abandonment endpoint and browser recovery action. A missing command is fenced against late arrival; an already committed command returns its original outcome.
+  Code: backend/src/round_robin/api/commands.py, frontend/app/api-client.ts, frontend/app/live-workspace.tsx, frontend/app/design/workspace.tsx
+  Tests: backend/tests/test_review_command_recovery.py, backend/tests/integration/test_review_command_races.py, tests/e2e/review_fixes.spec.ts, frontend/tests/api-client.test.ts
+
+RR-005 [P1] Definitive4xx on retry never releases pending command
+  Retire retained receipts after explicitly annotated not-committed 4xx rejections, while preserving unknown outcomes and UUID conflicts.
+  Code: frontend/app/api-client.ts
+  Tests: frontend/tests/api-client.test.ts
+
+RR-006 [P2] Research reserve rejection stalls proposals until the active-time cutoff
+  Use the frozen finish reserve for research allowance. Settle pending research as unavailable when no research time remains so proposals can proceed.
+  Code: backend/src/round_robin/research/service.py
+  Tests: backend/tests/test_audit_runtime_fixes.py::test_research_uses_frozen_finish_reserve_instead_of_default, backend/tests/test_audit_runtime_fixes.py::test_unstarted_research_settles_when_only_finishing_time_remains
+
+RR-007 [P2] Preflight accepts selected files that cannot fit the evidence packet
+  Share exact evidence-packet planning between preflight, Start and runtime. Reject passage overflow and oversized structured sources before intake, including selected parent evidence.
+  Code: backend/src/round_robin/api/preflight.py, backend/src/round_robin/orchestration/controller.py
+  Tests: backend/tests/test_audit_runtime_fixes.py::test_preflight_and_start_share_exact_selected_passage_capacity, backend/tests/test_audit_runtime_fixes.py::test_oversized_structured_source_is_rejected_before_intake
+
+RR-008 [P2] Accepted JPEGs can normalize into permanently unreviewable images
+  Separate the original 10 MiB upload limit from canonical 64 MiB PNG validation. Review still enforces the actual configured outgoing provider limit.
+  Code: backend/src/round_robin/visual/assets.py, backend/src/round_robin/visual/reviews.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_large_normalized_jpeg_can_be_reviewed_under_its_canonical_allowance
+
+RR-009 [P2] Image and vision requests can run beyond their total deadlines
+  Use the absolute-deadline HTTP transport for image and vision requests, including headers and bounded error-body parsing.
+  Code: backend/src/round_robin/providers/images.py
+  Tests: backend/tests/integration/test_image_total_deadline.py, backend/tests/test_visual_audit_fixes.py::test_error_response_stream_cannot_renew_the_absolute_image_allowance
+
+RR-010 [P2] Expired visual sessions retain finish holds and unserviceable queued work
+  Expire visual sessions at the paid deadline or queued consent expiry. Quarantine unserviceable funding configurations, fence queued publication and release only unused review funds.
+  Code: backend/src/round_robin/worker/image_tasks.py, backend/src/round_robin/visual/views.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_expired_visual_work_releases_only_unused_review_hold, backend/tests/test_visual_audit_fixes.py::test_unserviceable_queued_images_become_terminal_without_spending
+
+RR-011 [P2] Currency rounding can falsely mark an over-budget option affordable
+  Calculate and format totals using a pinned ISO 4217 minor-unit table. Reject unsupported currency codes in preflight; preserve three-decimal amounts in the UI.
+  Code: backend/src/round_robin/research/currencies.py, backend/src/round_robin/research/calculator.py, backend/src/round_robin/api/preflight.py, frontend/app/live-workspace.tsx
+  Tests: backend/tests/test_audit_runtime_fixes.py::test_lifecycle_totals_use_the_currency_minor_unit, backend/tests/test_audit_runtime_fixes.py::test_three_decimal_currency_cannot_pass_a_lower_hard_budget, backend/tests/test_audit_runtime_fixes.py::test_unsupported_currency_is_a_preflight_blocker_not_an_implicit_cent
+
+RR-012 [P2] Saved nonUSD amounts are presented as USD during editing
+  Label budget and component inputs with their saved currencies and inherit the brief currency for new candidates.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx, tests/e2e/review_fixes.spec.ts
+
+RR-013 [P2] Switching drafts retains stale public-term browser validation error
+  Recompute public-research field validity when the selected draft changes.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx
+
+RR-014 [P2] Native diagrams ignore frozen output dimensions
+  Validate native diagram dimensions against the frozen brief before reservation/rendering; derive the browser starter from those dimensions.
+  Code: backend/src/round_robin/api/visual.py, frontend/app/design/workspace.tsx
+  Tests: backend/tests/test_visual_audit_fixes.py::test_diagram_dimensions_are_bound_before_reserving_renderer_capacity, frontend/tests/design-workspace.test.tsx
+
+RR-015 [P2] Diagram edge labels can be clipped despite successful required-text validation
+  Validate edge-label ink bounds before rendering. Embed the exact trusted packaged font and fix SVG text-run lengths to the validated advances, including whitespace. Preserve the attachment sandbox and remote-resource restrictions while permitting its fixed embedded font. Retain historical version1/2 read behavior.
+  Code: backend/src/round_robin/visual/renderers/diagram.py, backend/src/round_robin/api/visual.py, backend/src/round_robin/app.py
+  Tests: backend/tests/test_visual_audit_fixes.py::test_edge_label_extent_is_checked_before_rendering, backend/tests/test_exhaustive_visual_renderer.py, backend/tests/integration/test_native_renderer.py, validation/svg-independent-review/csp-probe.json
+
+RR-016 [P2] Every maintenance cycle re-purges the complete permanent deletion history
+  Process at most 100 new manifest entries per routine cycle using a transactionally committed identity/offset/anchor cursor. Skip already completed fences; keep full manifest replay for explicit restore/operations.
+  Code: backend/src/round_robin/operations/recovery.py, backend/src/round_robin/operations/maintenance.py
+  Tests: backend/tests/test_review_operations_fixes.py
+
+RR-017 [P2] The expiry regression uses UTC yesterday against a Phoenix comparison date
+  Construct the expiry test date in the brief timezone using ZoneInfo, matching production comparison semantics.
+  Code: backend/tests/test_evidence_regressions.py
+  Tests: backend/tests/test_evidence_regressions.py
+
+RR-018 [P1] Waiting runs multiply scheduler records and saturate dispatch
+  Keep one active advance intention under existing run locks without locking/mutating publisher-held outbox rows. Reconciliation retires legacy duplicates.
+  Code: backend/src/round_robin/database/services.py, backend/src/round_robin/dispatcher/service.py
+  Tests: backend/tests/test_audit_runtime_fixes.py::test_waiting_advances_do_not_multiply_and_resume_after_drain, backend/tests/test_audit_runtime_fixes.py::test_reconciler_retires_legacy_duplicate_advance_records, backend/tests/integration/test_audit_runtime_postgres.py::test_immediate_broker_delivery_deduplicates_waiting_advances, backend/tests/integration/test_audit_runtime_postgres.py::test_competing_advance_producers_retain_one_durable_intention
+
+RR-019 [P1] Concurrent deletion can fail a normal backup and close all writes and dispatch
+  Coordinate backup database snapshots/file copies with deletion using a cross-process artifact guard. Deletion retains the guard through transaction commit; backup releases it before recording database status.
+  Code: backend/src/round_robin/operations/artifact_lifecycle.py, backend/src/round_robin/operations/recovery.py, backend/src/round_robin/operations/maintenance.py, backend/src/round_robin/reports/storage.py, backend/src/round_robin/visual/service.py
+  Tests: backend/tests/test_review_operations_fixes.py::test_backup_and_legal_delete_cleanup_share_one_consistent_artifact_snapshot, backend/tests/test_review_backup_retention.py::test_backup_waits_for_retention_file_deletion_and_database_commit
+
+RR-020 [P2] An older autosave can overwrite the newly opened linked follow-up brief
+  Fence autosave completions by editor generation and mode so switching into follow-up or clarification cannot be overwritten by an older save.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx
+
+RR-021 [P2] Editing any requirements line erases existing typed constraints
+  Keep typed constraints and their stable IDs outside the manual requirements textarea; show them as saved numeric checks.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx, tests/e2e/review_fixes.spec.ts
+
+RR-022 [P2] Entering a price can leave it excluded from every cost calculation
+  Expose cost inclusion status. Disable amount entry for excluded/not-applicable costs until the user explicitly includes them.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx, tests/e2e/review_fixes.spec.ts
+
+RR-023 [P2] Review-history navigation reuses another run's unsaved choice and notes
+  Reset unsaved choice/reason/outcome fields when changing report history, and require the selected option to belong to the current comparison.
+  Code: frontend/app/live-workspace.tsx
+  Tests: frontend/tests/live-workspace.test.tsx
+
+RR-024 [P2] Saving a native interface clears its browser actions and assertions
+  Persist the exact private native-interface interaction plan in version provenance, restore it on reopen, and retain it across candidate renders.
+  Code: backend/src/round_robin/api/visual.py, frontend/app/design/workspace.tsx
+  Tests: backend/tests/test_visual_audit_fixes.py::test_native_interface_exact_actions_survive_saved_version_reopen, frontend/tests/design-workspace.test.tsx
+
+RR-025 [P2] Expired terminal retries retain unused finish funds and block new runs
+  Reconcile held finish funds on terminal runs after frozen authorization expires. Allow explicit terminal retry abandonment, retaining unknown attempt exposure and saved history.
+  Code: backend/src/round_robin/orchestration/policies.py, backend/src/round_robin/orchestration/controller.py, backend/src/round_robin/dispatcher/service.py, backend/src/round_robin/api/events.py, frontend/app/live-workspace.tsx
+  Tests: backend/tests/test_audit_runtime_fixes.py::test_expired_terminal_retry_releases_only_unused_hold, backend/tests/test_audit_runtime_fixes.py::test_terminal_cancel_abandons_retry_without_releasing_unknown_exposure, backend/tests/integration/test_audit_runtime_postgres.py::test_expired_retry_funds_do_not_block_a_fresh_accepted_run
+
+RR-026 [P2] Anonymous sign-in blocks the ASGI event loop during database contention
+  Offload complete hosted login reservation, login-state save and callback-session transactions to the threadpool, preserving database locking and identity fencing.
+  Code: backend/src/round_robin/security/hosted.py, backend/src/round_robin/api/hosted.py
+  Tests: backend/tests/test_review_hosted_async.py, probes/hosted_event_loop_fixed.py
+
+RR-027 [P2] Markdown export turns untrusted evidence into active image/HTML markup
+  Escape all interpolated report/evidence strings as inert Markdown literals and HTML text. Keep raw JSON exports unchanged.
+  Code: backend/src/round_robin/reports/exports.py
+  Tests: backend/tests/test_exports.py::test_markdown_keeps_untrusted_images_html_and_delimiters_literal, backend/tests/test_deep_evidence_boundaries.py
+

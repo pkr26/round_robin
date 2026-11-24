@@ -1,0 +1,7 @@
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running upgrade  -> f973196b6714, initial_application
+INFO  [alembic.runtime.migration] Running upgrade f973196b6714 -> a41e349d12ac, Append-only submitted and confirmed brief history.
+INFO  [alembic.runtime.migration] Running upgrade a41e349d12ac -> c6917df240ab, Optional immutable visual sessions, versions, reviews and operations.
+INFO  [alembic.runtime.migration] Running upgrade c6917df240ab -> d1260b7f94de, Freeze nonsecret operator visual configuration with each design.
+INFO  [alembic.runtime.migration] Running upgrade d1260b7f94de -> e7209a4f361c, Persist immutable claims and exact selected parent reuse.

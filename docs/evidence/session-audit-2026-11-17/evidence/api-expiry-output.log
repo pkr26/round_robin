@@ -1,0 +1,27 @@
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+  from ._compat import httpx2
+{
+  "initial_assessment_time": "2026-10-28T19:00:00+00:00",
+  "reassessment_time": "2026-11-17T19:00:00+00:00",
+  "quote_valid_until": "2026-11-10",
+  "fresh_requirement_post_status": 201,
+  "initial_report_version": 6,
+  "new_report_version": 7,
+  "new_readiness": "ready_to_choose",
+  "new_cost_totals": [
+    "1600.00",
+    "1840.00",
+    "0.00"
+  ],
+  "cost_receipt_dates": [
+    "2026-10-28T19:00:00Z",
+    "2026-10-28T19:00:00Z",
+    "2026-10-28T19:00:00Z"
+  ],
+  "new_requirement_attestation_did_not_replace_cost_receipts": true,
+  "model_call_count_unchanged": true,
+  "external_provider_requests": 0,
+  "fixture_qualification": "Completed live-labeled fixture derives from actual simulated pipeline; initial label/usage setup is synthetic, and no live-provider quality is claimed."
+}

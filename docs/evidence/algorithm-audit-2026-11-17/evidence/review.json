@@ -1,0 +1,459 @@
+{
+  "review_date": "2026-11-17",
+  "domain": "Evidence, calculations, epistemic aggregation and readiness algorithms",
+  "product_source_modified": false,
+  "summary": {
+    "algorithms_or_processes": 25,
+    "confirmed_defects": 4,
+    "capability_gaps": 2,
+    "adversarial_probes": 6,
+    "existing_tests_passed": 328
+  },
+  "findings": [
+    {
+      "id": "E-F01",
+      "priority": "P1",
+      "severity": "high",
+      "kind": "correctness defect",
+      "title": "Auditor disagreement manufactures demonstrated failures using the synthesis citations",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/reporting.py:97-103",
+        "backend/src/round_robin/reports/readiness.py:9-10",
+        "backend/src/round_robin/providers/base.py:121-124"
+      ],
+      "trigger": "Synthesis passes each option with positive evidence; the auditor says fail with an empty basis_refs list (valid provider output).",
+      "impact": "Both options become fail, retain the synthesis positive citation and synthesizer attribution, and the report publishes no_feasible_option as though each failure had been demonstrated.",
+      "validation": "probes.py:audit_disagreement; probe-results.json:audit_disagreement; actual validate_output and build_report passed.",
+      "fix": "Represent disputed as unknown until a scoped adverse assessment has a valid supporting basis. Preserve both verdicts, respective citations and assessor identities; use the actual supported failing assessment when deriving infeasibility.",
+      "caveat": "Report reason does mention disagreement, but the authoritative failure/readiness labels still assert demonstrated failure. No live model behavior is needed for reproduction."
+    },
+    {
+      "id": "E-F02",
+      "priority": "P2",
+      "severity": "medium",
+      "kind": "acquisition-policy defect",
+      "title": "First query exhausts page allowance and starves cost/counterevidence retrieval",
+      "source_refs": [
+        "backend/src/round_robin/research/service.py:149-175",
+        "backend/src/round_robin/research/service.py:212-227"
+      ],
+      "trigger": "Ordinary first comparison query returns eight valid unique hits.",
+      "impact": "All eight fetch slots go to first-query results. Later cost and counterevidence searches still consume authorizations but none of their pages can be fetched; summary lists all three queries and no limitations.",
+      "validation": "probes.py:counterevidence_starvation runs real execute_research with synthetic SQLite ledger and stub search/page transports; all saved URLs are query1, later_query_sources_fetched=0, limitations=[].",
+      "fix": "Reserve page slots per objective or interleave candidate collection and acquisition; stop searches that cannot yield inspectable evidence or record discovery-only results explicitly; disclose unsatisfied research objectives.",
+      "caveat": "Plan rotation is locally correct; execution allocation is the failure. Duplicate hits or early failed fetches can change outcomes, but eight fresh hits are sufficient."
+    },
+    {
+      "id": "E-F03",
+      "priority": "P1",
+      "severity": "high",
+      "kind": "polarity-validation defect",
+      "title": "A contradicted claim chain can be promoted to supported without new evidence",
+      "source_refs": [
+        "backend/src/round_robin/research/claims.py:19-35",
+        "backend/src/round_robin/providers/base.py:131-140",
+        "backend/src/round_robin/research/reuse.py:57-63",
+        "backend/src/round_robin/research/reuse.py:80-97"
+      ],
+      "trigger": "New fact repeats the exact proposition of a prior contradicted fact and cites only that fact; prior fact references a contradicted source saying the opposite.",
+      "impact": "Graph reachability marks the new claim grounded and validate_output leaves evidence_status=supported. Persisted-claim checks use the same status-insensitive source roots and graph, so circulation among agents can erase known contradiction.",
+      "validation": "probes.py:support_laundering calls validate_output with identical prior/current proposition and explicit contradictory source; returns supported. Persistence path verified by source review.",
+      "fix": "Preserve signed support/contradiction edges and evidence qualifications. Block status upgrades based solely on contradicted/mixed/stale ancestors; require a new explicit scoped support assessment and resolution record.",
+      "caveat": "This is a reproducible polarity/status loss, not a claim that a graph algorithm can prove semantic entailment. Opposite propositions can legitimately cite a refutation, so relation identity and polarity must be explicit."
+    },
+    {
+      "id": "E-F04",
+      "priority": "P2",
+      "severity": "medium",
+      "kind": "aggregation/traceability defect",
+      "title": "Bounded dissent aggregation can discard the final auditor and ignores proposal critical defects",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/reporting.py:127-131",
+        "backend/src/round_robin/orchestration/reporting.py:164",
+        "backend/src/round_robin/orchestration/reporting.py:83"
+      ],
+      "trigger": "Two earlier proposals provide twelve distinct dissent strings each; final auditor contributes material dissent/critical text. Separately, a proposal puts a concern in critical_defects and later stages omit it.",
+      "impact": "Only first20 dissent strings publish, omitting all final auditor specifics. Proposal critical_defects never enter aggregate and do not set unresolved_critical_defect unless the last audit repeats them.",
+      "validation": "probes.py:dissent_loss returns dissent_count=20 and no AUDITOR marker; separate proposal-critical probe produces empty dissent and false unresolved flag.",
+      "fix": "Maintain objection IDs, targets, materiality, dispositions and response links across stages; reserve display capacity for unresolved audit defects and attach overflow links/counts rather than silently dropping records.",
+      "caveat": "Saved contributions preserve the original text and the final-audit generic unresolved flag survives. Claim is loss from report aggregation/required resolution, not deletion from storage."
+    },
+    {
+      "id": "E-G01",
+      "priority": "P2",
+      "severity": "medium",
+      "kind": "capability gap",
+      "title": "Ordinary live inputs have no path to accepted evidence support and ready_to_choose",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/controller.py:95-107",
+        "backend/src/round_robin/orchestration/reporting.py:115-117",
+        "backend/src/round_robin/research/service.py:219",
+        "backend/src/round_robin/research/reuse.py:153-154"
+      ],
+      "trigger": "A live run has complete correct user-entered costs, all requirements passed and distinct successful audit.",
+      "impact": "Every cost source is rewritten to a synthetic user_supplied evidence record; ready dependency requires verification_status=supported. No application service promotes evidence into supported, so ordinary runs remain conditional regardless of review quality.",
+      "validation": "probes.py:missing_verification_transition yields conditional with user_supplied; direct synthetic supported status yields ready. Static scan of all source writes found no supported transition.",
+      "fix": "Implement explicit source-to-cost verification and immutable scoped assessment records (possibly human-attested); preserve unverified distinction. Do not fix by automatically trusting model consensus or all entered costs.",
+      "caveat": "Conservative state is safer than overclaiming and may be intentional pending a verification feature; report as missing acceptance capability, not false positive readiness."
+    },
+    {
+      "id": "E-G02",
+      "priority": "P2",
+      "severity": "medium",
+      "kind": "capability gap",
+      "title": "Evidence extraction always chooses page prefix rather than relevant or contradictory passages",
+      "source_refs": [
+        "backend/src/round_robin/research/fetcher.py:307-310",
+        "backend/src/round_robin/research/service.py:212-214"
+      ],
+      "trigger": "A relevant cost exclusion appears after extracted character4000 of a fetched page.",
+      "impact": "The only two selected passages end at4000, so no agent sees the later exclusion even though the entire page was downloaded. Long navigation and introductions consume capacity.",
+      "validation": "probes.py:prefix_passages source is4249 characters with critical exclusion after4200; selected4000 omits it.",
+      "fix": "Use bounded query/requirement-aware passage retrieval and diversity, preserve exact locators/hashes, explicitly search for exception/exclusion passages, and expose uninspected coverage. Evaluate recall with adversarial long-document fixtures before trusting ranking.",
+      "caveat": "Current scope labels correctly state that semantic support is unchecked and design docs admit excerpt limits. This is an accuracy capability gap, not misrepresented full-document verification."
+    }
+  ],
+  "algorithm_inventory": [
+    {
+      "id": "E01",
+      "algorithm": "Claim support graph and cycle detection",
+      "file": "backend/src/round_robin/research/claims.py",
+      "line": 12,
+      "assessment": "defect",
+      "invariant": "Every supported fact must have a noncircular scoped support path; a contradicted predecessor must not alone justify supported status.",
+      "complexity_or_bounds": "O(V+E); at most 220 current/prior claims.",
+      "finding_id": "E-F03"
+    },
+    {
+      "id": "E02",
+      "algorithm": "Local claim aliases, reference validation and persistent ID rewrite",
+      "file": "backend/src/round_robin/research/claims.py",
+      "line": 41,
+      "assessment": "no new defect found",
+      "invariant": "Unique local aliases map atomically to new persistent IDs; every reference must be local or scoped.",
+      "complexity_or_bounds": "O(total response structure + references); 20 claims/40 unique refs.",
+      "finding_id": null
+    },
+    {
+      "id": "E03",
+      "algorithm": "Immutable claim versions and packet validation",
+      "file": "backend/src/round_robin/research/reuse.py",
+      "line": 28,
+      "assessment": "defect",
+      "invariant": "Stored owner/run/hash/version must match and validated support status must remain sound.",
+      "complexity_or_bounds": "Bounded 200 claims and their edges.",
+      "finding_id": "E-F03"
+    },
+    {
+      "id": "E04",
+      "algorithm": "Explicit parent selection and freshness downgrade",
+      "file": "backend/src/round_robin/research/reuse.py",
+      "line": 110,
+      "assessment": "no new defect found",
+      "invariant": "Import only approved immutable parent content in the same meeting; time-sensitive/unselected support cannot remain accepted.",
+      "complexity_or_bounds": "O(selected records + selected references); 24 selections.",
+      "finding_id": null
+    },
+    {
+      "id": "E05",
+      "algorithm": "Public query scope, fingerprint and template rendering",
+      "file": "backend/src/round_robin/research/queries.py",
+      "line": 22,
+      "assessment": "no new defect found",
+      "invariant": "Private brief/location must never become a fallback query; only approved term and template identities may be rendered.",
+      "complexity_or_bounds": "At most eight 120-character terms, bounded region/templates.",
+      "finding_id": null
+    },
+    {
+      "id": "E06",
+      "algorithm": "Greedy query packing and rotated template plan",
+      "file": "backend/src/round_robin/research/service.py",
+      "line": 35,
+      "assessment": "no new local defect found",
+      "invariant": "Every approved term group remains represented within six queries; comparison/cost/counterevidence templates rotate.",
+      "complexity_or_bounds": "O(terms * templates * rendered text), all bounded. Execution defeats diversity: E-F02.",
+      "finding_id": "E-F02"
+    },
+    {
+      "id": "E07",
+      "algorithm": "Search authorization, frozen plan, lease fencing and uncertain settlement",
+      "file": "backend/src/round_robin/research/service.py",
+      "line": 60,
+      "assessment": "no new safety defect found",
+      "invariant": "Never repeat an ambiguous authorized search; only current run/fence/lease may commit evidence.",
+      "complexity_or_bounds": "At most six searches; bounded deadline.",
+      "finding_id": null
+    },
+    {
+      "id": "E08",
+      "algorithm": "Public-search candidate/page allocation",
+      "file": "backend/src/round_robin/research/service.py",
+      "line": 149,
+      "assessment": "defect",
+      "invariant": "Acquisition should reserve room for cost/counterevidence objectives and disclose unfulfilled objectives.",
+      "complexity_or_bounds": "Greedy first-query-first, max eight pages.",
+      "finding_id": "E-F02"
+    },
+    {
+      "id": "E09",
+      "algorithm": "Search transport response parsing and URL filtering",
+      "file": "backend/src/round_robin/research/search.py",
+      "line": 24,
+      "assessment": "no new defect found",
+      "invariant": "Bound query/response/credentials; search results are candidates, never verified evidence.",
+      "complexity_or_bounds": "At most eight hits, 262144 response bytes.",
+      "finding_id": null
+    },
+    {
+      "id": "E10",
+      "algorithm": "Public DNS admission and target/secret validation",
+      "file": "backend/src/round_robin/research/fetcher.py",
+      "line": 42,
+      "assessment": "no new defect found",
+      "invariant": "All resolved addresses must be public; reject credential-bearing URLs, pin IP, bound outstanding DNS work.",
+      "complexity_or_bounds": "At most two resolver workers; 16 decode rounds.",
+      "finding_id": null
+    },
+    {
+      "id": "E11",
+      "algorithm": "Deadline-enforced HTTPS fetch and redirects",
+      "file": "backend/src/round_robin/research/fetcher.py",
+      "line": 134,
+      "assessment": "no new defect found",
+      "invariant": "Total wall deadline/byte cap applies across network reads and redirects; TLS SNI retains origin host.",
+      "complexity_or_bounds": "One MiB/page, max four redirect targets, eight page attempts.",
+      "finding_id": null
+    },
+    {
+      "id": "E12",
+      "algorithm": "HTML text extraction and source fingerprinting",
+      "file": "backend/src/round_robin/research/fetcher.py",
+      "line": 213,
+      "assessment": "bounded extraction limitation",
+      "invariant": "Extract canonical text and preserve source origin/hash without calling it semantically verified.",
+      "complexity_or_bounds": "Linear in capped page bytes; no relevance model.",
+      "finding_id": null
+    },
+    {
+      "id": "E13",
+      "algorithm": "Passage selection, origin grouping and bounded packet",
+      "file": "backend/src/round_robin/research/fetcher.py",
+      "line": 307,
+      "assessment": "capability gap",
+      "invariant": "Selected evidence must cover decisive relevant terms and disclose omitted parts.",
+      "complexity_or_bounds": "Prefix-only 2*2000 characters/source in live service.",
+      "finding_id": "E-G02"
+    },
+    {
+      "id": "E14",
+      "algorithm": "Typed decimal expression evaluation",
+      "file": "backend/src/round_robin/research/calculator.py",
+      "line": 47,
+      "assessment": "no new defect found",
+      "invariant": "Units, operation depth, operand count, magnitude, precision and rounding must remain explicit.",
+      "complexity_or_bounds": "120 leaves, four operation levels; O(expression nodes).",
+      "finding_id": null
+    },
+    {
+      "id": "E15",
+      "algorithm": "Lifecycle cost, discounts, unknowns and expiry",
+      "file": "backend/src/round_robin/research/calculator.py",
+      "line": 104,
+      "assessment": "no new defect found",
+      "invariant": "Unknown/excluded/expired cost cannot become complete total; mixed currencies cannot be silently summed.",
+      "complexity_or_bounds": "30 cost components/option; exact Decimal64 then minor-unit rounding.",
+      "finding_id": null
+    },
+    {
+      "id": "E16",
+      "algorithm": "Break-even linear cost solution",
+      "file": "backend/src/round_robin/research/calculator.py",
+      "line": 158,
+      "assessment": "limited arithmetic primitive",
+      "invariant": "Complete supplied component rates must be current; equal slopes/negative crossing rejected; no forecast or proof all real charges supplied.",
+      "complexity_or_bounds": "O(components), two affine cost curves; not called by live report comparison.",
+      "finding_id": null
+    },
+    {
+      "id": "E17",
+      "algorithm": "Pinned currency minor-unit lookup",
+      "file": "backend/src/round_robin/research/currencies.py",
+      "line": 19,
+      "assessment": "static implementation reviewed; source currency table not externally revalidated",
+      "invariant": "Unknown currencies must fail rather than default to two places.",
+      "complexity_or_bounds": "O(1) lookup; pinned data requires separately controlled updates.",
+      "finding_id": null
+    },
+    {
+      "id": "E18",
+      "algorithm": "Comparison date and deterministic cost constraints",
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "line": 29,
+      "assessment": "no new arithmetic defect found",
+      "invariant": "Use run-created date in brief timezone; verify all cost categories; deterministic cost constraints override model claims.",
+      "complexity_or_bounds": "O(options * (components + hard requirements)).",
+      "finding_id": null
+    },
+    {
+      "id": "E19",
+      "algorithm": "Synthesis/audit constraint reconciliation",
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "line": 87,
+      "assessment": "defect",
+      "invariant": "Changing a verdict must carry its actual evidence and assessor; disagreement alone is not demonstrated failure.",
+      "complexity_or_bounds": "O(options * requirements); scoped evidence membership.",
+      "finding_id": "E-F01"
+    },
+    {
+      "id": "E20",
+      "algorithm": "Cost dependency support and evidence promotion",
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "line": 110,
+      "assessment": "capability gap",
+      "invariant": "Readiness requires accepted current support, with a real transition that can establish that support.",
+      "complexity_or_bounds": "Source status conjunction over included cost components.",
+      "finding_id": "E-G01"
+    },
+    {
+      "id": "E21",
+      "algorithm": "Readiness decision reducer",
+      "file": "backend/src/round_robin/reports/readiness.py",
+      "line": 6,
+      "assessment": "upstream-sensitive correctness",
+      "invariant": "No-feasible requires demonstrated failures; ready requires distinct successful audit, two proposals, all requirements and supported dependencies.",
+      "complexity_or_bounds": "Linear in compared constraints/dependencies; upstream false basis accepted.",
+      "finding_id": "E-F01"
+    },
+    {
+      "id": "E22",
+      "algorithm": "Dissent and critical-defect aggregation",
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "line": 127,
+      "assessment": "defect",
+      "invariant": "Material unresolved objections must remain visible through bounded report generation.",
+      "complexity_or_bounds": "Ordered deduplication then first20 truncation.",
+      "finding_id": "E-F04"
+    },
+    {
+      "id": "E23",
+      "algorithm": "Next-evidence requests and parent change summary",
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "line": 132,
+      "assessment": "limited deterministic policy",
+      "invariant": "Missing cost/requirement results generate inspectable next actions; linked changes reflect saved inputs.",
+      "complexity_or_bounds": "First20 items; no information-gain ranking, dependency sensitivity or full material-objection mapping.",
+      "finding_id": null
+    },
+    {
+      "id": "E24",
+      "algorithm": "Outcome-inclusive timing measurement",
+      "file": "backend/src/round_robin/reports/measurements.py",
+      "line": 18,
+      "assessment": "no new defect found",
+      "invariant": "Timing must derive from committed samples, retain unsuccessful outcomes and distinguish queue/input wait/active clocks.",
+      "complexity_or_bounds": "O(events log events) sorting plus linear scan; not a human usefulness validation.",
+      "finding_id": null
+    },
+    {
+      "id": "E25",
+      "algorithm": "Saved evidence/calculation/report contract gates",
+      "file": "backend/src/round_robin/schemas/runtime.py",
+      "line": 112,
+      "assessment": "no new local integrity defect found",
+      "invariant": "Mode, lineage, exact calculation totals/currency/horizon, reference scope and reducer-derived readiness must agree.",
+      "complexity_or_bounds": "Bounded comparisons/references; semantic truth remains outside schema.",
+      "finding_id": null
+    }
+  ],
+  "validation": {
+    "probe_command": "PYTHONPATH=backend/src:backend/tests uv run python docs/evidence/algorithm-audit-2026-11-17/evidence/probes.py",
+    "probe_result": "probe-results.json",
+    "existing_tests_log": "existing-tests.log",
+    "existing_tests": "328 passed, 2 pre-existing dependency deprecation warnings, 16.02s",
+    "initial_invalid_test_command": "One initial pytest invocation named nonexistent test_evidence.py; it collected no tests (exit4). Corrected command passed328."
+  },
+  "limitations": [
+    "No paid providers or real external retrieval were invoked.",
+    "Synthetic transport and report probes establish deterministic control/data-flow defects, not frequency in natural model outputs.",
+    "Currency table upstream publication and actual monetary/cost market inputs were not externally validated.",
+    "The report readiness and claim validations cannot establish real-world correctness without scoped semantic/human evaluation."
+  ],
+  "source_manifest": [
+    {
+      "file": "backend/src/round_robin/orchestration/controller.py",
+      "sha256": "baea509e2b78f5c2894209a0ff8d89b238eea764a236de60b7e6cf8522312380"
+    },
+    {
+      "file": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "6248ad9dfa25eb00924f34dc371512e0c87ee07528be0b8487ccb1931de2a909"
+    },
+    {
+      "file": "backend/src/round_robin/providers/base.py",
+      "sha256": "c652f47aebad8365fca14e85ffdfff8cde0df6a7adc702d68129ad1e93cb07be"
+    },
+    {
+      "file": "backend/src/round_robin/reports/measurements.py",
+      "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805"
+    },
+    {
+      "file": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02"
+    },
+    {
+      "file": "backend/src/round_robin/research/calculator.py",
+      "sha256": "e1f825c8e0c35b1fdd9ac4560251146c1449cf27cf15b49ee3a77ac625ae2f91"
+    },
+    {
+      "file": "backend/src/round_robin/research/claims.py",
+      "sha256": "523b277fa424935e116deaf233e990d748dc975816dd834b93ce94b58c43f111"
+    },
+    {
+      "file": "backend/src/round_robin/research/currencies.py",
+      "sha256": "0f39f65bb9499138e5beeff38061852b3f0c54927be1c800de64cf1bd005d3fb"
+    },
+    {
+      "file": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "3ea3ae37e88aeae2769fef2dd9e8f9271efde7d8e05281525974f86b4e07789d"
+    },
+    {
+      "file": "backend/src/round_robin/research/queries.py",
+      "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239"
+    },
+    {
+      "file": "backend/src/round_robin/research/reuse.py",
+      "sha256": "7e9c948dbc5b8f141aaa23ddde0f9acd18c9b3a83551fd16891b805fb86711cd"
+    },
+    {
+      "file": "backend/src/round_robin/research/search.py",
+      "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99"
+    },
+    {
+      "file": "backend/src/round_robin/research/service.py",
+      "sha256": "4a6f3c34020765313d41ff79064f1f29d2a624fcd3fd98f5a9ca4391afdea02f"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/briefs.py",
+      "sha256": "149b80352afb5a9cad730a8b2ac8117b03e0849b73e99e4a3c242ec3a98768d2"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/contributions.py",
+      "sha256": "f6833e97a6a197fa172953e10e71f14a0a5e7960b6c769b7ad828e2fe8dd0db7"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/evidence.py",
+      "sha256": "e692ec830ac0d1e0ed670fa47c3937ef66bb9f190f95646cc4dcf7af5c8452b3"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/reports.py",
+      "sha256": "f7c45545b6f4a045e96004319eb064ad9f2c7db86c72a37acefd3471a1a452fe"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "baa92905f1022812d9a7767de3b2a8ce4114c2db7909e6bb6ba0a76152929915"
+    },
+    {
+      "file": "backend/src/round_robin/schemas/views.py",
+      "sha256": "4b3674121381245c864e0ea4ba8bdee542ee88655e2942d9814b9871551425a9"
+    }
+  ]
+}

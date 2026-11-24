@@ -1,0 +1,666 @@
+{
+  "note": "Reviewer finding groups overlap where fixes were coordinated or cross-reviewed; the row count is not a unique defect count.",
+  "findings": [
+    {
+      "id": "API-01",
+      "description": "Accepted hosted origin slash/case/default-port variants denied legitimate browser CSRF/CORS; malformed host/ports were accepted.",
+      "source": "backend/src/round_robin/configuration.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_api.py",
+      "reproduction": "Six origin/port cases failed before fixes; extended IDNA/control/ambiguous-host cases now pass.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-02",
+      "description": "OIDC transport failures and malformed token shapes escaped controlled error handling; boolean token was accepted.",
+      "source": "backend/src/round_robin/api/hosted.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_hosted_routes.py",
+      "reproduction": "Eleven mocked cases failed before fixes.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-03",
+      "description": "Run view remaining requests omitted visual model calls in the shared ledger.",
+      "source": "backend/src/round_robin/api/events.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_api.py::test_remaining_request_count_includes_shared_visual_model_calls",
+      "reproduction": "Returned24 with one recorded model call; now23.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-04",
+      "description": "SQLite application engines did not enforce declared foreign keys, masking PostgreSQL parity errors.",
+      "source": "backend/src/round_robin/database/session.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_api.py::test_sqlite_application_enforces_foreign_keys_like_postgresql",
+      "reproduction": "Inserted orphan draft before fix; now raisesIntegrityError.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-05",
+      "description": "Clock regression made run read/cancel responses invalid; coordinated runtime settlement permanently fences lost clock intervals.",
+      "source": "backend/src/round_robin/api/events.py",
+      "status": "fixed; coordinated with RUNTIME clock finding",
+      "regression": "backend/tests/test_deep_api.py::test_clock_regression_does_not_make_run_reads_or_cancellation_unavailable",
+      "reproduction": "Run GET503 before fix; now readable and cancellation publishes with no renewed allowance.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-06",
+      "description": "Synchronous database reads in async SSE handling blocked other application requests.",
+      "source": "backend/src/round_robin/api/events.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_api.py::test_sse_database_reads_do_not_block_other_async_requests",
+      "reproduction": "Async heartbeat0 ticks during injected160ms DB waits before fix; threadpool offload now permits progress.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-07",
+      "description": "Test fixture/verifier URL checks allowed libpq query parameters to override loopback test destinations; malformed URL errors were not normalized.",
+      "source": "backend/src/round_robin/database/safety.py",
+      "status": "fixed; coordinated with restore guard finding",
+      "regression": "backend/tests/test_deep_service_safety.py",
+      "reproduction": "Shared guard now rejects routing and Redis DB overrides before driver invocation; reused by all service fixtures/verifier/restore.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-08",
+      "description": "Fictional sample scope validation depended on scenario order and crashed on optional missing base report.",
+      "source": "backend/src/round_robin/fixtures.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_contracts.py",
+      "reproduction": "Both reorder/null cases failed before fix; now keyed by scenario ID with controlled validation.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-09",
+      "description": "Direct verifier CLI could not import its new shared guard without PYTHONPATH; unit mocks hid the defect.",
+      "source": "scripts/verify.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_verifier_bootstrap.py",
+      "reproduction": "Actual combined attempt1 failed after build/unit checks; isolated subprocess now imports guard with no shell PYTHONPATH.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-10",
+      "description": "Verifier subprocess environment inherited operator production DB/storage and browser API targets.",
+      "source": "scripts/verify.py",
+      "status": "fixed",
+      "regression": "backend/tests/test_deep_evidence_supervisors.py::test_verifier_never_inherits_production_database_storage_or_frontend_targets",
+      "reproduction": "Mock captured inherited production DB before fix; verification now scopes defaults to disposable resources and forces browser loopback target while preserving credential rejection.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "API-11",
+      "description": "Saved evidence corruption was returned by untyped source reads; report readiness was read from raw saved JSON without verifying referenced row/body scope and hash. Coordinated with E24 shared validator; snapshot binds each record and run/meeting readiness now becomes unavailable while run state remains inspectable.",
+      "status": "fixed; coordinated with E24/E25",
+      "source": "backend/src/round_robin/api/events.py",
+      "regression": "backend/tests/test_deep_read_routes.py::test_corrupt_saved_support_cannot_retain_readiness_or_escape_snapshot_binding",
+      "reproduction": "Three parameter cases failed before fixes because report GET returned200 on corrupt saved support; initial independent source probe showed all6 corruptions returned200 through both source endpoints.",
+      "review_ledger": "reviews/root-review.json"
+    },
+    {
+      "id": "RUNTIME-01",
+      "description": "Dropped valid usage on refusal, truncation and empty provider envelopes",
+      "status": "fixed",
+      "source": "backend/src/round_robin/providers/http.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_billable_failure_preserves_valid_usage_and_request_identity",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-02",
+      "description": "Malformed JSON/envelope and transport timeout lost observed provider request ID needed by receipt reconciliation",
+      "status": "fixed",
+      "source": "backend/src/round_robin/providers/http.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_malformed_envelope_keeps_http_request_identity_for_final_receipt",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-03",
+      "description": "Structured source alias matching upload locator collided and silently omitted selected upload passage",
+      "status": "fixed",
+      "source": "backend/src/round_robin/orchestration/controller.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_structured_quote_alias_cannot_overwrite_a_selected_upload_passage",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-04",
+      "description": "Unowned outbox families before LIMIT starved core dispatch indefinitely",
+      "status": "fixed",
+      "source": "backend/src/round_robin/dispatcher/service.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_dispatch_limit_cannot_be_starved_by_unowned_outbox_families",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-05",
+      "description": "Old stage iteration could authorize a send and commit content during newer iteration",
+      "status": "fixed",
+      "source": "backend/src/round_robin/worker/tasks.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_stale_iteration_delivery_cannot_authorize_or_finalize_current_work",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-06",
+      "description": "DNS worker thread start failure leaked a bounded DNS permit",
+      "status": "fixed",
+      "source": "backend/src/round_robin/providers/transport.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_dns_thread_start_failure_releases_bounded_capacity",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-07",
+      "description": "Independent audit hard requirement failure disappeared when synthesis omitted that assessment",
+      "status": "fixed",
+      "source": "backend/src/round_robin/orchestration/reporting.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_audit_hard_requirement_failure_cannot_be_lost_when_synthesis_omits_it",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-08",
+      "description": "Late definitive not-sent evidence could not reconcile an already unknown attempt",
+      "status": "fixed",
+      "source": "backend/src/round_robin/worker/tasks.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_completed_attempt_with_late_not_sent_proof_can_clear_unknown_exposure",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-09",
+      "description": "Nested NaN/Infinity usage metadata could reach PostgreSQL JSON despite valid model content",
+      "status": "fixed",
+      "source": "backend/src/round_robin/providers/http.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_nonfinite_usage_metadata_cannot_break_postgres_persistence",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-10",
+      "description": "Journal integrity comparisons accepted bool/float substitutions for integer schema, record sequence and checkpoint sequence",
+      "status": "fixed",
+      "source": "experiments/journal.py",
+      "regression": "backend/tests/test_deep_runtime_experiments.py::test_journal_integrity_rejects_boolean_or_float_substitutes_for_integer_fields",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-11",
+      "description": "Truthy string final-usage certainty could settle uncertain exposure at zero",
+      "status": "fixed",
+      "source": "experiments/runner.py",
+      "regression": "backend/tests/test_deep_runtime_experiments.py::test_untyped_final_usage_certainty_cannot_release_unknown_exposure",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-12",
+      "description": "Frozen FinishPolicy accepts more protected requests than runtime supports",
+      "status": "fixed_by_deep_evidence",
+      "source": "backend/src/round_robin/schemas/preflight.py",
+      "regression": "backend/tests/test_deep_evidence_boundaries.py::test_finish_reservation_rejects_call_counts_the_runtime_cannot_preserve",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-13",
+      "description": "Invented non-preregistered TrialSpec could authorize an extra paid trial",
+      "status": "fixed",
+      "source": "experiments/study_runner.py",
+      "regression": "backend/tests/test_deep_runtime_study.py::test_unregistered_trial_cannot_create_an_extra_paid_run",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-14",
+      "description": "Altered in-memory manifest could diverge from the approved immutable source artifact while sending",
+      "status": "fixed",
+      "source": "experiments/study_runner.py",
+      "regression": "backend/tests/test_deep_runtime_study.py::test_in_memory_manifest_must_match_the_approved_file_before_sending",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-15",
+      "description": "Lowered current operator batch-request cap did not protect remaining mandatory final-role slots",
+      "status": "fixed",
+      "source": "experiments/study_runner.py",
+      "regression": "backend/tests/test_deep_runtime_study.py::test_lowered_operator_request_cap_still_reserves_all_unfinished_final_roles",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-16",
+      "description": "Malformed preregistration human-record shapes escaped sanitized StudyBlocked handling",
+      "status": "fixed",
+      "source": "experiments/study_runner.py",
+      "regression": "backend/tests/test_deep_runtime_study.py::test_malformed_human_record_shapes_fail_as_sanitized_study_rejections",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-17",
+      "description": "Negative audit verdict and summary disappeared from blinded reviewer public output",
+      "status": "fixed",
+      "source": "experiments/study_runner.py",
+      "regression": "backend/tests/test_deep_runtime_study.py::test_negative_audit_is_visible_in_the_blinded_public_result",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-18",
+      "description": "Delayed execute message could finalize a valid retry before admission or finalize a newer generation",
+      "status": "fixed",
+      "source": "backend/src/round_robin/worker/tasks.py",
+      "regression": "backend/tests/test_deep_runtime.py::test_delayed_execute_message_cannot_finalize_a_retry_waiting_for_admission",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-19",
+      "status": "fixed",
+      "description": "Clock regression made active_elapsed and finalize freeze throw the same policy failure, preventing cancellation or terminal partial settlement until time caught up.",
+      "sources": [
+        "backend/src/round_robin/orchestration/budget.py",
+        "backend/src/round_robin/orchestration/controller.py",
+        "backend/src/round_robin/dispatcher/service.py"
+      ],
+      "regression": "backend/tests/test_deep_runtime_clock.py",
+      "fix": "Preserve known prior active_seconds; clear unmeasurable interval; persist active_clock_invalid; forbid future remaining-active/retry; dispatcher explicitly finalizes clock-invalid runs without clearing unknown money.",
+      "reproduction": "All3 new API cancel/advance/dispatcher regression cases failed before the fix.",
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "RUNTIME-20",
+      "status": "fixed",
+      "description": "Ambient Decimal precision could round supported1e12 plus18-place token cost down to a budget ceiling, lose fractional finish transfers, break under caller Inexact traps or misreport totals.",
+      "sources": [
+        "backend/src/round_robin/orchestration/budget.py",
+        "backend/src/round_robin/orchestration/controller.py",
+        "backend/src/round_robin/providers/http.py",
+        "experiments/runner.py",
+        "experiments/study_runner.py"
+      ],
+      "regression": "backend/tests/test_deep_runtime_money.py",
+      "fix": "Fresh bounded high precision contexts for ledger sums/policy arithmetic, authorization/finish transfers, final accounting and HTTP bounds/costs. Apply matching isolated contexts to experimental replay/admission/authorizations, current study policy and approval reservation arithmetic.",
+      "reproduction": "Initial suite5 failed/3 passed before context isolation; default-context cap overflow also explicitly asserted with Inexact trap disabled. Experimental direct-library cases initially4 failed/4 passed: precision1 silently changed0.019 hold to0.02 and0.15 exposure to0.1; enabled Inexact traps also broke valid authorization.",
+      "additional_regressions": [
+        "backend/tests/test_deep_runtime_experiments.py::test_journal_financial_transfers_and_caps_ignore_caller_decimal_context",
+        "backend/tests/test_deep_runtime_study.py::test_current_study_policy_exact_boundary_ignores_low_precision_callers"
+      ],
+      "review_ledger": "reviews/runtime-review.json"
+    },
+    {
+      "id": "E01",
+      "description": "retrieved hostname violated StoredEvidence origin-group ID contract",
+      "source": "backend/src/round_robin/research/fetcher.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_successful_public_research_is_readable_through_the_typed_evidence_boundary",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E02",
+      "description": "untrusted fetched NUL/search titles reached JSON evidence storage and failed PostgreSQL/snapshot boundaries",
+      "source": "backend/src/round_robin/research/service.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_untrusted_search_metadata_cannot_commit_postgresql_invalid_evidence",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E03",
+      "description": "saved runtime comparison subtotal and missing cost gaps were not tied to checked calculation",
+      "source": "backend/src/round_robin/schemas/runtime.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_saved_cost_summary_cannot_disagree_with_its_exact_calculation",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E04",
+      "description": "saved reader accepted mismatched row identity/version/cutoff and leaked TypeError for malformed scope",
+      "source": "backend/src/round_robin/reports/read_adapters.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_saved_report_reader_binds_immutable_row_identity_and_cutoff",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E05",
+      "description": "ready selected hard requirement assessments could have no supporting reference",
+      "source": "backend/src/round_robin/reports/readiness.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_ready_hard_requirement_assessments_need_a_supporting_reference",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E06",
+      "description": "inherited caller Decimal Inexact trap broke documented division rounding behavior",
+      "source": "backend/src/round_robin/research/calculator.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_division_rounding_contract_is_independent_of_callers_decimal_traps",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E07",
+      "description": "Markdown dropped recommendation conditions and next evidence responsible person/revisit date",
+      "source": "backend/src/round_robin/reports/exports.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_markdown_retains_conditions_and_action_ownership_from_saved_report",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E08",
+      "description": "concurrent first hosted logins raced insertion of same owner",
+      "source": "backend/src/round_robin/security/hosted.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_concurrent_first_logins_create_one_owner_and_two_usable_sessions",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E09",
+      "description": "restore loopback guard could be overridden by libpq routing query parameters",
+      "source": "backend/src/round_robin/operations/recovery.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_restore_destination_cannot_be_overridden_by_driver_query_parameters",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E10",
+      "description": "FinishPolicy accepted larger finishing-call reservations ignored by runtime fixed two-role protection; coordinated runtime agent finding",
+      "source": "backend/src/round_robin/schemas/preflight.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_finish_reservation_rejects_call_counts_the_runtime_cannot_preserve",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E11",
+      "description": "SQLite legacy SELECT transaction mode produced torn backup across atomic related-table update",
+      "source": "backend/src/round_robin/operations/recovery.py",
+      "status": "fixed",
+      "test": "backend/tests/test_deep_evidence_boundaries.py::test_sqlite_backup_reads_related_tables_from_one_physical_snapshot",
+      "reproduction": "Regression failed before implementation fix and passed afterward.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E12",
+      "description": "Release summary invented absent output time and grade/output binding from other record fields.",
+      "status": "fixed",
+      "source": "experiments/release.py",
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_release_cannot_invent_missing_output_time_or_grade_binding"
+      ],
+      "reproduction": "Both parameter cases failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E13",
+      "description": "Manual grades accepted boolean version, wrong-shape/blank findings and numeric reviewer identity; mutable list input could replace findings after retention.",
+      "status": "fixed",
+      "source": "experiments/evaluation.py",
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_manual_grade_requires_typed_attributable_nonblank_findings",
+        "backend/tests/test_deep_evidence_evaluation.py::test_original_grade_copies_mutable_findings_before_retaining_them"
+      ],
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E14",
+      "description": "Fixed-evidence adjudication could precede retained original reviews.",
+      "status": "fixed",
+      "source": "experiments/evaluation.py",
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_fixed_evidence_adjudication_cannot_predate_the_original_reviews"
+      ],
+      "reproduction": "Failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E15",
+      "description": "Failed repeated executions could claim complete review coverage unlike failed primaries.",
+      "status": "fixed",
+      "source": "experiments/evaluation.py",
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_failed_repeat_cannot_claim_complete_successful_review_coverage"
+      ],
+      "reproduction": "Failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E16",
+      "description": "Finite visual active observations could accumulate to infinity and break JSON summary.",
+      "status": "fixed",
+      "source": "experiments/visual_evaluation.py",
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_visual_summary_rejects_nonfinite_accumulation_of_finite_active_observations"
+      ],
+      "reproduction": "Failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E17",
+      "description": "Study task/brief identities accepted booleans or other nonstrings, violating versioned identity scope and potentially colliding when formatted.",
+      "status": "fixed",
+      "sources": [
+        "experiments/evaluation.py",
+        "experiments/release.py",
+        "experiments/visual_evaluation.py"
+      ],
+      "tests": [
+        "backend/tests/test_deep_evidence_evaluation.py::test_study_task_identities_require_nonblank_strings"
+      ],
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E18",
+      "description": "Cross-review caught unconditional SQLite BEGIN failure under PEP249 autocommit=False; guarded existing physical transaction without weakening legacy snapshot.",
+      "source": "backend/src/round_robin/operations/recovery.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_boundaries.py::test_sqlite_backup_respects_an_already_open_pep249_transaction"
+      ],
+      "reproduction": "Failed before follow-up fix; both legacy and PEP249 snapshot regressions pass.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E19",
+      "description": "Verifier accepted rival readiness despite own API/worker/dispatcher exit before readiness, immediately after readiness or during browser checks.",
+      "source": "scripts/verify.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_supervisors.py::test_verifier_cannot_accept_rival_readiness_or_ignore_owned_service_exit"
+      ],
+      "reproduction": "All9 role/timing cases failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E20",
+      "description": "Supervisor child-disappearance signal race aborted sibling cleanup, schema removal and final evidence write.",
+      "sources": [
+        "scripts/verify.py",
+        "scripts/dev.py"
+      ],
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_supervisors.py::test_verifier_cleanup_race_does_not_skip_siblings_schema_or_evidence"
+      ],
+      "reproduction": "Failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E21",
+      "description": "Verifier prototype mode could reuse stale server and service mode inherited operator durability-control destination.",
+      "source": "scripts/verify.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_supervisors.py::test_verifier_owns_browser_server_and_isolates_durability_control"
+      ],
+      "reproduction": "Failed before fix; explicit CI and disposable control namespace used.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E22",
+      "description": "Development startup readiness exhaustion entered endless monitor rather than reporting startup failure.",
+      "source": "scripts/dev.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_supervisors.py::test_development_supervisor_fails_when_api_readiness_deadline_expires"
+      ],
+      "reproduction": "Failed before fix.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E23",
+      "description": "DNS worker-start resource failure leaked bounded semaphore capacity and escaped as raw RuntimeError, permanently exhausting resolution after repeated failures.",
+      "source": "backend/src/round_robin/research/fetcher.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_dns_cli.py::test_failed_dns_thread_start_releases_capacity_and_reports_unavailable"
+      ],
+      "reproduction": "New regression failed before fix; permit is now released and failure converted to sanitized FetchUnavailable.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E24",
+      "description": "Actual source GET/list returned corrupt text/hash and content-vs-row identity/owner/run/hash mismatches as200. Report reference checks and controller owner-content validation were incomplete.",
+      "status": "fixed",
+      "sources": [
+        "backend/src/round_robin/reports/read_adapters.py",
+        "backend/src/round_robin/api/artifacts.py",
+        "backend/src/round_robin/orchestration/controller.py"
+      ],
+      "coordinated_root_sources": [
+        "backend/src/round_robin/api/events.py"
+      ],
+      "tests": [
+        "backend/tests/test_deep_evidence_source_reads.py",
+        "backend/tests/test_deep_read_routes.py"
+      ],
+      "reproduction": "Historical local probe reproduced all6 variants returning200 through both actual source HTTP endpoints. Central read_stored_evidence now validates exact typed excerpt hash and row/content/caller id,run,owner,meeting,sha bindings; reports validate only named evidence at original cutoff. Source/report/snapshot reads and exports fail safely without data rewrites or provider operations.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "E25",
+      "description": "Malformed content.committed event payload/list or nonstring/blank step identity escaped historical reconstruction guard or was silently accepted. New run readiness reads could500 and hide terminal state.",
+      "source": "backend/src/round_robin/reports/read_adapters.py",
+      "status": "fixed",
+      "tests": [
+        "backend/tests/test_deep_evidence_source_reads.py::test_malformed_committed_event_keeps_run_readable_and_saved_assessment_unavailable",
+        "backend/tests/test_deep_evidence_source_reads.py::test_historical_committed_event_without_step_identity_retains_prior_ignored_semantics"
+      ],
+      "reproduction": "Six invalid actual HTTP cases failed before fix; two absent/None legacy cases passed. Guarded dict/identity reconstruction now returns sanitized unavailable assessment while run remains readable and records/spend unchanged.",
+      "review_ledger": "reviews/evidence-review.json"
+    },
+    {
+      "id": "V01",
+      "description": "Malformed successful image JSON escaped as AttributeError instead of typed invalid_image_result preserving provider request ID.",
+      "source": "backend/src/round_robin/providers/images.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_image_malformed_success_is_typed_private_and_never_retried",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V02",
+      "description": "Generation packet omitted the user supplied targeted intent, while saved provenance misleadingly retained it.",
+      "source": "backend/src/round_robin/worker/image_tasks.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_generation_intent_reaches_the_exact_once_funded_provider_packet",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V03",
+      "description": "Native renderer receipts could claim passed actions with skipped, unavailable or failed assertions; network attempt totals did not bind recorded attempts.",
+      "source": "backend/src/round_robin/visual/renderers/interface.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_native_receipt_cannot_skip_or_contradict_requested_assertion",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V04",
+      "description": "Visual reducer restored fractional/boolean authority counters and unsupported operation kinds, which could bypass shared call counters.",
+      "source": "backend/src/round_robin/visual/iterations.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_corrupt_visual_journal_cannot_restore_execution_authority",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V05",
+      "description": "Native revision conflicts left original command pending and byte hold reserved; publication and sources were not protected by a savepoint preserving terminal failure accounting.",
+      "source": "backend/src/round_robin/api/visual.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_native_conflict_releases_hold_and_terminalizes_original_receipt",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V06",
+      "description": "Failed native source publication could leave orphaned private pixel/source files after rollback; cleanup now preserves every previously committed artifact.",
+      "source": "backend/src/round_robin/visual/service.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_native_source_failure_rolls_back_pixels_and_removes_only_new_orphans",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V07",
+      "description": "Text upload disconnect raised an unhandled ClientDisconnect and left temporary receipt/storage accounting unresolved.",
+      "source": "backend/src/round_robin/api/artifacts.py",
+      "test": "backend/tests/test_deep_visual_boundaries.py::test_disconnected_text_upload_records_terminal_failure_without_retaining_private_bytes",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V08",
+      "description": "Visual reopening retained a previous native source while a new source read was pending or failed; failure was silently ignored.",
+      "source": "frontend/app/design/workspace.tsx",
+      "test": "tests/e2e/deep_visual.spec.ts::failed source reopening clears previous source and exposes an accessible recoverable error",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V09",
+      "description": "Expired or changed owner access left old private draft/candidate/history/source on screen and cached identity could continue a captured action. Session generation, explicit owner refresh and private state clearing now prevent this.",
+      "source": "frontend/app/api-client.ts",
+      "test": "tests/e2e/deep_visual.spec.ts::a changed account cannot send the previous account's captured visual action",
+      "status": "fixed",
+      "reproduction": "Python V01\u2013V05 produced19 failing parametrized regressions before fixes; V07 independently failed before fix. Browser source/privacy regressions verify the resulting boundaries.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "V10",
+      "description": "A real Playwright remaining-budget TimeoutError could reject before the runner watchdog set expired; catch then canceled the watchdog and incorrectly emitted render_failed/exit1 instead of deadline timeout. The outer catch now classifies only uncaught Playwright TimeoutError as expiration; per-action timeouts retain failed-check behavior.",
+      "source": "scripts/native-renderer.mjs",
+      "test": "backend/tests/integration/test_native_renderer.py::test_actual_playwright_deadline_wins_before_a_delayed_watchdog_and_stays_a_timeout",
+      "status": "fixed",
+      "reproduction": "Actual Docker+Chromium deterministic delayed-watchdog regression failed against old image with NativeRendererError in1.66s; after fix/rebuild the exact test produced sanitized render_timeout/exit124. Existing deadline test remained unchanged.",
+      "review_ledger": "reviews/visual-review.json"
+    },
+    {
+      "id": "CROSS-RUNTIME-01",
+      "status": "fixed_by_deep_evidence_and_cross_verified",
+      "source": "backend/src/round_robin/operations/recovery.py",
+      "description": "Unconditional SQLite BEGIN fails for a Python3.12 sqlite connection configured autocommit=False (already physical transaction), producing OperationalError and falsely marking durability compromised.",
+      "reproduction": "Temporary SQLite engine with connect_args={\"autocommit\":False}; Base.metadata.create_all(engine); backup(engine, temporary artifacts/archive/deletion manifest).",
+      "observed": "OperationalError (sqlite3.OperationalError) cannot start a transaction within a transaction; durability compromised warning.",
+      "recommended_fix": "Issue BEGIN only when connection.connection.driver_connection.in_transaction is false. Retain one-snapshot test for legacy mode and add modern transaction-mode regression.",
+      "coordination": "Reported to root and deep_evidence; no source changes by this reviewer.",
+      "regression": "backend/tests/test_deep_evidence_boundaries.py::test_sqlite_backup_respects_an_already_open_pep249_transaction",
+      "review_ledger": "reviews/runtime-cross-review.json"
+    },
+    {
+      "id": "CROSS-RUNTIME-02",
+      "source": "backend/src/round_robin/reports/read_adapters.py",
+      "status": "fixed_by_deep_evidence_and_cross_reviewed",
+      "description": "New run_view report validation exposed malformed content.committed payload parsing outside the sanitizing try; list payload raised AttributeError and list step_id raised unhashable TypeError, making run/Stop reads fail.",
+      "reproduction": "Independent temporary API fixture added content.committed seq2 within report cutoff9 with payload=[]; GET /api/runs/{id} raised AttributeError before fix.",
+      "fix": "Move event/default reconstruction inside guarded parsing; reject nondict payload and nonstring/blank step ID as UnreadableReport; preserve absent/None legacy behavior.",
+      "regressions": [
+        "backend/tests/test_deep_evidence_source_reads.py::test_malformed_committed_event_keeps_run_readable_and_saved_assessment_unavailable",
+        "backend/tests/test_deep_evidence_source_reads.py::test_historical_committed_event_without_step_identity_retains_prior_ignored_semantics"
+      ],
+      "coordination": "Reported root and evidence agent; no source/test edits by this cross-reviewer.",
+      "review_ledger": "reviews/runtime-cross-review.json"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "saved_currency": "EUR",
+  "rendered_budget_label": "Budget (USD)",
+  "invalid_before_switch": "Use at most eight public terms, each no longer than 120 characters.",
+  "new_meeting_public_terms": "",
+  "validation_error_after_switch": "Use at most eight public terms, each no longer than 120 characters.",
+  "new_form_valid": false
+}

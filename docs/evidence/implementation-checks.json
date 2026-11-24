@@ -1,0 +1,208 @@
+{
+  "recorded_at_utc": "2026-11-16T12:54:29.066845+00:00",
+  "scope": "Phase-by-phase implementation; simulated product execution and bounded disposable services",
+  "service_profile": true,
+  "native_profile": true,
+  "docker_broker_fault_profile": true,
+  "phase_or_release_gates_passed": false,
+  "live_provider_calls": 0,
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Darwin",
+    "machine": "arm64"
+  },
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 20.566,
+      "output": "...ssssssssssssssss..................................................... [ 18%]\n........................................................................ [ 37%]\n.....sssss.............................................................. [ 55%]\n........................................................................ [ 74%]\n........................................................................ [ 92%]\n.............................                                            [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  <workspace>/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5\n  <workspace>/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.\n    from ._compat import httpx2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] backend/tests/integration/test_broker_recovery.py:50: Broker restart faults require the explicit disposable Docker profile\nSKIPPED [1] backend/tests/integration/test_image_processes.py:116: Requires explicit disposable PostgreSQL/Redis process profile\nSKIPPED [1] backend/tests/integration/test_image_processes.py:141: Requires explicit disposable PostgreSQL/Redis process profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:33: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:59: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:72: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:111: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:55: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:69: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:80: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:92: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:108: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_api.py:127: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission\nSKIPPED [1] backend/tests/integration/test_postgres_restore.py:25: Full PostgreSQL restore requires the explicit disposable loopback test profile\nSKIPPED [1] backend/tests/integration/test_worker_processes.py:102: requires explicit disposable PostgreSQL/Redis process profile\nSKIPPED [1] backend/tests/integration/test_worker_processes.py:128: requires explicit disposable PostgreSQL/Redis process profile\nSKIPPED [1] backend/tests/test_fetcher_transport.py:138: Real TLS transport checks require the explicit loopback-only test profile\nSKIPPED [2] backend/tests/test_fetcher_transport.py:151: Real TLS transport checks require the explicit loopback-only test profile\nSKIPPED [1] backend/tests/test_fetcher_transport.py:164: Real TLS transport checks require the explicit loopback-only test profile\nSKIPPED [1] backend/tests/test_fetcher_transport.py:173: Real TLS transport checks require the explicit loopback-only test profile\n368 passed, 21 skipped, 2 warnings in 19.31s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "round_robin.export_contracts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.798,
+      "output": "Authoritative fixture contracts match committed outputs.\n<workspace>/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.\n  from ._compat import httpx2\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check_client.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.941,
+      "output": "Generated TypeScript contract matches.\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.evaluation",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.055,
+      "output": "{\n  \"status\": \"draft_fictional_not_frozen\",\n  \"task_count\": 16,\n  \"trials_per_workflow\": 26,\n  \"total_trials\": 78,\n  \"dataset_fingerprint\": \"e2dc6067f3d4193b5a7b0a0689bcec469f8052f34395fecd78e5d77d7b8a814a\",\n  \"paid_access_enabled\": false,\n  \"phase_passed\": false\n}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/scenario_summary.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.548,
+      "output": "# Scenario implementation inventory\n\n88 core and 12 visual requirements retained. No scenario or phase is declared passed.\n\nPending: 1. Partial implementation/test slices: 99.\n\n| Earliest phase | Requirements | Pending | Partial implementation/test slices |\n| --- | ---: | ---: | ---: |\n| 0B | 17 | 0 | 17 |\n| 1 | 20 | 0 | 20 |\n| 2 | 28 | 0 | 28 |\n| 3 | 13 | 1 | 12 |\n| 4 | 4 | 0 | 4 |\n| 5 | 3 | 0 | 3 |\n| 6 | 3 | 0 | 3 |\n| 7 | 5 | 0 | 5 |\n| 8 | 7 | 0 | 7 |\n\nPartial entries cover only their named unit, browser, mocked-provider and actual-process assertions.\nFull scenario invariants, remaining fault combinations, real-provider/human validation and phase\ngates remain pending. The 14 core combined-failure cases\nremain obligations in FAILURE_HANDLING.md and are not counted as new scenario IDs.\n\n11 requirements also retain their original fictional-prototype references.\nThose preparation references remain distinct from later durable API/process/browser evidence.\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.015,
+      "output": "\n> round-robin-workspace@0.1.0 typecheck <workspace>\n> pnpm --filter @round-robin/web typecheck\n\n\n> @round-robin/web@0.1.0 typecheck <workspace>/frontend\n> tsc --noEmit\n\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 9.41,
+      "output": "\n> round-robin-workspace@0.1.0 build <workspace>\n> pnpm --filter @round-robin/web build\n\n\n> @round-robin/web@0.1.0 build <workspace>/frontend\n> NEXT_TELEMETRY_DISABLED=1 next build --webpack\n\n\u25b2 Next.js 16.4.6 (webpack)\n\u2713 Running next.config.ts took 64ms\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 1712ms\n  Running TypeScript ...\n  Finished TypeScript in 1382ms ...\n  Collecting page data using 6 workers ...\n  Generating static pages using 6 workers (0/5) ...\n  Generating static pages using 6 workers (1/5) \n  Generating static pages using 6 workers (2/5) \n  Generating static pages using 6 workers (3/5) \n\u2713 Generating static pages using 6 workers (5/5) in 417ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n\u250c \u25cb /\n\u251c \u25cb /_not-found\n\u251c \u25cb /design\n\u2514 \u25cb /live\n\n\n\u25cb  (Static)  prerendered as static content\n\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "<disposable-verification-directory>/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.07,
+      "output": "{\"authorized_simulated_attempts\": 5, \"batch_id\": \"verification-001\", \"deployment_daily_exposure_usd\": \"0.05\", \"deployment_monthly_exposure_usd\": \"0.05\", \"journal_events\": 14, \"live_provider_calls\": 0, \"mode\": \"simulation_only\", \"phase_0_gate_passed\": false, \"replayed_without_execution\": false, \"run_id\": \"run-0f526fb8adb0e60b8a1658fc\", \"simulated\": true, \"spending_locked\": false, \"unsettled_attempt_ids\": []}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "<disposable-verification-directory>/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.052,
+      "output": "{\"authorized_simulated_attempts\": 5, \"batch_id\": \"verification-001\", \"deployment_daily_exposure_usd\": \"0.05\", \"deployment_monthly_exposure_usd\": \"0.05\", \"journal_events\": 14, \"live_provider_calls\": 0, \"mode\": \"simulation_only\", \"phase_0_gate_passed\": false, \"replayed_without_execution\": true, \"run_id\": \"run-0f526fb8adb0e60b8a1658fc\", \"simulated\": true, \"spending_locked\": false, \"unsettled_attempt_ids\": []}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "backend/tests/integration",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 22.074,
+      "output": "...ssss.........                                                         [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  <workspace>/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5\n  <workspace>/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.\n    from ._compat import httpx2\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n=========================== short test summary info ============================\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:33: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:59: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:72: Actual native browser execution requires an explicitly enabled Docker test profile\nSKIPPED [1] backend/tests/integration/test_native_renderer.py:111: Actual native browser execution requires an explicitly enabled Docker test profile\n12 passed, 4 skipped, 2 warnings in 21.56s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "backend/tests/test_fetcher_transport.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.108,
+      "output": ".....                                                                    [100%]\n5 passed in 0.94s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "alembic",
+        "upgrade",
+        "head"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.42,
+      "output": "INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> f973196b6714, initial_application\nINFO  [alembic.runtime.migration] Running upgrade f973196b6714 -> a41e349d12ac, Append-only submitted and confirmed brief history.\nINFO  [alembic.runtime.migration] Running upgrade a41e349d12ac -> c6917df240ab, Optional immutable visual sessions, versions, reviews and operations.\nINFO  [alembic.runtime.migration] Running upgrade c6917df240ab -> d1260b7f94de, Freeze nonsecret operator visual configuration with each design.\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "alembic",
+        "check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.371,
+      "output": "No new upgrade operations detected.\nINFO  [alembic.runtime.migration] Context impl PostgresqlImpl.\nINFO  [alembic.runtime.migration] Will assume transactional DDL.\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.schemas\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.tables\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.types\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.constraints\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.defaults\nINFO  [alembic.runtime.plugins] setting up autogenerate plugin alembic.autogenerate.comments\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "test:e2e"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 36.741,
+      "output": "\n> round-robin-workspace@0.1.0 test:e2e <workspace>\n> playwright test\n\n\nRunning 20 tests using 2 workers\n\n  \u2713   1 [chromium] \u203a tests/e2e/prototype.spec.ts:23:1 \u203a sample passages, exact calculations, keyboard dialog and immutable JSON export (556ms)\n  \u2713   3 [chromium] \u203a tests/e2e/prototype.spec.ts:70:1 \u203a custom draft saves without presenting an unrelated report and opt-in storage restores (478ms)\n  \u2713   4 [chromium] \u203a tests/e2e/prototype.spec.ts:96:1 \u203a changed horizon creates a linked walkthrough and preserves the original report (4.2s)\n  \u2713   2 [chromium] \u203a tests/e2e/live.spec.ts:81:1 \u203a server-saved comparison reopens, inspects exact evidence and exports its saved version (5.3s)\n  \u2713   5 [chromium] \u203a tests/e2e/prototype.spec.ts:127:1 \u203a unknown installation retains unknown total and conditional readiness (4.2s)\n  \u2713   7 [chromium] \u203a tests/e2e/prototype.spec.ts:153:1 \u203a partial result does not invent a recommendation or readiness (404ms)\n  \u2713   6 [chromium] \u203a tests/e2e/live.spec.ts:121:1 \u203a lost Start response retains its UUID and reconciles without a second review (4.8s)\n  \u2713   8 [chromium] \u203a tests/e2e/prototype.spec.ts:172:1 \u203a cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon (1.7s)\n  \u2713  10 [chromium] \u203a tests/e2e/prototype.spec.ts:198:1 \u203a expired preflight cannot start a new simulated review (297ms)\n  \u2713  11 [chromium] \u203a tests/e2e/prototype.spec.ts:212:1 \u203a narrow viewport reflows and tabs support arrow-key navigation (207ms)\n  \u2713  12 [chromium] \u203a tests/e2e/visual.spec.ts:80:1 \u203a canonical original remains honestly unreviewed, selectable and bounded behind preflight (624ms)\n  \u2713  13 [chromium] \u203a tests/e2e/visual.spec.ts:97:1 \u203a structured native source produces immutable editable pixels without an image provider (537ms)\n  \u2713   9 [chromium] \u203a tests/e2e/live.spec.ts:144:1 \u203a changed-input follow-up preserves the original report (10.7s)\n  \u2713  14 [chromium] \u203a tests/e2e/live.spec.ts:166:1 \u203a unknown cost stays unknown and narrow layout remains keyboard operable (5.5s)\n  \u2713  15 [chromium] \u203a tests/e2e/live.spec.ts:181:1 \u203a Stop remains unconfirmed until acknowledgement and preserves saved partial work (2.7s)\n  \u2713  16 [chromium] \u203a tests/e2e/live.spec.ts:205:1 \u203a actual CORS text upload freezes only selected ready bytes in preflight (731ms)\n  \u2713  17 [chromium] \u203a tests/e2e/live.spec.ts:226:1 \u203a debounced draft save preserves edits made while an older acknowledgement is delayed (3.6s)\n  \u2713  18 [chromium] \u203a tests/e2e/live.spec.ts:252:1 \u203a unconfirmed private autosave retains a noncontent receipt and reconciles after reload (1.5s)\n  \u2713  19 [chromium] \u203a tests/e2e/live.spec.ts:276:1 \u203a configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it (542ms)\n  \u2713  20 [chromium] \u203a tests/e2e/live.spec.ts:291:1 \u203a expired hosted access offers sign-in without replaying any saved action (228ms)\n\n  20 passed (36.3s)\n(node:23151) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:23150) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "docker",
+        "image",
+        "inspect",
+        "round-robin-native-renderer:local",
+        "--format",
+        "{{.Id}}"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.044,
+      "output": "sha256:567bcb1ce93e15338f2aba158dc149a0676fc8cc5a89ade958b241d829847343\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "backend/tests/integration/test_native_renderer.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 6.223,
+      "output": "....                                                                     [100%]\n4 passed in 6.03s\n"
+    }
+  ],
+  "all_checks_passed": true
+}

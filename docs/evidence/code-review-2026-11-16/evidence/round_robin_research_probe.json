@@ -1,0 +1,17 @@
+{
+  "provider_config_schema_valid": true,
+  "active_limit": 200,
+  "finish_reserved": 50,
+  "errors": [
+    "finish_time_reserve",
+    "finish_time_reserve"
+  ],
+  "run_status": "running",
+  "stage": "proposals",
+  "research_state": "pending",
+  "remaining_active_seconds": 199.942723,
+  "reconciler_progressed": false,
+  "proposal_steps": 0,
+  "search_calls": 0,
+  "external_provider_requests": 0
+}

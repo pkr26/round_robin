@@ -1,0 +1,8 @@
+
+> round-robin-workspace@0.1.0 typecheck /Users/pradeepreddy/Desktop/round_robin
+> pnpm --filter @round-robin/web typecheck
+
+
+> @round-robin/web@0.1.0 typecheck /Users/pradeepreddy/Desktop/round_robin/frontend
+> tsc --noEmit
+

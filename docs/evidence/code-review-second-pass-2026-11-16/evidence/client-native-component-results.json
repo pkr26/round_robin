@@ -1,0 +1,15 @@
+{
+  "first_render_actions": [
+    {
+      "action": "click",
+      "selector": "#submit",
+      "assertion": {
+        "selector": "#result",
+        "text": "Saved"
+      }
+    }
+  ],
+  "actions_editor_after_success": "[]",
+  "second_render_actions": [],
+  "second_render_html": "<button id=\"submit\">Submit</button><p id=\"result\">Waiting</p>"
+}

@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-17",
+  "source_files_checked": 116,
+  "source_files_changed": [],
+  "original_audit_evidence_changed": [],
+  "prior_findings_covered": 17,
+  "evidence_reproductions": 6,
+  "runtime_reproductions": 2,
+  "visual_transport_recheck": {
+    "mock_requests": 3,
+    "assertions_passed": true
+  },
+  "fresh_probe_commands_exit_codes": [
+    0,
+    0,
+    0
+  ],
+  "full_suites_rerun": false,
+  "product_implementation": "pending",
+  "provider_network_calls": 0,
+  "note": "Assertions reproduce existing behavior; they are not proof of fixed implementations or improved real-model quality."
+}

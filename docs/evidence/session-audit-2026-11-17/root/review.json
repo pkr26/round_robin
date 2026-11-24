@@ -1,0 +1,143 @@
+{
+  "scope": "Frontend session additions, generated contracts, regression-test boundaries, audit/design/repair records and evidence tooling",
+  "product_source_modified": false,
+  "findings": [
+    {
+      "id": "SESSION-UI01",
+      "priority": "P1",
+      "title": "Activity pagination failure hides Stop and an otherwise available report",
+      "session_relation": "New history pagination delays publishing the entire snapshot until every event page loads.",
+      "source_refs": [
+        "frontend/app/live-workspace.tsx:298-319",
+        "frontend/app/live-workspace.tsx:117-120",
+        "frontend/app/live-workspace.tsx:592"
+      ],
+      "trigger": "Open/reopen a run with more than100 events. GET snapshot succeeds, but a subsequent events-page request fails.",
+      "actual": "setSnapshot is after the pagination loop. On first load currentRun remains null, so running is false and Stop is absent; a valid completed report likewise has no export controls. Every retry starts the same coupled read.",
+      "impact": "An activity-only outage can remove cancellation controls while authorized work continues, or prevent access to an already available result.",
+      "proof": "root/frontend-audit.test.tsx first two probes; root/frontend-probes-final.log (3 reproduced-behavior assertions passed). Independently source-reviewed by runtime reviewer.",
+      "recommendation": "Publish validated run/report state immediately. Load activity pages in a separate generation-fenced state with its own loading/error/retry controls; retain Stop and saved-result access independently of history completeness.",
+      "caveat": "The Stop endpoint remains available; a previously displayed snapshot is retained. This specifically affects first/reopen loading and the new pagination dependency, not every network outage."
+    },
+    {
+      "id": "SESSION-UI02",
+      "priority": "P2",
+      "title": "A transient assessment-read failure silently removes the attestation workflow",
+      "session_relation": "The new scoped-assessment effect swallows errors and has no dedicated retry state.",
+      "source_refs": [
+        "frontend/app/live-workspace.tsx:159-168"
+      ],
+      "trigger": "A terminal live report loads successfully, but its one GET /assessments fails temporarily.",
+      "actual": "The catch does nothing; targets remain empty and the attestation section is not rendered. Switching Evidence/Overview does not retry because only runId/report.id drive the effect.",
+      "impact": "The advertised verification/readiness path disappears without telling the user why or offering recovery. Reload or a changed report identity is needed.",
+      "proof": "root/frontend-audit.test.tsx third probe: assessment request observed once, form/error absent, tab switches do not retry.",
+      "recommendation": "Represent loading/error/unsupported/success states for assessment targets and expose an explicit read retry without clearing typed input or resubmitting inference.",
+      "caveat": "No false attestation or extra paid request occurs; this is a recoverability/availability defect."
+    },
+    {
+      "id": "SESSION-TOOL01",
+      "priority": "P2",
+      "title": "Repair record generation can rebind old green logs to changed, invalid source",
+      "session_relation": "New finalize.py creates the completion claims and source/evidence manifests from independently read text logs.",
+      "source_refs": [
+        "docs/evidence/algorithm-fixes-2026-11-17/finalize.py:15-24",
+        "docs/evidence/algorithm-fixes-2026-11-17/finalize.py:47-69"
+      ],
+      "trigger": "Keep previous successful logs, change source afterward, then run finalize.py again.",
+      "actual": "The generator parses successful-looking text, marks all17 rows verified and then hashes current source. It does not require matching test-start input hashes or check process exit receipts. In a temporary copy, invalid Python is rebound to2014 passing tests and all17 verified closures. The generated report also claims evaluation/scenario checks passed although their logs were absent from that temporary copy.",
+      "impact": "Future reports can certify code that the recorded commands never tested; a matching current source-manifest then appears to substantiate stale results.",
+      "proof": "root/probe_record_binding.py; root/record-binding-results.json. Actual existing logs and copied source were used; only the temporary copy was mutated.",
+      "recommendation": "Capture command, exit status, profile and immutable input manifest at execution start. Check the same inputs at completion and consume those bound receipts in finalization; reject missing/stale checks before writing closures. Keep source hashes separate from a claim that those sources were executed.",
+      "caveat": "The current2014/250 totals were independently rerun successfully in this audit. This demonstrates stale-log rebinding in the reporting tool, not that the original current totals were fabricated or that hashes can resist an operator rewriting every artifact."
+    }
+  ],
+  "inventory": [
+    {
+      "name": "Snapshot/event pagination and sequence merge",
+      "source": "frontend/app/live-workspace.tsx:292-329",
+      "status": "SESSION-UI01; cutoff/dedup/generation protections reviewed"
+    },
+    {
+      "name": "Cancellation and saved-report access during reads",
+      "source": "frontend/app/live-workspace.tsx:117-120,298-319",
+      "status": "SESSION-UI01"
+    },
+    {
+      "name": "Assessment target loading and recovery",
+      "source": "frontend/app/live-workspace.tsx:159-168",
+      "status": "SESSION-UI02"
+    },
+    {
+      "name": "Scoped attestation submission and command receipt",
+      "source": "frontend/app/live-workspace.tsx:537-549; frontend/app/api-client.ts:189-270",
+      "status": "Exact target hash/version/references submitted; no new mutation-scope defect observed"
+    },
+    {
+      "name": "Intake suggestion display, editor copy and confirmation",
+      "source": "frontend/app/live-workspace.tsx:431-451; backend/src/round_robin/schemas/views.py",
+      "status": "Suggestions require explicit confirmation; no new local defect observed"
+    },
+    {
+      "name": "Complete issue/event UI and readiness dimensions",
+      "source": "frontend/app/live-workspace.tsx:523-525",
+      "status": "UI renders saved events; underlying freshness/version defects in evidence review"
+    },
+    {
+      "name": "Evidence coverage and inherited claim scope labels",
+      "source": "frontend/app/live-workspace.tsx:182-185,592",
+      "status": "Heuristic passage scope and attributed claim support remain qualified; no new local defect observed"
+    },
+    {
+      "name": "Visual candidate, supplement and regression display",
+      "source": "frontend/app/design/workspace.tsx:201-214",
+      "status": "Separate reviewer/completeness/blocker display reviewed; backend envelope defects in evaluation review"
+    },
+    {
+      "name": "Generated Python JSON and browser TypeScript contracts",
+      "source": "contracts/*.json; packages/api-client/src/{schema,application}.ts",
+      "status": "Fresh contracts:check and TypeScript check passed"
+    },
+    {
+      "name": "New regression tests and modified fixture rationale",
+      "source": "backend/tests/test_algorithm_*.py; backend/tests/test_runtime_algorithm_fixes.py; frontend/tests/live-workspace.test.tsx; domain closure records",
+      "status": "Existing controls remain exercised; missing adversarial cases reproduced, no passing-test count treated as correctness proof"
+    },
+    {
+      "name": "Initial audit inventory/report/reproducer artifacts",
+      "source": "docs/evidence/algorithm-audit-2026-11-17",
+      "status": "Historical evidence hashes preserved; inventories are responsibilities rather than unique formal algorithms"
+    },
+    {
+      "name": "Improvement design, literature scope and closure plan",
+      "source": "docs/evidence/algorithm-improvement-2026-11-17",
+      "status": "Prospective claims retained; empirical superiority remains explicitly unestablished"
+    },
+    {
+      "name": "Repair finalizer, hashes and completion claims",
+      "source": "docs/evidence/algorithm-fixes-2026-11-17/finalize.py; README.md",
+      "status": "SESSION-TOOL01; root input manifest matches current287 files; blanket completion claim superseded by this audit"
+    },
+    {
+      "name": "Audit probes, disposable inputs and source preservation",
+      "source": "docs/evidence/session-audit-2026-11-17/root",
+      "status": "Counterexample assertions record existing faulty behavior; no product/history edits or provider calls"
+    }
+  ],
+  "validation": {
+    "frontend_audit_probes": 3,
+    "record_binding_probes": 1,
+    "source_inputs_checked": 287,
+    "source_changes_since_repairs": [],
+    "full_backend": "2014 passed,43 skipped,16 warnings",
+    "frontend": "250 passed",
+    "contracts": "passed",
+    "typecheck": "passed",
+    "build": "passed"
+  },
+  "limits": [
+    "No new funded model evaluation or hosted/native service run.",
+    "A prototype-browser test validates sample journeys, not all new live endpoints; this audit adds real component counterexamples and the evidence lane adds an API freshness proof.",
+    "New probe files live under audit evidence and are outside the ordinary test-suite glob; their passing assertions reproduce defects rather than establish repaired behavior.",
+    "The evidence lane's earlier closures.json contains a stale subordinate claims.py hash; the later root repair manifest includes the correct current file. This does not change the independently verified current root manifest."
+  ]
+}

@@ -1,0 +1,1553 @@
+{
+  "recorded_at_utc": "2026-11-16T17:41:06.883186+00:00",
+  "scope": "Fresh local native-renderer OS/Node/embedded-Go vulnerability inventory and supported-base remediation; no deployment. All remaining matches stay visible.",
+  "result": "OPEN upstream limitations: 40 OS package/advisory matches, 27 unique CVEs; 34 Ubuntu MEDIUM and 6 Ubuntu LOW; no vendor FixedVersion. Final Node package inventory has zero indexed advisories.",
+  "scanner": {
+    "name": "Trivy",
+    "version": "0.76.2",
+    "official_release": "https://github.com/aquasecurity/trivy/releases/tag/v0.76.2",
+    "host_platform": "macOS ARM64",
+    "integrity": "Downloaded official release asset and checked its SHA-256 against official checksums and GitHub release asset digest.",
+    "binary": {
+      "path": ".local/exhaustive-audit/container-scan/trivy",
+      "sha256": "7a15c426f963473a485a4f315e21f8e2c881269d500bf0de35da13a4421fa108",
+      "bytes": 168530818
+    },
+    "archive": {
+      "path": ".local/exhaustive-audit/container-scan/trivy_0.76.2_macOS-ARM64.tar.gz",
+      "sha256": "ae7ea358326960406b703c77b2ac490190797d80b306b5b50c2a27221da0a5b8",
+      "bytes": 49840394
+    },
+    "database": {
+      "Version": 2,
+      "NextUpdate": "2026-11-17T13:03:44.830426014Z",
+      "UpdatedAt": "2026-11-16T13:03:44.830426244Z",
+      "DownloadedAt": "2026-11-16T17:21:06.278712Z"
+    },
+    "db_download_command": [
+      ".local/exhaustive-audit/container-scan/trivy",
+      "image",
+      "--download-db-only",
+      "--disable-telemetry",
+      "--skip-version-check",
+      "--db-repository",
+      "ghcr.io/aquasecurity/trivy-db:2",
+      "--cache-dir",
+      ".local/exhaustive-audit/container-scan/cache",
+      "--timeout",
+      "3m"
+    ],
+    "scan_command_template": [
+      ".local/exhaustive-audit/container-scan/trivy",
+      "image",
+      "--scanners",
+      "vuln",
+      "--detection-priority",
+      "comprehensive",
+      "--offline-scan",
+      "--skip-db-update",
+      "--skip-java-db-update",
+      "--skip-check-update",
+      "--skip-version-check",
+      "--skip-vex-repo-update",
+      "--disable-telemetry",
+      "--image-src",
+      "docker",
+      "--docker-host",
+      "unix:///Users/pradeepreddy/.colima/default/docker.sock",
+      "--ignorefile",
+      "",
+      "--cache-dir",
+      ".local/exhaustive-audit/container-scan/cache",
+      "--timeout",
+      "5m",
+      "--format",
+      "json",
+      "--output",
+      "<evidence file>",
+      "<immutable image ID>"
+    ],
+    "privacy": "Only official tool/base-image/CVE database and public vendor metadata downloads; scans use the local Docker image by immutable ID. No image/private source upload service; telemetry, remote fallback and dependency-resolution lookups disabled.",
+    "filtering": "No severity filter, ignore-unfixed flag, suppression file or package metadata removal. An empty --ignorefile disables repository ignore-file discovery."
+  },
+  "images": [
+    {
+      "label": "before",
+      "image_id": "sha256:76d41895473508582775357220feb0180b224b8680041b9d93e903c3c2d5ca88",
+      "os": {
+        "Family": "ubuntu",
+        "Name": "24.04"
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/container-scan/renderer-vulnerabilities.json",
+        "sha256": "fea99d48374a934ed54bd7037d3b788240e974341d9b089edb7f7ba7191b04bf",
+        "bytes": 3877187
+      },
+      "results": [
+        {
+          "target": "sha256:76d41895473508582775357220feb0180b224b8680041b9d93e903c3c2d5ca88 (ubuntu 24.04)",
+          "type": "ubuntu",
+          "packages": 511,
+          "package_advisory_matches": 652,
+          "unique_advisories": 177,
+          "severity": {
+            "MEDIUM": 604,
+            "HIGH": 2,
+            "LOW": 46
+          },
+          "matches_with_fixed_version": 0
+        },
+        {
+          "target": "Node.js",
+          "type": "node-pkg",
+          "packages": 147,
+          "package_advisory_matches": 19,
+          "unique_advisories": 19,
+          "severity": {
+            "HIGH": 6,
+            "MEDIUM": 12,
+            "LOW": 1
+          },
+          "matches_with_fixed_version": 19
+        }
+      ]
+    },
+    {
+      "label": "ubuntu26_candidate",
+      "image_id": "sha256:948434c7cfced1211ffe2551d8544435a79249da42a0c8d0c376bfd0d3848c63",
+      "os": {
+        "Family": "ubuntu",
+        "Name": "26.04"
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/container-scan/hardened-vulnerabilities.json",
+        "sha256": "2db2925069c72725a64348cd533420bbc936218f8efe859d23a8571caebb39c6",
+        "bytes": 839307
+      },
+      "results": [
+        {
+          "target": "sha256:948434c7cfced1211ffe2551d8544435a79249da42a0c8d0c376bfd0d3848c63 (ubuntu 26.04)",
+          "type": "ubuntu",
+          "packages": 176,
+          "package_advisory_matches": 40,
+          "unique_advisories": 27,
+          "severity": {
+            "MEDIUM": 34,
+            "LOW": 6
+          },
+          "matches_with_fixed_version": 0
+        },
+        {
+          "target": "Node.js",
+          "type": "node-pkg",
+          "packages": 2,
+          "package_advisory_matches": 0,
+          "unique_advisories": 0,
+          "severity": {},
+          "matches_with_fixed_version": 0
+        },
+        {
+          "target": "usr/bin/pebble",
+          "type": "gobinary",
+          "packages": 11,
+          "package_advisory_matches": 1,
+          "unique_advisories": 1,
+          "severity": {
+            "UNKNOWN": 1
+          },
+          "matches_with_fixed_version": 1
+        }
+      ]
+    },
+    {
+      "label": "debian13_alternative",
+      "image_id": "sha256:edfb67d958e0d3c8cc914f7e0162295b0e4b79dd9c8f887a3364ed0bc2c644ce",
+      "os": {
+        "Family": "debian",
+        "Name": "13.7"
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/container-scan/debian-vulnerabilities.json",
+        "sha256": "da567eea3cd9222c223d51c939c1ecd8cf4319abce9eade12e73611170dbc68c",
+        "bytes": 1896853
+      },
+      "results": [
+        {
+          "target": "sha256:edfb67d958e0d3c8cc914f7e0162295b0e4b79dd9c8f887a3364ed0bc2c644ce (debian 13.7)",
+          "type": "debian",
+          "packages": 166,
+          "package_advisory_matches": 450,
+          "unique_advisories": 228,
+          "severity": {
+            "LOW": 125,
+            "HIGH": 121,
+            "MEDIUM": 191,
+            "UNKNOWN": 12,
+            "CRITICAL": 1
+          },
+          "matches_with_fixed_version": 0
+        },
+        {
+          "target": "Node.js",
+          "type": "node-pkg",
+          "packages": 2,
+          "package_advisory_matches": 0,
+          "unique_advisories": 0,
+          "severity": {},
+          "matches_with_fixed_version": 0
+        }
+      ]
+    },
+    {
+      "label": "final",
+      "image_id": "sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b",
+      "os": {
+        "Family": "ubuntu",
+        "Name": "26.04"
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/container-scan/final-vulnerabilities.json",
+        "sha256": "93de9b5f0ddd89f12c3d9d1482983660a8e66249dad048ecfaf9cdc947523d09",
+        "bytes": 830205
+      },
+      "results": [
+        {
+          "target": "sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b (ubuntu 26.04)",
+          "type": "ubuntu",
+          "packages": 176,
+          "package_advisory_matches": 40,
+          "unique_advisories": 27,
+          "severity": {
+            "MEDIUM": 34,
+            "LOW": 6
+          },
+          "matches_with_fixed_version": 0
+        },
+        {
+          "target": "Node.js",
+          "type": "node-pkg",
+          "packages": 2,
+          "package_advisory_matches": 0,
+          "unique_advisories": 0,
+          "severity": {},
+          "matches_with_fixed_version": 0
+        }
+      ]
+    }
+  ],
+  "final_image": {
+    "image_id": "sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b",
+    "architecture": "linux/arm64",
+    "tags": [
+      "round-robin-native-renderer:exhaustive-hardened-final",
+      "round-robin-native-renderer:exhaustive-audit",
+      "round-robin-native-renderer:local"
+    ],
+    "playwright_base": "mcr.microsoft.com/playwright:v1.65.1-noble@sha256:1507cbfc550a63a6b7396791ca4f00df17beb56342d2447b3f106c306f525579",
+    "runtime_base": "ubuntu:26.04@sha256:d66b366dac61b575bee2aef07e9c26e8070096fbe84a3d4d3eb0da069b5d76db",
+    "source_inputs": [
+      {
+        "path": "scripts/native-renderer.Dockerfile",
+        "sha256": "efe76427b6989579d043a4f4359b294b164a1fb1f5a54b2ab98f72079cfa9453",
+        "bytes": 2390
+      },
+      {
+        "path": "scripts/native-renderer.mjs",
+        "sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+        "bytes": 9069
+      },
+      {
+        "path": "backend/tests/integration/test_native_renderer.py",
+        "sha256": "3b09f2d70cc92de9b8272a955f26cb4cfeeea1d09d135be741e8a33922658e58",
+        "bytes": 12604
+      }
+    ],
+    "provenance": {
+      "image_id": "sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b",
+      "node": "v26.13.1",
+      "node_sha256": "de21e5b6e081aa16f86413aeba8c77fac44670cb6fe2748cc7c00329e6e6aa3a",
+      "playwright": "1.65.1",
+      "browser": "Google Chrome for Testing 159.0.8154.6",
+      "browser_sha256": "3e818d32e2fe5749b54c65179d282d14d0af39010ed0fbdd24122af1aca22046",
+      "renderer_sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+      "uid": 10001,
+      "os_release": "PRETTY_NAME=\"Ubuntu 26.04.1 LTS\"\nNAME=\"Ubuntu\"\nVERSION_ID=\"26.04\"\nVERSION=\"26.04.1 LTS (Resolute Raccoon)\"\nVERSION_CODENAME=resolute\nID=ubuntu\nID_LIKE=debian\nHOME_URL=\"https://www.ubuntu.com/\"\nSUPPORT_URL=\"https://help.ubuntu.com/\"\nBUG_REPORT_URL=\"https://bugs.launchpad.net/ubuntu/\"\nPRIVACY_POLICY_URL=\"https://www.ubuntu.com/legal/terms-and-policies/privacy-policy\"\nUBUNTU_CODENAME=resolute\nLOGO=ubuntu-logo\n"
+    }
+  },
+  "remediation": [
+    "Preserve exact pinned Playwright Chromium headless and Node binaries, use supported Ubuntu 26.04 runtime with only official Chromium dependencies and fonts, apply available apt upgrades, keep dpkg metadata.",
+    "Remove unused browser distributions, GStreamer/media packages and all npm build-time dependency trees by not copying them into final runtime.",
+    "Remove unused /usr/bin/pebble Go binary after direct package-ownership check showed no dpkg owner; this removes its sole fixable embedded-Go advisory without removing package metadata.",
+    "Actually build and native-test supported Debian 13 slim alternative; its current vendor feed reports 450 OS matches including 1 CRITICAL and 121 HIGH, so retain the lower-exposure supported Ubuntu 26.04 option.",
+    "Bind actual container renderer script SHA-256 to the current repository source in a new native integration invariant and retag only the tested immutable final image."
+  ],
+  "validation": {
+    "command": [
+      "env",
+      "ROUND_ROBIN_TEST_NATIVE_RENDERER=1",
+      "ROUND_ROBIN_NATIVE_RENDERER_IMAGE=round-robin-native-renderer:exhaustive-hardened-final",
+      "uv",
+      "run",
+      "pytest",
+      "-q",
+      "backend/tests/integration/test_native_renderer.py"
+    ],
+    "result": "7 passed in 13.16s",
+    "checks": "Actual native rendering, interaction/network denial/resource safety plus nonroot minimal-runtime inventory and exact renderer source hash bridge. See test source and log for full assertions.",
+    "log": {
+      "path": ".local/exhaustive-audit/container-scan/final-native-tests.log",
+      "sha256": "ae8dc27627409e78122bc0c2527946204fe7ebd447bb14641015141929018e6f",
+      "bytes": 99
+    },
+    "debian_alternative": ".......                                                                  [100%]\n7 passed in 11.85s"
+  },
+  "remaining_findings": [
+    {
+      "cve": "CVE-2026-78408",
+      "package": "bsdutils",
+      "source_package": "util-linux",
+      "installed_version": "1:2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-102473",
+      "package": "dash",
+      "source_package": "dash",
+      "installed_version": "0.5.12-12ubuntu3",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-102473",
+      "vendor_page_sha256": "b3da0f3b7d34a1a13e9938f6289dc902f3d1eb1d28812dce7f6ff0ba36962e80",
+      "title": "dash: dash: Super-polynomial backtracking in pmatch when libc fnmatch is disabled",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        }
+      },
+      "assessment": "Entrypoint is Node with fixed arguments; submitted HTML is never a shell command. No application route invokes these shell pattern/escape paths. A secondary code-execution chain is not ruled out by this assessment.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-102474",
+      "package": "dash",
+      "source_package": "dash",
+      "installed_version": "0.5.12-12ubuntu3",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-102474",
+      "vendor_page_sha256": "ea9af677db550b87e818c2d6b0397bb8dcc1a583135316c5452a7ef7360e3b81",
+      "title": "dash: dash: Heap out-of-bounds write in conv_escape via undersized Unicode escape reservation",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 4
+        }
+      },
+      "assessment": "Entrypoint is Node with fixed arguments; submitted HTML is never a shell command. No application route invokes these shell pattern/escape paths. A secondary code-execution chain is not ruled out by this assessment.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-90781",
+      "package": "libasound2-data",
+      "source_package": "alsa-lib",
+      "installed_version": "1.2.15.3-1ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-90781",
+      "vendor_page_sha256": "727453b70a3c23310b96b0f13e92851a1baa94cd47085e159965c709f734be00",
+      "title": "alsa-lib: alsa-lib: Denial of Service via off-by-one stack buffer overflow",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
+          "V3Score": 6.1
+        }
+      },
+      "assessment": "ALSA is a required Chromium dependency. No host audio device or attacker-supplied ALSA state/configuration is mounted. Runtime loading is possible; direct input reachability was not formally disproved.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-90781",
+      "package": "libasound2t64",
+      "source_package": "alsa-lib",
+      "installed_version": "1.2.15.3-1ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-90781",
+      "vendor_page_sha256": "727453b70a3c23310b96b0f13e92851a1baa94cd47085e159965c709f734be00",
+      "title": "alsa-lib: alsa-lib: Denial of Service via off-by-one stack buffer overflow",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:H",
+          "V3Score": 6.1
+        }
+      },
+      "assessment": "ALSA is a required Chromium dependency. No host audio device or attacker-supplied ALSA state/configuration is mounted. Runtime loading is possible; direct input reachability was not formally disproved.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2025-59529",
+      "package": "libavahi-client3",
+      "source_package": "avahi",
+      "installed_version": "0.8-18ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2025-59529",
+      "vendor_page_sha256": "f67d472caf484fab33f7b4767e5048daba13db09fe53991910affef6a01cb3ef",
+      "title": "avahi: simple clients denial-of-service",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        }
+      },
+      "assessment": "No network, Avahi daemon or host service socket is available in the profile; these client libraries remain as dependencies. A library-only package match does not prove exploitability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2025-59529",
+      "package": "libavahi-common-data",
+      "source_package": "avahi",
+      "installed_version": "0.8-18ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2025-59529",
+      "vendor_page_sha256": "f67d472caf484fab33f7b4767e5048daba13db09fe53991910affef6a01cb3ef",
+      "title": "avahi: simple clients denial-of-service",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        }
+      },
+      "assessment": "No network, Avahi daemon or host service socket is available in the profile; these client libraries remain as dependencies. A library-only package match does not prove exploitability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2025-59529",
+      "package": "libavahi-common3",
+      "source_package": "avahi",
+      "installed_version": "0.8-18ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2025-59529",
+      "vendor_page_sha256": "f67d472caf484fab33f7b4767e5048daba13db09fe53991910affef6a01cb3ef",
+      "title": "avahi: simple clients denial-of-service",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        }
+      },
+      "assessment": "No network, Avahi daemon or host service socket is available in the profile; these client libraries remain as dependencies. A library-only package match does not prove exploitability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "libblkid1",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2017-7475",
+      "package": "libcairo2",
+      "source_package": "cairo",
+      "installed_version": "1.18.4-3",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2017-7475",
+      "vendor_page_sha256": "0f114c28ac1565f1dc4b0a4d93a38b4f498aa599f493ca2748b47f9bad4d02df",
+      "title": "cairo: NULL pointer dereference with a crafted font file",
+      "cvss": {
+        "ghsa": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        },
+        "nvd": {
+          "V2Vector": "AV:N/AC:M/Au:N/C:N/I:N/A:P",
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V2Score": 4.3,
+          "V3Score": 5.5
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.0/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+          "V3Score": 3.3
+        }
+      },
+      "assessment": "Rendering/font library remains present; submitted HTML is untrusted. No proof excludes every crafted-font/document path, so this remains a residual parser risk with process/time/memory/filesystem isolation.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2018-18064",
+      "package": "libcairo2",
+      "source_package": "cairo",
+      "installed_version": "1.18.4-3",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2018-18064",
+      "vendor_page_sha256": "478b7eec30930dc0c2a9feafd4771f3572027d07c9974aed4ba7990a413ab041",
+      "title": "cairo: Stack-based buffer overflow via parsing of crafted WebKitGTK+ document",
+      "cvss": {
+        "julia": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V3Score": 6.5
+        },
+        "nvd": {
+          "V2Vector": "AV:N/AC:M/Au:N/C:N/I:N/A:P",
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V2Score": 4.3,
+          "V3Score": 6.5
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+          "V3Score": 6.3
+        }
+      },
+      "assessment": "Rendering/font library remains present; submitted HTML is untrusted. No proof excludes every crafted-font/document path, so this remains a residual parser risk with process/time/memory/filesystem isolation.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2025-66382",
+      "package": "libexpat1",
+      "source_package": "expat",
+      "installed_version": "2.7.4-1ubuntu0.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2025-66382",
+      "vendor_page_sha256": "1c23c6b7ef8088a546332e24f066b99b0c59ebd6377778123beb7fa79089974a",
+      "title": "libexpat: libexpat: Denial of service via crafted file processing",
+      "cvss": {
+        "julia": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        },
+        "nvd": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V3Score": 5.5
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "V3Score": 2.9
+        }
+      },
+      "assessment": "Required OS XML/font/configuration parser remains. Readonly system inputs and blocked network constrain input routes; Chromium DOM parsing is separate, but comprehensive native parser reachability was not established.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-102633",
+      "package": "libexpat1",
+      "source_package": "expat",
+      "installed_version": "2.7.4-1ubuntu0.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-102633",
+      "vendor_page_sha256": "742dd7f3387b0ae79e809e03e4d8850eafe6aeca24cd584886315f093d907bc7",
+      "title": "expat: expat: Denial of Service via integer overflow in expat_realloc",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 5.9
+        }
+      },
+      "assessment": "Required OS XML/font/configuration parser remains. Readonly system inputs and blocked network constrain input routes; Chromium DOM parsing is separate, but comprehensive native parser reachability was not established.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-93990",
+      "package": "libexpat1",
+      "source_package": "expat",
+      "installed_version": "2.7.4-1ubuntu0.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-93990",
+      "vendor_page_sha256": "6292f896a9d555020e1072b1c5dc79dd46339c8a11de990b3f31ec82ea49e8af",
+      "title": "expat: Expat: XML Injection via Malformed UTF-16 Input",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+          "V3Score": 7.5
+        }
+      },
+      "assessment": "Required OS XML/font/configuration parser remains. Readonly system inputs and blocked network constrain input routes; Chromium DOM parsing is separate, but comprehensive native parser reachability was not established.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-86469",
+      "package": "libglib2.0-0t64",
+      "source_package": "glib2.0",
+      "installed_version": "2.88.0-1ubuntu0.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-86469",
+      "vendor_page_sha256": "1ccd7c9f99f2e46f8c3df9a7224529c4acf349fec9847778cafa0590465eac64",
+      "title": "glib2: TOCTOU Symlink Race in `G_FILE_CREATE_REPLACE_DESTINATION` Fallback Path",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:H/A:L",
+          "V3Score": 5.3
+        }
+      },
+      "assessment": "A filesystem symlink race remains in the library. Readonly image, no host mounts and bounded private tmpfs constrain affected writes; the claim is mitigation, not that every path is unreachable.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-67693",
+      "package": "libgnutls30t64",
+      "source_package": "gnutls28",
+      "installed_version": "3.8.12-2ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-67693",
+      "vendor_page_sha256": "1a3aeb656f97b99a1f742aef1dc45657b2e2d4fe3552704c0f7541b12b6389c0",
+      "title": "gnutls: gnutls: Information disclosure via contradictory Key Usage and Extended Key Usage extensions",
+      "cvss": {},
+      "assessment": "The renderer is network-disabled and does not establish intended TLS connections. Certificate-validation paths remain in the installed dependency; no external trust decisions are delegated to this library by the application.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-88647",
+      "package": "libgnutls30t64",
+      "source_package": "gnutls28",
+      "installed_version": "3.8.12-2ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-88647",
+      "vendor_page_sha256": "fda876629a487d31ec795b64bb786a310cd86ea79f2505359f0174d1e0fd1b47",
+      "title": "gnutls: gnutls: Information disclosure via hostname verification bypass",
+      "cvss": {},
+      "assessment": "The renderer is network-disabled and does not establish intended TLS connections. Certificate-validation paths remain in the installed dependency; no external trust decisions are delegated to this library by the application.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-88648",
+      "package": "libgnutls30t64",
+      "source_package": "gnutls28",
+      "installed_version": "3.8.12-2ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-88648",
+      "vendor_page_sha256": "8979f714a84a2967589980c3bb385c6109f88e294f3da883199a423eab7bfcc7",
+      "title": "gnutls: gnutls: Cross-domain certificate restriction bypass via incomplete X.509 validation",
+      "cvss": {},
+      "assessment": "The renderer is network-disabled and does not establish intended TLS connections. Certificate-validation paths remain in the installed dependency; no external trust decisions are delegated to this library by the application.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-95184",
+      "package": "libgnutls30t64",
+      "source_package": "gnutls28",
+      "installed_version": "3.8.12-2ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-95184",
+      "vendor_page_sha256": "858df0710d127fb51350896c3727e86ed7e8b144f12e20644e5f2384899608ad",
+      "title": "gnutls: gnutls: legitimate user certificates incorrectly rejected causing denial of service",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+          "V3Score": 5.3
+        }
+      },
+      "assessment": "The renderer is network-disabled and does not establish intended TLS connections. Certificate-validation paths remain in the installed dependency; no external trust decisions are delegated to this library by the application.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-95210",
+      "package": "libgnutls30t64",
+      "source_package": "gnutls28",
+      "installed_version": "3.8.12-2ubuntu1.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-95210",
+      "vendor_page_sha256": "56017913f581de49b53969e8a0cddef829f88d8e18b88a70927326160a4c5bc3",
+      "title": "gnutls: gnutls: certificates with invalid extensions incorrectly accepted",
+      "cvss": {},
+      "assessment": "The renderer is network-disabled and does not establish intended TLS connections. Certificate-validation paths remain in the installed dependency; no external trust decisions are delegated to this library by the application.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "libmount1",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-13757",
+      "package": "libp11-kit0",
+      "source_package": "p11-kit",
+      "installed_version": "0.26.2-2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-13757",
+      "vendor_page_sha256": "e646d76cf3b2d5f605783e604f375e73b43ce0a090f701e2b7ca13fe34d3b5e6",
+      "title": "p11-kit: Stack exhaustion via unbounded recursion in RPC attribute parsing",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 6.2
+        }
+      },
+      "assessment": "No external PKCS#11 RPC service or host service socket is supplied. The recursive RPC parser remains in the library; no formal native reachability proof was performed.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2023-37769",
+      "package": "libpixman-1-0",
+      "source_package": "pixman",
+      "installed_version": "0.46.4-1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2023-37769",
+      "vendor_page_sha256": "09059b2412f31de57244bb6c8bf6b48ed6e11fe92d65c92dc6346516377e2836",
+      "title": "stress-test master commit e4c878 was discovered to contain a FPE vulne ...",
+      "cvss": {
+        "nvd": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:H",
+          "V3Score": 6.5
+        }
+      },
+      "assessment": "Vendor advisory identifies a stress-test floating-point exception; the entrypoint does not execute the upstream stress test. The installed graphics library is retained and the vendor finding remains open.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "libsmartcols1",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-121876",
+      "package": "libsystemd0",
+      "source_package": "systemd",
+      "installed_version": "259.9-0ubuntu0.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-121876",
+      "vendor_page_sha256": "0d91a08a19961a30fb9c8435110b4b2930fb324d8f2cd298f390b710f4e32037",
+      "title": "sandboxed-containers: kernel: systemd-gpt-auto-generator: Guest Data Leakage in Confidential Computing (Sandboxed Containers)",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "No systemd init, journald service, guest disk or host mount is started/provided. Only required shared libraries are installed; GPT generator and terminal-logging preconditions do not occur in the intended renderer flow.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-40228",
+      "package": "libsystemd0",
+      "source_package": "systemd",
+      "installed_version": "259.9-0ubuntu0.1",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-40228",
+      "vendor_page_sha256": "4ce87bb506f322a1c5f3fa7747b91c85fff365e3fc5d44023232aeb23e20621e",
+      "title": "systemd: systemd-journald: Unintended output to user terminals via logger command",
+      "cvss": {
+        "nvd": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 3.3
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 2.9
+        }
+      },
+      "assessment": "No systemd init, journald service, guest disk or host mount is started/provided. Only required shared libraries are installed; GPT generator and terminal-logging preconditions do not occur in the intended renderer flow.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-121876",
+      "package": "libudev1",
+      "source_package": "systemd",
+      "installed_version": "259.9-0ubuntu0.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-121876",
+      "vendor_page_sha256": "0d91a08a19961a30fb9c8435110b4b2930fb324d8f2cd298f390b710f4e32037",
+      "title": "sandboxed-containers: kernel: systemd-gpt-auto-generator: Guest Data Leakage in Confidential Computing (Sandboxed Containers)",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:C/C:H/I:H/A:N",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "No systemd init, journald service, guest disk or host mount is started/provided. Only required shared libraries are installed; GPT generator and terminal-logging preconditions do not occur in the intended renderer flow.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-40228",
+      "package": "libudev1",
+      "source_package": "systemd",
+      "installed_version": "259.9-0ubuntu0.1",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-40228",
+      "vendor_page_sha256": "4ce87bb506f322a1c5f3fa7747b91c85fff365e3fc5d44023232aeb23e20621e",
+      "title": "systemd: systemd-journald: Unintended output to user terminals via logger command",
+      "cvss": {
+        "nvd": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 3.3
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 2.9
+        }
+      },
+      "assessment": "No systemd init, journald service, guest disk or host mount is started/provided. Only required shared libraries are installed; GPT generator and terminal-logging preconditions do not occur in the intended renderer flow.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "libuuid1",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-88807",
+      "package": "libxrender1",
+      "source_package": "libxrender",
+      "installed_version": "1:0.9.12-1build1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-88807",
+      "vendor_page_sha256": "1dceb283b283bf6a89192a5fc03975c558b979f7d535110a8097fa7393dc0940",
+      "title": "libXrender: libXrender: Code injection via heap overflow in RenderQueryPictFormats",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:H/PR:N/UI:R/S:C/C:H/I:H/A:H",
+          "V3Score": 8.3
+        }
+      },
+      "assessment": "The documented heap overflow requires a malicious X server. Chromium runs headless with no X11 socket mounts and no network; no X server is supplied. Ubuntu severity is MEDIUM despite a higher upstream score.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "login",
+      "source_package": "util-linux",
+      "installed_version": "1:4.16.0-2+really2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2024-56433",
+      "package": "login.defs",
+      "source_package": "shadow",
+      "installed_version": "1:4.17.4-2ubuntu3",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2024-56433",
+      "vendor_page_sha256": "8360832b836304c3369437fdff43ab5a5e7fbcc1f9285b75a26598afd2114193",
+      "title": "shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
+          "V3Score": 3.6
+        }
+      },
+      "assessment": "A fixed nonroot UID is created at image build. Runtime does not allocate subordinate IDs, create accounts or share host /etc or user-namespace configuration. Metadata remains and the finding is not suppressed.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "mount",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2024-56433",
+      "package": "passwd",
+      "source_package": "shadow",
+      "installed_version": "1:4.17.4-2ubuntu3",
+      "vendor_severity": "LOW",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable, fix deferred",
+      "vendor_url": "https://ubuntu.com/security/CVE-2024-56433",
+      "vendor_page_sha256": "8360832b836304c3369437fdff43ab5a5e7fbcc1f9285b75a26598afd2114193",
+      "title": "shadow-utils: Default subordinate ID configuration in /etc/login.defs could lead to compromise",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:N/S:U/C:L/I:L/A:N",
+          "V3Score": 3.6
+        }
+      },
+      "assessment": "A fixed nonroot UID is created at image build. Runtime does not allocate subordinate IDs, create accounts or share host /etc or user-namespace configuration. Metadata remains and the finding is not suppressed.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-9538",
+      "package": "perl-base",
+      "source_package": "perl",
+      "installed_version": "5.40.1-7ubuntu0.4",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-9538",
+      "vendor_page_sha256": "4f82b7de9fe4eb1be483bbea52d231d0ff844a3d910fd10ecd80fff654c1b016",
+      "title": "perl-Archive-Tar: perl-Archive-Tar: Denial of Service via crafted tar header with large entry size",
+      "cvss": {
+        "nvd": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 7.5
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+          "V3Score": 7.5
+        }
+      },
+      "assessment": "Node entrypoint does not run Perl or unpack supplied archives. No renderer API accepts tar archives; the OS package stays vendor-affected.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-35370",
+      "package": "rust-coreutils",
+      "source_package": "rust-coreutils",
+      "installed_version": "0.10.0-1ubuntu2~26.04.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-35370",
+      "vendor_page_sha256": "ca7097978805b48786ed56eb1b555ff91ec52710cc97909160734801a083cb5c",
+      "title": "The id utility in uutils coreutils miscalculates the groups= section o ...",
+      "cvss": {
+        "ghsa": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:N",
+          "V3Score": 4.4
+        }
+      },
+      "assessment": "Application ownership/authentication uses server state, not output of the id utility. Fixed UID and no runtime id-based authorization avoid the described group-reporting path in normal operation.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-35371",
+      "package": "rust-coreutils",
+      "source_package": "rust-coreutils",
+      "installed_version": "0.10.0-1ubuntu2~26.04.1",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-35371",
+      "vendor_page_sha256": "4ed1e0f83bdc73a65c80b002561330da6fc4d881ab531088409d437eaf7c3930",
+      "title": "The id utility in uutils coreutils exhibits incorrect behavior in its  ...",
+      "cvss": {
+        "ghsa": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+          "V3Score": 3.3
+        }
+      },
+      "assessment": "Application ownership/authentication uses server state, not output of the id utility. Fixed UID and no runtime id-based authorization avoid the described group-reporting path in normal operation.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-18477",
+      "package": "tar",
+      "source_package": "tar",
+      "installed_version": "1.35+dfsg-4ubuntu0.4",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-18477",
+      "vendor_page_sha256": "26018de494adbb56678bcee39661cfef7f2e1efcb704f07841af160f59b1eb42",
+      "title": "tar: tar: TOCTOU in incremental dumpdir 'X' rename handling allows restore path escape",
+      "cvss": {
+        "julia": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:N/I:H/A:N",
+          "V3Score": 4.4
+        },
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:H/PR:L/UI:R/S:U/C:N/I:H/A:N",
+          "V3Score": 4.4
+        }
+      },
+      "assessment": "Runtime does not extract supplied archives or call tar. Readonly image and no host mounts also constrain the described restore-path overwrite. Installed utility remains vendor-affected.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-18508",
+      "package": "tar",
+      "source_package": "tar",
+      "installed_version": "1.35+dfsg-4ubuntu0.4",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-18508",
+      "vendor_page_sha256": "afbb7e48a902bc82a6dd212941fdbafac43a2109027fe2749007f717cf4af588",
+      "title": "tar: tar: --one-top-level hardlink targets not confined to top-level directory enabling arbitrary file overwrite",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:N",
+          "V3Score": 4.4
+        }
+      },
+      "assessment": "Runtime does not extract supplied archives or call tar. Readonly image and no host mounts also constrain the described restore-path overwrite. Installed utility remains vendor-affected.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    },
+    {
+      "cve": "CVE-2026-78408",
+      "package": "util-linux",
+      "source_package": "util-linux",
+      "installed_version": "2.41.3-3ubuntu2.2",
+      "vendor_severity": "MEDIUM",
+      "severity_source": "ubuntu",
+      "trivy_status": "affected",
+      "fixed_version": null,
+      "vendor_release": "26.04 LTS resolute",
+      "vendor_status": "Vulnerable",
+      "vendor_url": "https://ubuntu.com/security/CVE-2026-78408",
+      "vendor_page_sha256": "d71b6a6164d926ffda8e0464bdb31c429680f523cabd9f630c786631d2d6a0ce",
+      "title": "util-linux: util-linux: nsenter --join-cgroup leaks root cgroup migration authority",
+      "cvss": {
+        "redhat": {
+          "V3Vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:R/S:C/C:N/I:H/A:H",
+          "V3Score": 7.9
+        }
+      },
+      "assessment": "The Node renderer does not invoke nsenter or migrate cgroups; fixed nonroot UID, no capabilities and no host mounts remove the documented root/cgroup precondition in the intended profile. This is context, not a formal proof of unreachability.",
+      "resolution": "OPEN: no vendor fixed package version reported; retain until an available supported update or independently verified safe removal."
+    }
+  ],
+  "evidence_artifacts": [
+    {
+      "path": ".local/exhaustive-audit/container-scan/trivy-release.json",
+      "sha256": "5c64555f355a83e8d866829b500bc7921f8052ab7958bee0b2236db4b31b2d58",
+      "bytes": 97606
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/trivy_0.76.2_checksums.txt",
+      "sha256": "802e4ac1418ed967cd3c4b901f4f71ca00b7363ede67778665a22d9f13f58c83",
+      "bytes": 2121
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/trivy_0.76.2_macOS-ARM64.tar.gz",
+      "sha256": "ae7ea358326960406b703c77b2ac490190797d80b306b5b50c2a27221da0a5b8",
+      "bytes": 49840394
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/trivy",
+      "sha256": "7a15c426f963473a485a4f315e21f8e2c881269d500bf0de35da13a4421fa108",
+      "bytes": 168530818
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/cache/db/metadata.json",
+      "sha256": "a4327d2db6ad32d28807040e2b0a83021edfc5fc6e56431e0d85c02c5d5f3656",
+      "bytes": 150
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/db-download.log",
+      "sha256": "11906b87f244dc13e64607a035af6cb2f5119abe12901d4701a6a6599741b3ba",
+      "bytes": 8445
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/renderer-image-inspect.json",
+      "sha256": "455705173cd91af5fd48678588caa71ff0e60d68a704fecf4f3b94082912af4c",
+      "bytes": 2028
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/scan.log",
+      "sha256": "70a88b7d42557095a71f7b99c66ecafed760ddd5129952246515aeea59185ab9",
+      "bytes": 457
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/hardened-image-inspect.json",
+      "sha256": "86b6d3afd719029b356f75a5b835503a75a1f55d34bc7202637829a3fcb9db03",
+      "bytes": 2354
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/hardened-build.log",
+      "sha256": "929962063657eb6eea6b50ae7efaa016035dff214cba7546df321238bdbb4bba",
+      "bytes": 50511
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/hardened-native-tests.log",
+      "sha256": "3ee0ea78de247fce5632d3cd6a8ccc6748252ea4940aafaf3a7e912aae661f78",
+      "bytes": 99
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/hardened-scan.log",
+      "sha256": "c5cacbd607d4b6fd5b2937d7bfe2eeb022cf888aeb6a65cb3ecd2ae8e49045e0",
+      "bytes": 715
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/pebble-ownership.txt",
+      "sha256": "8ad1d0c38470805883e6e83a50800dd5f0ea958f159e23aad710e2feef8bf40d",
+      "bytes": 59
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/debian-candidate.Dockerfile",
+      "sha256": "2653576d0711ad4ad0290d7720afaca824a088a2167679207bcec146caa550ed",
+      "bytes": 2389
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/debian-build.log",
+      "sha256": "2ff615997329883eed71fbd9bdb5561c2067ea0e91a65650ec1092779fb926cc",
+      "bytes": 43860
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/debian-native-tests.log",
+      "sha256": "098e6d5be0e3d374ec35de241dd6dd42d2ea101972906c1f0c70a25781d15406",
+      "bytes": 99
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/debian-scan.log",
+      "sha256": "a025ef7be06c1e5b9b8789735449dfef639e472762d7fb03ebd1441bf98bb367",
+      "bytes": 640
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/final-build.log",
+      "sha256": "7fb0b7f75008d050f3518056a9e74ae2140b59e720f019cac534c9844cad406d",
+      "bytes": 48723
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/final-image-inspect.json",
+      "sha256": "6d39ef0e09c2d4ed2c72a595a820444e2919bef69ae39c39593b43167db55607",
+      "bytes": 2359
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/final-scan.log",
+      "sha256": "945cb9c77ad7a501c901b527725c3f9a25e1e00722ae051498042b11fe9829b0",
+      "bytes": 457
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/final-native-tests.log",
+      "sha256": "ae8dc27627409e78122bc0c2527946204fe7ebd447bb14641015141929018e6f",
+      "bytes": 99
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/binary-provenance.json",
+      "sha256": "5a35af8b150cca549d6408497e2535f283a85ee827c605a53f73b716129c9f05",
+      "bytes": 1903
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/ubuntu26-vendor-status.json",
+      "sha256": "1c598c3f9e9359b4ecdc1fd86dc380a4aa40995de02616329daffef5a296b033",
+      "bytes": 19845
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/read_ubuntu_status.py",
+      "sha256": "69b57b5e906d57b2dd18a581ce40546bda22eed63a11b3abdbb25da3335c1b3a",
+      "bytes": 2133
+    },
+    {
+      "path": ".local/exhaustive-audit/container-scan/core-bundle.js",
+      "sha256": "874451b4e7acf90cda4330be42db2259c9e5036c22150f18016f04768434234c",
+      "bytes": 3626940
+    }
+  ],
+  "limitations": [
+    "All 40 remaining OS matches are OPEN. No supported vendor FixedVersion was present in the scanned current Ubuntu packages/database; vendor pages independently show Vulnerable or Vulnerable, fix deferred for every affected source package.",
+    "Ubuntu-selected severities are contextual vendor ratings, not the maximum upstream/NVD CVSS. Some remaining CVEs have higher upstream scores; this is not a claim that all high-CVSS issues disappeared.",
+    "The exact Node and Chrome binaries are copied from the pinned official Playwright image and their versions/hashes match the original. OS/Node-package scanning does not comprehensively attest vulnerabilities in these standalone native binaries.",
+    "Runtime context mitigations are not a formal exploitability proof, particularly graphics/font/XML parsers processing untrusted renderer content.",
+    "Actual build/native tests were performed on linux/arm64. Playwright lists supported Ubuntu26/Debian13 x64 and arm64 dependencies, but amd64 was not executed in this audit.",
+    "No kernel/host/Colima security attestation, fuzzing of native browser internals, or deployment occurred.",
+    "Database and apt repository state are time-bound; rerun builds and scans when vendor updates arrive."
+  ],
+  "upstream_release_advisory_check": {
+    "checked_at_utc": "2026-11-16T17:44:07.585746+00:00",
+    "scope": "Compact read-only primary-source release/advisory check; no new full binary CVE scan, no input changes.",
+    "node": {
+      "installed": "v26.13.1",
+      "latest_26x_in_official_distribution_index": {
+        "version": "v26.13.1",
+        "date": "2026-11-10",
+        "files": [
+          "aix-ppc64",
+          "headers",
+          "linux-arm64",
+          "linux-ppc64le",
+          "linux-s390x",
+          "linux-x64",
+          "linux-x64-musl",
+          "osx-arm64-tar",
+          "osx-x64-pkg",
+          "osx-x64-tar",
+          "src",
+          "win-arm64-7z",
+          "win-arm64-zip",
+          "win-x64-7z",
+          "win-x64-exe",
+          "win-x64-msi",
+          "win-x64-zip"
+        ],
+        "npm": "11.20.0",
+        "zlib": "1.3.2.1-motley",
+        "openssl": "3.5.9",
+        "modules": "147",
+        "lts": "Lithium",
+        "security": true
+      },
+      "release_note_date": "2026-11-11",
+      "date_note": "Official distribution index dates the entry 2026-11-10; release/security blog is dated 2026-11-11. Both refer to v26.13.1.",
+      "security_status": "Official release labels v26.13.1 a security release and lists fixes for current TLS, HTTPS and HTTP/2 advisories. Security index latest observed post is November 11. No newer26.x release was present in the fetched index.",
+      "release_url": "https://nodejs.org/en/blog/release/v26.13.1",
+      "advisory_url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases"
+    },
+    "playwright": {
+      "installed": "1.65.1",
+      "official_latest_tag": "v1.65.1",
+      "official_published_at": "2026-11-13T21:46:58Z",
+      "bundled_chromium": "159.0.8154.6",
+      "release_url": "https://github.com/microsoft/playwright/releases/tag/v1.65.1",
+      "repository_public_advisories": 0,
+      "advisory_limit": "Official repository advisory endpoint returned an empty array. This is not a claim that the product has never had vulnerabilities or that all advisories must appear in that repository endpoint."
+    },
+    "chrome": {
+      "installed": "159.0.8154.6",
+      "official_channel": "Beta",
+      "channel_snapshot": {
+        "timestamp": "2026-11-16T13:31:35.205Z",
+        "channels": {
+          "Stable": {
+            "channel": "Stable",
+            "version": "157.0.8103.78",
+            "revision": "1717349"
+          },
+          "Beta": {
+            "channel": "Beta",
+            "version": "159.0.8154.6",
+            "revision": "1739869"
+          },
+          "Dev": {
+            "channel": "Dev",
+            "version": "160.0.8157.0",
+            "revision": "1742402"
+          },
+          "Canary": {
+            "channel": "Canary",
+            "version": "160.0.8165.0",
+            "revision": "1745202"
+          }
+        }
+      },
+      "release_status": "Exact installed version is the current Beta listed by the official Chrome for Testing feed. Dev and Canary160 entries also exist; they are different release channels, not an established required security patch for the current bundled Beta.",
+      "current_stable_linux": "157.0.8103.78",
+      "stable_security_review": "Read official November9 and November11 stable security posts. November9 includes actively exploited CVE-2026-125350, fixed in the157 stable update; November11 lists additional fixes. These stable posts do not independently enumerate every fix present or absent in this159 Beta binary, so no comprehensive cross-branch patch-equivalence claim is made.",
+      "feed_url": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json"
+    },
+    "conclusion": "No newer same-line Node release, newer Playwright release or newer Beta browser build was found in these official snapshots, and no concrete actionable vulnerability in the exact installed versions was established by this compact check. This is not zero-CVE attestation; standalone binary and cross-branch patch-coverage limits remain open.",
+    "evidence": [
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/node-index.json",
+        "url": "https://nodejs.org/dist/index.json",
+        "http_status": 200,
+        "sha256": "ecbf1d9f49532daf606cd495537d2ff7ab28f441e877ae40821738d56e2a0a80",
+        "bytes": 337814
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/node-release.html",
+        "url": "https://nodejs.org/en/blog/release/v26.13.1",
+        "http_status": 200,
+        "sha256": "efa2700a71a9ab7d14373e5c1d5d8416a72ecb2841848ae56d3a0f7e5d7a37d8",
+        "bytes": 295167
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/node-security.html",
+        "url": "https://nodejs.org/en/blog/vulnerability/november-2026-security-releases",
+        "http_status": 200,
+        "sha256": "e5860b0809369acc0792fc48b7aaa92e661042ece93828c49a869af0801872c2",
+        "bytes": 326951
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/playwright-latest.json",
+        "url": "https://api.github.com/repos/microsoft/playwright/releases/latest",
+        "http_status": 200,
+        "sha256": "aa68748f6f5067a3351a62f259eb12839ca0fdff761cc9dc2158f3bc8f589fc4",
+        "bytes": 2473
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/playwright-advisories.json",
+        "url": "https://api.github.com/repos/microsoft/playwright/security-advisories",
+        "http_status": 200,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "bytes": 2
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/chrome-channel-versions.json",
+        "url": "https://googlechromelabs.github.io/chrome-for-testing/last-known-good-versions.json",
+        "http_status": 200,
+        "sha256": "af30dc063e6b9a939b1cf97576efee2372fd3d61f6aa009a4d7d9ca1eac7444a",
+        "bytes": 349
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/chrome-releases.html",
+        "url": "https://chromereleases.googleblog.com/",
+        "http_status": 200,
+        "sha256": "194cef01ddf1a205f1380efba20024df3ea2fba0adce637ba7d949e9a4ccb33d",
+        "bytes": 164690
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/chrome-stable-security-nov11.html",
+        "url": "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_01744469280.html",
+        "http_status": 200,
+        "sha256": "cb4dce68e5ee4c0785742d1b7fb2dc3a714600de02c8af03b9b0e9ee5bdb8c02",
+        "bytes": 347674
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/chrome-stable-security-nov9.html",
+        "url": "https://chromereleases.googleblog.com/2026/11/stable-channel-update-for-desktop_018223192.html",
+        "http_status": 200,
+        "sha256": "95a42d0b5569516f724c7f7ede590ae585722fe029ee21243e1432f7e11a2998",
+        "bytes": 166912
+      },
+      {
+        "path": ".local/exhaustive-audit/container-scan/upstream/node-security-index.html",
+        "url": "https://nodejs.org/en/blog/vulnerability",
+        "http_status": 200,
+        "sha256": "f6b1d0bd404f1f8218738ba5da66b68de180385e932a417e65df7e32735c83eb",
+        "bytes": 821745
+      }
+    ]
+  },
+  "local_image_cleanup": {
+    "recorded_at_utc": "2026-11-16T17:44:19.544032+00:00",
+    "operator": "root reviewer",
+    "reason": "Docker VM disk exhaustion interrupted later PostgreSQL verification; remove audit-created obsolete images to restore test disk capacity.",
+    "removed_image_ids": [
+      "sha256:76d41895473508582775357220feb0180b224b8680041b9d93e903c3c2d5ca88",
+      "sha256:948434c7cfced1211ffe2551d8544435a79249da42a0c8d0c376bfd0d3848c63",
+      "sha256:edfb67d958e0d3c8cc914f7e0162295b0e4b79dd9c8f887a3364ed0bc2c644ce"
+    ],
+    "retained": "All recorded scan/build/native-test/provenance files and final sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b tags; root reports no unrelated images or containers removed."
+  }
+}

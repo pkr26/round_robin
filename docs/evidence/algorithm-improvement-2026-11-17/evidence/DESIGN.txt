@@ -1,0 +1,265 @@
+EVIDENCE AND DECISION ALGORITHM IMPROVEMENT SPECIFICATION
+2026-11-17. Design only; no product code changed or tests rerun.
+
+Objective
+Improve the reliability of agent discussion by making support, disagreement and
+unresolved work explicit and machine-checkable. More agents, longer debate and
+agreement are not evidence of truth. Prefer additional structure where it closes
+a demonstrated failure mode, with measurable improvements on unseen cases.
+
+1. SIGNED CLAIM ASSESSMENTS, NOT REACHABILITY AS TRUTH (E-F03)
+
+Keep the existing immutable scoped IDs, hashes and cycle checks. Replace the
+single supported bit inferred from an ancestry path with immutable assessments
+about a particular assertion version, scope and evidence relationship.
+
+Minimum records:
+  Assertion: id, version, kind, subject_id, predicate, typed_value, unit,
+    scope, effective_interval, prose, predecessor_id.
+  RelationAssessment: id, assertion_version_id, relation=supports|refutes|context,
+    evidence_spans[], premise_assertion_versions[], required_premise_sets[],
+    method=exact_field_match|checked_calculation|semantic_review|user_attestation,
+    author_receipt, checked_at, valid_until, review_status,
+    supersedes_assessment_id, scope_limitations[].
+  EvidenceSpan: evidence_id, content_hash, start, end, exact_text.
+  AssessmentReview: assessment_id, reviewer_receipt, accepted|disputed|rejected,
+    reason, evidence_refs, reviewed_version_hash.
+
+author/reviewer receipts bind role, configured provider/model or human actor,
+run/fence, input/output versions and time. They establish attribution, not error
+independence or competence. Verify text offsets/hashes and calculator receipts
+deterministically. A model's semantic judgment remains attributed and reviewable.
+
+Do not globally mark a source as true. One page can support a price, contradict a
+delivery promise and say nothing about compatibility. A relation is claim- and
+scope-specific. User attestation may be an allowed basis under an explicit frozen
+decision policy, but must remain labeled user-attested rather than independently
+verified. Merely rereading a source or receiving a second model's agreement is
+not a new factual verification event.
+
+Identity: reuse a stable typed assertion identity for the same option/property/
+scope. Models may propose free-text matches; they may not merge distinct claims
+or erase contradictory versions. Do not equate text hashes with semantic identity.
+For unrestricted prose, retain separate assertions and an explicit proposed
+equivalence relation until accepted; mark uncertain links rather than guessing.
+
+Reducer states:
+  unassessed: no admissible assessed basis;
+  provisional: eligible support exists but required review is outstanding;
+  supported_for_scope: accepted supporting basis and no unresolved accepted
+    counter-basis/material objection under the frozen policy;
+  contested: support and counter-basis coexist, or a material support dispute
+    remains unresolved;
+  refuted_for_scope: accepted counter-basis and no accepted supporting basis;
+  stale: the only decisive accepted basis expired or changed scope.
+
+These states are evidence/workflow states, not probabilities or factual certainty.
+No averaging of provider votes; do not assign 95% confidence to a quorum. A source
+status alone cannot decide a different proposition's polarity: a refutation can
+support the opposite assertion. Require explicit directed relationships.
+
+Evaluate inference as AND within a required premise set and OR across accepted
+alternative sufficient bases. Today's any-root rule is insufficient when a
+conclusion needs several premises. A contradicted or stale premise cannot silently
+support an identical descendant claim. New independent evidence may legitimately
+change the outcome, but retain the counter-basis and its explicit disposition.
+Undeclared/free-form inferences remain provisional until reviewed. Reject cycles
+used as justificatory support; references for discussion can still link backward.
+
+Implementation: bounded DAG validation/topological reduction, O(V+E); propagate
+changes only through the affected dependent subgraph. Retain current 200-claim,
+20-new-claim/response and 40-reference/response caps. Cache only under exact graph,
+evidence, policy and scope hashes. A semantic assessor must not be a hidden extra
+paid call: include it in a reserved stage or explicitly authorize its allowance.
+
+2. AN OBJECTION LEDGER WITH REQUIRED DISPOSITIONS (E-F04)
+
+Introduce an immutable event ledger instead of aggregating only free-form dissent.
+  Objection: id, target_assertion_version|option_requirement|calculation_version,
+    severity, concern, opened_by_receipt, evidence_refs, materiality_basis.
+  ObjectionEvent: objection_id, response_refs, disposition, reason,
+    actor_receipt, evidence_refs, target_version_hash, timestamp.
+  Derived states: open, answered_pending_review, resolved, withdrawn,
+    accepted_risk, reopened.
+
+An answer is not automatically a resolution. A distinct assigned reviewer or
+explicit human decision must accept the response against its target and evidence.
+An unsupported critic allegation is an open question, not demonstrated failure.
+User acceptance of a risk does not turn a failed hard requirement into a pass.
+Preference objections can be declined with an explicit user rationale; mandatory
+technical conditions remain visible. If relevant evidence or target versions
+change, invalidate affected resolutions and reopen the objection.
+
+Every synthesis and audit receives unresolved material/critical objection IDs.
+It must return dispositions for each, or omitted IDs remain open server-side.
+The scheduler can prioritize corrections by severity and affected requirement,
+but it must preserve the original call/time/money ceilings. Exhaustion publishes
+an honest limited result, never fabricated consensus or endless convergence.
+
+Report all unresolved critical/material objections before nonmaterial dissent.
+The full ledger stays addressable; a 20-item display cap must provide overflow
+counts and links. Last-stage findings cannot be displaced by earlier verbosity.
+Do not label an omitted proposal concern resolved just because the final audit
+omitted it. Deduplicate only explicit accepted equivalences, preserving authors.
+Complexity: O(objections + events); bounded event counts and keyed target indexes.
+
+3. CONSERVATIVE CONSTRAINT REDUCTION WITH EXACT ATTRIBUTION (E-F01)
+
+Minimum result:
+  ConstraintVerdict: option_id, requirement_id, result=pass|fail|unknown|not_applicable,
+    basis_assessment_ids[], counter_assessment_ids[], assessor_receipts[],
+    scope, basis_quality, unresolved_objection_ids[], calculation_version_id?.
+
+Priority rules:
+  a. Validate the requirement/operator/unit/scope and deterministic calculation.
+  b. A complete valid calculation governs arithmetic over its stated inputs;
+     a model cannot replace it with a conflicting number.
+  c. A non-arithmetic pass/fail requires an accepted claim-specific assessment.
+     An auditor's unsupported fail creates unknown/contested, not fail.
+  d. Accepted synthesis support plus unresolved adverse assessment is contested,
+     not an arbitrary majority verdict. Retain BOTH citations and attribution.
+  e. Accepted adverse evidence can establish failure only under its actual scope;
+     never attach the synthesis's positive evidence to the auditor's conclusion.
+  f. not_applicable needs a reason and admissible basis for applicability.
+
+Declare no feasible option only if every considered option has at least one
+accepted adverse hard-requirement result under the relevant decision scope.
+Where costs are merely entered inputs, say 'No option meets the requirements using
+the supplied inputs'; do not promote that to verified supplier facts. Unknown
+requirements remain unresolved and must not be counted as either pass or fail.
+
+Store both arithmetic correctness and factual input support. Exact arithmetic can
+be correct while the quote is stale or its installation charge is missing.
+Complexity: O(options * requirements + linked assessments); retain five-option,
+20-requirement limits. Prefer this auditable reducer over learned fusion or
+weighted voting, which would need calibration data and can hide correlated errors.
+
+4. BUDGETED RETRIEVAL WITH OBJECTIVE COVERAGE (E-F02, E-G02)
+
+Freeze SearchObjective records before spending: id, type=comparison|cost|counter-
+evidence|requirement, approved_term_ids, template_ids, affected_requirement_ids,
+priority, query/page/passage allocation. Keep the existing approved-public-term
+privacy boundary, six-query/eight-page/24-passage limits, DNS/IP controls and total
+deadline. Local passage ranking may use private requirements; outgoing queries
+still use only explicitly approved public terms.
+
+Replace 'fetch all first-query hits immediately' with a small objective scheduler:
+  1. Check remaining evidence-packet space before any search authorization.
+  2. Collect bounded candidate queues for distinct objectives; at most 48 hits.
+  3. Reserve page opportunities for cost and counterevidence before optional
+     extra comparison hits. An initial policy can allocate two pages each to
+     comparison/cost/counterevidence and two to remaining gaps, then be evaluated.
+  4. Select round-robin across unmet mandatory objectives, then stable lexical
+     relevance/source-diversity ordering. Reassign a reservation only when its
+     objective has no admissible candidates or cannot be completed in time.
+  5. Stop authorizing a query when no result can be used within remaining page,
+     passage, time or money limits, unless discovery-only output is explicitly
+     useful and represented. Do not silently charge for unreachable acquisition.
+
+The 2/2/2/2 allocation is a bounded starting policy, not a universal optimum.
+Record actual objective coverage, attempted/failed acquisitions and unfulfilled
+reservations. A second query must not appear fulfilled merely because it ran.
+Origin groups and near-duplicate detection support diversity, not proof that
+sources are independent: different domains can copy the same source.
+
+Passages: split canonical extracted text at paragraph/sentence boundaries into
+overlapping windows <=2000 characters, retaining exact original offsets/hashes.
+Rank locally using explicit requirement/query terms, relevant section headings,
+cost units and exception/exclusion/negation terms. Include targeted searches for
+exceptions as well as supporting facts. Then apply bounded greedy coverage and
+diversity selection across objectives and source groups within the remaining
+packet budget; reserve space for counterevidence and decisive unknowns.
+
+Matching a term is a relevance heuristic, not proof of support/refutation. Expose
+full-text length/hash, selected intervals, omitted interval count and objective
+coverage; do not claim full-document verification. Retain selected bytes under
+the existing storage/retention policy. Do not silently introduce a full-page
+archive or hidden summarization/model calls. Source tables and images unsupported
+by the text extractor remain explicit limitations.
+
+Initial ranking should be deterministic and reproducible (e.g. lexical/BM25 plus
+coverage/diversity rules). Compare embeddings or rerankers on held-out evidence
+recall before adding them. Avoid pretending an uncalibrated relevance score is
+expected information gain or probability of truth. Learned selection is a later
+optional improvement, not the prerequisite to fixing starvation/prefix selection.
+
+Complexity: text extraction O(B), candidate scoring O(P*R), greedy bounded
+selection O(K*P) with cached novelty scores; B <= eight capped one-MiB pages,
+R <=20 requirements and objective tags, K <=24 selected passages. Explicitly cap
+window candidates and preserve overflow disclosure. The CPU work is cheap relative
+to new inference and requires no extra network recipient.
+
+5. READINESS THROUGH EXPLICIT ACCEPTED BASIS, NOT SOURCE-WIDE PROMOTION (E-G01)
+
+Do not simply change all user_supplied evidence to supported. Add scoped
+verification/attestation commands that create immutable assessment receipts for
+specific cost fields and requirement claims. A cost basis must bind amount,
+currency, quantity, frequency, applicability, quote scope/validity and the exact
+supporting excerpt or attestation. Supplier documents need scope-aware checks;
+the presence of a dollar amount alone is insufficient. A not-applicable cost
+component also needs an explicit accepted justification.
+
+The frozen policy states acceptable basis types for this decision. A user-attested
+comparison may be ready under a user-attested scope if that is explicitly the
+policy; it is never represented as independent supplier verification. Policies
+requiring independent verification must retain conditional status until that
+work actually exists. Source retrieval and model agreement cannot waive it.
+
+Readiness should expose separate dimensions:
+  input/comparison completeness; checked arithmetic; feasibility support;
+  review quorum; unresolved material objections; freshness; accepted basis scope.
+Use a deterministic conjunction for ready_to_choose. A missing dimension produces
+conditional or insufficient_evidence with a specific next action. no_feasible
+follows the qualified failure rule above. Retain all raw dimensions and basis IDs
+so the UI/report cannot imply that quorum or mathematical correctness equals truth.
+
+Begin with an explicit human-attestation workflow plus exact arithmetic and field
+matching. Add bounded independent semantic review only when calibrated against
+annotated evidence and budgeted explicitly. Never block all useful output while
+waiting: publish conditional comparisons with known gaps and possible next actions.
+
+6. STAGED IMPLEMENTATION AND ACCEPTANCE
+
+Phase A: Repair deterministic report bugs first. Preserve adverse citations and
+attribution; unsupported disagreements become unknown; surface final-audit
+concerns and overflow. Add explicit acquisition-objective shortfall records and
+reserve fetch capacity. Keep the current provider protocol and all spending fences.
+
+Phase B: Introduce versioned RelationAssessment/Objection records behind a policy
+version. Write them alongside existing outputs and compute the new reducers in
+shadow mode. Compare decisions without silently relabeling historical reports.
+Old reports remain bound to their original algorithm/policy versions.
+
+Phase C: Enable obligation-carrying synthesis/audit and scoped human attestation;
+switch publication to the new deterministic reducer after invariant tests and
+reviewed shadow discrepancies pass. Derive compatibility fields from the new
+records, never maintain two independent sources of truth.
+
+Phase D: Introduce objective-aware passage ranking; validate it against long-page,
+late-exclusion, quoted-negation, mirrored-source, stale-quote and conflicting-
+source cases. Add learned reranking only if it improves held-out recall under
+the same budget without increasing unsupported conclusions.
+
+Acceptance examples (new targeted tests, not rerunning old coverage as proof):
+  E-F01: unsupported auditor fail cannot produce demonstrated failure; genuine
+    accepted adverse basis retains its own citations and assessor.
+  E-F02: eight first-query candidates cannot starve other mandatory objectives;
+    exhausted context prevents unusable search spending; shortfalls stay visible.
+  E-F03: contradicted/stale ancestor alone cannot promote an identical claim;
+    a genuine opposite proposition can cite a refutation with explicit polarity;
+    all required premises are checked; cycles and scope mismatches fail closed.
+  E-F04: all open material IDs survive arbitrary response order and >20 findings;
+    missing dispositions remain open; invalidated resolutions reopen.
+  E-G01: exact scoped attestation can satisfy only the policy it actually meets;
+    stale/unmatched/partially verified quotes cannot certify a ready comparison.
+  E-G02: relevant tail exclusions are retrieved within the same packet budget;
+    every selected span reproduces its exact text/hash/locator.
+
+Use property/metamorphic tests for graph/order invariance, bounded resource use,
+freshness and qualification preservation; independent annotated examples for
+semantic judgments and evidence relevance. Assess retrieval recall of decisive
+support AND counterevidence, false ready/no-feasible rates, unresolved-objection
+retention, answer accuracy and cost/latency against a strong single-agent baseline.
+Freeze targets and unseen cases before comparing variants; report denominators,
+uncertainty and failures. No 'best' claim follows from test coverage, complexity,
+synthetic unanimity or a single aggregate score.

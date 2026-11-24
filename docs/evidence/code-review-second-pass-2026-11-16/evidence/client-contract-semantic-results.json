@@ -1,0 +1,103 @@
+{
+  "typed_requirement_before": [
+    {
+      "option": "option_a",
+      "total": "1600.00",
+      "minimum_spend": {
+        "requirement_id": "minimum_project_spend",
+        "result": "pass",
+        "basis_refs": [
+          "calc_a3b3ece4a05da5a490be1017064f4841c5b60117793a30c746633ab52c84610c"
+        ],
+        "method": "deterministic_calculation",
+        "assessor": "offline fixture",
+        "reason": "Checked 12-month cost 1600.00 USD gte 1200 USD."
+      }
+    },
+    {
+      "option": "option_b",
+      "total": "1840.00",
+      "minimum_spend": {
+        "requirement_id": "minimum_project_spend",
+        "result": "pass",
+        "basis_refs": [
+          "calc_dd317acc6406193a2e2da5584112973b08c1e9835193c28ed55164cd3ab09a91"
+        ],
+        "method": "deterministic_calculation",
+        "assessor": "offline fixture",
+        "reason": "Checked 12-month cost 1840.00 USD gte 1200 USD."
+      }
+    },
+    {
+      "option": "option_status_quo",
+      "total": "0.00",
+      "minimum_spend": {
+        "requirement_id": "minimum_project_spend",
+        "result": "fail",
+        "basis_refs": [
+          "calc_800a595d706bc02369efbfe9dda33c1e93dddb87029cd713565de1073911c8f4"
+        ],
+        "method": "deterministic_calculation",
+        "assessor": "offline fixture",
+        "reason": "Checked 12-month cost 0.00 USD gte 1200 USD."
+      }
+    }
+  ],
+  "typed_requirement_after": [
+    {
+      "option": "option_a",
+      "total": "1600.00",
+      "minimum_spend": {
+        "requirement_id": "requirement_manual_1",
+        "result": "unknown",
+        "basis_refs": [],
+        "method": "fixture_assessment",
+        "assessor": "offline fixture",
+        "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it."
+      }
+    },
+    {
+      "option": "option_b",
+      "total": "1840.00",
+      "minimum_spend": {
+        "requirement_id": "requirement_manual_1",
+        "result": "unknown",
+        "basis_refs": [],
+        "method": "fixture_assessment",
+        "assessor": "offline fixture",
+        "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it."
+      }
+    },
+    {
+      "option": "option_status_quo",
+      "total": "0.00",
+      "minimum_spend": {
+        "requirement_id": "requirement_manual_1",
+        "result": "unknown",
+        "basis_refs": [],
+        "method": "fixture_assessment",
+        "assessor": "offline fixture",
+        "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it."
+      }
+    }
+  ],
+  "entered_9000_upfront": {
+    "schema_valid": true,
+    "total": "600.00",
+    "formula": "50 \u00d7 1 \u00d7 12 months + 0 \u00d7 1",
+    "inputs": [
+      {
+        "label": "Monthly supplies and service",
+        "amount": "50",
+        "unit": "USD",
+        "source_ref": "passage_offer_a"
+      },
+      {
+        "label": "Installation (explicitly included)",
+        "amount": "0",
+        "unit": "USD",
+        "source_ref": "passage_offer_a"
+      }
+    ]
+  }
+}

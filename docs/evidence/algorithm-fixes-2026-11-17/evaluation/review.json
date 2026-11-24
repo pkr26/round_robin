@@ -1,0 +1,143 @@
+{
+  "schema_version": "evaluation-visual-fixes-1",
+  "date": "2026-11-17",
+  "provider_calls": 0,
+  "scope": "Offline implementation and synthetic regression validation; no empirical model-quality or release claim.",
+  "findings": [
+    {
+      "id": "EVAL-01",
+      "title": "Selected visual findings were absent from the edit request",
+      "status": "implemented",
+      "changes": [
+        "Exact approved findings and address/decline choices are bound to parent pixels, frozen brief, and canonical SHA-256 bundle.",
+        "API creates the bundle; worker reconstructs it from immutable scoped findings and rejects content/hash changes before authorization; actual image prompt contains the bundle.",
+        "Subsequent critics receive parent pixels, exact bundle, server-owned regression targets, and no same-round peer critiques."
+      ],
+      "sources": [
+        "backend/src/round_robin/visual/feedback.py:30",
+        "backend/src/round_robin/worker/image_tasks.py:219",
+        "backend/src/round_robin/providers/images.py:256",
+        "backend/src/round_robin/api/visual.py:342"
+      ]
+    },
+    {
+      "id": "EVAL-02",
+      "title": "Funded study omitted production claim, objection and correction protocol",
+      "status": "implemented",
+      "changes": [
+        "Study freezes per-arm shared policy version/hash and shares proposal quorum, conditional revision, synthesis/audit routing, retry guards and correction predicate.",
+        "Every request carries scoped claims, material obligations, evidence assessments and repair diagnostics. Parallel rounds freeze the obligation snapshot at the barrier.",
+        "The pure discussion reducer is shared with live runtime; issue events and state are retained in the study journal. Audit true cannot erase unresolved material obligations.",
+        "A concrete failed audit or open material issue can admit at most one correction plus independent re-audit; original 24-call, two-call logical-role, time and currency ceilings remain.",
+        "Minor unclassified dissent remains visible but does not alone admit the optional revision round."
+      ],
+      "sources": [
+        "experiments/study_runner.py:452",
+        "experiments/study_runner.py:560",
+        "experiments/runner.py:308",
+        "backend/src/round_robin/research/discussion.py:67",
+        "backend/src/round_robin/orchestration/protocol.py:43"
+      ],
+      "scope_limit": "The study remains explicitly fixed-evidence/preconfirmed-input with its journal executor; it does not reproduce live intake, research retrieval, or the full job-store engine. Human-curated evidence is not globally promoted to factual truth."
+    },
+    {
+      "id": "EVAL-03",
+      "title": "Two critics could omit regression checks while appearing complete",
+      "status": "implemented",
+      "changes": [
+        "Pixel-delivery coverage, regression completeness, and unresolved blockers are separate fields. Every prior material/critical issue and locked requirement needs two explicit independent checks.",
+        "Missing, uncertain, declined, persistent and regressed checks remain unresolved; absent findings do not mean resolution.",
+        "Unresolved ancestor targets persist across V2/V3 even when critics supply only regression rows without repeating the issue as a new finding.",
+        "Legacy V2 critiques without regression checks can receive one append-only supplement per critic through the existing review action, using the original remaining inference allowance. Original critiques remain unchanged. Incomplete exhausted recovery stays explicitly limited."
+      ],
+      "sources": [
+        "backend/src/round_robin/visual/feedback.py:55",
+        "backend/src/round_robin/visual/service.py:160",
+        "backend/src/round_robin/visual/service.py:348",
+        "backend/src/round_robin/visual/views.py",
+        "backend/src/round_robin/visual/schemas.py:82"
+      ]
+    },
+    {
+      "id": "EVAL-04",
+      "title": "Renamed copies inflated independent task denominators",
+      "status": "implemented",
+      "changes": [
+        "Shared substantive case fingerprints remove display/identity aliases, normalize known unordered record collections, and preserve amounts, narrative, meaningful evidence, and ordered sequences.",
+        "Study, end-to-end release and visual manifests reject substantive duplicate fingerprints; optional development fingerprints reject renamed held-out overlap.",
+        "Release and visual fingerprint context includes decision-relevant requirements/evidence/rubrics. The tool does not infer semantic independence from a hash."
+      ],
+      "sources": [
+        "experiments/cases.py:19",
+        "experiments/release.py:35",
+        "experiments/visual_evaluation.py:56",
+        "experiments/study_runner.py:115"
+      ]
+    }
+  ],
+  "evaluation_tools": {
+    "paired_comparison": "experiments/paired.py:83",
+    "behavior": [
+      "Same frozen tasks and planned primary denominator across arms; missing/failed/insufficiently reviewed results are not useful.",
+      "Paired wins/losses/ties and per-stratum summaries, recorded-seed cluster bootstrap intervals, exact McNemar only for independent task clusters.",
+      "Critical-defect differences withheld until both primary review sets are complete; exact one-sided zero-event bounds reported only under independent-case assumption.",
+      "Repeats remain diagnostics, not extra independent cases; original reviewer disagreement remains visible.",
+      "Approved reviewer roster enforced when supplied in frozen mapping; blinded output and measurement records bind exact retained trial/configuration identities.",
+      "Finite exact cost accounting includes unknown exposure; observed admitted latency denominator includes failed outcomes. No automatic phase/release pass."
+    ],
+    "limitations": [
+      "Synthetic tests verify implementation, not task accuracy or human usefulness.",
+      "Distinct provider/reviewer identities do not themselves prove epistemic independence.",
+      "Small/unrepresentative clusters can give unreliable bootstrap precision; preregister thresholds and multiplicity handling.",
+      "Normalized hashes catch aliases, not paraphrases or shared hidden project dependencies.",
+      "No paid model runs or real human grading were performed."
+    ]
+  },
+  "validation": [
+    {
+      "log": "pytest-focused.log",
+      "result": "152 passed; before final ancestry and structured-material supplement."
+    },
+    {
+      "log": "pytest-final-focused.log",
+      "result": "172 passed, 1 obsolete unconditional-revision assertion failed. Production sources were final. Assertion then corrected to check declared minor-only skip and retained minor issues."
+    },
+    {
+      "log": "pytest-final-affected.log",
+      "result": "12 passed, including all new regression tests and the corrected study graph assertion; no product source changes between the last two runs."
+    }
+  ],
+  "checks": [
+    "Actual mocked HTTP image prompt contains exact selected finding and declined choice.",
+    "Hash and immutable-parent tampering rejected.",
+    "Empty child critics cannot clear parent defect or locked requirement; disagreement remains persistent.",
+    "Append-only legacy recovery leaves originals unchanged; persistent ancestor survives next version.",
+    "Alias/title/order duplicate detected; altered cost and ordered sequence remain distinct.",
+    "Failed audit admits one bounded correction and independent re-audit, with no replay on rerun.",
+    "Claims receive stable distinct scoped IDs and are carried to synthesis.",
+    "Structured material objections trigger all revision nodes; unresolved obligations survive audit true; same-round critique contexts remain isolated.",
+    "Paired missing denominator and exact zero-event uncertainty verified.",
+    "Cost/latency records reject mismatched exposure and include failed admissions."
+  ],
+  "source_sha256": {
+    "experiments/cases.py": "9d623cdff444ad883f88a4dd5fd5328cddd850e9fdd4e3dfd881c8ad6f164728",
+    "experiments/paired.py": "0b34a0fd329450d234dc44beb16ed5074b2864820e430fe210d9759934ebcd13",
+    "experiments/evaluation.py": "3bde8cc385f7bc0afd15b3adae579643dace51702e6cee741acdaa6ddfa28689",
+    "experiments/release.py": "b7621ed6798ed4631526513ef06410f33de8584c7c852240dd6746fc77edadc1",
+    "experiments/visual_evaluation.py": "4fc235f959ccfe0fb49e0fbad8cd0aaee0de5e0d5e49864a089961288317e080",
+    "experiments/runner.py": "29f81b625eccfe972b10df470e472c3911a6821fe6f5739d33b678d35c905c1c",
+    "experiments/study_runner.py": "4b1711fa361b77c17298e71f9611edd7d40c0f5377778dba8c30e14b20cc92b7",
+    "backend/src/round_robin/visual/feedback.py": "8065e00edfea41bb6e822d7f7b8260d748ebfed468aab7937156b453a1c7f2e5",
+    "backend/src/round_robin/visual/service.py": "8e2f7b43a4ebb4c0473bd5eee1aefd113458e7a58b9b0f463d77f4fde7ba258d",
+    "backend/src/round_robin/visual/reviews.py": "68f0dd0d502a6a27f3187f7a9eb87b54bb038eda653fe4eaca21388f4370d433",
+    "backend/src/round_robin/visual/schemas.py": "b0de434ff0a7faf20388c36a8a2ea3ed6d89c4e670373744cd8c27fdc0a739d2",
+    "backend/src/round_robin/visual/views.py": "c8fbbc86609034253a1085e571119c04c4688d3f95246823e1600736d4c9a774",
+    "backend/src/round_robin/worker/image_tasks.py": "e89fb975e5d4a00d31a4a5f99cecad6485098774e645d45617ab5b2ea1acd6f3",
+    "backend/src/round_robin/providers/images.py": "ad3b8f9ca3dfce6751897ece8127e83b8c0ef4baffbed54b7aea580e531cd75d",
+    "backend/src/round_robin/api/visual.py": "17fc505ff3a8184d279ee29451a118f32cbd71256ba75c1e801458f14e9fbe6e",
+    "backend/tests/test_algorithm_evaluation_visual_fixes.py": "1c078c64dfde951bb1f2481ef192afdfb519001014d07e3a266135fc0f01456b",
+    "backend/tests/test_study_runner.py": "3efb96c749b53afdb9d64312e59d5bed7e3d8b51867b17fead80e397ad7c3a8d",
+    "backend/tests/test_exhaustive_image_worker.py": "18d6692269a96c6e595b5ba0b2581d55226a548dffda739e0e29e39d85003e2b",
+    "backend/tests/test_visual_evaluation.py": "ccb816b9e23f8b84fe656cf3c97cd2de2a0674ff2eb4363fc6b87249c4156050"
+  }
+}

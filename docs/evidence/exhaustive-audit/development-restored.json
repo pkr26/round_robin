@@ -1,0 +1,36 @@
+{
+  "started_at_utc": "2026-11-16T17:58:34.392950+00:00",
+  "pid": 32081,
+  "command": [
+    "uv",
+    "run",
+    "python",
+    "scripts/dev.py",
+    "--skip-services"
+  ],
+  "log": ".local/exhaustive-audit/development-restored.log",
+  "execution_mode": "simulated",
+  "paid_access_enabled": false,
+  "health_verified": true,
+  "checked_at_utc": "2026-11-16T18:01:00.663580+00:00",
+  "checks": {
+    "api_health": {
+      "url": "http://127.0.0.1:8000/health",
+      "status": 200,
+      "mode": "simulated",
+      "paid_access_configured": false
+    },
+    "api_ready": {
+      "url": "http://127.0.0.1:8000/ready",
+      "status": 200,
+      "status_body": "ready"
+    },
+    "live_workspace": {
+      "url": "http://127.0.0.1:3000/live",
+      "status": 200,
+      "html_bytes": 16999,
+      "contains_workspace": true
+    }
+  },
+  "original_development_supervisor_was_restored": true
+}

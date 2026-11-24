@@ -1,0 +1,44 @@
+[project]
+name = "round-robin"
+version = "0.2.0"
+description = "Durable project comparisons with bounded independent review and explicit spending authorization"
+requires-python = ">=3.12"
+dependencies = [
+    "pydantic>=2.12,<3",
+    "fastapi>=0.121,<1",
+    "uvicorn>=0.38,<1",
+    "sqlalchemy>=2.0,<3",
+    "alembic>=1.17,<2",
+    "psycopg[binary]>=3.2,<4",
+    "celery[redis]>=5.6,<6",
+    "httpx>=0.28,<1",
+    "authlib>=1.6,<2",
+    "reportlab>=4.4,<5",
+    "pillow>=13,<14",
+    "python-multipart>=0.0.20,<1",
+    "defusedxml>=0.7,<1",
+    "httpcore>=1.0.9,<2",
+    "idna>=3.10,<4",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9,<10",
+    "httpx>=0.28,<1",
+    "pypdf>=6,<7",
+    "pypdfium2>=5,<6",
+    "coverage>=7.17.3",
+    "hypothesis>=6.170.15",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["backend/src", "."]
+testpaths = ["backend/tests"]
+addopts = "-ra"
+
+[tool.ruff]
+target-version = "py312"
+

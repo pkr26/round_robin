@@ -1,0 +1,93 @@
+{
+  "scope": "Second-pass frontend/client/visual audit; excludes all 17 prior findings. Actual React components executed in jsdom with controlled transport replies, real AJV draft validation, backend Pydantic validation and production calculation/report policy. No application source changed, no existing app data touched, no providers called.",
+  "findings": [
+    {
+      "id": "client2-01",
+      "priority": "P2",
+      "title": "An older autosave can overwrite the newly opened linked follow-up brief",
+      "path": "frontend/app/live-workspace.tsx",
+      "line_start": 361,
+      "line_end": 363,
+      "related_locations": ["frontend/app/live-workspace.tsx:235", "frontend/app/live-workspace.tsx:320", "frontend/app/live-workspace.tsx:502"],
+      "trigger": "Edit the current meeting draft and let its 700ms autosave PATCH begin. Before the reply, click its saved review in Review history, then Create a linked follow-up. Allow the older PATCH to complete.",
+      "actual": "followUp replaces the draft with snapshot.brief but does not increment editGeneration. History/follow-up remain enabled during autosave. Its late handler sees the same meeting and generation, replaces the follow-up with the older working draft, and marks it clean. The next Save linked follow-up submits that wrong brief with the selected parent_run_id.",
+      "evidence": "The real component showed Frozen reviewed brief before the deferred response, Edited working draft afterwards, no Unsaved changes indicator, then posted parent run_e841230d629649bbb4119a6b88401d39 with brief.title Edited working draft and expected_draft_revision 2.",
+      "impact": "Follow-up creation silently uses facts from a different draft instead of the frozen reviewed input, and can persist that substituted content.",
+      "suggested_fix": "Advance the edit/scope generation when entering follow-up or clarification, and fence existing autosave completions to the editor mode they originated from.",
+      "probe": "/tmp/rr-audit2-client/live-component-probes.cjs",
+      "result": "/tmp/rr-audit2-client/live-component-results.json#/autosave_overwrites_followup"
+    },
+    {
+      "id": "client2-02",
+      "priority": "P2",
+      "title": "Editing any requirements line erases existing typed constraints",
+      "path": "frontend/app/live-workspace.tsx",
+      "line_start": 306,
+      "line_end": 309,
+      "related_locations": ["frontend/app/live-workspace.tsx:167", "backend/src/round_robin/orchestration/reporting.py:61"],
+      "trigger": "Open a valid saved draft containing a numeric requirement whose id is not the UI-reserved requirement_budget or requirement_deadline, then add an unrelated line in Hard requirements and save.",
+      "actual": "The textarea serializes all its rows to new requirement_manual_N ids with metric manual, operator manual and threshold null. The original numeric requirement is not preserved even if its displayed text was untouched.",
+      "evidence": "A total_cost/gte/1200 constraint minimum_project_spend became requirement_manual_1/manual/manual/null. Both payloads pass real contracts. Production comparison_data changed its pass/pass/fail results into unknown/unknown/unknown for the same option totals.",
+      "impact": "An ordinary edit silently removes deterministic enforcement and changes requirement identities used by the saved decision evidence; live model assessments can now replace a previously mandatory arithmetic check.",
+      "suggested_fix": "Preserve each existing requirement's identity/type/operator/threshold when editing unrelated text; represent typed constraints explicitly or keep them out of the lossy manual textarea.",
+      "probe": "/tmp/rr-audit2-client/live-component-probes.cjs",
+      "supporting_probe": "/tmp/rr-audit2-client/contract-semantic-probes.py",
+      "result": "/tmp/rr-audit2-client/contract-semantic-results.json#/typed_requirement_after"
+    },
+    {
+      "id": "client2-03",
+      "priority": "P2",
+      "title": "Entering a price can leave it excluded from every cost calculation",
+      "path": "frontend/app/live-workspace.tsx",
+      "line_start": 293,
+      "line_end": 294,
+      "related_locations": ["frontend/app/live-workspace.tsx:488", "backend/src/round_robin/research/calculator.py:121"],
+      "trigger": "Open a contract-valid draft with a not_applicable cost component, enter a real price in its ordinary USD amount input, and save.",
+      "actual": "editCost changes amount and unknown_reason but preserves the hidden status. No UI label or control reveals not_applicable/excluded state. A new amount remains not_applicable and is skipped by the calculator (excluded similarly stays an unresolved charge).",
+      "evidence": "The real component accepted and saved 9000 in Upfront purchase (USD), retaining status not_applicable. The backend validates this payload. Production lifecycle_total ignored the 9000 entirely and returned 600.00 from the monthly and installation lines.",
+      "impact": "Users can believe they supplied a missing or newly applicable cost while the application omits that value from budget checks and comparisons.",
+      "suggested_fix": "Expose inclusion status alongside every editable amount and require an explicit status transition when supplying a cost; do not present skipped values as ordinary included price fields.",
+      "probe": "/tmp/rr-audit2-client/live-component-probes.cjs",
+      "supporting_probe": "/tmp/rr-audit2-client/contract-semantic-probes.py",
+      "result": "/tmp/rr-audit2-client/contract-semantic-results.json#/entered_9000_upfront"
+    },
+    {
+      "id": "client2-04",
+      "priority": "P2",
+      "title": "Review-history navigation reuses another run's unsaved choice and notes",
+      "path": "frontend/app/live-workspace.tsx",
+      "line_start": 502,
+      "line_end": 502,
+      "related_locations": ["frontend/app/live-workspace.tsx:447", "frontend/app/live-workspace.tsx:467", "backend/src/round_robin/api/drafts.py:137"],
+      "trigger": "Select an approach and type its reason on one report, then use Review history to open another report with a replaced option id and click Save my choice.",
+      "actual": "History changes runId and snapshot but leaves choiceOption, choiceNote and outcomeNote intact. The new select has no matching option so displays its empty placeholder, while Save remains enabled because the stale state is nonempty. outcomePayload posts to the new run using the old note and classifies the absent option as modified with a Decision deferred reason.",
+      "evidence": "With two valid backend-validated snapshots, the selector displayed an empty value yet Save was enabled. It submitted run_other_history, choice modified, reason Decision deferred. The first report has the best quote. The same stale outcome textarea can be saved to the new run.",
+      "impact": "User choice/outcome records become attached to the wrong saved decision, including contradictory classification and reason.",
+      "suggested_fix": "Reset or key the outcome editor by run/report identity and validate that the chosen id belongs to the currently displayed comparison before enabling or submitting.",
+      "probe": "/tmp/rr-audit2-client/live-component-probes.cjs",
+      "result": "/tmp/rr-audit2-client/live-component-results.json#/stale_outcome"
+    },
+    {
+      "id": "client2-05",
+      "priority": "P2",
+      "title": "Saving a native interface clears its browser actions and assertions",
+      "path": "frontend/app/design/workspace.tsx",
+      "line_start": 112,
+      "line_end": 112,
+      "related_locations": ["frontend/app/design/workspace.tsx:180", "frontend/app/design/workspace.tsx:182", "backend/src/round_robin/visual/service.py:143", "backend/src/round_robin/visual/renderers/interface.py:80"],
+      "trigger": "Enter native HTML plus declared browser actions/assertions, render V1 successfully, change only the HTML and render the next version.",
+      "actual": "renderNative invokes open(result), which unconditionally sets actions to []. The HTML is rehydrated but the interaction plan is not. Saved provenance only contains action type, hashed selectors and result statuses, so reopening cannot reconstruct the lost plan either.",
+      "evidence": "The actual React component's first submission included a click #submit with assertion #result text Saved. Immediately after success its actions field was []. The second render of HTML with the click handler removed submitted actions: [].",
+      "impact": "Declared functional checks disappear after every successful save and are silently omitted from subsequent candidate renders; an interaction regression is no longer exercised unless the user manually reconstructs the plan.",
+      "suggested_fix": "Preserve actions while rendering another revision of the same design, and retain the exact private interaction plan with the version if reopen is intended to restore editable native input.",
+      "probe": "/tmp/rr-audit2-client/native-component-probe.cjs",
+      "result": "/tmp/rr-audit2-client/native-component-results.json"
+    }
+  ],
+  "reproduction_commands": [
+    "node /tmp/rr-audit2-client/live-component-probes.cjs",
+    "PYTHONPATH=backend/src .venv/bin/python /tmp/rr-audit2-client/contract-semantic-probes.py",
+    "node /tmp/rr-audit2-client/native-component-probe.cjs"
+  ],
+  "limitations": ["Transport controlled in React probes; no real user account, provider or active development server contacted.", "No confirmed cross-account/private state leak found in this subtask.", "No claim that these probes exhaust every possible asynchronous interleaving."]
+}

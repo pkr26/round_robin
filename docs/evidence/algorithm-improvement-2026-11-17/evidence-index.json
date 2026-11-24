@@ -1,0 +1,70 @@
+[
+  {
+    "path": "PLAN.txt",
+    "sha256": "75a48265a6d2aabb7957f8231d487038b6bc2c256d54e27ec47f5e43d96abbe9"
+  },
+  {
+    "path": "closure-plan.json",
+    "sha256": "ad0529f3d513c060690bb27fef45fa936d6c0fcdb2c4c9f975a3ee8d92d9c1e0"
+  },
+  {
+    "path": "evaluation/DESIGN.json",
+    "sha256": "eccfb71ac0c5599696391288d67e2be48c366fdf182d249f2c34457728213760"
+  },
+  {
+    "path": "evaluation/DESIGN.txt",
+    "sha256": "b1eaff52fdce58ee58890b3a83346e5d8d4324cbd23ea9e8b88787abbfa2067f"
+  },
+  {
+    "path": "evidence/DESIGN.txt",
+    "sha256": "a241f3b594df20ea09748554154daf4259645c70e509f1b29d6a9d064fdee822"
+  },
+  {
+    "path": "evidence/design.json",
+    "sha256": "f4f993bf547fae90da7c842271419f0cf840f2a14d3733192972344abf228731"
+  },
+  {
+    "path": "recheck/evidence-run.log",
+    "sha256": "0eb5a8e63b77830040862611222267b915d60863585467da4c3af2d923e2ee93"
+  },
+  {
+    "path": "recheck/evidence_probes.py",
+    "sha256": "5c020f574322947d8160f68eb0be14e3564196c5508ab49804ef11b2ee6cba32"
+  },
+  {
+    "path": "recheck/probe-results.json",
+    "sha256": "4a0d5898b576b72d8d27f46acfae1b00e222fb20d0c438447aac55eeb8d5f333"
+  },
+  {
+    "path": "recheck/runtime-results.json",
+    "sha256": "49a3623e70d079114ab7127fe3134478dccbb09636a5a1701470051c9a33e532"
+  },
+  {
+    "path": "recheck/runtime_probes.py",
+    "sha256": "8ff0a6b19a654b12b91bbf15b33c68994040ca55a6177cb73d230df60b42d87d"
+  },
+  {
+    "path": "recheck/source-check.json",
+    "sha256": "671811424795eca0e109c9a56cfc27c9aa814fef8b23bce6acd7ea87616b1e54"
+  },
+  {
+    "path": "recheck/visual-cross-review.json",
+    "sha256": "26026904c574f89bc9ac047c09bece7876edc2bfce905fcf6f55b289749d2f4a"
+  },
+  {
+    "path": "recheck/visual-run.log",
+    "sha256": "26026904c574f89bc9ac047c09bece7876edc2bfce905fcf6f55b289749d2f4a"
+  },
+  {
+    "path": "recheck/visual_cross_review.py",
+    "sha256": "f26aeb3f1fcb04b1a6dc5c8dc1cf819bfd9a0e618cead189ea2761ec9857198a"
+  },
+  {
+    "path": "runtime/DESIGN.txt",
+    "sha256": "5cecd785ad0364fc6279dce3e3e1431d4da3623a346bb5cde64f61dd9beeb31c"
+  },
+  {
+    "path": "validation.json",
+    "sha256": "1412e549b4f84131693dffde6222aef06483b0604bbfcef28a5377f6c5345475"
+  }
+]

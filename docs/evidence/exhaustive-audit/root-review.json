@@ -1,0 +1,199 @@
+{
+  "review_basis": "Fresh source, current requirements, new execution and independent cross-review; prior audit findings and counters discarded.",
+  "reviewed_source": [
+    {
+      "path": "backend/src/round_robin/app.py",
+      "sha256": "802e50204cd2604707be3f99e8f0f91e32750339326ef876347f18e1508884bb"
+    },
+    {
+      "path": "backend/src/round_robin/configuration.py",
+      "sha256": "9a848aebbf299774a4ee904187f594315f577636ea04e6bbe4f8689cb65d6f09"
+    },
+    {
+      "path": "backend/src/round_robin/fixture_api.py",
+      "sha256": "e107103ad2790794fe02183ec3b2158c4226e78a6f33afd4c8241f5a49be9533"
+    },
+    {
+      "path": "backend/src/round_robin/export_contracts.py",
+      "sha256": "b8b22e6b87631043561f5c4398722c27a4d5f6a7247294b641fcba73a38d094b"
+    },
+    {
+      "path": "backend/src/round_robin/api/artifacts.py",
+      "sha256": "3c91405de0880b8f8580de0c9065776038da498b89313ce14d765c0d889cfecb"
+    },
+    {
+      "path": "backend/src/round_robin/api/auth.py",
+      "sha256": "8c29bd8ceb6e8c3848eeaca23dcbd6ad5b6c05f22a45ba9f782db19eb87ebc30"
+    },
+    {
+      "path": "backend/src/round_robin/api/commands.py",
+      "sha256": "a521149e1e337e1bc258606d3c58a7c525229c56b8e7cf218ef15921666839ec"
+    },
+    {
+      "path": "backend/src/round_robin/api/drafts.py",
+      "sha256": "30173f9dbf9cca9df45a286bdb0fe5cae881f601f31356789cea796293a409a4"
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "sha256": "0e8ac3040e53c3293d7560286a76fb6c04dd03b1a1a6b34321cc8f4d2f83a7d0"
+    },
+    {
+      "path": "backend/src/round_robin/api/lineage.py",
+      "sha256": "6ba0c02e21cd91f61ca4d2ec5915e13380e95b879411a21c94874dcd24baed2e"
+    },
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "sha256": "f8b39c56bf207f0564a50ae6ad3cac59be56f58b7754ba7059c2b6fde0661a81"
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "sha256": "322bfb2386197d01e61024579c4cf8b4f5523770663d20812150f56d51c06796"
+    },
+    {
+      "path": "backend/src/round_robin/database/session.py",
+      "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f"
+    },
+    {
+      "path": "backend/src/round_robin/database/safety.py",
+      "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a"
+    },
+    {
+      "path": "experiments/evaluation.py",
+      "sha256": "f4b820c978b1fb81923d69475e46fa05060747f93c1375f7c33ca4a6b74a7067"
+    },
+    {
+      "path": "experiments/journal.py",
+      "sha256": "547351dccc0f16a068f0e91beeef71c266f6b8f1fc25fe8d675a40bce6a5037b"
+    },
+    {
+      "path": "experiments/release.py",
+      "sha256": "59f3ed798f1be472c72b4ea1ed017fd6419d153276208db7a488d0f6bd9b9052"
+    },
+    {
+      "path": "experiments/visual_evaluation.py",
+      "sha256": "aab841798f0c3ac03caf9cb48e5b5357a6805fc0c4043d0fd92e13890d4eb782"
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "cd227c4e548aaf634ea463343e2a91ea5f83b32720804c8c8a61991955844f8d"
+    },
+    {
+      "path": "scripts/scenario_summary.py",
+      "sha256": "3b330bfda05b1cb0983b7c045ef33c7d5fc98fce2f80d53a089745924a635044"
+    },
+    {
+      "path": "scripts/serve_prototype.py",
+      "sha256": "0cad86469e7cd9c3cbc72b0a09f33f5473635a209c1fe79933aa3cda4d8b4cee"
+    },
+    {
+      "path": "scripts/verify.py",
+      "sha256": "cfc41540851eaa5bff0d2431679559ab1c15005c65f11ee761651ed112fa4de8"
+    },
+    {
+      "path": "frontend/app/live-workspace.tsx",
+      "sha256": "b70b6fd4e57806f779c84a6f71573b3e95430eb84d64567b77fba134b6a2c55f"
+    },
+    {
+      "path": ".github/workflows/verification.yml",
+      "sha256": "e47305b3d8a724cdfecf0241eae95f4a49f6dbf399f6e4ed355431c0547a025b"
+    },
+    {
+      "path": "compose.yaml",
+      "sha256": "4da8f16098ef0af30ee968d63996da3707358f138b694b18543c3bd0e77db29b"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha256": "30cc82729d195464493b682530ef4c11680d27d6b8342240bbfe4c37af091909"
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "ec1991e6f877dcb893c6788c1b9d381624ffde94b563f6eff30c94fdde8c74ec"
+    },
+    {
+      "path": "uv.lock",
+      "sha256": "5d828d01c81e2e0d054841e2f36b608ae2e193fbd72f242d41f6193078cb47ea"
+    },
+    {
+      "path": "backend/src/round_robin/api/hosted.py",
+      "sha256": "a99e9fa456eb277a0f4350777b7f16cdf7e5d3818b9878999641387d89c1b1ad"
+    },
+    {
+      "path": "backend/src/round_robin/fixtures.py",
+      "sha256": "8569d95a017f37418a05a4e91bf44e0effc30301d47c5973a208d999f3a2aaf0"
+    },
+    {
+      "path": "backend/src/round_robin/__init__.py",
+      "sha256": "f0fe4f5ae2569dfae701fbc51127dea7fcad802614d46c386f6d8ee814473589"
+    },
+    {
+      "path": "backend/src/round_robin/api/__init__.py",
+      "sha256": "8f846a55f39ad5274695ad70d89fe28b4a383df5806fe30e405675a03e2f8ccb"
+    },
+    {
+      "path": "backend/src/round_robin/database/__init__.py",
+      "sha256": "5ad531f47b9f73c18da3de4609729488db8adc79e969187f5630779cc26fb461"
+    },
+    {
+      "path": "backend/src/round_robin/providers/__init__.py",
+      "sha256": "f415cb787d28c12ca66037ab855745b4b0ec7aa7fe08ca20cb235db00de37a93"
+    },
+    {
+      "path": "backend/src/round_robin/worker/__init__.py",
+      "sha256": "c519fc9c2cdc595a41995441f0b6c59fbfa6d8106480861bd37b4533915cd15a"
+    },
+    {
+      "path": "experiments/__init__.py",
+      "sha256": "e4e628c05ba5d27ecd19f0de87aa1a38e938788cb224fea964b8279af513b0a3"
+    },
+    {
+      "path": "scripts/audit.py",
+      "sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f",
+      "review": "Final read of owned process groups, deferred signal handling, bounded escalation, failed-record publication and lock lifetime after independent runtime/visual review."
+    }
+  ],
+  "regression_files": [
+    "backend/tests/test_exhaustive_api.py",
+    "backend/tests/test_exhaustive_api_final.py",
+    "backend/tests/test_exhaustive_audit_runner.py",
+    "backend/tests/test_exhaustive_boundaries.py",
+    "backend/tests/test_exhaustive_contracts.py",
+    "backend/tests/test_exhaustive_coverage_gate.py",
+    "backend/tests/test_exhaustive_hosted_downloads.py",
+    "backend/tests/test_exhaustive_lineage.py",
+    "backend/tests/test_exhaustive_study_records.py",
+    "backend/tests/test_exhaustive_tooling.py",
+    "frontend/tests/live-workspace.test.tsx",
+    "backend/tests/integration/test_exhaustive_postgres.py"
+  ],
+  "independent_reviewers": [
+    "runtime: API command, preflight, export, parent replacement authority",
+    "visual_frontend: hosted artifact policy and live frontend test assertions",
+    "evidence: coverage gate and fresh audit runner"
+  ],
+  "limits": [
+    "Coverage and finite adversarial interleavings do not prove absence of unknown defects.",
+    "Selected parent reuse has a connected real browser/API/worker journey; active replacement has component/API and actual PostgreSQL race coverage. No single browser journey combines both."
+  ],
+  "additional_validation": "Independent review prompted stronger still-mounted parent, run, meeting and autosave scope-switch tests; 73 component tests pass. Independently reviewed the final native source scope-generation guard and deterministic visible-editor early/late hydration regression; visual ledger binds those hashes.",
+  "final_process_cleanup_followup": {
+    "finding": "Darwin zombie-only owned groups can return EPERM while exiting; never equate permission denial with disappearance.",
+    "script_sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f",
+    "tests_sha256": "3a1ce4dff411a5430b58dce6eb0118f01bd46f71aa48cab6a31e50fafd20cf31",
+    "reviewers": [
+      "runtime implementation and deterministic/real-process verification",
+      "root final source read"
+    ],
+    "tests_passed": 52,
+    "focused_lines": {
+      "covered": 144,
+      "total": 144
+    },
+    "focused_branches": {
+      "covered": 42,
+      "total": 42
+    },
+    "actual_owned_child_exit_probe_count": 1500,
+    "evidence": ".local/exhaustive-audit/runtime/runner-permission-final",
+    "primary_source": "https://github.com/apple-oss-distributions/xnu/blob/main/bsd/kern/kern_sig.c"
+  }
+}

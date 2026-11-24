@@ -1,0 +1,39 @@
+{
+  "method": "Independent source inspection of evidence agent probe results; no rerun needed",
+  "cross_review": [
+    {
+      "finding": "audit_disagreement",
+      "status": "confirmed_with_scope_caveat",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/reporting.py:97",
+        "backend/src/round_robin/reports/readiness.py:9"
+      ],
+      "reason": "Replacement copies synthesis refs and assessor, changes result/reason on audit disagreement without checking audit refs. Readiness interprets copied refs as demonstrated failure.",
+      "caveat": "Probe directly invokes report builder with completed execution status; does not establish controller completed a failed audit. Readiness bug does not depend on that execution-status claim."
+    },
+    {
+      "finding": "support_laundering",
+      "status": "confirmed_structural_support_bug",
+      "source_refs": [
+        "backend/src/round_robin/research/claims.py:19",
+        "backend/src/round_robin/providers/base.py:131",
+        "backend/src/round_robin/research/reuse.py:57",
+        "backend/src/round_robin/research/reuse.py:81"
+      ],
+      "reason": "Graph rooting ignores support/refute polarity and evidence statuses; provider validation and durable claim persistence use the same rooting test, allowing the same contradicted proposition to retain model-supplied supported status.",
+      "caveat": "Reachability cannot establish semantic truth. A new opposite proposition may legitimately cite evidence contradicting an old proposition; require proposition-specific typed support/refute relations rather than rejecting every contradicted source."
+    },
+    {
+      "finding": "dissent_loss",
+      "status": "confirmed_report_omission",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/reporting.py:127",
+        "backend/src/round_robin/orchestration/reporting.py:164",
+        "backend/src/round_robin/reports/exports.py:66",
+        "frontend/app/live-workspace.tsx:474"
+      ],
+      "reason": "Chronological dissent is truncated at 20 after audit critical defects are appended; early ordinary concerns can exclude final audit reasons from report UI/exports.",
+      "caveat": "Original contributions remain saved and generic final-audit unresolved flag survives. Earlier proposal-only critical defects are omitted, but absence of resolution records does not prove they remain unresolved after later audit passes."
+    }
+  ]
+}

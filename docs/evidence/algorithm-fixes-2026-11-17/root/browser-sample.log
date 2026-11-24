@@ -1,0 +1,21 @@
+
+> round-robin-workspace@0.1.0 test:e2e /Users/pradeepreddy/Desktop/round_robin
+> playwright test prototype.spec.ts
+
+
+Running 8 tests using 2 workers
+
+(node:765) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:766) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium] › tests/e2e/prototype.spec.ts:23:1 › sample passages, exact calculations, keyboard dialog and immutable JSON export (1.3s)
+  ✓  2 [chromium] › tests/e2e/prototype.spec.ts:70:1 › custom draft saves without presenting an unrelated report and opt-in storage restores (2.6s)
+  ✓  3 [chromium] › tests/e2e/prototype.spec.ts:96:1 › changed horizon creates a linked walkthrough and preserves the original report (5.3s)
+  ✓  4 [chromium] › tests/e2e/prototype.spec.ts:127:1 › unknown installation retains unknown total and conditional readiness (4.9s)
+  ✓  5 [chromium] › tests/e2e/prototype.spec.ts:153:1 › partial result does not invent a recommendation or readiness (1.1s)
+  ✓  7 [chromium] › tests/e2e/prototype.spec.ts:198:1 › expired preflight cannot start a new simulated review (985ms)
+  ✓  8 [chromium] › tests/e2e/prototype.spec.ts:212:1 › narrow viewport reflows and tabs support arrow-key navigation (887ms)
+  ✓  6 [chromium] › tests/e2e/prototype.spec.ts:172:1 › cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon (2.5s)
+
+  8 passed (11.9s)

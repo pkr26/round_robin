@@ -1,0 +1,117 @@
+Combined 23 files, skipped 29
+Name                                                                      Stmts   Miss Branch BrPart   Cover   Missing
+----------------------------------------------------------------------------------------------------------------------
+backend/migrations/env.py                                                    25      0      6      0 100.00%
+backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py      12      0      0      0 100.00%
+backend/migrations/versions/c6917df240ab_optional_visual_contracts.py        22      0      0      0 100.00%
+backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py      10      0      0      0 100.00%
+backend/migrations/versions/e7209a4f361c_claim_versions_and_reuse.py         15      0      4      0 100.00%
+backend/migrations/versions/f973196b6714_initial_application.py              86      0      0      0 100.00%
+backend/src/round_robin/__init__.py                                           1      0      0      0 100.00%
+backend/src/round_robin/api/__init__.py                                       0      0      0      0 100.00%
+backend/src/round_robin/api/artifacts.py                                    282      0     86      2  99.46%   266->268, 315->319
+backend/src/round_robin/api/auth.py                                          34      1     14      1  95.83%   18
+backend/src/round_robin/api/commands.py                                      59      0     16      0 100.00%
+backend/src/round_robin/api/drafts.py                                       180      2     46      2  98.23%   169, 198
+backend/src/round_robin/api/events.py                                       232      1     62      1  99.32%   242
+backend/src/round_robin/api/hosted.py                                        51      0      8      0 100.00%
+backend/src/round_robin/api/lineage.py                                       29      0     12      0 100.00%
+backend/src/round_robin/api/preflight.py                                    158      0     52      0 100.00%
+backend/src/round_robin/api/reuse.py                                         14      0      0      0 100.00%
+backend/src/round_robin/api/visual.py                                       505     16    162      5  96.55%   185-194, 207-210, 247, 352, 357, 366, 528
+backend/src/round_robin/app.py                                              171      5     42      1  96.24%   191-193, 201-202
+backend/src/round_robin/configuration.py                                     74      2     30      2  96.15%   76, 85
+backend/src/round_robin/database/__init__.py                                  0      0      0      0 100.00%
+backend/src/round_robin/database/claim_models.py                             31      0      0      0 100.00%
+backend/src/round_robin/database/models.py                                  226      0      0      0 100.00%
+backend/src/round_robin/database/safety.py                                   22      0      8      0 100.00%
+backend/src/round_robin/database/services.py                                 55      1     16      1  97.18%   55
+backend/src/round_robin/database/session.py                                  16      0      2      0 100.00%
+backend/src/round_robin/database/visual_models.py                            57      0      0      0 100.00%
+backend/src/round_robin/dispatcher/__init__.py                                0      0      0      0 100.00%
+backend/src/round_robin/dispatcher/service.py                               175      2     66      3  97.93%   39, 84, 87->79
+backend/src/round_robin/export_contracts.py                                  32      1      8      1  95.00%   41
+backend/src/round_robin/fixture_api.py                                       36      0      6      0 100.00%
+backend/src/round_robin/fixtures.py                                         122      0     36      0 100.00%
+backend/src/round_robin/operations/__init__.py                                0      0      0      0 100.00%
+backend/src/round_robin/operations/artifact_lifecycle.py                     46      4     14      1  91.67%   32-34, 49
+backend/src/round_robin/operations/durability.py                            157      1     34      1  98.95%   165, 170->169
+backend/src/round_robin/operations/maintenance.py                            53      0     20      0 100.00%
+backend/src/round_robin/operations/processes.py                              56      1     16      0  98.61%   59
+backend/src/round_robin/operations/recovery.py                              349      3    152      5  98.40%   86, 105->99, 169, 213, 345->342
+backend/src/round_robin/ops.py                                              138      1     48      1  98.92%   157
+backend/src/round_robin/orchestration/__init__.py                             0      0      0      0 100.00%
+backend/src/round_robin/orchestration/admission.py                           77      0     34      0 100.00%
+backend/src/round_robin/orchestration/budget.py                             183      1     88      1  99.26%   110
+backend/src/round_robin/orchestration/circuits.py                            45      0     12      0 100.00%
+backend/src/round_robin/orchestration/configuration.py                       38      0     16      0 100.00%
+backend/src/round_robin/orchestration/controller.py                         305      2    136      1  99.32%   213-216, 266->269
+backend/src/round_robin/orchestration/policies.py                            73      1     34      2  97.20%   19, 84->87
+backend/src/round_robin/orchestration/reporting.py                          133      0     60      1  99.48%   64->68
+backend/src/round_robin/providers/__init__.py                                 0      0      0      0 100.00%
+backend/src/round_robin/providers/base.py                                   116      0     32      0 100.00%
+backend/src/round_robin/providers/http.py                                   229      1     98      1  99.39%   179->181, 286
+backend/src/round_robin/providers/images.py                                 281      7    102      7  96.34%   136, 248, 250, 254, 262, 287, 294
+backend/src/round_robin/providers/simulated.py                               42      0     16      0 100.00%
+backend/src/round_robin/providers/structured.py                              22      0     14      0 100.00%
+backend/src/round_robin/providers/transport.py                               98      1     10      1  98.15%   51
+backend/src/round_robin/reports/exports.py                                  153      0     68      0 100.00%
+backend/src/round_robin/reports/measurements.py                              45      0     24      0 100.00%
+backend/src/round_robin/reports/read_adapters.py                             55      0     26      0 100.00%
+backend/src/round_robin/reports/readiness.py                                 30      0     26      0 100.00%
+backend/src/round_robin/reports/storage.py                                   51      0      8      1  98.31%   47->49
+backend/src/round_robin/research/calculator.py                              164      3     72      3  97.46%   109, 161, 193
+backend/src/round_robin/research/claims.py                                   77      1     48      1  98.40%   52
+backend/src/round_robin/research/currencies.py                                6      0      0      0 100.00%
+backend/src/round_robin/research/fetcher.py                                 252      1     88      2  99.12%   96->101, 304
+backend/src/round_robin/research/queries.py                                  28      0     10      0 100.00%
+backend/src/round_robin/research/reuse.py                                   139      0     56      0 100.00%
+backend/src/round_robin/research/search.py                                   39      0     12      0 100.00%
+backend/src/round_robin/research/service.py                                 195      1     68      1  99.24%   89
+backend/src/round_robin/schemas/__init__.py                                   7      0      0      0 100.00%
+backend/src/round_robin/schemas/application.py                               51      0      0      0 100.00%
+backend/src/round_robin/schemas/briefs.py                                   102      0     24      0 100.00%
+backend/src/round_robin/schemas/common.py                                    57      0     22      0 100.00%
+backend/src/round_robin/schemas/contributions.py                             50      0      6      0 100.00%
+backend/src/round_robin/schemas/events.py                                    22      0      0      0 100.00%
+backend/src/round_robin/schemas/evidence.py                                  47      0      2      0 100.00%
+backend/src/round_robin/schemas/preflight.py                                 64      0      8      0 100.00%
+backend/src/round_robin/schemas/provider_configuration.py                    66      0     14      0 100.00%
+backend/src/round_robin/schemas/reports.py                                  117      0     26      0 100.00%
+backend/src/round_robin/schemas/runtime.py                                  169      0     82      0 100.00%
+backend/src/round_robin/schemas/views.py                                    169      0      2      0 100.00%
+backend/src/round_robin/security/__init__.py                                  0      0      0      0 100.00%
+backend/src/round_robin/security/hosted.py                                  144      0     44      0 100.00%
+backend/src/round_robin/security/logging.py                                  12      0      6      0 100.00%
+backend/src/round_robin/visual/__init__.py                                    0      0      0      0 100.00%
+backend/src/round_robin/visual/assets.py                                     98      1     24      1  98.36%   124
+backend/src/round_robin/visual/iterations.py                                123      0     66      2  98.94%   72->64, 108->111
+backend/src/round_robin/visual/jobs.py                                       73      0     18      0 100.00%
+backend/src/round_robin/visual/renderers/__init__.py                          0      0      0      0 100.00%
+backend/src/round_robin/visual/renderers/diagram.py                         114      0     32      2  98.63%   88->87, 148->143
+backend/src/round_robin/visual/renderers/interface.py                       235      5     68      4  97.03%   47, 199, 202-203, 253->258, 269
+backend/src/round_robin/visual/reviews.py                                    67      0     34      0 100.00%
+backend/src/round_robin/visual/schemas.py                                    86      0      8      0 100.00%
+backend/src/round_robin/visual/service.py                                   372      3    160      4  98.68%   226, 265, 271, 393->392
+backend/src/round_robin/visual/views.py                                     162      1     10      1  98.84%   54
+backend/src/round_robin/worker/__init__.py                                    0      0      0      0 100.00%
+backend/src/round_robin/worker/app.py                                         4      0      0      0 100.00%
+backend/src/round_robin/worker/image_tasks.py                               419      3    162      4  98.80%   43, 287, 408, 470->465
+backend/src/round_robin/worker/research_tasks.py                              9      0      0      0 100.00%
+backend/src/round_robin/worker/tasks.py                                     248      1     70      2  99.06%   37->35, 244
+experiments/__init__.py                                                       0      0      0      0 100.00%
+experiments/adapters.py                                                      91      1     32      1  98.37%   81
+experiments/evaluation.py                                                   299      0    138      0 100.00%
+experiments/journal.py                                                      172      0     54      0 100.00%
+experiments/release.py                                                       97      0     62      0 100.00%
+experiments/runner.py                                                       311      2    150      2  99.13%   252, 269
+experiments/study_runner.py                                                 605     12    218     12  96.84%   36, 190, 430->432, 439, 450->507, 487->490, 498, 596, 625-627, 629->637, 635-636, 657, 681
+experiments/visual_evaluation.py                                            214      0    122      0 100.00%
+scripts/audit.py                                                            144      0     42      0 100.00%
+scripts/coverage_gate.py                                                    213      0    106      0 100.00%
+scripts/dev.py                                                               89      0     30      1  99.16%   87->81
+scripts/scenario_summary.py                                                  68      0     38      0 100.00%
+scripts/serve_prototype.py                                                   23      0      6      0 100.00%
+scripts/verify.py                                                           156      4     34      3  96.32%   139->135, 167-169, 180->188, 199
+----------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                     11976     93   4044     88  98.83%

@@ -1,0 +1,589 @@
+{
+  "schema_version": "1.0",
+  "id": "report_3f52a31ae1234bad9bc71efc97c08d82",
+  "run_id": "run_e841230d629649bbb4119a6b88401d39",
+  "parent_report_id": null,
+  "version": 1,
+  "event_cutoff": 24,
+  "fictional": true,
+  "simulated": true,
+  "execution_status": "completed",
+  "recommendation": null,
+  "readiness": "insufficient_evidence",
+  "readiness_reasons": [
+    "No defensible preferred option with a feasibility basis has been established."
+  ],
+  "readiness_unavailable_reason": null,
+  "main_reasons": [
+    "Comparable cost uses bounded Decimal calculations from this run's supplied inputs."
+  ],
+  "tradeoff": "Consider upfront commitment, ongoing costs and the hard requirements; lowest known subtotal alone cannot establish the best choice.",
+  "largest_uncertainty": "No defensible preferred option with a feasibility basis has been established.",
+  "what_would_change_answer": "Correct a decisive cost or requirement in a linked follow-up and recompute the comparison.",
+  "next_action": "For Option A \u00b7 lower upfront: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+  "comparison": [
+    {
+      "option_id": "option_a",
+      "label": "Option A \u00b7 lower upfront",
+      "role": "candidate",
+      "total": null,
+      "known_subtotal": "1600.00",
+      "missing_components": [
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "currency": "USD",
+      "horizon_months": 12,
+      "constraint_results": [
+        {
+          "requirement_id": "requirement_budget",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_goal",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_server_deadline",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        }
+      ],
+      "calculation_id": "calc_option_a",
+      "caveat": "Entered costs are arithmetic inputs, not independently verified supplier facts."
+    },
+    {
+      "option_id": "option_b",
+      "label": "Option B \u00b7 lower recurring",
+      "role": "candidate",
+      "total": null,
+      "known_subtotal": "1840.00",
+      "missing_components": [
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "currency": "USD",
+      "horizon_months": 12,
+      "constraint_results": [
+        {
+          "requirement_id": "requirement_budget",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_goal",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_server_deadline",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        }
+      ],
+      "calculation_id": "calc_option_b",
+      "caveat": "Entered costs are arithmetic inputs, not independently verified supplier facts."
+    },
+    {
+      "option_id": "option_status_quo",
+      "label": "Keep handwritten labels",
+      "role": "status_quo",
+      "total": null,
+      "known_subtotal": "0.00",
+      "missing_components": [
+        "Confirm whether installation applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether recurring applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "currency": "USD",
+      "horizon_months": 12,
+      "constraint_results": [
+        {
+          "requirement_id": "requirement_budget",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_goal",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        },
+        {
+          "requirement_id": "requirement_server_deadline",
+          "result": "unknown",
+          "basis_refs": [],
+          "method": "fixture_assessment",
+          "assessor": "offline fixture",
+          "reason": "This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "counter_basis_refs": [],
+          "assessment_scope": null,
+          "disputed": false
+        }
+      ],
+      "calculation_id": "calc_option_status_quo",
+      "caveat": "Entered costs are arithmetic inputs, not independently verified supplier facts."
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calc_option_a",
+      "label": "Option A \u00b7 lower upfront: 12-month cost",
+      "operation": "lifecycle_total",
+      "inputs": [
+        {
+          "label": "Upfront purchase",
+          "amount": "1000",
+          "unit": "USD",
+          "source_ref": "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14"
+        },
+        {
+          "label": "Monthly supplies and service",
+          "amount": "50",
+          "unit": "USD",
+          "source_ref": "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14"
+        },
+        {
+          "label": "Installation (explicitly included)",
+          "amount": "0",
+          "unit": "USD",
+          "source_ref": "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14"
+        }
+      ],
+      "formula": "1000 \u00d7 1 + 50 \u00d7 1 \u00d7 12 months + 0 \u00d7 1",
+      "output": null,
+      "unit": "USD",
+      "currency": "USD",
+      "horizon_months": 12,
+      "rounding": "USD cents, ROUND_HALF_EVEN (after exact component arithmetic)",
+      "decimal_precision": 64,
+      "flags": [],
+      "missing_components": [
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "known_subtotal": "1600.00"
+    },
+    {
+      "id": "calc_option_b",
+      "label": "Option B \u00b7 lower recurring: 12-month cost",
+      "operation": "lifecycle_total",
+      "inputs": [
+        {
+          "label": "Upfront purchase",
+          "amount": "1600",
+          "unit": "USD",
+          "source_ref": "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc"
+        },
+        {
+          "label": "Monthly supplies and service",
+          "amount": "20",
+          "unit": "USD",
+          "source_ref": "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc"
+        },
+        {
+          "label": "Required installation",
+          "amount": "0",
+          "unit": "USD",
+          "source_ref": "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc"
+        }
+      ],
+      "formula": "1600 \u00d7 1 + 20 \u00d7 1 \u00d7 12 months + 0 \u00d7 1",
+      "output": null,
+      "unit": "USD",
+      "currency": "USD",
+      "horizon_months": 12,
+      "rounding": "USD cents, ROUND_HALF_EVEN (after exact component arithmetic)",
+      "decimal_precision": 64,
+      "flags": [],
+      "missing_components": [
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "known_subtotal": "1840.00"
+    },
+    {
+      "id": "calc_option_status_quo",
+      "label": "Keep handwritten labels: 12-month cost",
+      "operation": "lifecycle_total",
+      "inputs": [
+        {
+          "label": "New spending (explicit zero)",
+          "amount": "0",
+          "unit": "USD",
+          "source_ref": "evidence_63ee2e353200b231627858efb5409a64eff781b7"
+        }
+      ],
+      "formula": "0 \u00d7 1",
+      "output": null,
+      "unit": "USD",
+      "currency": "USD",
+      "horizon_months": 12,
+      "rounding": "USD cents, ROUND_HALF_EVEN (after exact component arithmetic)",
+      "decimal_precision": 64,
+      "flags": [],
+      "missing_components": [
+        "Confirm whether installation applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether recurring applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+        "Confirm whether tax delivery applies; no explicit component or not-applicable entry exists."
+      ],
+      "known_subtotal": "0.00"
+    }
+  ],
+  "hard_requirement_ids": [
+    "requirement_budget",
+    "requirement_goal",
+    "requirement_server_deadline"
+  ],
+  "evidence_ids": [
+    "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14",
+    "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc",
+    "evidence_63ee2e353200b231627858efb5409a64eff781b7"
+  ],
+  "contribution_ids": [
+    "step_b73f44ed9f1f4ddeb400b5498be731e1",
+    "step_09a6874708354b2295fbadb807e8f596",
+    "step_328fc83e3aa4403ea2b126b7a798a3cb",
+    "step_162f5dad3ddb408d9eb0dcfb376512fd",
+    "step_a052111056194e8fa3ebcdbc10ab91f1",
+    "step_55afb25c7bba4a8184573d117ed558c2"
+  ],
+  "claim_ids": [],
+  "essential_dependencies": [
+    {
+      "id": "dependency_option_a",
+      "description": "All applicable cost components for Option A \u00b7 lower upfront must be supplied and current.",
+      "status": "unverified",
+      "accepted_scoped_support": false,
+      "reference_ids": [
+        "calc_option_a",
+        "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14",
+        "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14",
+        "evidence_3bd0910b43b82de3dbe302d0924e953aa237ba14"
+      ],
+      "origin": "user_supplied"
+    },
+    {
+      "id": "dependency_option_b",
+      "description": "All applicable cost components for Option B \u00b7 lower recurring must be supplied and current.",
+      "status": "unverified",
+      "accepted_scoped_support": false,
+      "reference_ids": [
+        "calc_option_b",
+        "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc",
+        "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc",
+        "evidence_5655865b14ac0f218e6e9e9f84857f481c7007dc"
+      ],
+      "origin": "user_supplied"
+    },
+    {
+      "id": "dependency_option_status_quo",
+      "description": "All applicable cost components for Keep handwritten labels must be supplied and current.",
+      "status": "unverified",
+      "accepted_scoped_support": false,
+      "reference_ids": [
+        "calc_option_status_quo",
+        "evidence_63ee2e353200b231627858efb5409a64eff781b7"
+      ],
+      "origin": "user_supplied"
+    },
+    {
+      "id": "dependency_actual_review",
+      "description": "Simulated advisers provide no independent provider review or verification.",
+      "status": "unverified",
+      "accepted_scoped_support": false,
+      "reference_ids": [],
+      "origin": "user_supplied"
+    }
+  ],
+  "dissent": [],
+  "next_evidence": [
+    {
+      "id": "next_evidence_1",
+      "question": "For Option A \u00b7 lower upfront: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Option A \u00b7 lower upfront in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_2",
+      "question": "For Option A \u00b7 lower upfront: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Option A \u00b7 lower upfront in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_3",
+      "question": "Does Option A \u00b7 lower upfront satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option A \u00b7 lower upfront satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_4",
+      "question": "Does Option A \u00b7 lower upfront satisfy: Replace handwritten labels with a repeatable label system.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option A \u00b7 lower upfront satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_5",
+      "question": "Does Option A \u00b7 lower upfront satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option A \u00b7 lower upfront satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_6",
+      "question": "For Option B \u00b7 lower recurring: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Option B \u00b7 lower recurring in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_7",
+      "question": "For Option B \u00b7 lower recurring: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Option B \u00b7 lower recurring in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_8",
+      "question": "Does Option B \u00b7 lower recurring satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option B \u00b7 lower recurring satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_9",
+      "question": "Does Option B \u00b7 lower recurring satisfy: Replace handwritten labels with a repeatable label system.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option B \u00b7 lower recurring satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_10",
+      "question": "Does Option B \u00b7 lower recurring satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Option B \u00b7 lower recurring satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_11",
+      "question": "For Keep handwritten labels: Confirm whether installation applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether installation applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_12",
+      "question": "For Keep handwritten labels: Confirm whether recurring applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether recurring applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_13",
+      "question": "For Keep handwritten labels: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_14",
+      "question": "For Keep handwritten labels: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.",
+      "affected_conclusion": "Comparable all-in cost and budget feasibility may change.",
+      "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.",
+      "request_text": "Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_15",
+      "question": "Does Keep handwritten labels satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Keep handwritten labels satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_16",
+      "question": "Does Keep handwritten labels satisfy: Replace handwritten labels with a repeatable label system.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Keep handwritten labels satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    },
+    {
+      "id": "next_evidence_17",
+      "question": "Does Keep handwritten labels satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?",
+      "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.",
+      "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.",
+      "request_text": "Please provide dated evidence that Keep handwritten labels satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.",
+      "responsible_person": null,
+      "revisit_date": null
+    }
+  ],
+  "coverage": [
+    {
+      "provider": "openai",
+      "role": "intake",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "openai",
+      "role": "proposal",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "anthropic",
+      "role": "proposal",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "google",
+      "role": "proposal",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "openai",
+      "role": "synthesis",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "anthropic",
+      "role": "audit",
+      "status": "simulated",
+      "notes": "Actual saved stage coverage."
+    }
+  ],
+  "assessment": {
+    "proposal_providers": [
+      "openai",
+      "anthropic",
+      "google"
+    ],
+    "synthesizer": "openai",
+    "auditor": "anthropic",
+    "synthesis_valid": true,
+    "audit_succeeded": true,
+    "unresolved_critical_defect": false
+  },
+  "usage": {
+    "simulated": true,
+    "status": "reported",
+    "actual_cost": "0",
+    "conservative_exposure_usd": "0",
+    "unknown_operation_ids": [],
+    "request_count": 6,
+    "currency": "USD"
+  },
+  "stop_reason": "protocol_complete",
+  "change_summary": [],
+  "research_summary": {
+    "status": "not_requested",
+    "queries": 0,
+    "pages": 0,
+    "source_count": null,
+    "reason": null,
+    "limitations": [],
+    "objectives": []
+  },
+  "algorithm_policy_version": "legacy_v1",
+  "issues": [],
+  "dissent_overflow_count": 0,
+  "evidence_assessments": [],
+  "readiness_dimensions": null,
+  "decision_insights": {
+    "cost_frontier_option_ids": [],
+    "dominated_option_ids": [],
+    "unresolved_option_ids": [],
+    "sensitivity": [],
+    "preference_order": [],
+    "limitations": []
+  }
+}

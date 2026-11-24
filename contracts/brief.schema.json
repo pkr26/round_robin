@@ -1,0 +1,501 @@
+{
+  "$defs": {
+    "Constraint": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "origin": {
+          "enum": [
+            "user_supplied",
+            "assumed",
+            "fictional"
+          ],
+          "title": "Origin",
+          "type": "string"
+        },
+        "metric": {
+          "enum": [
+            "total_cost",
+            "lead_time_days",
+            "manual"
+          ],
+          "title": "Metric",
+          "type": "string"
+        },
+        "operator": {
+          "enum": [
+            "lte",
+            "gte",
+            "eq",
+            "manual"
+          ],
+          "title": "Operator",
+          "type": "string"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Threshold"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "origin",
+        "metric",
+        "operator",
+        "threshold"
+      ],
+      "title": "Constraint",
+      "type": "object"
+    },
+    "CostComponent": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "upfront",
+            "installation",
+            "recurring",
+            "maintenance",
+            "tax_delivery",
+            "discount",
+            "other"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "amount": {
+          "anyOf": [
+            {
+              "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Amount"
+        },
+        "currency": {
+          "pattern": "^[A-Z]{3}$",
+          "title": "Currency",
+          "type": "string"
+        },
+        "quantity": {
+          "default": "1",
+          "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+          "title": "Quantity",
+          "type": "string"
+        },
+        "frequency": {
+          "enum": [
+            "once",
+            "monthly"
+          ],
+          "title": "Frequency",
+          "type": "string"
+        },
+        "status": {
+          "default": "included",
+          "enum": [
+            "included",
+            "excluded",
+            "not_applicable"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "unknown_reason": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unknown Reason"
+        },
+        "source_ref": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Source Ref",
+          "type": "string"
+        },
+        "unit": {
+          "default": "item",
+          "enum": [
+            "item",
+            "month"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "quote_valid_until": {
+          "anyOf": [
+            {
+              "format": "date",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote Valid Until"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "kind",
+        "amount",
+        "currency",
+        "quantity",
+        "frequency",
+        "status",
+        "unknown_reason",
+        "source_ref",
+        "unit",
+        "quote_valid_until"
+      ],
+      "title": "CostComponent",
+      "type": "object"
+    },
+    "Option": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "label": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Label",
+          "type": "string"
+        },
+        "role": {
+          "default": "candidate",
+          "enum": [
+            "candidate",
+            "status_quo"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "provenance": {
+          "enum": [
+            "user_supplied",
+            "assumed",
+            "fictional"
+          ],
+          "title": "Provenance",
+          "type": "string"
+        },
+        "cost_components": {
+          "items": {
+            "$ref": "#/$defs/CostComponent"
+          },
+          "maxItems": 30,
+          "title": "Cost Components",
+          "type": "array"
+        },
+        "consequences": {
+          "items": {
+            "maxLength": 500,
+            "minLength": 1,
+            "type": "string"
+          },
+          "maxItems": 10,
+          "title": "Consequences",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "label",
+        "role",
+        "provenance",
+        "cost_components",
+        "consequences"
+      ],
+      "title": "Option",
+      "type": "object"
+    },
+    "Preference": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "description": {
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Description",
+          "type": "string"
+        },
+        "rank": {
+          "maximum": 10,
+          "minimum": 1,
+          "title": "Rank",
+          "type": "integer"
+        },
+        "origin": {
+          "enum": [
+            "user_supplied",
+            "assumed",
+            "fictional"
+          ],
+          "title": "Origin",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "description",
+        "rank",
+        "origin"
+      ],
+      "title": "Preference",
+      "type": "object"
+    },
+    "PublicTerm": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "maxLength": 96,
+          "minLength": 3,
+          "pattern": "^[a-z][a-z0-9_:-]+$",
+          "title": "Id",
+          "type": "string"
+        },
+        "text": {
+          "maxLength": 120,
+          "minLength": 1,
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "title": "PublicTerm",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "revision": {
+      "minimum": 1,
+      "title": "Revision",
+      "type": "integer"
+    },
+    "title": {
+      "maxLength": 200,
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    },
+    "question": {
+      "maxLength": 4000,
+      "title": "Question",
+      "type": "string"
+    },
+    "background": {
+      "default": "",
+      "maxLength": 12000,
+      "title": "Background",
+      "type": "string"
+    },
+    "goal": {
+      "maxLength": 4000,
+      "title": "Goal",
+      "type": "string"
+    },
+    "currency": {
+      "pattern": "^[A-Z]{3}$",
+      "title": "Currency",
+      "type": "string"
+    },
+    "budget": {
+      "anyOf": [
+        {
+          "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Budget"
+    },
+    "deadline": {
+      "anyOf": [
+        {
+          "format": "date",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Deadline"
+    },
+    "timezone": {
+      "default": "America/Phoenix",
+      "maxLength": 64,
+      "title": "Timezone",
+      "type": "string"
+    },
+    "location": {
+      "default": "",
+      "maxLength": 500,
+      "title": "Location",
+      "type": "string"
+    },
+    "horizon_months": {
+      "anyOf": [
+        {
+          "maximum": 120,
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Horizon Months"
+    },
+    "options": {
+      "items": {
+        "$ref": "#/$defs/Option"
+      },
+      "maxItems": 5,
+      "title": "Options",
+      "type": "array"
+    },
+    "hard_requirements": {
+      "items": {
+        "$ref": "#/$defs/Constraint"
+      },
+      "maxItems": 20,
+      "title": "Hard Requirements",
+      "type": "array"
+    },
+    "preferences": {
+      "items": {
+        "$ref": "#/$defs/Preference"
+      },
+      "maxItems": 10,
+      "title": "Preferences",
+      "type": "array"
+    },
+    "user_facts": {
+      "items": {
+        "maxLength": 500,
+        "minLength": 1,
+        "type": "string"
+      },
+      "maxItems": 30,
+      "title": "User Facts",
+      "type": "array"
+    },
+    "selected_attachment_ids": {
+      "items": {
+        "maxLength": 96,
+        "minLength": 3,
+        "pattern": "^[a-z][a-z0-9_:-]+$",
+        "type": "string"
+      },
+      "maxItems": 5,
+      "title": "Selected Attachment Ids",
+      "type": "array"
+    },
+    "public_research_terms": {
+      "items": {
+        "$ref": "#/$defs/PublicTerm"
+      },
+      "maxItems": 8,
+      "title": "Public Research Terms",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "revision",
+    "title",
+    "question",
+    "background",
+    "goal",
+    "currency",
+    "budget",
+    "deadline",
+    "timezone",
+    "location",
+    "horizon_months",
+    "options",
+    "hard_requirements",
+    "preferences",
+    "user_facts",
+    "selected_attachment_ids",
+    "public_research_terms"
+  ],
+  "title": "DraftBrief",
+  "type": "object"
+}

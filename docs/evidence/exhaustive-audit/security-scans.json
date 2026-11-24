@@ -1,0 +1,525 @@
+{
+  "recorded_at_utc": "2026-11-16T17:54:13.426550+00:00",
+  "review": "Fresh read-only scanner runs and manual triage against frozen first-party source; only docs and local evidence written.",
+  "scans": {
+    "bandit": {
+      "tool_version": "1.9.4",
+      "tool_python_version": "3.14.7",
+      "command": [
+        "uv",
+        "tool",
+        "run",
+        "--offline",
+        "--from",
+        "bandit",
+        "bandit",
+        "-r",
+        "backend/src",
+        "experiments",
+        "scripts",
+        "-f",
+        "json",
+        "-o",
+        ".local/exhaustive-audit/security-review-bandit-permission-final.json"
+      ],
+      "exit_code": 1,
+      "exit_reason": "Findings emitted; all individually triaged below",
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-bandit-permission-final.json",
+        "sha256": "fb2ab7bd05edcc711ba050ef4bdcbc6e28bcb103f1ce88b5ac776014c00c87ff",
+        "bytes": 57269
+      },
+      "log": {
+        "path": ".local/exhaustive-audit/security-review-bandit-permission-final.log",
+        "sha256": "88065793f98f389b5864483c7636cf8092979787b19867fbf4b7be98793340b7",
+        "bytes": 407
+      },
+      "files_scanned": 102,
+      "lines_scanned": 11948,
+      "findings": 25,
+      "errors": 0,
+      "severity": {
+        "LOW": 22,
+        "MEDIUM": 3
+      },
+      "nosec_suppressions": 0,
+      "skipped_tests": 0,
+      "triage": [
+        {
+          "test_id": "B101",
+          "count": 1,
+          "disposition": "Fictional fixture precondition",
+          "reason": "The assertion checks a fixed authored sample horizon. It does not enforce authorization, spending or an untrusted live request boundary; live consumers validate their own inputs. Python optimization does not remove a live security gate here.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/fixtures.py",
+              "line": 124,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B105",
+          "count": 2,
+          "disposition": "Not a credential",
+          "reason": "Development returns a null CSRF value; revocation clears the existing CSRF token to an empty string. Neither literal is an authenticating secret. Hosted mutation routes require a valid nonempty server token.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/api/hosted.py",
+              "line": 54,
+              "severity": "LOW",
+              "confidence": "MEDIUM"
+            },
+            {
+              "path": "backend/src/round_robin/security/hosted.py",
+              "line": 105,
+              "severity": "LOW",
+              "confidence": "MEDIUM"
+            }
+          ]
+        },
+        {
+          "test_id": "B108",
+          "count": 1,
+          "disposition": "Private container tmpfs",
+          "reason": "The literal /tmp is inside the renderer container: bounded private tmpfs, mode 700, uid/gid 10001, noexec/nosuid/nodev. It is not a shared predictable host temp file; the container has no host mounts and uses a unique server job name.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/visual/renderers/interface.py",
+              "line": 248,
+              "severity": "MEDIUM",
+              "confidence": "MEDIUM"
+            }
+          ]
+        },
+        {
+          "test_id": "B310",
+          "count": 2,
+          "disposition": "Fixed loopback readiness probe",
+          "reason": "Both urlopen calls use a literal http://127.0.0.1:8000/ready with bounded timeout after local listener/process checks. No request URL or protocol is supplied by an untrusted caller, and no credentials or private payload accompany the probe.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "scripts/dev.py",
+              "line": 84,
+              "severity": "MEDIUM",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/verify.py",
+              "line": 125,
+              "severity": "MEDIUM",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B311",
+          "count": 2,
+          "disposition": "Reproducible experiment ordering",
+          "reason": "Seeded random.Random shuffles study trials and review packets reproducibly. These calls do not generate sessions, CSRF tokens, provider credentials or cryptographic keys. Packet metadata retains separate private identity mapping and inspection requirements.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "experiments/evaluation.py",
+              "line": 183,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "experiments/study_runner.py",
+              "line": 372,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B404",
+          "count": 4,
+          "disposition": "Reviewed subprocess import",
+          "reason": "Imports support fixed local verification/development commands and the isolated renderer. Call sites are argument vectors with shell=False default; an import alone is not an injection path.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/visual/renderers/interface.py",
+              "line": 13,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/audit.py",
+              "line": 12,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 8,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/verify.py",
+              "line": 10,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B405",
+          "count": 1,
+          "disposition": "Typed XML construction, no XML parsing",
+          "reason": "Diagram input is a bounded typed node/edge object. Element/SubElement/tostring construct SVG; labels are assigned as text and escaped by serialization. Arbitrary XML/SVG source is not accepted or parsed by this renderer.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/visual/renderers/diagram.py",
+              "line": 11,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B406",
+          "count": 1,
+          "disposition": "Output escaping, no XML parsing",
+          "reason": "reports/exports.py imports only xml.sax.saxutils.escape and escapes saved text before ReportLab Paragraph rendering. No XML document parser or external entity resolution is invoked by this import/use.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/reports/exports.py",
+              "line": 7,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B603",
+          "count": 8,
+          "disposition": "Fixed argument vectors and bounded renderer",
+          "reason": "Reviewed all flagged call sites: audit/dev/verify use fixed command arrays and repository cwd. The native renderer passes HTML through stdin, binds the locally inspected sha256 image ID, bounds time/output and uses server-issued job IDs. No user text is interpolated into shell syntax.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "backend/src/round_robin/visual/renderers/interface.py",
+              "line": 163,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/audit.py",
+              "line": 83,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 56,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 57,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 58,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 78,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/verify.py",
+              "line": 60,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/verify.py",
+              "line": 121,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        },
+        {
+          "test_id": "B607",
+          "count": 3,
+          "disposition": "Operator PATH boundary",
+          "reason": "docker and uv are intentionally resolved from the local operator PATH for development. Commands are fixed arrays, not browser-controlled executables. A compromised operator PATH remains outside this application authorization boundary; launchers are not privileged installers.",
+          "actionable_defect_established": false,
+          "locations": [
+            {
+              "path": "scripts/dev.py",
+              "line": 56,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 57,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            },
+            {
+              "path": "scripts/dev.py",
+              "line": 58,
+              "severity": "LOW",
+              "confidence": "HIGH"
+            }
+          ]
+        }
+      ]
+    },
+    "ruff": {
+      "tool_version": "0.17.5",
+      "command": [
+        "uv",
+        "tool",
+        "run",
+        "--offline",
+        "--from",
+        "ruff",
+        "ruff",
+        "check",
+        "--select",
+        "E9,F63,F7,F82",
+        "--output-format",
+        "json",
+        "backend/src",
+        "experiments",
+        "scripts"
+      ],
+      "exit_code": 0,
+      "findings": 0,
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-ruff-permission-final.json",
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "bytes": 2
+      },
+      "scope_note": "Targeted syntax/control-flow/undefined-name checks, not all lint/style rules"
+    },
+    "python_dependencies": {
+      "tool_version": "pip-audit 2.10.1",
+      "command": [
+        "uv",
+        "tool",
+        "run",
+        "--offline",
+        "--from",
+        "pip-audit",
+        "pip-audit",
+        "--no-deps",
+        "--disable-pip",
+        "-r",
+        ".local/exhaustive-audit/requirements-final.txt",
+        "--format",
+        "json",
+        "--output",
+        ".local/exhaustive-audit/security-review-python.json"
+      ],
+      "exit_code": 0,
+      "dependencies": 57,
+      "known_advisories": 0,
+      "requirements": {
+        "path": ".local/exhaustive-audit/requirements-final.txt",
+        "sha256": "a80de8338e5b8e7678767ea64900c156dd336b4b1c10f1531cddd48e2800e242",
+        "bytes": 3148
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-python.json",
+        "sha256": "23eaba9ab60cd425a82a1903d719b0ba933a8c72a7a24538f093618169b6dbfe",
+        "bytes": 3258
+      },
+      "log": {
+        "path": ".local/exhaustive-audit/security-review-python.log",
+        "sha256": "79d30422388543b2563e1dde76bb7e7857d7ef0c6fdf05c8c71598633ca07e1e",
+        "bytes": 265
+      },
+      "prior_final_comparison": "Prior final artifact has 56 dependencies; this pinned-requirements scan adds packaging 26.3, with no other package-version changes. Both have zero known advisories."
+    },
+    "node_dependencies": {
+      "tool_version": "pnpm 9.15.9",
+      "command": [
+        "pnpm",
+        "audit",
+        "--json"
+      ],
+      "exit_code": 0,
+      "dependencies": 275,
+      "known_advisories_by_severity": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0
+      },
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-node.json",
+        "sha256": "b77cd333890663982bc998118491c2e6b465d2a811ba8d11bfcb89817b760760",
+        "bytes": 310
+      }
+    },
+    "secret_patterns": {
+      "tool": "Local Python pattern scanner",
+      "tool_python_version": "3.12.14",
+      "command": [
+        "uv",
+        "run",
+        "python",
+        ".local/exhaustive-audit/security-review-secret-scan.py"
+      ],
+      "exit_code": 0,
+      "files_scanned": 355,
+      "potential_secret_locations": 0,
+      "patterns": {
+        "private_key_header": "-----BEGIN (?:RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY-----",
+        "aws_access_key_id": "\\b(?:AKIA|ASIA)[A-Z0-9]{16}\\b",
+        "github_token": "\\b(?:gh[pousr]_[A-Za-z0-9]{36,255}|github_pat_[A-Za-z0-9_]{50,255})\\b",
+        "provider_key_literal": "\\b(?:sk-proj-[A-Za-z0-9_-]{24,}|sk-ant-[A-Za-z0-9_-]{24,}|sk-[A-Za-z0-9]{32,})\\b",
+        "google_api_key": "\\bAIza[A-Za-z0-9_-]{30,}\\b"
+      },
+      "roots": [
+        "backend/src",
+        "backend/tests",
+        "backend/migrations",
+        "contracts",
+        "docs",
+        "experiments",
+        "frontend/app",
+        "frontend/tests",
+        "packages/api-client/src",
+        "scripts",
+        "tests",
+        ".github"
+      ],
+      "root_files": [
+        ".env.example",
+        ".coveragerc",
+        "pyproject.toml",
+        "uv.lock",
+        "package.json",
+        "pnpm-lock.yaml",
+        "pnpm-workspace.yaml",
+        "compose.yaml",
+        "alembic.ini",
+        "playwright.config.ts",
+        "README.md"
+      ],
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-secrets.json",
+        "sha256": "71c2c92b00f3425a10336f720bd20728bcaa184d52218e8371085836b92ad83f",
+        "bytes": 42345
+      },
+      "scanner": {
+        "path": ".local/exhaustive-audit/security-review-secret-scan.py",
+        "sha256": "dacf1170f4ce829901abf3022bac9395264ee89ded45c5bdd178cf7857c73c9d",
+        "bytes": 2774
+      },
+      "limits": "Fixed pattern search only; does not inspect .local, real .env files, dependencies, caches, build outputs or history. Does not recognize every credential format. No matched values are emitted.",
+      "captured_at_utc": "2026-11-16T17:52:59.757370+00:00"
+    }
+  },
+  "pillow_remediation": {
+    "before": {
+      "version": "12.3.0",
+      "known_advisories": 42,
+      "evidence": {
+        "path": ".local/exhaustive-audit/dependency-python.json",
+        "sha256": "a811e1e30df1eb63bfa6e83981df01eef489a1bedc0277f26a025dcff8db0621",
+        "bytes": 346968
+      }
+    },
+    "after": {
+      "version": "13.0.0",
+      "known_advisories": 0,
+      "evidence": {
+        "path": ".local/exhaustive-audit/security-review-python.json",
+        "sha256": "23eaba9ab60cd425a82a1903d719b0ba933a8c72a7a24538f093618169b6dbfe",
+        "bytes": 3258
+      }
+    }
+  },
+  "original_artifacts_reviewed": [
+    {
+      "path": ".local/exhaustive-audit/static-bandit-final.json",
+      "sha256": "138208609a57854998a3a1881f49bb5d248ba19c14085e7d225b0cd16564dbce",
+      "bytes": 57350
+    },
+    {
+      "path": ".local/exhaustive-audit/static-ruff-final.json",
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "bytes": 2
+    },
+    {
+      "path": ".local/exhaustive-audit/dependency-python-final.json",
+      "sha256": "f9789176a53b90cf849dcc8a891d296c5b95eb031ada248530bda41cc2616305",
+      "bytes": 3203
+    },
+    {
+      "path": ".local/exhaustive-audit/dependency-node-after.json",
+      "sha256": "b77cd333890663982bc998118491c2e6b465d2a811ba8d11bfcb89817b760760",
+      "bytes": 310
+    },
+    {
+      "path": ".local/exhaustive-audit/secret-scan-final.json",
+      "sha256": "6f1617111efb1232fa332f0c995b8691ad0aeb76f10459ee509256f2f810d5b4",
+      "bytes": 38878
+    }
+  ],
+  "original_provenance_limit": "Original invocation/tool-version metadata was not captured in those JSON artifacts; it is not inferred. Fresh scanner invocations and observed versions are recorded above. The original secret artifact had 334 files and 0 hits but 12 listed file hashes changed later, so fresh 355-file evidence supersedes it.",
+  "limits": [
+    "Zero indexed advisories is not proof of no undisclosed vulnerabilities or malicious package behavior.",
+    "These Python/Node inventories cover exported Python pins and the pnpm-reported graph. Separate container-security.json records the OS/runtime image scan and its open vendor-unfixed findings.",
+    "Static scan triage is contextual source review, not a claim of exhaustive security correctness.",
+    "Final all-service test/coverage acceptance remains a separate source/input-bound audit record."
+  ],
+  "container_security_record": "container-security.json",
+  "final_source_refresh": {
+    "recorded_at_utc": "2026-11-16T17:54:13.426550+00:00",
+    "source": {
+      "path": "scripts/audit.py",
+      "sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f",
+      "bytes": 9658
+    },
+    "runner_tests": {
+      "path": "backend/tests/test_exhaustive_audit_runner.py",
+      "sha256": "3a1ce4dff411a5430b58dce6eb0118f01bd46f71aa48cab6a31e50fafd20cf31",
+      "bytes": 22342
+    },
+    "scope": "Bandit, targeted Ruff and first-party credential patterns rerun after the Darwin cleanup repair. Dependency advisory scans were not rerun because both lockfiles and exported requirements match the earlier captured inputs.",
+    "unchanged_dependency_inputs": [
+      {
+        "path": "uv.lock",
+        "sha256": "5d828d01c81e2e0d054841e2f36b608ae2e193fbd72f242d41f6193078cb47ea",
+        "bytes": 319371
+      },
+      {
+        "path": "pnpm-lock.yaml",
+        "sha256": "ec1991e6f877dcb893c6788c1b9d381624ffde94b563f6eff30c94fdde8c74ec",
+        "bytes": 85349
+      },
+      {
+        "path": ".local/exhaustive-audit/requirements-final.txt",
+        "sha256": "a80de8338e5b8e7678767ea64900c156dd336b4b1c10f1531cddd48e2800e242",
+        "bytes": 3148
+      }
+    ]
+  }
+}

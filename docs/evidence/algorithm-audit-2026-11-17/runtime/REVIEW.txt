@@ -1,0 +1,154 @@
+Runtime discussion-algorithm audit — 2026-11-17
+
+Reviewed 23 algorithms/processes. Found 3 concrete defects (1 P1, 2 P2).
+All findings are independently reproduced in synthetic offline SQLite data. Product source is unchanged.
+No concrete defect observed is not a formal proof. Model accuracy and real-provider performance are unmeasured.
+
+RUNTIME-01 [P1] Optional retry waiting can consume the protected synthesis and audit time
+Source: backend/src/round_robin/orchestration/policies.py:88-93
+Trigger: A proposal fails with a valid long Retry-After while the other two independent proposals succeed.
+Observed: plan_recovery checks only wait + 30 seconds. A 500-second wait is accepted within the default 600-second allowance although 190 seconds are reserved for synthesis/audit. The proposal barrier remains open. At the accepted retry time the failed proposal is skipped and synthesis immediately fails finish_time_reserve before making any model call.
+Impact: A run with sufficient useful proposals loses both mandatory final stages because optional backoff was allowed to spend protected finishing time. No recommendation is published.
+Recommendation: Compute retry eligibility from the same mandatory-stage time reserve used by authorization and request construction. If wait plus the proposed request envelope plus persistence and still-required final work cannot fit, settle the optional proposal immediately and advance with the other two. Add a deadline-triggered barrier cutoff so previously scheduled backoff cannot consume the reserve.
+Evidence: probe-results.json:retry_wait_consumes_mandatory_finish_time
+
+RUNTIME-02 [P2] At-least-once duplicate execution bypasses Retry-After
+Source: backend/src/round_robin/worker/tasks.py:94-139
+Trigger: A worker saves a retryable failure and its future outbox intention; an older duplicate message for the same Step is delivered before that intention is due.
+Observed: Retry eligibility is represented only by Outbox.due_at. execute_step sees status=pending and immediately authorizes another call. The probe's requested wait was 120 seconds; the second provider invocation occurred about 0.012 seconds later and consumed the last allowed call.
+Impact: Provider Retry-After is not an execution invariant. Expected duplicate delivery can exhaust retries during a rate-limit period, reduce discussion completeness, and amplify provider pressure.
+Recommendation: Persist a step/attempt not-before timestamp or retry generation, enforce it under the step lock before authorization, and carry the generation in delivery identifiers. Keep at-least-once delivery harmless across retry state transitions.
+Evidence: probe-results.json:retry_after_bypassed_by_duplicate
+
+RUNTIME-03 [P2] Clarification and manual retry bypass queue quotas
+Source: backend/src/round_robin/api/events.py:242-253
+Trigger: An owner already has the allowed three queued runs and confirms an awaiting-input run (or requests an eligible retry).
+Observed: Only initial Start counts queued work. The resumption endpoints set queued and issue a ticket without checking owner/global queue counts. The direct clarification probe increased the owner's queue from three to four with a configured limit of three.
+Impact: The documented owner/global admission backlog bounds are not maintained across all enqueue transitions, weakening fairness and overload protection. This does not bypass single-executing-run or monetary limits.
+Recommendation: Apply one owner/global queue-capacity guard under the existing policy lock to every transition into queued, including clarification and retry; leave the resumable state intact when capacity is unavailable.
+Evidence: probe-queue-results.json
+
+Reviewed inventory
+
+1. Command UUID idempotency and abandonment tombstones
+   backend/src/round_robin/api/commands.py:27-84
+   Status: reviewed_no_concrete_defect_observed
+   Owner lock serializes original/replay/abandon; HMAC binds kind/body; gone and abandoned resources are not re-executed.
+
+2. Preflight snapshot and Start validation
+   backend/src/round_robin/api/preflight.py:21-184
+   Status: concrete_defect_reproduced
+   Frozen model/request contract/configuration, revision/hash, attachment scope, one-use preflight, queue quota and explicit parent replacement are checked. Quotas are incomplete on resumption paths (RUNTIME-03).
+
+3. Atomic active-parent replacement
+   backend/src/round_robin/api/lineage.py:11-48
+   Status: reviewed_no_concrete_defect_observed
+   Explicit accepted parent version/status, common transaction with child creation, execution-fence increment; reservations remain accounted.
+
+4. Cancellation and resumption commands
+   backend/src/round_robin/api/events.py:194-283
+   Status: concrete_defect_reproduced
+   Expected versions and command UUIDs preserve single intent. Cancellation fences future authorization, manual retry preserves counters/generation, clarification has immutable scope. RUNTIME-03 applies.
+
+5. Run admission and FIFO scheduling
+   backend/src/round_robin/orchestration/admission.py:14-84
+   Status: reviewed_no_concrete_defect_observed
+   Global policy lock, one running run, initial/resumption expiration, fresh ticket ordering, frozen configuration and deleted/terminal checks. Linear queue scan is reasonable only for the intended bounded pilot queue.
+
+6. Provider and global physical-call capacity
+   backend/src/round_robin/orchestration/admission.py:87-103
+   Status: reviewed_no_concrete_defect_observed
+   Maximum three global and two/provider; bounded execution leases are separated from indefinitely retained uncertain monetary exposure; image operations share capacity.
+
+7. Input evidence preparation and explicit hard constraints
+   backend/src/round_robin/orchestration/controller.py:21-110
+   Status: reviewed_with_design_limitations_cross_reviewed
+   Canonical hashes, exact recipient/owner/meeting scope, 24 passages, 2000 characters per passage, server-derived budget/deadline constraints. Preparation runs after intake, so newly attached passages are absent from intake (root cross-review).
+
+8. Stage planning and independent proposals
+   backend/src/round_robin/orchestration/controller.py:113-159
+   Status: reviewed_no_concrete_defect_observed
+   Three fixed provider slots and iteration-keyed steps; durable enqueue intent; synthesis needs two successful independent providers, audit provider must differ from the actual successful synthesizer.
+
+9. Transactional stage barriers and state machine
+   backend/src/round_robin/orchestration/controller.py:279-350
+   Status: concrete_defect_reproduced
+   All scheduled steps settle before advancing; closed barriers keyed by stage/generation/iteration prevent repeat transitions. Proposed brief is copied unchanged rather than model-normalized. Pending long retry can block mandatory work (RUNTIME-01).
+
+10. Bounded correction/re-audit
+   backend/src/round_robin/orchestration/controller.py:162-199
+   Status: reviewed_no_concrete_defect_observed
+   At most one extra synthesis/audit pair; checks original request/money/active limits and aggregate logical-role counters. No convergence claim; after one correction publishes honest limitations if needed.
+
+11. Finalization and saved partial report
+   backend/src/round_robin/orchestration/controller.py:202-276
+   Status: reviewed_no_concrete_defect_observed
+   Transactional report version, terminal state, active-clock freeze, unfinished step fence, retained eligible retry resources, unknown-exposure accounting, integrity fallback and mandatory-completion flag. Existing report makes duplicate ordinary finalization idempotent.
+
+12. Request construction and peer routing
+   backend/src/round_robin/worker/tasks.py:24-47
+   Status: reviewed_with_design_limitations_cross_reviewed
+   Proposals receive no peer outputs and imported-only claims; synthesis/audit receive selected committed outputs. Exact allowed-reference set and calculated timeout preserve finishing margin at dispatch. Error repair is regeneration with repair=true, no rejected output or validation details (root cross-review).
+
+13. Worker claim, durable authorization and content fencing
+   backend/src/round_robin/worker/tasks.py:94-244
+   Status: concrete_defect_reproduced
+   Checks generation, iteration, expected stage, capacity, independent audit identity; commits authorization before I/O; reconciles usage even for fenced content; bounded persistence retry. Retry not-before is absent (RUNTIME-02).
+
+14. Heartbeats and bounded worker execution
+   backend/src/round_robin/worker/tasks.py:76-92; backend/src/round_robin/worker/app.py:9-17
+   Status: reviewed_no_concrete_defect_observed
+   10-second heartbeat with 150-second lease, no extension without authority; ordinary requests max 90 seconds and task hard limit 120 seconds. These are engineering bounds rather than model-quality guarantees.
+
+15. Automatic retry and provider fallback
+   backend/src/round_robin/orchestration/policies.py:72-93
+   Status: concrete_defect_reproduced
+   At most two calls/logical role and three infrastructure claims; refusal does not trigger fallback; auditor cannot fall back to synthesizer. Long waits ignore final-stage time reserve (RUNTIME-01), and fixed 2.5-second default has no documented jitter.
+
+16. Manual retry eligibility and retained finishing funds
+   backend/src/round_robin/orchestration/policies.py:15-62
+   Status: reviewed_no_concrete_defect_observed
+   Only failed synthesis/audit in latest iteration, eligible failure codes, original active/request/logical limits and live funding expiry. No successful negative audit is treated as an execution retry.
+
+17. Active clock and exact monetary ledger
+   backend/src/round_robin/orchestration/budget.py:20-230
+   Status: reviewed_no_concrete_defect_observed
+   Isolated high-precision Decimal arithmetic, clock regression closure, run/owner/deployment ceilings, unknown exposure across periods, protected finish money/calls/time, immutable authorization IDs, high-water unknown usage and explicit settlement. Every authorization scans ledger history; future scaling needs indexed aggregate accounting without losing conservative exposure.
+
+18. Scoped circuit breaker
+   backend/src/round_robin/orchestration/circuits.py:15-58
+   Status: reviewed_no_concrete_defect_observed
+   Provider/model/credential-version scope; three transient failures within 60 seconds open 30 seconds; bounded single half-open probe; counted authorizations and expired-probe recovery. Heuristic availability control, not accuracy weighting.
+
+19. Frozen live configuration compatibility
+   backend/src/round_robin/orchestration/configuration.py:12-43
+   Status: reviewed_no_concrete_defect_observed
+   Operator funding, immutable expiry/config hash/deployment epoch/request-contract hash checked on admission/authorization. Live validation was not exercised against an actual provider.
+
+20. Transactional outbox dispatch and delivery recovery
+   backend/src/round_robin/dispatcher/service.py:25-49; backend/src/round_robin/database/services.py:64-79
+   Status: concrete_defect_reproduced
+   Outbox intent in same transaction; identifier-only at-least-once publish; publication failure keeps pending intention; advance dedup. Worker correctness must tolerate old duplicate deliveries (RUNTIME-02).
+
+21. Lease expiry, orphan authorization and retained-hold reconciliation
+   backend/src/round_robin/dispatcher/service.py:52-179
+   Status: reviewed_no_concrete_defect_observed
+   Authorized abandoned attempts become unknown and are not blindly resent; unstarted claims retry at most three; terminal orphan exposure retained; expired eligible retry funds released; current-state barriers reconciled.
+
+22. Event sequence, snapshot and reconnect replay
+   backend/src/round_robin/database/services.py:52-61; backend/src/round_robin/api/events.py:28-152
+   Status: reviewed_no_concrete_defect_observed
+   Run-locked monotonic event sequence and uniqueness; snapshot/read pages bounded to cutoff; SSE cursor clamping, bounded read batches and per-delivery owner/deletion/epoch checks. No DB transaction held over client stream.
+
+23. Durability/restore boundary at worker admission
+   backend/src/round_robin/orchestration/admission.py:22-41; backend/src/round_robin/operations/durability.py:45-79
+   Status: reviewed_no_concrete_defect_observed
+   Independent failure marker, dispatch lock, restore quarantine and deployment epoch stop authorization. Full backup/restore implementation is outside this focused discussion-algorithm lane.
+
+Validation
+uv run pytest -q backend/tests/test_orchestration.py backend/tests/test_runtime_audit.py backend/tests/test_runtime_regressions.py backend/tests/test_admission_audit.py backend/tests/test_exhaustive_runtime_controller.py backend/tests/test_exhaustive_runtime_workers.py backend/tests/test_deep_runtime_clock.py backend/tests/test_deep_runtime_money.py
+154 passed, 3 warnings in 14.13 seconds
+PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/runtime/probe_runtime.py
+PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/runtime/probe_queue.py
+
+See review.json for structured findings, sources and limits.

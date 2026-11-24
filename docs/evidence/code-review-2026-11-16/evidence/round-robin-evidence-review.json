@@ -1,0 +1,355 @@
+{
+  "agent": "evidence_security_audit",
+  "mode": "read-only review; temporary isolated probes only",
+  "source_mutations": [],
+  "external_provider_requests": 0,
+  "reviewed_files": [
+    {
+      "path": "backend/migrations/env.py",
+      "sha256": "9e843aaf7e65ad14c4b90191c3ee85418981c52da158eb0d957aa0f46c5b16a6",
+      "lines": 34
+    },
+    {
+      "path": "backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py",
+      "sha256": "cd7a41192a99a33de3ab15613c9a926958ae8ed81f5d6c256ff6a0be8f0cbeb0",
+      "lines": 18
+    },
+    {
+      "path": "backend/migrations/versions/c6917df240ab_optional_visual_contracts.py",
+      "sha256": "ad9c5a3a6d89f35772e5445bcde17f9cab98ec892402ba3baf14d9edfaa724d2",
+      "lines": 32
+    },
+    {
+      "path": "backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py",
+      "sha256": "1aa8f2ed62b8f61a2726c2126a13c4ad00f10aadf2e39ae4a4c219dd5646b334",
+      "lines": 20
+    },
+    {
+      "path": "backend/migrations/versions/e7209a4f361c_claim_versions_and_reuse.py",
+      "sha256": "7fa5cabf4c7cb80cdbbb5227fac5fbc0d78fc2ebb49b7270123755ecd4a488dc",
+      "lines": 47
+    },
+    {
+      "path": "backend/migrations/versions/f973196b6714_initial_application.py",
+      "sha256": "fcb134b4ca01400681c17a67318fe55e61c59bf07cb5aa22d9581a36ad4fb534",
+      "lines": 321
+    },
+    {
+      "path": "backend/src/round_robin/api/artifacts.py",
+      "sha256": "5bb53cb87a2e9eca838441239bcc8ad906fd8b071c06b6cb4bb2848e375f720a",
+      "lines": 329
+    },
+    {
+      "path": "backend/src/round_robin/api/auth.py",
+      "sha256": "8c29bd8ceb6e8c3848eeaca23dcbd6ad5b6c05f22a45ba9f782db19eb87ebc30",
+      "lines": 38
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "sha256": "0e8ac3040e53c3293d7560286a76fb6c04dd03b1a1a6b34321cc8f4d2f83a7d0",
+      "lines": 270
+    },
+    {
+      "path": "backend/src/round_robin/api/hosted.py",
+      "sha256": "a99e9fa456eb277a0f4350777b7f16cdf7e5d3818b9878999641387d89c1b1ad",
+      "lines": 65
+    },
+    {
+      "path": "backend/src/round_robin/api/lineage.py",
+      "sha256": "6ba0c02e21cd91f61ca4d2ec5915e13380e95b879411a21c94874dcd24baed2e",
+      "lines": 48
+    },
+    {
+      "path": "backend/src/round_robin/api/reuse.py",
+      "sha256": "34a71e58076a34db218b9fbf928d2a120c976e47849cadf97a6964524fcf85ef",
+      "lines": 19
+    },
+    {
+      "path": "backend/src/round_robin/database/__init__.py",
+      "sha256": "5ad531f47b9f73c18da3de4609729488db8adc79e969187f5630779cc26fb461",
+      "lines": 1
+    },
+    {
+      "path": "backend/src/round_robin/database/claim_models.py",
+      "sha256": "e0159c50ae2d384dc06ec55612bea1cbffb5229e3d0f1527ee4eb8e45a31b0bd",
+      "lines": 38
+    },
+    {
+      "path": "backend/src/round_robin/database/models.py",
+      "sha256": "ba2cc158071fb3a3dafa9e7cfe8beb249b728f87b6578d35af07158f949aed3c",
+      "lines": 269
+    },
+    {
+      "path": "backend/src/round_robin/database/safety.py",
+      "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a",
+      "lines": 35
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "sha256": "322bfb2386197d01e61024579c4cf8b4f5523770663d20812150f56d51c06796",
+      "lines": 71
+    },
+    {
+      "path": "backend/src/round_robin/database/session.py",
+      "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f",
+      "lines": 23
+    },
+    {
+      "path": "backend/src/round_robin/database/visual_models.py",
+      "sha256": "766e323fc9579eb87fe6ae1590f3883583e7874720269c36c390a1377fd5bcee",
+      "lines": 68
+    },
+    {
+      "path": "backend/src/round_robin/operations/__init__.py",
+      "sha256": "981502c16e2504ea8cc006f0a9b7156419bc6611db8782d5e7eee80f6de2f7fa",
+      "lines": 1
+    },
+    {
+      "path": "backend/src/round_robin/operations/durability.py",
+      "sha256": "e77947c41c0699b959241b1658cc3fbe9e97bd45264d237736584eba6604c9a4",
+      "lines": 193
+    },
+    {
+      "path": "backend/src/round_robin/operations/maintenance.py",
+      "sha256": "eebed00a0b07800f54992b8e780fba906dc235bea78be702de4b7f04a632aeab",
+      "lines": 58
+    },
+    {
+      "path": "backend/src/round_robin/operations/processes.py",
+      "sha256": "023647f667f1054c18f27bdc60440a83934fd46b28920cdb53b93a41d01bd098",
+      "lines": 72
+    },
+    {
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "sha256": "4f0a5be8fe8947019588eeeb8b1e621bcd87571317f1a18d2f2e1f2ec8bec429",
+      "lines": 333
+    },
+    {
+      "path": "backend/src/round_robin/ops.py",
+      "sha256": "6459726dc46e850c8fbf65b11cbbbdd2a9bf292398f3c1266b8645d950da22ed",
+      "lines": 157
+    },
+    {
+      "path": "backend/src/round_robin/reports/exports.py",
+      "sha256": "bd02a5799010a2e9db9f6584dba5c98ca453983125e89995f9d1e55b52aec629",
+      "lines": 164
+    },
+    {
+      "path": "backend/src/round_robin/reports/measurements.py",
+      "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805",
+      "lines": 53
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c",
+      "lines": 68
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02",
+      "lines": 34
+    },
+    {
+      "path": "backend/src/round_robin/reports/storage.py",
+      "sha256": "1935f27e5ca65350a9eef8eb79ab23abdd7a26dba487f226e4347dfcfdc1ce66",
+      "lines": 63
+    },
+    {
+      "path": "backend/src/round_robin/research/calculator.py",
+      "sha256": "9da92bce09534f32492ecfb9e3ce97a23e64e687ca8e9b7e2f72595f5c886770",
+      "lines": 192
+    },
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "sha256": "523b277fa424935e116deaf233e990d748dc975816dd834b93ce94b58c43f111",
+      "lines": 99
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "3ea3ae37e88aeae2769fef2dd9e8f9271efde7d8e05281525974f86b4e07789d",
+      "lines": 310
+    },
+    {
+      "path": "backend/src/round_robin/research/queries.py",
+      "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239",
+      "lines": 44
+    },
+    {
+      "path": "backend/src/round_robin/research/reuse.py",
+      "sha256": "7e9c948dbc5b8f141aaa23ddde0f9acd18c9b3a83551fd16891b805fb86711cd",
+      "lines": 171
+    },
+    {
+      "path": "backend/src/round_robin/research/search.py",
+      "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99",
+      "lines": 47
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "39c43fb7802c74a7f5b2c3ccac73a927c3376cb946f04ef4edb323ae8cf568aa",
+      "lines": 210
+    },
+    {
+      "path": "backend/src/round_robin/security/__init__.py",
+      "sha256": "72a82de619a785a236cb594c7ccfa10993382e7529d0c95ecc7abb496f7c8872",
+      "lines": 1
+    },
+    {
+      "path": "backend/src/round_robin/security/hosted.py",
+      "sha256": "5c30f1a788b92e5d1d92a47b1772a067e74502ab29e56717db8466d252ae5f77",
+      "lines": 180
+    },
+    {
+      "path": "backend/src/round_robin/security/logging.py",
+      "sha256": "305c996403678d42f27eedcad12a47c60554d01d71db114e729b0d7c33193879",
+      "lines": 18
+    }
+  ],
+  "additional_cross_review_files": [
+    "backend/src/round_robin/api/preflight.py",
+    "backend/src/round_robin/app.py",
+    "backend/src/round_robin/api/drafts.py",
+    "backend/src/round_robin/schemas/common.py",
+    "backend/src/round_robin/schemas/briefs.py",
+    "backend/src/round_robin/schemas/contributions.py",
+    "backend/src/round_robin/schemas/views.py",
+    "backend/src/round_robin/orchestration/controller.py",
+    "backend/src/round_robin/orchestration/reporting.py",
+    "backend/src/round_robin/orchestration/admission.py",
+    "backend/src/round_robin/dispatcher/service.py",
+    "backend/src/round_robin/worker/research_tasks.py"
+  ],
+  "findings": [
+    {
+      "id": "EVID-01",
+      "priority": "P2",
+      "title": "Preflight accepts selected files that cannot fit the evidence packet",
+      "file": "backend/src/round_robin/api/preflight.py",
+      "lines": [
+        44,
+        51
+      ],
+      "related_locations": [
+        "backend/src/round_robin/api/artifacts.py:127",
+        "backend/src/round_robin/orchestration/controller.py:89-93"
+      ],
+      "description": "The upload boundary permits one MiB, but preflight only checks ownership/readiness/hash/recipients. A selected 52,800-byte UTF-8 text file passes preflight without blockers or warnings, starts successfully, consumes an intake attempt and then deterministically fails the 24-passage runtime cap. The source shape and remaining packet capacity are known before Start. Live runs share this intake-first path, so this can waste a paid intake call for an input which cannot succeed.",
+      "reproduction_script": "/tmp/round_robin_evidence_probe.py",
+      "evidence": {
+        "upload_bytes": 52800,
+        "upload_status": 201,
+        "upload_state": "ready",
+        "preflight_status": 200,
+        "preflight_blockers": [],
+        "preflight_warnings": [],
+        "start_status": 202,
+        "terminal_status": "failed",
+        "stop_reason": "context_limit_selected_passages",
+        "attempt_stages": [
+          "intake"
+        ],
+        "comparison": [],
+        "provider_requests_external": 0
+      },
+      "suggested_fix": "Apply evidence packet and structured-source size validation during preflight and repeat it at Start; return an actionable blocker or provide explicit bounded excerpt selection before admission."
+    },
+    {
+      "id": "EVID-02",
+      "priority": "P2",
+      "title": "Research reserve rejection leaves proposals permanently blocked on pending research",
+      "file": "backend/src/round_robin/research/service.py",
+      "lines": [
+        116,
+        120
+      ],
+      "related_locations": [
+        "backend/src/round_robin/research/service.py:86-87",
+        "backend/src/round_robin/research/service.py:56-61",
+        "backend/src/round_robin/worker/research_tasks.py:7-14"
+      ],
+      "description": "Research hardcodes a 215-second reserve instead of using the frozen finish policy. A valid configuration with a 200-second active limit and 50-second finishing reserve therefore always throws before acquiring a lease. The transaction rolls back leaving research_state=pending. Reconciliation handles only running research, while schedule_research blocks proposals for pending research, so every redelivery fails and the run remains stuck until its active deadline. Default configurations encounter the same state when research starts late.",
+      "reproduction_script": "/tmp/round_robin_research_probe.py",
+      "evidence": {
+        "provider_config_schema_valid": true,
+        "active_limit": 200,
+        "finish_reserved": 50,
+        "errors": [
+          "finish_time_reserve",
+          "finish_time_reserve"
+        ],
+        "run_status": "running",
+        "stage": "proposals",
+        "research_state": "pending",
+        "remaining_active_seconds": 199.942723,
+        "reconciler_progressed": false,
+        "proposal_steps": 0,
+        "search_calls": 0,
+        "external_provider_requests": 0
+      },
+      "suggested_fix": "Compute the allowance from the configured finish reserve and terminally settle unavailable research when no research time remains; enqueue advance so conditional text review can proceed."
+    },
+    {
+      "id": "EVID-03",
+      "priority": "P2",
+      "title": "Every maintenance cycle re-purges the complete permanent deletion history",
+      "file": "backend/src/round_robin/operations/maintenance.py",
+      "lines": [
+        56,
+        57
+      ],
+      "related_locations": [
+        "backend/src/round_robin/operations/recovery.py:123-128",
+        "backend/src/round_robin/operations/recovery.py:93",
+        "backend/src/round_robin/dispatcher/service.py:169-177"
+      ],
+      "description": "The minute-based dispatcher invokes maintenance synchronously. Maintenance reads the whole independently retained manifest and repeats purge_record for all historical entries without a batch bound or checking already-purged status. One already-purged meeting with one run executes 25 SQL statements on every pass and increments its fence again. As history grows, cleanup work grows with all past deletions and blocks the same loop responsible for dispatch and lease reconciliation; ordinary create/delete cycles are not constrained by the active meeting quota.",
+      "reproduction_script": "/tmp/round_robin_maintenance_probe.py",
+      "evidence": {
+        "pass1": {
+          "sql_statements": 25,
+          "deletion_records_reapplied": 1,
+          "run_execution_fence": 2
+        },
+        "pass2": {
+          "sql_statements": 25,
+          "deletion_records_reapplied": 1,
+          "run_execution_fence": 3
+        }
+      },
+      "suggested_fix": "Retain the full independent manifest for restore verification, but process active pending deletions in bounded batches and skip proven completed records during routine maintenance. Keep full replay as an explicit restore/purge operation."
+    },
+    {
+      "id": "EVID-04",
+      "priority": "P2",
+      "title": "The expiry regression uses UTC yesterday against a Phoenix comparison date",
+      "file": "backend/tests/test_evidence_regressions.py",
+      "lines": [
+        225,
+        226
+      ],
+      "related_locations": [
+        "backend/src/round_robin/orchestration/reporting.py:29-33"
+      ],
+      "description": "The regression creates expiry as utcnow().date()-1 while the sample brief uses America/Phoenix. Between midnight and 06:59 UTC that date is the current Phoenix date, so the quote is correctly considered current and the test incorrectly expects it to be expired. Root observed this failure in the full suite; the source inspection and current UTC/Phoenix calendars establish the cause. This is a test defect, not a stale-quote product defect.",
+      "evidence": {
+        "utc_observed": "2026-11-17 03:24 UTC",
+        "phoenix_observed": "2026-11-16 20:24 MST",
+        "expiry_constructed": "2026-11-16",
+        "accepted_comparison_date": "2026-11-16",
+        "actual_total": "1600.00",
+        "incorrect_expected_total": null,
+        "failure_window": "00:00 through 06:59 UTC each day"
+      },
+      "suggested_fix": "Freeze the clock and explicit comparison date in this test, or derive the expired quote date from the brief timezone."
+    }
+  ],
+  "limitations": [
+    "Production PostgreSQL concurrency and real hosted OIDC not exercised by my probes.",
+    "Relevant regression tests read selectively; root owns the full-suite run.",
+    "Source review does not establish absence of further issues."
+  ],
+  "delegated_to_root": [
+    "Non-two-decimal currency rounding; root independently reproduced and verified currency source.",
+    "Non-USD saved briefs are labeled USD in frontend editor; frontend agent owns this finding."
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "markdown": {
+    "http_create": 201,
+    "upload": "ready",
+    "preflight_blockers": [],
+    "http_start": 202,
+    "run_status": "completed",
+    "export_status": "ready",
+    "raw_remote_image_markdown_preserved": true,
+    "raw_html_image_preserved": true,
+    "network_requests_made": false,
+    "artifact": "/tmp/rr-audit2-data/export-unsafe-markup.md"
+  },
+  "readiness": {
+    "positive_included": {
+      "evidence_statuses": [
+        "user_supplied"
+      ],
+      "all_hard_requirements_pass": true,
+      "cost_totals": [
+        "100.00",
+        "100.00"
+      ],
+      "assessment": {
+        "proposal_providers": [
+          "anthropic",
+          "openai",
+          "google"
+        ],
+        "synthesizer": "openai",
+        "auditor": "google",
+        "synthesis_valid": true,
+        "audit_succeeded": true,
+        "unresolved_critical_defect": false
+      },
+      "readiness": "conditional",
+      "accepted_claim_evidence_status": "supported",
+      "reasons": [
+        "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+      ],
+      "dependencies": [
+        {
+          "id": "dependency_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+          "description": "All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+          "status": "unverified",
+          "accepted_scoped_support": false,
+          "reference_ids": [
+            "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+            "evidence_e6b1a27b79b2af2ce24d70b55eea8b2c3ed3818e"
+          ],
+          "origin": "user_supplied"
+        }
+      ],
+      "source_records_created_by": "real prepare_evidence",
+      "review_records": "synthetic ideal positive distinct-provider reviews; no paid execution"
+    },
+    "zero_included": {
+      "evidence_statuses": [
+        "user_supplied"
+      ],
+      "all_hard_requirements_pass": true,
+      "cost_totals": [
+        "0.00",
+        "0.00"
+      ],
+      "assessment": {
+        "proposal_providers": [
+          "anthropic",
+          "openai",
+          "google"
+        ],
+        "synthesizer": "openai",
+        "auditor": "google",
+        "synthesis_valid": true,
+        "audit_succeeded": true,
+        "unresolved_critical_defect": false
+      },
+      "readiness": "conditional",
+      "accepted_claim_evidence_status": "supported",
+      "reasons": [
+        "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+      ],
+      "dependencies": [
+        {
+          "id": "dependency_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+          "description": "All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+          "status": "unverified",
+          "accepted_scoped_support": false,
+          "reference_ids": [
+            "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+            "evidence_e6b1a27b79b2af2ce24d70b55eea8b2c3ed3818e"
+          ],
+          "origin": "user_supplied"
+        }
+      ],
+      "source_records_created_by": "real prepare_evidence",
+      "review_records": "synthetic ideal positive distinct-provider reviews; no paid execution"
+    },
+    "excluded": {
+      "evidence_statuses": [
+        "user_supplied"
+      ],
+      "all_hard_requirements_pass": false,
+      "cost_totals": [
+        null,
+        null
+      ],
+      "assessment": {
+        "proposal_providers": [
+          "anthropic",
+          "openai",
+          "google"
+        ],
+        "synthesizer": "openai",
+        "auditor": "google",
+        "synthesis_valid": true,
+        "audit_succeeded": true,
+        "unresolved_critical_defect": false
+      },
+      "readiness": "conditional",
+      "accepted_claim_evidence_status": "supported",
+      "reasons": [
+        "A selected-option hard requirement remains unknown: This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+        "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+      ],
+      "dependencies": [
+        {
+          "id": "dependency_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+          "description": "All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+          "status": "unverified",
+          "accepted_scoped_support": false,
+          "reference_ids": [
+            "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084"
+          ],
+          "origin": "user_supplied"
+        }
+      ],
+      "source_records_created_by": "real prepare_evidence",
+      "review_records": "synthetic ideal positive distinct-provider reviews; no paid execution"
+    },
+    "not_applicable": {
+      "evidence_statuses": [
+        "user_supplied"
+      ],
+      "all_hard_requirements_pass": false,
+      "cost_totals": [
+        null,
+        null
+      ],
+      "assessment": {
+        "proposal_providers": [
+          "anthropic",
+          "openai",
+          "google"
+        ],
+        "synthesizer": "openai",
+        "auditor": "google",
+        "synthesis_valid": true,
+        "audit_succeeded": true,
+        "unresolved_critical_defect": false
+      },
+      "readiness": "conditional",
+      "accepted_claim_evidence_status": "supported",
+      "reasons": [
+        "A selected-option hard requirement remains unknown: This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+        "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+      ],
+      "dependencies": [
+        {
+          "id": "dependency_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+          "description": "All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+          "status": "unverified",
+          "accepted_scoped_support": false,
+          "reference_ids": [
+            "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084"
+          ],
+          "origin": "user_supplied"
+        }
+      ],
+      "source_records_created_by": "real prepare_evidence",
+      "review_records": "synthetic ideal positive distinct-provider reviews; no paid execution"
+    }
+  }
+}

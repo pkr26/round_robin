@@ -1,0 +1,33 @@
+INDEPENDENT EVIDENCE/REPORT SESSION AUDIT
+November 17, 2026
+
+Reviewed 22 algorithm/process responsibilities across 15 current source files. Existing 115 tests pass, but three new offline counterexamples reproduce two high-priority correctness failures and one export fidelity failure. A fourth, actual API-path probe strengthens the expiry finding. Product files and historical records were not changed.
+
+SESSION-E01 P1 — New reassessment reports can certify a choice using explicitly expired supplier quotes
+Source: backend/src/round_robin/research/discussion.py:160; backend/src/round_robin/orchestration/reporting.py:31; backend/src/round_robin/orchestration/reporting.py:77; backend/src/round_robin/api/assessments.py:76; backend/src/round_robin/api/assessments.py:103
+Trigger: Cost inputs were valid at the run start and received owner attestations with valid_until=null. After the quoted valid-through date passes, another requirement attestation republishes the report.
+Observed: current_assessments checks only attestation.valid_until and exact hashes, not the embedded quote_valid_until. comparison_as_of always uses run.created_at, including the new report version. The new publication retains both accepted cost receipts and known cost totals and returns ready_to_choose.
+Impact: A freshly published reassessment presents a ready choice after a known price validity boundary has passed. The option_costs POST expiry check does not protect requirement-only re-publication.
+Proof: probe.py:expired_reassessment plus actual owner API api_expiry.py/api-expiry-results.json: Oct28 cost receipts, Nov10 quote expiry, Nov17 requirement-only POST201 publishes ready_to_choose version7 after version6; cost totals1600/1840/0 and all old cost receipts retained; zero added model calls.
+Repair: Separate immutable original comparison-as-of from a new reassessment-as-of. Recheck every accepted cost receipt and each included quote validity at reassessment publication; drop stale support and keep costs/readiness conditional. Preserve the original historical report, and serialize the assessment date explicitly.
+Limit: The authenticated API path is exercised on a completed synthetic live-labeled fixture derived from the actual simulated pipeline. Initial fixture labels/usage are converted only to exercise live readiness; no paid provider quality is claimed. The subsequent owner attestation POST and saved-report GET are actual application routes.
+
+SESSION-E02 P1 — An audit can close an objection using an answer from an obsolete synthesis
+Source: backend/src/round_robin/research/discussion.py:17; backend/src/round_robin/research/discussion.py:45; backend/src/round_robin/research/discussion.py:91; backend/src/round_robin/research/discussion.py:100
+Trigger: Synthesis0 answers a critical issue. A later replacement synthesis omits that answer or its required condition. Audit1 returns resolved for the issue.
+Observed: The reducer accepts any prior answered event from a different provider if the frozen brief hash matches. It does not require the latest synthesis to answer, bind the answer/resolution to the current synthesis or claim versions, or reopen resolved issues on a replacement synthesis. The reproduced ledger closes the issue despite no response in synthesis1, and build_report returns ready_to_choose.
+Impact: The new objection mechanism can certify an obsolete correction and hide a regression in the actual final recommendation. The main invariant that each current material concern gets an inspectable current resolution is not enforced.
+Proof: probe.py:stale_answer_resolution; probe-results.json:stale_answer_resolution. Events opened by proposal1, answered by synthesis0, resolved by audit1; no synthesis1 answer. New report ready_to_choose.
+Repair: Bind answers and reviewer resolutions to an explicit current synthesis ID, issue/claim versions and input packet hash. On replacement, carry or invalidate each resolution through an explicit recheck; require an answer in the current synthesis or an explicit verified carry-forward record before independent resolution.
+Limit: The auditor does receive the latest synthesis in the live packet, so a careful model could avoid this. The defect is deterministic acceptance of a stale disposition, not proof every real auditor would make the mistake or a demand that the application prove natural-language truth.
+
+SESSION-E03 P2 — Markdown/PDF omit the actual objection-resolution event ledger
+Source: backend/src/round_robin/reports/exports.py:44; backend/src/round_robin/reports/exports.py:68; backend/src/round_robin/reports/exports.py:154; backend/src/round_robin/schemas/discussion.py:35
+Trigger: A saved issue has opening, synthesis-answer and independent-resolution events and is exported to Markdown or PDF.
+Observed: describe() renders value.responses/value.resolutions, but DiscussionIssue stores events. Both export paths therefore print an empty list after the issue status instead of the actual response explanations/provenance/citations, under a heading claiming Complete objection and resolution ledger.
+Impact: Downloaded decision briefs cannot explain how an objection was resolved even though JSON and the UI retain that explanation. The completion claim that the full issue ledger survives all exports is false.
+Proof: probe.py:export_loss; probe-results.json:export_ledger_loss. Both resolution sentinels present in JSON and absent in Markdown and independently extracted PDF text.
+Repair: Render each actual events entry including disposition, response, actor/stage, step/input identity and basis refs; preserve all entries rather than summary limits. Add extraction checks for unique resolution explanations and adverse/supporting citations across JSON/Markdown/PDF.
+Limit: Saved JSON and UI event history remain intact; the defect is export fidelity rather than deletion of original evidence. General PDF geometry was not audited in this lane.
+
+The session closure claims for scoped current readiness, version-bound issue resolution and complete export fidelity therefore need reopening. Many other controls improved substantially, but passing existing suites does not close these counterexamples.

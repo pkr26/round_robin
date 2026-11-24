@@ -1,0 +1,53 @@
+{
+  "schema": "rr_fix_c219dc75493d44f9a19b36295cb87af9",
+  "queue": "rr_fix_d8c11a0c0605439eb305a893ad53ade7",
+  "api_port": 18000,
+  "browser_port": 13000,
+  "paid_provider_calls": 0,
+  "checks": [
+    {
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 6.33,
+      "log": "check-01.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "upgrade",
+        "head"
+      ],
+      "exit_code": 0,
+      "seconds": 0.51,
+      "log": "check-02.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.39,
+      "log": "check-03.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "/tmp/rr-fix-validation/browser/playwright.config.cjs"
+      ],
+      "exit_code": 1,
+      "seconds": 120.2,
+      "log": "check-04.log"
+    }
+  ],
+  "status": "failed",
+  "error": "RuntimeError: check-04 failed",
+  "owned_resources_cleaned": true
+}

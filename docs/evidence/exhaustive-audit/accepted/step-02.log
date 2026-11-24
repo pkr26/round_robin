@@ -1,0 +1,18 @@
+PASS uv run pytest -q
+PASS uv run python -m round_robin.export_contracts --check
+PASS node scripts/check_client.mjs
+PASS node --test scripts/frontend_coverage.test.mjs
+PASS uv run python -m experiments.evaluation validate
+PASS uv run python scripts/scenario_summary.py --check
+PASS pnpm typecheck
+PASS pnpm build
+PASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate
+PASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate
+PASS uv run pytest backend/tests/integration -q
+PASS uv run pytest backend/tests/test_fetcher_transport.py -q
+PASS uv run alembic upgrade head
+PASS uv run alembic check
+PASS pnpm test:e2e
+PASS docker image inspect round-robin-native-renderer:exhaustive-audit --format {{.Id}}
+PASS uv run pytest backend/tests/integration/test_native_renderer.py -q
+Evidence saved to /Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/checks.json

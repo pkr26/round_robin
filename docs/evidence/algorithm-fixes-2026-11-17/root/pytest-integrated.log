@@ -1,0 +1,778 @@
+...ssssssssssssssssssssssssssssssssssssss............................... [  3%]
+........................................................................ [  7%]
+........................F............................................... [ 10%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 24%]
+...............................................F........F............... [ 28%]
+........................................................................ [ 31%]
+........................................................................ [ 35%]
+........................................................................ [ 38%]
+........................................................................ [ 42%]
+........................................................................ [ 45%]
+........................................................................ [ 49%]
+...................F..F................................................. [ 53%]
+........................................................................ [ 56%]
+........................................................................ [ 60%]
+.....................................F.................................F [ 63%]
+FFFFF................................................................... [ 67%]
+........................................................................ [ 70%]
+........................................................................ [ 74%]
+........................................................................ [ 77%]
+........................................................................ [ 81%]
+..............sssss..................................................... [ 84%]
+........................................................................ [ 88%]
+............F........................................................... [ 91%]
+........................................................................ [ 95%]
+........................................................................ [ 98%]
+.....................                                                    [100%]
+=================================== FAILURES ===================================
+_________ test_research_uses_frozen_finish_reserve_instead_of_default __________
+
+research_run = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_research_uses_frozen_fini0/research.sqlite), autoflush=True, expire_on_commit=False)
+
+    def test_research_uses_frozen_finish_reserve_instead_of_default(research_run):
+        with research_run.begin() as session:
+            run = session.get(Run, "run_local")
+            run.configuration = {**run.configuration,
+                "limits": {**run.configuration["limits"], "active_seconds": 200},
+                "finish_policy": {**run.configuration["finish_policy"], "reserved_active_seconds": 50}}
+            assert schedule_research(session, run)
+        search = SearchFixture()
+        assert execute_research("run_local", session_factory=research_run, search=search,
+            transport=PageFixture(), resolver=lambda _: ["93.184.216.34"])
+>       assert len(search.queries) == 3
+E       assert 0 == 3
+E        +  where 0 = len([])
+E        +    where [] = <backend.tests.test_research_service.SearchFixture object at 0x113f1a9c0>.queries
+
+backend/tests/test_audit_runtime_fixes.py:36: AssertionError
+____ test_claim_support_requires_a_source_path_and_keeps_valid_alias_chains ____
+
+    def test_claim_support_requires_a_source_path_and_keeps_valid_alias_chains():
+        request = replace(packet(), evidence=[{"id": "evidence_owned", "text": "A source passage."}])
+        content = {**output(), "claims": [claim(refs=["evidence_owned"]), claim("new_claim_2", ["new_claim_1"]), claim("new_claim_3"), claim("new_claim_4", kind="preference")]}
+        checked = validate_output(ProviderOutput.model_validate(content), request)
+>       assert [item.evidence_status for item in checked.claims] == ["supported", "supported", "not_checked", "supported"]
+E       AssertionError: assert ['not_checked..., 'supported'] == ['supported',..., 'supported']
+E         
+E         At index 0 diff: 'not_checked' != 'supported'
+E         Use -v to get more diff
+
+backend/tests/test_evidence_regressions.py:139: AssertionError
+_ test_live_workers_publish_expired_costs_as_unknown_and_unrooted_claims_as_unchecked _
+
+factory = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_live_workers_publish_expi0/orchestration.sqlite), autoflush=True, expire_on_commit=False)
+tmp_path = PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_live_workers_publish_expi0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x118ae3830>
+
+    def test_live_workers_publish_expired_costs_as_unknown_and_unrooted_claims_as_unchecked(factory, tmp_path, monkeypatch):
+        config = synthetic_configuration()
+        for capability in config["capabilities"].values():
+            capability["context_window_tokens"] = 128000
+        provider_path = tmp_path / "providers.json"
+        provider_path.write_text(json.dumps(config))
+        settings = replace(Settings(), provider_config_file=provider_path, paid_access_enabled=True, artifact_directory=tmp_path / "private")
+        monkeypatch.setattr("round_robin.orchestration.configuration.settings", settings)
+        from zoneinfo import ZoneInfo
+        comparison_date = utcnow().astimezone(ZoneInfo(complete_brief().timezone)).date()
+        brief = complete_brief(valid_until=comparison_date - timedelta(days=1))
+        run_id = seed(factory, brief=brief, config=run_configuration(settings, "live"))
+        with factory.begin() as session:
+            for policy in lock_policies(session, "owner_test"):
+                policy.spending_locked = False
+                policy.limit_usd = "10"
+                policy.metadata_json = {"daily_usd": "10", "monthly_usd": "50"}
+        registry, requests = mock_registry(ProviderConfiguration.model_validate(config))
+        for provider, adapter in registry.items():
+            original_transport = adapter.transport
+    
+            def add_unrooted_claim(request, provider=provider, original_transport=original_transport):
+                raw = original_transport.handle_request(request).json()
+                block = raw["output"][0]["content"][0] if provider == "openai" else raw["content"][0] if provider == "anthropic" else raw["candidates"][0]["content"]["parts"][0]
+                content = json.loads(block["text"])
+                content["claims"] = [claim()]
+                request_body = json.loads(request.content)
+                request_text = request_body["input"][0]["content"] if provider == "openai" else request_body["messages"][0]["content"] if provider == "anthropic" else request_body["contents"][0]["parts"][0]["text"]
+                request_packet = json.loads(request_text)
+                if request_packet["evidence"]:
+                    # An adviser must not override missing current arithmetic by
+                    # calling the old structured quote a passing budget basis.
+                    content["constraints"] = [{"option_id": "option_a", "requirement_id": "requirement_budget", "result": "pass", "reason": "The adviser incorrectly treats an expired price as current.", "basis_refs": [request_packet["evidence"][0]["id"]]}]
+                block["text"] = json.dumps(content)
+                return httpx.Response(200, json=raw)
+    
+            adapter.transport = httpx.MockTransport(add_unrooted_claim)
+        drain(factory, registry)
+        app = create_app(str(factory.kw["bind"].url), settings=settings)
+        app.dependency_overrides[require_owner] = lambda: "owner_test"
+        with TestClient(app) as client:
+            report_response = client.get(f"/api/runs/{run_id}/report")
+            claim_response = client.get(f"/api/runs/{run_id}/claims")
+            assert report_response.status_code == claim_response.status_code == 200
+            report = report_response.json()
+>           assert report["simulated"] is False and report["readiness"] == "conditional"
+E           AssertionError: assert (False is False and None == 'conditional')
+
+backend/tests/test_evidence_regressions.py:262: AssertionError
+_ test_image_packet_immutable_versions_and_bounded_prior_evidence[prior_valid] _
+
+image_factory = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_image_packet_immutable_ve4/image-worker.sqlite), autoflush=True, expire_on_commit=False)
+image_configuration = {'schema_version': '1.0', 'version': 'synthetic-image-config-v1', 'funded': True, 'expires_at': '2026-11-17T14:16:19.429819Z', ...}
+tmp_path = PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_image_packet_immutable_ve4')
+case = 'prior_valid'
+
+    @pytest.mark.parametrize('case',['missing_version','foreign_version','generator_critic','prior_missing','prior_valid','prior_overflow','metadata_overflow','edit_pixels'])
+    def test_image_packet_immutable_versions_and_bounded_prior_evidence(image_factory,image_configuration,tmp_path,case):
+        from round_robin.database.visual_models import DesignReview
+        design_id,operation_id=seed_image(image_factory,image_configuration)
+        adapter=FakeImageAdapter('openai',image_configuration,image_factory)
+        assert worker.execute_image_operation(operation_id,session_factory=image_factory,provider_registry={'openai':adapter},artifact_directory=tmp_path)['status']=='persisted'
+        with image_factory.begin() as session:
+            design=session.get(DesignSession,design_id);version=session.scalar(select(DesignVersion))
+            review=session.scalar(select(DesignOperation).where(DesignOperation.provider=='google'))
+            provider=FakeImageAdapter('google',image_configuration,image_factory)
+            expected=None
+            if case=='missing_version':review.payload={**review.payload,'target_version_id':'missing'};expected='immutable parent'
+            if case=='foreign_version':version.session_id='foreign';expected='immutable parent'
+            if case=='generator_critic':review.provider='openai';expected='generator'
+            if case=='prior_missing':version.parent_version_id='missing';expected='prior design'
+            if case in {'prior_valid','prior_overflow'}:
+                parent=DesignVersion(**{column.name:getattr(version,column.name) for column in DesignVersion.__table__.columns if column.name not in {'id','version','parent_version_id'}} ,id='parent_version',version=0,parent_version_id=None)
+                session.add(parent);session.flush();version.parent_version_id=parent.id
+                session.add(DesignReview(id='parent_review',session_id=design_id,version_id=parent.id,provider='anthropic',receipt={},critique={'findings':[{'id':f'prior_{n}'} for n in range(41 if case=='prior_overflow' else 1)]}));session.flush()
+                if case=='prior_overflow':expected='Prior findings exceed'
+            if case=='metadata_overflow':
+                review.payload={**review.payload,'kind':'generation','edit_intent':['x'*140000]};expected='metadata exceeds'
+            if case=='edit_pixels':review.payload={**review.payload,'kind':'edit','parent_version_id':version.id}
+            if expected:
+                with pytest.raises(VisualLimit,match=expected):worker._packet(session,design,review,provider,tmp_path)
+            else:
+>               packet=worker._packet(session,design,review,provider,tmp_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_image_worker.py:227: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/src/round_robin/worker/image_tasks.py:244: in _packet
+    prior_context["regression_targets"] = regression_targets(design.frozen_brief, prior_findings)
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+brief = {'purpose': 'Create a synthetic green square', 'audience': 'Test', 'domain': 'raster_concept', 'required_text': [], ...}
+findings = [{'id': 'prior_0'}]
+
+    def regression_targets(brief: dict, findings: list[dict]) -> list[dict]:
+        if len(findings) > 40 or len({row["id"] for row in findings}) != len(findings):
+            raise ValueError("Prior findings must be bounded and uniquely identified")
+        targets = []
+        for value in findings:
+>           finding = Finding.model_validate(value)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           pydantic_core._pydantic_core.ValidationError: 3 validation errors for Finding
+E           description
+E             Field required [type=missing]
+E               For further information visit https://errors.pydantic.dev/2.14/v/missing
+E           category
+E             Field required [type=missing]
+E               For further information visit https://errors.pydantic.dev/2.14/v/missing
+E           severity
+E             Field required [type=missing]
+E               For further information visit https://errors.pydantic.dev/2.14/v/missing
+
+backend/src/round_robin/visual/feedback.py:22: ValidationError
+_ test_image_packet_immutable_versions_and_bounded_prior_evidence[edit_pixels] _
+
+image_factory = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_image_packet_immutable_ve7/image-worker.sqlite), autoflush=True, expire_on_commit=False)
+image_configuration = {'schema_version': '1.0', 'version': 'synthetic-image-config-v1', 'funded': True, 'expires_at': '2026-11-17T14:16:19.574995Z', ...}
+tmp_path = PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_image_packet_immutable_ve7')
+case = 'edit_pixels'
+
+    @pytest.mark.parametrize('case',['missing_version','foreign_version','generator_critic','prior_missing','prior_valid','prior_overflow','metadata_overflow','edit_pixels'])
+    def test_image_packet_immutable_versions_and_bounded_prior_evidence(image_factory,image_configuration,tmp_path,case):
+        from round_robin.database.visual_models import DesignReview
+        design_id,operation_id=seed_image(image_factory,image_configuration)
+        adapter=FakeImageAdapter('openai',image_configuration,image_factory)
+        assert worker.execute_image_operation(operation_id,session_factory=image_factory,provider_registry={'openai':adapter},artifact_directory=tmp_path)['status']=='persisted'
+        with image_factory.begin() as session:
+            design=session.get(DesignSession,design_id);version=session.scalar(select(DesignVersion))
+            review=session.scalar(select(DesignOperation).where(DesignOperation.provider=='google'))
+            provider=FakeImageAdapter('google',image_configuration,image_factory)
+            expected=None
+            if case=='missing_version':review.payload={**review.payload,'target_version_id':'missing'};expected='immutable parent'
+            if case=='foreign_version':version.session_id='foreign';expected='immutable parent'
+            if case=='generator_critic':review.provider='openai';expected='generator'
+            if case=='prior_missing':version.parent_version_id='missing';expected='prior design'
+            if case in {'prior_valid','prior_overflow'}:
+                parent=DesignVersion(**{column.name:getattr(version,column.name) for column in DesignVersion.__table__.columns if column.name not in {'id','version','parent_version_id'}} ,id='parent_version',version=0,parent_version_id=None)
+                session.add(parent);session.flush();version.parent_version_id=parent.id
+                session.add(DesignReview(id='parent_review',session_id=design_id,version_id=parent.id,provider='anthropic',receipt={},critique={'findings':[{'id':f'prior_{n}'} for n in range(41 if case=='prior_overflow' else 1)]}));session.flush()
+                if case=='prior_overflow':expected='Prior findings exceed'
+            if case=='metadata_overflow':
+                review.payload={**review.payload,'kind':'generation','edit_intent':['x'*140000]};expected='metadata exceeds'
+            if case=='edit_pixels':review.payload={**review.payload,'kind':'edit','parent_version_id':version.id}
+            if expected:
+                with pytest.raises(VisualLimit,match=expected):worker._packet(session,design,review,provider,tmp_path)
+            else:
+>               packet=worker._packet(session,design,review,provider,tmp_path)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_image_worker.py:227: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/src/round_robin/worker/image_tasks.py:258: in _packet
+    bundle, bundle_hash = build_edit_bundle(brief=design.frozen_brief, parent_version_id=version.id,
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+brief = {'purpose': 'Create a synthetic green square', 'audience': 'Test', 'domain': 'raster_concept', 'required_text': [], ...}
+parent_version_id = 'designversion_e205d37c69324150ae3b70318fc125ef'
+parent_hash = '0fa253f88939b5072b0963be775bfb36793bd9f6f8056e50cb8367977fdcdd3e'
+findings = [], dispositions = {}, intent = ''
+
+    def build_edit_bundle(*, brief, parent_version_id, parent_hash, findings, dispositions, intent):
+        VisualBrief.model_validate(brief)
+        if not isinstance(intent, str) or not intent.strip() or len(intent) > 2000:
+>           raise ValueError("An edit requires a concrete bounded intent")
+E           ValueError: An edit requires a concrete bounded intent
+
+backend/src/round_robin/visual/feedback.py:33: ValueError
+_ test_actual_ready_requires_complete_checked_cost_even_with_all_positive_reviews _
+
+runtime_body = {'schema_version': '1.0', 'id': 'report_e5940fd84dfb4c08ae22a0f51d7ca03b', 'run_id': 'run_one', 'parent_report_id': None, ...}
+
+    def test_actual_ready_requires_complete_checked_cost_even_with_all_positive_reviews(runtime_body):
+        body=genuinely_ready(runtime_body)
+        # The seed includes installation/maintenance gaps. Deliberately keep every
+        # cost identity aligned while exposing the missing charge to the runtime gate.
+        selected=body['comparison'][0]
+        calc=next(item for item in body['calculations'] if item['id']==selected['calculation_id'])
+        selected['missing_components']=calc['missing_components']=['Supplier must confirm installation charge']
+        selected['total']=calc['output']=None
+        with pytest.raises(ValidationError,match='incomplete comparable cost'):
+            RuntimeDecisionReport.model_validate(body)
+        selected['missing_components']=calc['missing_components']=[]
+        selected['total']=calc['output']=selected['known_subtotal']
+>       assert RuntimeDecisionReport.model_validate(body).readiness=='ready_to_choose'
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       pydantic_core._pydantic_core.ValidationError: 1 validation error for RuntimeDecisionReport
+E         Value error, Published readiness dimensions do not establish a ready decision [type=value_error]
+E           For further information visit https://errors.pydantic.dev/2.14/v/value_error
+
+backend/tests/test_exhaustive_runtime_report.py:94: ValidationError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[refusal] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f5ea750>
+kind = 'refusal'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11f659ee0>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='1aec0504fa09beb5056864d247d13ec9b5c247afcc10d790398569b75756d3e6')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = (), discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_9108bbdd89dc32b0c06a359ee3334e8b'
+
+experiments/study_runner.py:480: KeyError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[before_send] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x116a24b90>
+kind = 'before_send'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11f3e7cb0>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='d8963b415f792f531c24e14f7b968f37068cc51dcb1fad36f74790cf8341ca23')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = (), discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_93345b6df9153c7638616e4f990f4938'
+
+experiments/study_runner.py:480: KeyError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[retry_nan] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x11f393cb0>
+kind = 'retry_nan'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11f390c20>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='06d6bfa1f3c875cecd6504073c71910c58305e4952edb7167eb102c7b52f2810')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = (), discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_c397a1dcac075c6e830fe66bc7b68e26'
+
+experiments/study_runner.py:480: KeyError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[retry_too_late] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x117787dd0>
+kind = 'retry_too_late'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11f58ddf0>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='2fdb3fd6194d50e9c7399d9aac7b693a6c4567c07841139f2c7316501443a4af')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = (), discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_628d360ca96d2af845d9d87464467ba9'
+
+experiments/study_runner.py:480: KeyError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[fallback] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1128d2000>
+kind = 'fallback'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11229d5e0>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='eb5d002d14feb315426b4362dc9dc21f50ffa8225bf3df292f35c921cf17f107')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = ['anthropic']
+discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_119c7783efd157f013f76eaa8bf9edc8'
+
+experiments/study_runner.py:480: KeyError
+_ test_study_call_failures_preserve_receipts_and_original_two_call_limit[simulated] _
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1013/test_study_cal...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x117db6d80>
+kind = 'simulated'
+
+    @pytest.mark.parametrize('kind',['refusal','before_send','retry_nan','retry_too_late','fallback','simulated','policy_timeout'])
+    def test_study_call_failures_preserve_receipts_and_original_two_call_limit(funded_study,monkeypatch,kind):
+        approval,manifest,config,registry,requests=runner_context(funded_study)
+        with Journal(approval.journal_directory,mode='explicit_live_study') as journal:
+            sleeps=[]
+            runner=FundedStudyRunner(journal,approval,manifest,config,provider_registry=registry,sleeper=sleeps.append)
+            trial=next(item for item in runner.plan if item.workflow=='single_provider')
+            run_id=runner._run_id(trial);runner.ledger.open_run(approval.batch_id,run_id,approval.owner_id)
+            if kind=='policy_timeout':monkeypatch.setattr(runner,'_elapsed',lambda _:600)
+            if kind=='simulated':runner.providers['openai']=SimulatedProvider('openai')
+            elif kind!='policy_timeout':
+                calls=[]
+                def generate(request):
+                    calls.append(request)
+                    if kind=='retry_too_late':monkeypatch.setattr(runner,'_elapsed',lambda _:590)
+                    raise ProviderFailure('refusal' if kind=='refusal' else 'authentication' if kind=='fallback' else 'timeout',retryable=kind in {'retry_nan','retry_too_late','before_send'},retry_after=float('nan') if kind=='retry_nan' else None,may_have_sent=kind!='before_send',provider_request_id='owned_receipt')
+                monkeypatch.setattr(runner.providers['openai'],'generate',generate)
+>           result=runner._call(trial,'proposal_manual','proposal','openai',[],fallbacks=['anthropic'] if kind=='fallback' else ())
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_study.py:175: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <experiments.study_runner.FundedStudyRunner object at 0x11f3cb080>
+trial = TrialSpec(trial_id='DDL-03.v1.single_provider.r0', task_id='DDL-03', task_version=1, workflow='single_provider', repeat_index=0, primary=True, dataset_fingerprint='18c3e144b19309b55b47529271e5f38ae093fcc244457274cba318385ef2d3e0')
+step_id = 'proposal_manual', stage = 'proposal', provider_name = 'openai'
+peers = [], finish_role = None, fallbacks = (), discussion_snapshot = None
+
+    def _call(self, trial, step_id, stage, provider_name, peers, *, finish_role=None, fallbacks=(), discussion_snapshot=None):
+        case, run_id = self.cases[trial.task_id], self._run_id(trial)
+        snapshots = [snapshot.model_dump(mode="json") for snapshot in case.checked_snapshots]
+        from round_robin.orchestration.reporting import comparison_data
+        cost_as_of = self.manifest.frozen_at.astimezone(ZoneInfo(case.brief.timezone)).date()
+        _, calculations = comparison_data(case.brief, as_of=cost_as_of)
+        allowed = {snapshot.id for snapshot in case.checked_snapshots} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers}
+        claims = [claim for peer in peers for claim in peer["output"].get("claims", []) if claim.get("id")]
+        allowed.update(claim["id"] for claim in claims)
+        attempts, failures = [], []
+        repair_diagnostics = ()
+        current_provider = provider_name
+        for ordinal in range(2):
+            attempt_id = "attempt_" + hashlib.sha256(f"{run_id}:{step_id}:{ordinal}".encode()).hexdigest()[:40]
+            request = None
+            try:
+                with self.mutex:
+                    self._authority()
+                    state = self.ledger._state()
+                    if stage in {"synthesis", "audit"} and sum(item["run_id"] == run_id and item["step_id"] in {stage, stage + "_correction"} for item in state["attempts"].values()) >= 2:
+                        raise PolicyError("logical_finish_call_limit")
+                    role = finish_role if finish_role not in state["runs"][run_id]["final_roles"] else None
+                    remaining_roles = 2 - len(state["runs"][run_id]["final_roles"]) - int(role is not None)
+                    timeout = min(90, math.floor(600 - self._elapsed(run_id) - remaining_roles * 95 - 25))
+                    if timeout <= 0:
+                        raise PolicyError("protected_finish_time_exhausted")
+                    scoped_peers = [{"id": peer["id"], "provider": peer["provider"], "stage": peer["stage"], "output": peer["output"]} for peer in peers]
+                    from round_robin.research.discussion import current_assessments, discussion_issues
+>                   current_run = self._discussion_runs[run_id]
+                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   KeyError: 'trial_e6a7d33464f2e883dbfc160a2454da2c'
+
+experiments/study_runner.py:480: KeyError
+_______ test_registered_url_html_is_inert_and_stored_passages_are_exact ________
+
+    def test_registered_url_html_is_inert_and_stored_passages_are_exact():
+        html = b'<html><script>private tool action</script><style>.x{display:none}</style><p>Offer: 1000 upfront.</p><p>Installation unknown.</p></html>'
+        transport = FakeTransport([FetchResponse(200, {"content-type": "text/html"}, html)])
+        allowance = FetchAllowance(registered_urls={"candidate": "https://example.com"})
+        source = collect_source("candidate", allowance, transport=transport, resolver=public)
+        assert "private tool" not in source.text and "Installation unknown." in source.text
+        assert source.status == "not_checked"
+        passages = exact_passages(source, size=15)
+        assert all(passage["sha256"] == hashlib.sha256(passage["text"].encode()).hexdigest() for passage in passages)
+>       assert "".join(passage["text"] for passage in passages) == source.text
+E       AssertionError: assert 'Offer: 1000 ...llation unkno' == 'Offer: 1000 ...tion unknown.'
+E         
+E         - Offer: 1000 upfront.
+E         + Offer: 1000 upfupfront.
+E         ?             +++
+E         - Installation unknown.
+E         ?                   ---
+E         + Instaltallation unkno
+E         ?    +++
+
+backend/tests/test_research.py:62: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+backend/tests/test_exhaustive_audit_runner.py::test_audit_cli_refuses_preexisting_output_without_subprocesses
+  <frozen runpy>:128: RuntimeWarning: 'scripts.audit' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.audit'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_coverage_gate.py::test_manifest_cli_entrypoint_binds_actual_source_and_verification_inputs
+  <frozen runpy>:128: RuntimeWarning: 'scripts.coverage_gate' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.coverage_gate'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_journal_budget.py::test_runner_cli_safe_failure_and_module_entry_do_not_touch_providers
+  <frozen runpy>:128: RuntimeWarning: 'experiments.runner' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.runner'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_workers.py::test_dispatcher_module_entrypoint_handles_immediate_stop_without_connecting
+  <frozen runpy>:128: RuntimeWarning: 'round_robin.dispatcher.service' found in sys.modules after import of package 'round_robin.dispatcher', but prior to execution of 'round_robin.dispatcher.service'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags0]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags1]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags2]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags3]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags4]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.release' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.release'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags5]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags6]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags7]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.visual_evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.visual_evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_scenario_cli_preserves_pending_obligations_in_saved_and_console_summary
+  <frozen runpy>:128: RuntimeWarning: 'scripts.scenario_summary' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.scenario_summary'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_development_cli_sanitizes_failed_setup_without_restarting_or_resetting
+  <frozen runpy>:128: RuntimeWarning: 'scripts.dev' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.dev'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:28: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:32: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:44: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_broker_recovery.py:50: Broker restart faults require the explicit disposable Docker profile
+SKIPPED [1] backend/tests/integration/test_deep_migrations.py:16: Migration rollback requires the explicit disposable PostgreSQL profile
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:16: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:76: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_image_processes.py:119: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_image_processes.py:144: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [2] backend/tests/integration/test_image_total_deadline.py:17: Actual image TLS checks require the explicit loopback-only profile
+SKIPPED [1] backend/tests/integration/test_launcher_ports.py:14: Socket lifecycle check requires the explicit disposable loopback profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:41: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:67: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:80: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:119: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:143: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:180: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:191: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [4] backend/tests/integration/test_native_renderer.py:214: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:56: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:70: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:81: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:93: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:109: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:128: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_restore.py:25: Full PostgreSQL restore requires the explicit disposable loopback test profile
+SKIPPED [1] backend/tests/integration/test_provider_transport.py:30: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [2] backend/tests/integration/test_provider_transport.py:40: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [3] backend/tests/integration/test_review_command_races.py:14: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:106: requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:132: requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:138: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [2] backend/tests/test_fetcher_transport.py:151: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:164: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:173: Real TLS transport checks require the explicit loopback-only test profile
+FAILED backend/tests/test_audit_runtime_fixes.py::test_research_uses_frozen_finish_reserve_instead_of_default
+FAILED backend/tests/test_evidence_regressions.py::test_claim_support_requires_a_source_path_and_keeps_valid_alias_chains
+FAILED backend/tests/test_evidence_regressions.py::test_live_workers_publish_expired_costs_as_unknown_and_unrooted_claims_as_unchecked
+FAILED backend/tests/test_exhaustive_image_worker.py::test_image_packet_immutable_versions_and_bounded_prior_evidence[prior_valid]
+FAILED backend/tests/test_exhaustive_image_worker.py::test_image_packet_immutable_versions_and_bounded_prior_evidence[edit_pixels]
+FAILED backend/tests/test_exhaustive_runtime_report.py::test_actual_ready_requires_complete_checked_cost_even_with_all_positive_reviews
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[refusal]
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[before_send]
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[retry_nan]
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[retry_too_late]
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[fallback]
+FAILED backend/tests/test_exhaustive_runtime_study.py::test_study_call_failures_preserve_receipts_and_original_two_call_limit[simulated]
+FAILED backend/tests/test_research.py::test_registered_url_html_is_inert_and_stored_passages_are_exact
+13 failed, 1981 passed, 43 skipped, 16 warnings in 133.58s (0:02:13)

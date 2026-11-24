@@ -1,0 +1,155 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+....F................................................................... [ 10%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 35%]
+........................................................................ [ 39%]
+........................................................................ [ 43%]
+........................................................................ [ 46%]
+........................................................................ [ 50%]
+........................................................................ [ 53%]
+........................................................................ [ 57%]
+........................................................................ [ 61%]
+........................................................................ [ 64%]
+........................................................................ [ 68%]
+........................................................................ [ 71%]
+........................................................................ [ 75%]
+........................................................................ [ 79%]
+........................................................................ [ 82%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 93%]
+........................................................................ [ 97%]
+.........................................................                [100%]
+=================================== FAILURES ===================================
+___________ test_shutdown_kills_descendant_after_launcher_exits[dev] ___________
+
+tmp_path = PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-965/test_shutdown_kills_descendant0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1131fe3f0>
+verifier = {'processes': [], 'commands': [], 'signals': [], 'sql': [], ...}
+supervisor = 'dev'
+
+    @pytest.mark.parametrize('supervisor', ['dev', 'verify'])
+    def test_shutdown_kills_descendant_after_launcher_exits(tmp_path, monkeypatch, verifier, supervisor):
+        # This child really ignores TERM. Its parent exits on TERM, which was the
+        # audited escape from the old wait-only-on-launcher cleanup.
+        launcher = tmp_path / 'launcher.py'
+        launcher.write_text('''import os, signal, subprocess, sys, time
+    from pathlib import Path
+    root = Path(__file__).parent
+    if sys.argv[-1] == "child":
+        signal.signal(signal.SIGTERM, signal.SIG_IGN)
+        (root / "child.pid").write_text(str(os.getpid()))
+        while True: signal.pause()
+    subprocess.Popen([sys.executable, __file__, "child"])
+    while not (root / "child.pid").exists(): time.sleep(.01)
+    (root / "ready").touch()
+    while True: signal.pause()
+    ''')
+        real_popen, real_killpg, real_sleep = _REAL_POPEN, _REAL_KILLPG, _REAL_SLEEP
+        owned = []
+        def launch(*args, **kwargs):
+            if owned:
+                if supervisor == 'dev':
+                    handlers[signal.SIGINT]()
+                return SimpleNamespace(pid=2000000000, returncode=0, poll=lambda: 0, wait=lambda **kw: 0)
+            process = real_popen([sys.executable, str(launcher)], start_new_session=True)
+            owned.append(process)
+            deadline = time.monotonic() + 5
+            while not (tmp_path / 'ready').exists():
+                assert time.monotonic() < deadline
+                real_sleep(.01)
+            return process
+        # verifier fixture patches shared stdlib methods; restore only those needed
+        # for the owned real process, without launching product infrastructure.
+        monkeypatch.setattr(subprocess, 'Popen', launch)
+        monkeypatch.setattr(os, 'killpg', real_killpg)
+        terminate = dev.terminate_owned
+        monkeypatch.setattr(dev, 'terminate_owned', lambda processes: terminate(processes, grace_seconds=.3))
+        monkeypatch.setattr(verify, 'terminate_owned', lambda processes: terminate(processes, grace_seconds=.3))
+        try:
+            if supervisor == 'verify':
+                assert verify.main() == 1  # dummy siblings exit before readiness
+            else:
+                handlers = {}
+                monkeypatch.setattr(sys, 'argv', ['dev', '--skip-services'])
+                monkeypatch.setattr(dev, 'available', lambda port: True)
+                monkeypatch.setattr(signal, 'signal', lambda number, handler: handlers.update({number: handler}))
+                monkeypatch.setattr(time, 'sleep', lambda seconds: handlers[signal.SIGINT]())
+>               assert dev.main() == 0
+                       ^^^^^^^^^^
+
+backend/tests/test_audit_fix_boundaries.py:89: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+scripts/dev.py:51: in main
+    validate_local_targets(app_env)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+environment = {'CODEX_APPLY_PATCH_PRESERVE_LINE_ENDINGS': '1', 'CODEX_CI': '1', 'CODEX_INTERNAL_ORIGINATOR_OVERRIDE': 'codex_vscode', 'CODEX_PERMISSION_PROFILE': ':danger-full-access', ...}
+
+    def validate_local_targets(environment):
+        """Never migrate or start a development worker against inherited remote data."""
+        from round_robin.database.safety import require_disposable_postgres, require_disposable_redis
+        from sqlalchemy.engine import make_url
+        from sqlalchemy.exc import ArgumentError
+        try:
+            database = require_disposable_postgres(environment.get("ROUND_ROBIN_DATABASE_URL", "postgresql+psycopg://round_robin:round_robin_local@127.0.0.1:55432/round_robin"), suffix="")
+            broker = make_url(environment.get("ROUND_ROBIN_BROKER_URL", "redis://127.0.0.1:56379/0"))
+            if not database.database or not (broker.database or "").isdigit():
+                raise ValueError
+            require_disposable_redis(broker, database=int(broker.database))
+        except (ArgumentError, ValueError, TypeError):
+>           raise SystemExit("Local development requires explicit loopback PostgreSQL and Redis without routing overrides; no services or migrations were started") from None
+E           SystemExit: Local development requires explicit loopback PostgreSQL and Redis without routing overrides; no services or migrations were started
+
+scripts/dev.py:30: SystemExit
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+backend/tests/test_exhaustive_audit_runner.py::test_audit_cli_refuses_preexisting_output_without_subprocesses
+  <frozen runpy>:128: RuntimeWarning: 'scripts.audit' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.audit'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_coverage_gate.py::test_manifest_cli_entrypoint_binds_actual_source_and_verification_inputs
+  <frozen runpy>:128: RuntimeWarning: 'scripts.coverage_gate' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.coverage_gate'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_journal_budget.py::test_runner_cli_safe_failure_and_module_entry_do_not_touch_providers
+  <frozen runpy>:128: RuntimeWarning: 'experiments.runner' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.runner'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_workers.py::test_dispatcher_module_entrypoint_handles_immediate_stop_without_connecting
+  <frozen runpy>:128: RuntimeWarning: 'round_robin.dispatcher.service' found in sys.modules after import of package 'round_robin.dispatcher', but prior to execution of 'round_robin.dispatcher.service'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags0]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags1]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags2]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags3]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags4]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.release' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.release'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags5]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags6]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags7]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.visual_evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.visual_evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_scenario_cli_preserves_pending_obligations_in_saved_and_console_summary
+  <frozen runpy>:128: RuntimeWarning: 'scripts.scenario_summary' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.scenario_summary'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_development_cli_sanitizes_failed_setup_without_restarting_or_resetting
+  <frozen runpy>:128: RuntimeWarning: 'scripts.dev' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.dev'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED backend/tests/test_audit_fix_boundaries.py::test_shutdown_kills_descendant_after_launcher_exits[dev] - SystemExit: Local development requires explicit loopback PostgreSQL and Redis without routing overrides; no services or migrations were started
+1 failed, 2000 passed, 16 warnings in 256.63s (0:04:16)

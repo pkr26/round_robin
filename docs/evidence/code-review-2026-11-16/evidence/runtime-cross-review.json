@@ -1,0 +1,27 @@
+{
+  "review": "Independent short cross-review of root findings",
+  "findings": [
+    {
+      "id": "root_currency_rounding",
+      "verdict": "confirmed",
+      "evidence": "Independent DraftBrief/comparison_data probe accepted KWD1.005 with1.001 total_cost ceiling and returned total1.00,resultpass. Currency regex accepts KWD and monetary input accepts6decimal places; lifecycle_total hardcodes CENT.01 and formats.2f."
+    },
+    {
+      "id": "root_upload_preflight",
+      "verdict": "confirmed_source_path",
+      "evidence": "Upload permits1MiB, selected_manifest records only upload identity/hash/byte_size/recipients, preflight does not compute evidence count or request budget. prepare_evidence splits selected text every2000characters and rejects>24 combined passage records after intake.52800ASCII bytes already require27 passages before structured quotes, so deterministic failure is known at preflight."
+    },
+    {
+      "id": "root_research_pending_reserve",
+      "verdict": "confirmed",
+      "evidence": "Independently validated ProviderConfiguration(active_seconds200,finish_reserved_seconds50,research.enabledTrue). execute_research checks hardcodedremaining-215 before pending\u2192running, throwsBudgetDenied; task catches onlySQLAlchemyError. Pending research is accepted as existing by schedule_research and ignored by reconcile_public_research. No proposals schedule.",
+      "precision_note": "Run eventually finalizes once remaining active time reaches25seconds throughcheck_eligible, so say stalls until active deadline/reserve cutoff, not literally forever or necessarily full200seconds."
+    }
+  ],
+  "runtime_probe_files": [
+    "/tmp/round-robin-runtime-deadline-probe.py",
+    "/tmp/round-robin-runtime-deadline-result.json",
+    "/tmp/round-robin-runtime-reserve-probe.py",
+    "/tmp/round-robin-runtime-reserve-result.json"
+  ]
+}

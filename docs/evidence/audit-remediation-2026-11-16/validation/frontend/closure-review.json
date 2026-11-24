@@ -1,0 +1,97 @@
+{
+  "assigned_findings": 9,
+  "reviewed_current_source": true,
+  "unit_result": "247 passed",
+  "coverage_gate": "passed",
+  "browser_run_status": "Parent owns final browser results; two abandonment journeys previously passed, EUR fixture corrected and rerunning.",
+  "findings": [
+    {
+      "finding_id": "RR-004",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Server-serialized abandonment tombstone prevents late original execution; client retains lost-body receipt on 404 and uncertain abandonment, handles committed/gone, enforces owner and access generation.",
+      "production_reference": "frontend/app/api-client.ts:231",
+      "unit_reference": "frontend/tests/api-client.test.ts:187",
+      "browser_reference": "tests/e2e/review_fixes.spec.ts",
+      "backend_reference": "backend/src/round_robin/api/commands.py:66"
+    },
+    {
+      "finding_id": "RR-005",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Explicit not_committed retry4xx releases receipt; unannotated errors, unknown outcomes and UUID conflicts retain it.",
+      "production_reference": "frontend/app/api-client.ts:226",
+      "unit_reference": "frontend/tests/api-client.test.ts:168",
+      "browser_reference": null,
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-012",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Budget/component currency labels use saved currency; new options inherit brief currency; prices remain exact.",
+      "production_reference": "frontend/app/live-workspace.tsx:34",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:569",
+      "browser_reference": "tests/e2e/review_fixes.spec.ts",
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-013",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Input custom validity is recomputed from current state on draft selection/reset.",
+      "production_reference": "frontend/app/live-workspace.tsx:143",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:557",
+      "browser_reference": null,
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-020",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Autosave completion applies draft/editor flags only to original editor scope; acknowledged meeting revision still advances for follow-up save.",
+      "production_reference": "frontend/app/live-workspace.tsx:245",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:614",
+      "browser_reference": null,
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-021",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Manual editor excludes typed constraints and reserved budget/deadline; preserves unchanged manual IDs and all typed payload fields; count reserves every typed slot.",
+      "production_reference": "frontend/app/live-workspace.tsx:326",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:584",
+      "browser_reference": "tests/e2e/review_fixes.spec.ts",
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-022",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Visible cost treatment control disables skipped prices until explicit inclusion; inclusion and amount persist together.",
+      "production_reference": "frontend/app/live-workspace.tsx:309",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:601",
+      "browser_reference": "tests/e2e/review_fixes.spec.ts",
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-023",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "History/run/report scope changes clear choice and notes; save validates selected option belongs to displayed comparison.",
+      "production_reference": "frontend/app/live-workspace.tsx:148",
+      "unit_reference": "frontend/tests/live-workspace.test.tsx:635",
+      "browser_reference": null,
+      "backend_reference": null
+    },
+    {
+      "finding_id": "RR-024",
+      "closure_review": "implemented with corrected-behavior regressions; no assigned omission found",
+      "behavior": "Successful same-design render retains action plan, and reopening restores exact validated private version provenance.",
+      "production_reference": "frontend/app/design/workspace.tsx:124",
+      "unit_reference": "frontend/tests/design-workspace.test.tsx:242",
+      "browser_reference": null,
+      "backend_reference": "backend/src/round_robin/api/visual.py:586"
+    }
+  ],
+  "additional_coordinated_fixes": [
+    "RR-010 expired visual controls",
+    "RR-011 ISO currency minor-unit formatting",
+    "RR-014 diagram starter frozen dimensions",
+    "RR-025 terminal retry discard control"
+  ],
+  "omissions": []
+}

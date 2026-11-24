@@ -1,0 +1,44 @@
+{
+  "reviewed_at_utc": "2026-11-17T04:45:47.841909+00:00",
+  "passed": true,
+  "reviewer": "/root/fix_frontend",
+  "review_type": "Independent read-only code, CSP and actual local Chromium geometry/paint review",
+  "source_sha256": {
+    "backend/src/round_robin/visual/renderers/diagram.py": "0b15492363edd551b1f34c47b36d45fe88a28836d570e75f64807030bd169618",
+    "backend/src/round_robin/api/visual.py": "45931f9f952775c6ba2be7645c0dd27268e0f2ed797e1999620296ca932ac62a",
+    "backend/src/round_robin/app.py": "1d38cd5c10f1ae6215cf749e9c9498e78fd77774587a8f9f871ff3a64aa57883"
+  },
+  "confirmed_intermediate_issue": {
+    "description": "Embedded exact font alone left cross-platform rounded-versus-fractional advance mismatch and visible clipping",
+    "case": "S repeated60times, Pillow right485, actual browser right546.203125 on a500px viewport",
+    "status": "Fixed by explicit SVG textLength/lengthAdjust, preserved whitespace, and2px viewport inset"
+  },
+  "final_verification": {
+    "browser": "Repository-installed Playwright Chromium1255, macOS ARM64",
+    "generated_svg_bytes_checked_against_current_source": true,
+    "supported_glyph_and_whitespace_cases": 104,
+    "font_loaded_all_cases": true,
+    "viewport_geometry_overflows": 0,
+    "unclipped_paint_overflows": 0,
+    "minimum_remaining_paint_margin_px": 1,
+    "boundary_validation_rejections": 208,
+    "boundary_rejection_scope": "Every case rejected with0px and1px margins; every case accepted with2px margin",
+    "csp_inline_script_blocked": true,
+    "csp_external_image_blocked": true,
+    "csp_external_font_blocked": true,
+    "network_requests_beyond_local_intercepted_fixture": 0
+  },
+  "historical_download_review": "No regression found: v1/v2 JSON remains inert owner/hash-bound attachment, original SVG bytes retain hash verification and access scoping, current strict validation applies only to new renders.",
+  "remaining_confirmed_regressions": [],
+  "production_files_changed_by_reviewer": false,
+  "active_user_services_contacted": false,
+  "evidence": [
+    "geometry.json",
+    "accepted-diagram-browser.png",
+    "aligned-geometry.json",
+    "final-geometry.json",
+    "final-ink-bounds.json",
+    "csp-probe.json",
+    "independent-review.json"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "reviewer": "deep_runtime",
+  "type": "independent implementation-gap validation requested by root; no feature changes",
+  "gaps": [
+    {
+      "id": "RUNTIME-GAP-RPT03",
+      "status": "confirmed_unimplemented_contract_obligation",
+      "contract": "docs/FAILURE_HANDLING.md RPT-03: one funded substantive correction/recheck cycle when resources remain; otherwise explicit partial result.",
+      "supporting_contracts": [
+        "docs/PROJECT_PLAN.md:210",
+        "docs/PROJECT_PLAN.md:344",
+        "docs/FAILURE_HANDLING.md:208"
+      ],
+      "manifest": "backend/tests/scenarios/manifest.json RPT-03 (currently partial_offline_assertions)",
+      "evidence": [
+        "backend/src/round_robin/orchestration/controller.py::advance_run audit branch always calls finalize_run and returns, for both positive and negative audits; no resource-dependent correction branch exists.",
+        "Repository search found stage_iteration reads/defaults and test mutations, but no production increment or assignment to a higher iteration anywhere under backend/src.",
+        "Manual execution retry in api/events.py increments recovery_generation and retains the original stage iteration; successful negative audits are not failed execution steps eligible for retryable_steps.",
+        "experiments/study_runner.py optional bounded_debate revisions respond to critique before synthesis/audit; a final negative audit still terminates the trial.",
+        "Manifest named assertions check unavailable/partial/readiness/scope behavior; none executes a funded substantive correction followed by a new independent audit."
+      ],
+      "conclusion": "Partial-result behavior is implemented. Funded substantive correction/recheck is unimplemented, rather than merely awaiting additional fault tests. Default avoidance of additional paid calls is prudent but does not fulfill this explicit contract.",
+      "implementation_action": "None requested or taken. Root should disclose this functional limitation separately from passed tests."
+    }
+  ]
+}

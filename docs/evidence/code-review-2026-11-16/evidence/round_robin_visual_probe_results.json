@@ -1,0 +1,36 @@
+{
+  "wide_upload": {
+    "dimensions": [
+      9000,
+      1
+    ],
+    "bytes": 108,
+    "upload_status": 503,
+    "read_design_status": 503,
+    "list_designs_status": 503
+  },
+  "native_frozen_dimensions": {
+    "frozen_dimensions": [
+      1024,
+      1024
+    ],
+    "status": 201,
+    "actual_dimensions": [
+      [
+        800,
+        400
+      ]
+    ]
+  },
+  "directed_edges": {
+    "source": "node_a",
+    "target": "node_b",
+    "svg_line_only": true
+  },
+  "canonical_review_limit": {
+    "uploaded_jpeg_bytes": 5687427,
+    "accepted_png_bytes": 14511086,
+    "critic_maximum_bytes": 67108864,
+    "review_error": "UnsafeRaster: Raster input must contain at most ten MiB"
+  }
+}

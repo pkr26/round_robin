@@ -1,0 +1,18 @@
+.visual-shell { width: min(1150px, 100%); margin: auto; padding: 30px; }
+.visual-heading { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.visual-app h1 { font: 400 clamp(30px, 4vw, 44px)/1.15 Georgia, serif; max-width: 800px; letter-spacing: -1px; margin-top: 30px; }
+.visual-app .visual-intro { color: #667563; max-width: 800px; }
+.visual-app .live-card > label { display: flex; flex-direction: column; margin: 15px 0; gap: 7px; }
+.visual-app .visual-recipients { display: flex; flex-wrap: wrap; gap: 20px; border: 1px solid #d9e2d4; border-radius: 8px; padding: 16px; margin: 20px 0; }
+.visual-recipients label { display: flex; flex-direction: row; gap: 8px; align-items: center; }
+.visual-recipients legend { font-size: 12px; color: #5b7054; padding: 0 5px; }
+.visual-candidate img { display: block; width: 100%; height: auto; max-height: 640px; object-fit: contain; margin-top: 18px; background: repeating-conic-gradient(#f0f2ec 0% 25%, #fff 0% 50%) 50% / 24px 24px; border: 1px solid #e0e7d9; border-radius: 7px; }
+.visual-candidate code { overflow-wrap: anywhere; word-break: break-all; font-size: 11px; }
+.visual-candidate pre, .visual-source { font: 12px/1.5 monospace; overflow: auto; }
+.visual-compare { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 15px; }
+.visual-compare .live-card { margin: 15px 0; }
+.visual-finding { border-left: 3px solid #bed1b1; padding: 10px 15px; margin: 14px 0; background: #f7f9f3; }
+.visual-app details > label { display: block; margin: 15px 0; font-size: 13px; }
+.visual-app .live-consent { display: flex !important; flex-direction: row !important; align-items: flex-start; }
+.visual-app summary { cursor: pointer; padding: 8px 0; }
+@media (max-width: 600px) { .visual-shell { padding: 22px 14px; } .visual-app .live-card { padding: 20px; } .visual-candidate img { max-height: 450px; } }

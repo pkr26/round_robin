@@ -1,0 +1,513 @@
+ROUND ROBIN — ALGORITHM AND PROCESS INVENTORY
+Audit date: November 17, 2026 (America/Phoenix)
+
+All mapped discussion responsibilities are listed, including experimental and gated visual paths. 'No concrete defect observed' describes the review result; it is not a correctness proof or an empirical model-quality result. Domain entries sometimes inspect different boundaries of the same module. Sources and invariant details are retained in algorithm-inventory.json and each domain review.
+
+ALG-01 [root] Protocol selection and typed stage surface
+Status: reviewed_provisional_capability
+Source: backend/src/round_robin/schemas/provider_configuration.py:53; backend/src/round_robin/orchestration/controller.py:304-343
+Invariant/assessment: Only independent_review_provisional is accepted in the application; critique/revision/evidence_review exist in experimental paths, not the live state graph.
+
+ALG-02 [root] Frozen input manifest, canonical bytes and preflight context admission
+Status: defect
+Source: backend/src/round_robin/api/preflight.py:44-75; backend/src/round_robin/orchestration/controller.py:60-109
+Invariant/assessment: The selected inputs must match ownership/hash/recipient scope and be representable by admitted packets.
+Findings: ROOT-01
+
+ALG-03 [root] Intake questions, normalized-brief handoff and confirmation
+Status: capability_gap
+Source: backend/src/round_robin/orchestration/controller.py:304-321; backend/src/round_robin/api/events.py:222-255
+Invariant/assessment: At most three questions; confirmed options/horizon and original authorized scope precede proposals.
+Findings: ROOT-G01
+
+ALG-04 [root] Peer packet selection and proposal independence
+Status: reviewed_no_new_defect_observed
+Source: backend/src/round_robin/worker/tasks.py:23-50; backend/src/round_robin/providers/base.py:59-79
+Invariant/assessment: Initial proposals receive no peer outputs or current-run peer claims; synthesis sees proposals; correction sees prior synthesis/audit; audit sees latest synthesis.
+
+ALG-05 [root] Common role prompt and structured output semantics
+Status: reviewed_quality_not_empirically_validated
+Source: backend/src/round_robin/providers/http.py:26; backend/src/round_robin/providers/base.py:28-39
+Invariant/assessment: No tool authority from supplied text, preserve uncertainty/dissent, scoped references, JSON contract. Distinct provider names are the proposal roles; there is no explicit role-specialization or argument-adjudication schema.
+Findings: ROOT-G02
+
+ALG-06 [root] Provider wire schema transformation and local schema/reference validation
+Status: reviewed_with_evidence_polarity_finding_in_evidence_review
+Source: backend/src/round_robin/providers/structured.py:5-27; backend/src/round_robin/providers/http.py:40-67; backend/src/round_robin/providers/base.py:107-147
+Invariant/assessment: Local validation retains constraints omitted by provider wire dialects; references/options/requirements are scoped; empty audit verdicts and duplicate assessments fail.
+Findings: E-F03
+
+ALG-07 [root] Schema repair classification and feedback packet
+Status: capability_gap
+Source: backend/src/round_robin/providers/http.py:169-189; backend/src/round_robin/worker/tasks.py:50
+Invariant/assessment: A second generation remains within the two-call logical-role ceiling; actual targeted repair needs explicit diagnostics.
+Findings: ROOT-G02
+
+ALG-08 [root] Provider envelope decoding, refusal and usage certainty
+Status: reviewed_no_new_defect_observed
+Source: backend/src/round_robin/providers/http.py:135-289
+Invariant/assessment: Explicit refusal is not retried to evade refusal; valid content may retain unknown usage; malformed accounting does not imply zero exposure.
+
+ALG-09 [root] Conservative request cost and context bound
+Status: runtime_bound_enforced_preflight_gap
+Source: backend/src/round_robin/providers/http.py:120-133; backend/src/round_robin/providers/base.py:71-78
+Invariant/assessment: Bound encoded bytes plus protocol overhead and explicit billable output ceiling before send; money and context fit configured limits.
+Findings: ROOT-01
+
+ALG-10 [root] Absolute provider transport deadline through DNS, socket and TLS
+Status: reviewed_no_new_defect_observed
+Source: backend/src/round_robin/providers/transport.py:21-138
+Invariant/assessment: Every operation uses the remaining absolute deadline; DNS threads have bounded outstanding capacity; no hidden transport retry.
+
+ALG-11 [root] Frozen provider configuration and request contract hash
+Status: reviewed_no_new_defect_observed
+Source: backend/src/round_robin/orchestration/configuration.py:13-43; backend/src/round_robin/providers/http.py:70-80
+Invariant/assessment: Funding, expiry, deployment epoch and current declared prompt/schema contract must match the accepted run before a paid authorization.
+
+ALG-12 [root] Simulation choice and synthetic audit
+Status: reviewed_not_accuracy_evidence
+Source: backend/src/round_robin/providers/simulated.py:24-60
+Invariant/assessment: Choose lowest complete known feasible cost only as a labeled simulation; never represent simulated agreement as measured factual accuracy.
+
+ALG-13 [root] Ordered event replay, snapshot cutoff and browser history consumption
+Status: client_pagination_defect
+Source: backend/src/round_robin/database/services.py:52-60; backend/src/round_robin/api/events.py:63-149; frontend/app/live-workspace.tsx:274-294
+Invariant/assessment: Committed events have unique per-run sequence; readers stay within a cutoff and consume every page without stale-run mixing.
+Findings: ROOT-02
+
+ALG-14 [root] Browser mutation receipt, uncertain-command reconciliation and owner fence
+Status: reviewed_no_new_defect_observed
+Source: frontend/app/api-client.ts:133-270; frontend/app/live-workspace.tsx:274-294
+Invariant/assessment: An uncertain command retains its UUID/body hash and is reconciled before replay; polling does not authorize new model work; late reads are fenced.
+
+ALG-15 [runtime] Command UUID idempotency and abandonment tombstones
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/api/commands.py:27-84
+Invariant/assessment: Owner lock serializes original/replay/abandon; HMAC binds kind/body; gone and abandoned resources are not re-executed.
+
+ALG-16 [runtime] Preflight snapshot and Start validation
+Status: initial_start_reviewed_resumption_boundary_defect
+Source: backend/src/round_robin/api/preflight.py:21-184
+Invariant/assessment: Frozen model/request contract/configuration, revision/hash, attachment scope, one-use preflight, queue quota and explicit parent replacement are checked
+Findings: RUNTIME-03
+
+ALG-17 [runtime] Atomic active-parent replacement
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/api/lineage.py:11-48
+Invariant/assessment: Explicit accepted parent version/status, common transaction with child creation, execution-fence increment; reservations remain accounted.
+
+ALG-18 [runtime] Cancellation and resumption commands
+Status: concrete_defect_reproduced
+Source: backend/src/round_robin/api/events.py:194-283
+Invariant/assessment: Expected versions and command UUIDs preserve single intent
+Findings: RUNTIME-03
+
+ALG-19 [runtime] Run admission and FIFO scheduling
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/admission.py:14-84
+Invariant/assessment: Global policy lock, one running run, initial/resumption expiration, fresh ticket ordering, frozen configuration and deleted/terminal checks
+
+ALG-20 [runtime] Provider and global physical-call capacity
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/admission.py:87-103
+Invariant/assessment: Maximum three global and two/provider; bounded execution leases are separated from indefinitely retained uncertain monetary exposure; image operations share capacity.
+
+ALG-21 [runtime] Input evidence preparation and explicit hard constraints
+Status: reviewed_with_design_limitations_cross_reviewed
+Source: backend/src/round_robin/orchestration/controller.py:21-110
+Invariant/assessment: Canonical hashes, exact recipient/owner/meeting scope, 24 passages, 2000 characters per passage, server-derived budget/deadline constraints
+
+ALG-22 [runtime] Stage planning and independent proposals
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/controller.py:113-159
+Invariant/assessment: Three fixed provider slots and iteration-keyed steps; durable enqueue intent; synthesis needs two successful independent providers, audit provider must differ from the actual successful synthesizer.
+
+ALG-23 [runtime] Transactional stage barriers and state machine
+Status: concrete_defect_reproduced
+Source: backend/src/round_robin/orchestration/controller.py:279-350
+Invariant/assessment: All scheduled steps settle before advancing; closed barriers keyed by stage/generation/iteration prevent repeat transitions
+Findings: RUNTIME-01
+
+ALG-24 [runtime] Bounded correction/re-audit
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/controller.py:162-199
+Invariant/assessment: At most one extra synthesis/audit pair; checks original request/money/active limits and aggregate logical-role counters
+
+ALG-25 [runtime] Finalization and saved partial report
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/controller.py:202-276
+Invariant/assessment: Transactional report version, terminal state, active-clock freeze, unfinished step fence, retained eligible retry resources, unknown-exposure accounting, integrity fallback and mandatory-completion flag
+
+ALG-26 [runtime] Request construction and peer routing
+Status: reviewed_with_design_limitations_cross_reviewed
+Source: backend/src/round_robin/worker/tasks.py:24-47
+Invariant/assessment: Proposals receive no peer outputs and imported-only claims; synthesis/audit receive selected committed outputs
+
+ALG-27 [runtime] Worker claim, durable authorization and content fencing
+Status: concrete_defect_reproduced
+Source: backend/src/round_robin/worker/tasks.py:94-244
+Invariant/assessment: Checks generation, iteration, expected stage, capacity, independent audit identity; commits authorization before I/O; reconciles usage even for fenced content; bounded persistence retry
+Findings: RUNTIME-02
+
+ALG-28 [runtime] Heartbeats and bounded worker execution
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/worker/tasks.py:76-92; backend/src/round_robin/worker/app.py:9-17
+Invariant/assessment: 10-second heartbeat with 150-second lease, no extension without authority; ordinary requests max 90 seconds and task hard limit 120 seconds
+
+ALG-29 [runtime] Automatic retry and provider fallback
+Status: concrete_defect_reproduced
+Source: backend/src/round_robin/orchestration/policies.py:72-93
+Invariant/assessment: At most two calls/logical role and three infrastructure claims; refusal does not trigger fallback; auditor cannot fall back to synthesizer
+Findings: RUNTIME-01
+
+ALG-30 [runtime] Manual retry eligibility and retained finishing funds
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/policies.py:15-62
+Invariant/assessment: Only failed synthesis/audit in latest iteration, eligible failure codes, original active/request/logical limits and live funding expiry
+
+ALG-31 [runtime] Active clock and exact monetary ledger
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/budget.py:20-230
+Invariant/assessment: Isolated high-precision Decimal arithmetic, clock regression closure, run/owner/deployment ceilings, unknown exposure across periods, protected finish money/calls/time, immutable authorization IDs, high-water unknown usage and explicit settlement
+
+ALG-32 [runtime] Scoped circuit breaker
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/circuits.py:15-58
+Invariant/assessment: Provider/model/credential-version scope; three transient failures within 60 seconds open 30 seconds; bounded single half-open probe; counted authorizations and expired-probe recovery
+
+ALG-33 [runtime] Frozen live configuration compatibility
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/configuration.py:12-43
+Invariant/assessment: Operator funding, immutable expiry/config hash/deployment epoch/request-contract hash checked on admission/authorization
+
+ALG-34 [runtime] Transactional outbox dispatch and delivery recovery
+Status: concrete_defect_reproduced
+Source: backend/src/round_robin/dispatcher/service.py:25-49; backend/src/round_robin/database/services.py:64-79
+Invariant/assessment: Outbox intent in same transaction; identifier-only at-least-once publish; publication failure keeps pending intention; advance dedup
+Findings: RUNTIME-02
+
+ALG-35 [runtime] Lease expiry, orphan authorization and retained-hold reconciliation
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/dispatcher/service.py:52-179
+Invariant/assessment: Authorized abandoned attempts become unknown and are not blindly resent; unstarted claims retry at most three; terminal orphan exposure retained; expired eligible retry funds released; current-state barriers reconciled.
+
+ALG-36 [runtime] Event sequence, snapshot and reconnect replay
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/database/services.py:52-61; backend/src/round_robin/api/events.py:28-152
+Invariant/assessment: Run-locked monotonic event sequence and uniqueness; snapshot/read pages bounded to cutoff; SSE cursor clamping, bounded read batches and per-delivery owner/deletion/epoch checks
+
+ALG-37 [runtime] Durability/restore boundary at worker admission
+Status: reviewed_no_concrete_defect_observed
+Source: backend/src/round_robin/orchestration/admission.py:22-41; backend/src/round_robin/operations/durability.py:45-79
+Invariant/assessment: Independent failure marker, dispatch lock, restore quarantine and deployment epoch stop authorization
+
+ALG-38 [evidence] Claim support graph and cycle detection
+Status: defect
+Source: backend/src/round_robin/research/claims.py:12
+Invariant/assessment: Every supported fact must have a noncircular scoped support path; a contradicted predecessor must not alone justify supported status.
+Complexity/bounds: O(V+E); at most 220 current/prior claims.
+Findings: E-F03
+
+ALG-39 [evidence] Local claim aliases, reference validation and persistent ID rewrite
+Status: no new defect found
+Source: backend/src/round_robin/research/claims.py:41
+Invariant/assessment: Unique local aliases map atomically to new persistent IDs; every reference must be local or scoped.
+Complexity/bounds: O(total response structure + references); 20 claims/40 unique refs.
+
+ALG-40 [evidence] Immutable claim versions and packet validation
+Status: defect
+Source: backend/src/round_robin/research/reuse.py:28
+Invariant/assessment: Stored owner/run/hash/version must match and validated support status must remain sound.
+Complexity/bounds: Bounded 200 claims and their edges.
+Findings: E-F03
+
+ALG-41 [evidence] Explicit parent selection and freshness downgrade
+Status: no new defect found
+Source: backend/src/round_robin/research/reuse.py:110
+Invariant/assessment: Import only approved immutable parent content in the same meeting; time-sensitive/unselected support cannot remain accepted.
+Complexity/bounds: O(selected records + selected references); 24 selections.
+
+ALG-42 [evidence] Public query scope, fingerprint and template rendering
+Status: no new defect found
+Source: backend/src/round_robin/research/queries.py:22
+Invariant/assessment: Private brief/location must never become a fallback query; only approved term and template identities may be rendered.
+Complexity/bounds: At most eight 120-character terms, bounded region/templates.
+
+ALG-43 [evidence] Greedy query packing and rotated template plan
+Status: no new local defect found
+Source: backend/src/round_robin/research/service.py:35
+Invariant/assessment: Every approved term group remains represented within six queries; comparison/cost/counterevidence templates rotate.
+Complexity/bounds: O(terms * templates * rendered text), all bounded. Execution defeats diversity: E-F02.
+Findings: E-F02
+
+ALG-44 [evidence] Search authorization, frozen plan, lease fencing and uncertain settlement
+Status: no new safety defect found
+Source: backend/src/round_robin/research/service.py:60
+Invariant/assessment: Never repeat an ambiguous authorized search; only current run/fence/lease may commit evidence.
+Complexity/bounds: At most six searches; bounded deadline.
+
+ALG-45 [evidence] Public-search candidate/page allocation
+Status: defect
+Source: backend/src/round_robin/research/service.py:149
+Invariant/assessment: Acquisition should reserve room for cost/counterevidence objectives and disclose unfulfilled objectives.
+Complexity/bounds: Greedy first-query-first, max eight pages.
+Findings: E-F02
+
+ALG-46 [evidence] Search transport response parsing and URL filtering
+Status: no new defect found
+Source: backend/src/round_robin/research/search.py:24
+Invariant/assessment: Bound query/response/credentials; search results are candidates, never verified evidence.
+Complexity/bounds: At most eight hits, 262144 response bytes.
+
+ALG-47 [evidence] Public DNS admission and target/secret validation
+Status: no new defect found
+Source: backend/src/round_robin/research/fetcher.py:42
+Invariant/assessment: All resolved addresses must be public; reject credential-bearing URLs, pin IP, bound outstanding DNS work.
+Complexity/bounds: At most two resolver workers; 16 decode rounds.
+
+ALG-48 [evidence] Deadline-enforced HTTPS fetch and redirects
+Status: no new defect found
+Source: backend/src/round_robin/research/fetcher.py:134
+Invariant/assessment: Total wall deadline/byte cap applies across network reads and redirects; TLS SNI retains origin host.
+Complexity/bounds: One MiB/page, max four redirect targets, eight page attempts.
+
+ALG-49 [evidence] HTML text extraction and source fingerprinting
+Status: bounded extraction limitation
+Source: backend/src/round_robin/research/fetcher.py:213
+Invariant/assessment: Extract canonical text and preserve source origin/hash without calling it semantically verified.
+Complexity/bounds: Linear in capped page bytes; no relevance model.
+
+ALG-50 [evidence] Passage selection, origin grouping and bounded packet
+Status: capability gap
+Source: backend/src/round_robin/research/fetcher.py:307
+Invariant/assessment: Selected evidence must cover decisive relevant terms and disclose omitted parts.
+Complexity/bounds: Prefix-only 2*2000 characters/source in live service.
+Findings: E-G02
+
+ALG-51 [evidence] Typed decimal expression evaluation
+Status: no new defect found
+Source: backend/src/round_robin/research/calculator.py:47
+Invariant/assessment: Units, operation depth, operand count, magnitude, precision and rounding must remain explicit.
+Complexity/bounds: 120 leaves, four operation levels; O(expression nodes).
+
+ALG-52 [evidence] Lifecycle cost, discounts, unknowns and expiry
+Status: no new defect found
+Source: backend/src/round_robin/research/calculator.py:104
+Invariant/assessment: Unknown/excluded/expired cost cannot become complete total; mixed currencies cannot be silently summed.
+Complexity/bounds: 30 cost components/option; exact Decimal64 then minor-unit rounding.
+
+ALG-53 [evidence] Break-even linear cost solution
+Status: limited arithmetic primitive
+Source: backend/src/round_robin/research/calculator.py:158
+Invariant/assessment: Complete supplied component rates must be current; equal slopes/negative crossing rejected; no forecast or proof all real charges supplied.
+Complexity/bounds: O(components), two affine cost curves; not called by live report comparison.
+
+ALG-54 [evidence] Pinned currency minor-unit lookup
+Status: static implementation reviewed; source currency table not externally revalidated
+Source: backend/src/round_robin/research/currencies.py:19
+Invariant/assessment: Unknown currencies must fail rather than default to two places.
+Complexity/bounds: O(1) lookup; pinned data requires separately controlled updates.
+
+ALG-55 [evidence] Comparison date and deterministic cost constraints
+Status: no new arithmetic defect found
+Source: backend/src/round_robin/orchestration/reporting.py:29
+Invariant/assessment: Use run-created date in brief timezone; verify all cost categories; deterministic cost constraints override model claims.
+Complexity/bounds: O(options * (components + hard requirements)).
+
+ALG-56 [evidence] Synthesis/audit constraint reconciliation
+Status: defect
+Source: backend/src/round_robin/orchestration/reporting.py:87
+Invariant/assessment: Changing a verdict must carry its actual evidence and assessor; disagreement alone is not demonstrated failure.
+Complexity/bounds: O(options * requirements); scoped evidence membership.
+Findings: E-F01
+
+ALG-57 [evidence] Cost dependency support and evidence promotion
+Status: capability gap
+Source: backend/src/round_robin/orchestration/reporting.py:110
+Invariant/assessment: Readiness requires accepted current support, with a real transition that can establish that support.
+Complexity/bounds: Source status conjunction over included cost components.
+Findings: E-G01
+
+ALG-58 [evidence] Readiness decision reducer
+Status: upstream-sensitive correctness
+Source: backend/src/round_robin/reports/readiness.py:6
+Invariant/assessment: No-feasible requires demonstrated failures; ready requires distinct successful audit, two proposals, all requirements and supported dependencies.
+Complexity/bounds: Linear in compared constraints/dependencies; upstream false basis accepted.
+Findings: E-F01
+
+ALG-59 [evidence] Dissent and critical-defect aggregation
+Status: defect
+Source: backend/src/round_robin/orchestration/reporting.py:127
+Invariant/assessment: Material unresolved objections must remain visible through bounded report generation.
+Complexity/bounds: Ordered deduplication then first20 truncation.
+Findings: E-F04
+
+ALG-60 [evidence] Next-evidence requests and parent change summary
+Status: limited deterministic policy
+Source: backend/src/round_robin/orchestration/reporting.py:132
+Invariant/assessment: Missing cost/requirement results generate inspectable next actions; linked changes reflect saved inputs.
+Complexity/bounds: First20 items; no information-gain ranking, dependency sensitivity or full material-objection mapping.
+
+ALG-61 [evidence] Outcome-inclusive timing measurement
+Status: no new defect found
+Source: backend/src/round_robin/reports/measurements.py:18
+Invariant/assessment: Timing must derive from committed samples, retain unsuccessful outcomes and distinguish queue/input wait/active clocks.
+Complexity/bounds: O(events log events) sorting plus linear scan; not a human usefulness validation.
+
+ALG-62 [evidence] Saved evidence/calculation/report contract gates
+Status: no new local integrity defect found
+Source: backend/src/round_robin/schemas/runtime.py:112
+Invariant/assessment: Mode, lineage, exact calculation totals/currency/horizon, reference scope and reducer-derived readiness must agree.
+Complexity/bounds: Bounded comparisons/references; semantic truth remains outside schema.
+
+ALG-63 [evaluation] Synthetic adapter contracts
+Status: reviewed_with_stated_limitations
+Source: Synthetic adapter contracts (experiments/adapters.py:17-125): reject provider
+credentials in offline mode; failure classification; two-call retry eligibility;
+bounded canonical packets; no peer proposals in proposal packets; reference and
+numeric shape validation. Appropriate deterministic controls, no truth validation.
+Packet work O(bytes); reference checks O(references).
+
+ALG-64 [evaluation] Journal append/recovery
+Status: reviewed_with_stated_limitations
+Source: Journal append/recovery (experiments/journal.py:27-206): exclusive operator
+flock; canonical hash chain; immutable manifest; durable file/head and directory
+fsync; partial writes or mismatching head fail closed. Hashes detect corruption,
+not a hostile operator rewriting history. Startup O(events + bytes); append O(new
+event bytes), plus filesystem durability costs. Covered by runner tests.
+
+ALG-65 [evaluation] Journal budget reducer
+Status: reviewed_with_stated_limitations
+Source: Journal budget reducer (experiments/runner.py:30-334): Decimal arithmetic;
+event replay; immutable run/attempt IDs; unresolved exposure carryover; owner and
+deployment limits; two finishing holds; call/time reserves; settlement and explicit
+reconciliation. Unknown attempts do not become free retries. Full replay O(events)
+per state reconstruction; exposure scans O(runs * attempts), repeated for six
+limit scopes. Bound batch sizes make this workable, but long-lived aggregate
+journals should gain verified checkpoints/indexes before scale grows.
+
+ALG-66 [evaluation] Dataset and trial planning
+Status: reviewed_with_stated_limitations
+Source: Dataset and trial planning (experiments/evaluation.py:39-114;
+study_runner.py:56-129,364-375): stable canonical fingerprints; exact 16-task
+strata; fixed 5-task repeats; double-review allocation; prospective snapshot
+checking; normalized substantive duplicate check for frozen text study; randomized
+primary executions precede repeats. Plan O(tasks * arms * repeats). No repeat
+inflation of primary denominator. Keep the semantic-independence human gate.
+
+ALG-67 [evaluation] Blinding and identity binding
+Status: reviewed_with_stated_limitations
+Source: Blinding and identity binding (experiments/evaluation.py:117-219): unique
+original execution/output retention; common-provider redaction; opaque reproducible
+packet IDs; separate private mapping; hash-bound output/configuration; private
+durable immutable files. O(output bytes + outputs log outputs). Direct metadata
+leakage is constrained; indirect blinding requires actual human inspection.
+
+ALG-68 [evaluation] Manual grading/adjudication
+Status: reviewed_with_stated_limitations
+Source: Manual grading/adjudication (experiments/evaluation.py:222-393): typed useful
+scores; critical-defect disqualification; original grades retained; duplicate
+reviewer-slot rejection; exact task/output binding; adjudications reference all
+originals and follow their timestamps; missing/failed outputs remain denominator;
+suspected critical defects require a second original. Work O(trials + grades).
+No automatic phase pass. Missing paired efficacy/uncertainty analysis is explicit.
+
+ALG-69 [evaluation] Timing estimator
+Status: reviewed_with_stated_limitations
+Source: Timing estimator (experiments/evaluation.py:396-435): all admitted trials form
+denominator; qualifying completed work required; missing/failed runs remain failures;
+first-useful time cannot follow completion; successful-only nearest-rank median
+and p90 labeled separately. O(n log n). This is conservative for incomplete runs;
+it is not an unrestricted measure of first partial content.
+
+ALG-70 [evaluation] Funded admission/configuration freeze
+Status: reviewed_with_stated_limitations
+Source: Funded admission/configuration freeze (study_runner.py:132-362): expiration,
+explicit funding and recipients; file hash binding; discovery/baseline/reviewer
+record prerequisites; one aggregate spending policy; shared/exclusive lock around
+operator policy; original run IDs survive new batches; durable attempt records.
+These validate supplied records' structure and bindings, not actual observation.
+
+ALG-71 [evaluation] Three-arm workflow
+Status: issues_found
+Source: Three-arm workflow (study_runner.py:378-642): independent proposal barrier;
+optional parallel critiques; evidence review; dissent/critical-triggered revisions;
+synthesis; different-provider audit except same-provider baseline; two bounded
+attempts; retry-after/deadline checks; no replay after interrupted execution;
+failures and unknown usage retained. EVAL-02. Claims context differs from runtime.
+No majority-vote truth rule. Maximum 24 calls/run in shared journal policy.
+
+ALG-72 [evaluation] Held-out release counting
+Status: issues_found
+Source: Held-out release counting (experiments/release.py:19-103): exact 48-task
+strata; immutable configuration/protocol ID; prospective timestamps; original
+review identities; critical defect double-review; conservative minimum scores and
+reasoned adjudication; 39/48 numerical target; no automatic release. EVAL-04.
+O(tasks + grades + serialized brief bytes).
+
+ALG-73 [evaluation] Visual study
+Status: reviewed_with_stated_limitations
+Source: Visual study (experiments/visual_evaluation.py:22-237): >=12 matched briefs;
+4 fixed repeats; shared initial-image hashes across arms; baseline cannot replace
+its initial image; blinded pixel packet binding; two-review allocation; adverse
+repeats retained; exact unknown-exposure cost accounting; paired cost/time deltas;
+limits reported; no automatic release. Exact-hash brief independence is weaker
+than normalized text study checks. No paired human efficacy estimator is supplied.
+
+ALG-74 [evaluation] Visual pixel-review protocol
+Status: issues_found
+Source: Visual pixel-review protocol (visual/reviews.py:11-84): canonical pixels and
+server-created receipts; equal fixed candidate; actual view-byte hash verification;
+parent pixels bound for comparison; no current peer critiques in initial packets;
+version/provider/receipt checks; two eligible non-generator providers for quorum;
+unknown provenance disclosed. Receipt work O(pixel bytes), critique checks
+O(findings). EVAL-03. Two-provider agreement is not a correctness proof.
+
+ALG-75 [evaluation] Visual state/resource reducer
+Status: reviewed_with_stated_limitations
+Source: Visual state/resource reducer (visual/iterations.py:19-146): exact finite
+money; defensive copy of persisted nested state; journal/counter consistency;
+mode/fence/epoch checks; 1800-second original lifetime; protected review time/money/
+calls; 24 calls, 4 image submissions, 60 polls, 3 versions, 2 edits, 6 render
+attempts; conflicting settlements rejected; cancellation increments fence.
+O(operations), with explicit small bounds. No quality-based automatic edit stop.
+
+ALG-76 [evaluation] Image job identity/recovery
+Status: reviewed_with_stated_limitations
+Source: Image job identity/recovery (visual/jobs.py:12-90): recursively hash request
+bytes; require immutable authorization identity; persist possibly-sent state before
+external call; no blind retry; capability-gated same-job lookup; counted polls and
+fence/epoch validation. Current implemented HTTP image endpoint is synchronous;
+helpers do not fabricate asynchronous support. O(packet bytes).
+
+ALG-77 [evaluation] Visual schemas
+Status: issues_found
+Source: Visual schemas (visual/schemas.py:11-115): bounded dimensions/pixel product;
+typed mode and revisions; bounded findings; geometry within delivered view;
+response-local alias uniqueness; explicit capability flags and honest async
+constraints. EVAL-03: missing relation between prior finding and required status.
+
+ALG-78 [evaluation] Visual scheduling/persistence/lineage
+Status: issues_found
+Source: Visual scheduling/persistence/lineage (visual/service.py:150-344): immutable
+latest-parent check; counted authorization before generated publication; independent
+critic scheduling with per-step limits; scoped server finding IDs; one review per
+provider/version; coverage distinct from user selection; retained history; current
+round review contents not merged into peers. EVAL-01/EVAL-03 at packet boundaries.
+
+ALG-79 [evaluation] Visual artifact resource/recovery
+Status: reviewed_with_stated_limitations
+Source: Visual artifact resource/recovery (visual/service.py:24-149,237-285,345-483):
+owner/deployment storage holds; private path/hash ownership; immutable native source
+metadata; expired local holds reaped; cancellation/deletion/restoration fences;
+unknown spending retained; validated backup/restore rebase. Storage accounting
+scans all designs, versions and operations per reservation, O(D+V+O). These protect
+discussion artifacts; they do not establish visual correctness.
+
+ALG-80 [evaluation] Edit and re-review communication
+Status: issues_found
+Source: Edit and re-review communication (api/visual.py:340-385;
+worker/image_tasks.py:218-251; providers/images.py:243-327): edit from exact latest
+parent requires previous two-critic coverage; chosen IDs validated; user intent
+sent; edited pixels and shared prior findings sent to critics; structured response
+parsed and server-bound. EVAL-01: choices/actual findings omitted from generator.

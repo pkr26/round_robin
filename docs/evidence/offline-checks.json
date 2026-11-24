@@ -1,0 +1,133 @@
+{
+  "recorded_at_utc": "2026-11-16T03:59:10.909682+00:00",
+  "scope": "Phase 0 offline preparation, fictional fixtures only",
+  "phase_passed": false,
+  "live_provider_calls": 0,
+  "environment": {
+    "python": "3.12.14",
+    "platform": "Darwin",
+    "machine": "arm64"
+  },
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.334,
+      "output": "........................................................................ [ 54%]\n.............................................................            [100%]\n=============================== warnings summary ===============================\n.venv/lib/python3.12/site-packages/fastapi/testclient.py:1\n  <workspace>/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.\n    from starlette.testclient import TestClient as TestClient  # noqa\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n133 passed, 1 warning in 1.05s\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "round_robin.export_contracts",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.306,
+      "output": "Authoritative fixture contracts match committed outputs.\n"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/check_client.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.589,
+      "output": "Generated TypeScript contract matches.\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.evaluation",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.048,
+      "output": "{\n  \"status\": \"draft_fictional_not_frozen\",\n  \"task_count\": 16,\n  \"trials_per_workflow\": 26,\n  \"total_trials\": 78,\n  \"dataset_fingerprint\": \"e2dc6067f3d4193b5a7b0a0689bcec469f8052f34395fecd78e5d77d7b8a814a\",\n  \"paid_access_enabled\": false,\n  \"phase_passed\": false\n}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/scenario_summary.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.071,
+      "output": "# Scenario preparation inventory\n\n88 core and 12 visual requirements retained. No scenario or phase is declared passed.\n\nPending: 83. Partial offline assertions: 17.\n\n| Earliest phase | Requirements | Pending | Partial offline assertions |\n| --- | ---: | ---: | ---: |\n| 0B | 17 | 0 | 17 |\n| 1 | 20 | 20 | 0 |\n| 2 | 28 | 28 | 0 |\n| 3 | 13 | 13 | 0 |\n| 4 | 4 | 4 | 0 |\n| 5 | 3 | 3 | 0 |\n| 6 | 3 | 3 | 0 |\n| 7 | 5 | 5 | 0 |\n| 8 | 7 | 7 | 0 |\n\nPartial entries cover the named offline assertions only. Their full invariants, live/distributed\nverification and dependent phase gates remain pending. The 14 core combined-failure cases\nremain obligations in FAILURE_HANDLING.md and are not counted as new scenario IDs.\n\n11 pending requirements also link to offline browser prototype assertions.\nThese preparation references do not establish durable API behavior or change scenario status.\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "typecheck"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 1.156,
+      "output": "\n> round-robin-workspace@0.1.0 typecheck <workspace>\n> pnpm --filter @round-robin/web typecheck\n\n\n> @round-robin/web@0.1.0 typecheck <workspace>/frontend\n> tsc --noEmit\n\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 8.353,
+      "output": "\n> round-robin-workspace@0.1.0 build <workspace>\n> pnpm --filter @round-robin/web build\n\n\n> @round-robin/web@0.1.0 build <workspace>/frontend\n> NEXT_TELEMETRY_DISABLED=1 next build --webpack\n\n\u25b2 Next.js 16.4.6 (webpack)\n\u2713 Running next.config.ts took 49ms\n\n  Creating an optimized production build ...\n\u2713 Compiled successfully in 857ms\n  Running TypeScript ...\n  Finished TypeScript in 637ms ...\n  Collecting page data using 4 workers ...\n  Generating static pages using 4 workers (0/3) ...\n\u2713 Generating static pages using 4 workers (3/3) in 349ms\n  Finalizing page optimization ...\n  Collecting build traces ...\n\nRoute (app)\n\u250c \u25cb /\n\u2514 \u25cb /_not-found\n\n\n\u25cb  (Static)  prerendered as static content\n\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "test:e2e"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 7.573,
+      "output": "\n> round-robin-workspace@0.1.0 test:e2e <workspace>\n> playwright test\n\n\nRunning 8 tests using 2 workers\n\n  \u2713  2 [chromium] \u203a tests/e2e/prototype.spec.ts:23:1 \u203a sample passages, exact calculations, keyboard dialog and immutable JSON export (439ms)\n  \u2713  1 [chromium] \u203a tests/e2e/prototype.spec.ts:70:1 \u203a custom draft saves without presenting an unrelated report and opt-in storage restores (570ms)\n  \u2713  3 [chromium] \u203a tests/e2e/prototype.spec.ts:96:1 \u203a changed horizon creates a linked walkthrough and preserves the original report (4.2s)\n  \u2713  4 [chromium] \u203a tests/e2e/prototype.spec.ts:127:1 \u203a unknown installation retains unknown total and conditional readiness (4.2s)\n  \u2713  5 [chromium] \u203a tests/e2e/prototype.spec.ts:153:1 \u203a partial result does not invent a recommendation or readiness (396ms)\n  \u2713  7 [chromium] \u203a tests/e2e/prototype.spec.ts:198:1 \u203a expired preflight cannot start a new simulated review (315ms)\n  \u2713  8 [chromium] \u203a tests/e2e/prototype.spec.ts:212:1 \u203a narrow viewport reflows and tabs support arrow-key navigation (202ms)\n  \u2713  6 [chromium] \u203a tests/e2e/prototype.spec.ts:172:1 \u203a cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon (1.7s)\n\n  8 passed (7.0s)\n(node:69445) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n(node:69446) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "<disposable-verification-directory>/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.064,
+      "output": "{\"authorized_simulated_attempts\": 5, \"batch_id\": \"verification-001\", \"deployment_daily_exposure_usd\": \"0.05\", \"deployment_monthly_exposure_usd\": \"0.05\", \"journal_events\": 14, \"live_provider_calls\": 0, \"mode\": \"simulation_only\", \"phase_0_gate_passed\": false, \"replayed_without_execution\": false, \"run_id\": \"run-0f526fb8adb0e60b8a1658fc\", \"simulated\": true, \"spending_locked\": false, \"unsettled_attempt_ids\": []}\n"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "<disposable-verification-directory>/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.051,
+      "output": "{\"authorized_simulated_attempts\": 5, \"batch_id\": \"verification-001\", \"deployment_daily_exposure_usd\": \"0.05\", \"deployment_monthly_exposure_usd\": \"0.05\", \"journal_events\": 14, \"live_provider_calls\": 0, \"mode\": \"simulation_only\", \"phase_0_gate_passed\": false, \"replayed_without_execution\": true, \"run_id\": \"run-0f526fb8adb0e60b8a1658fc\", \"simulated\": true, \"spending_locked\": false, \"unsettled_attempt_ids\": []}\n"
+    }
+  ],
+  "all_checks_passed": true
+}

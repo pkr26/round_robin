@@ -1,0 +1,39 @@
+{
+  "recorded_at_utc": "2026-11-16T13:33:58.537886+00:00",
+  "scope": "Post-suite launcher TIME_WAIT regression and development restart confirmation",
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "pytest",
+        "backend/tests/integration/test_launcher_ports.py",
+        "-q"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.202,
+      "output": ".                                                                        [100%]\n1 passed in 0.01s\n"
+    }
+  ],
+  "live_provider_calls": 0,
+  "/health": {
+    "status_code": 200,
+    "body": {
+      "status": "ok",
+      "mode": "simulated",
+      "paid_access_configured": false,
+      "authorization": "Every paid attempt requires current policy, capacity and budget checks"
+    }
+  },
+  "/ready": {
+    "status_code": 200,
+    "body": {
+      "status": "ready",
+      "schema_version": "1"
+    }
+  },
+  "/live": {
+    "status_code": 200
+  },
+  "all_checks_passed": true
+}

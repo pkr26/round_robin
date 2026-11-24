@@ -1,0 +1,18 @@
+{
+  "failed_generation_result": {
+    "status": "persisted"
+  },
+  "provider_calls": 1,
+  "expired_design": {
+    "state": "active",
+    "seconds_elapsed": 2000.00297498703,
+    "hold_status": "held",
+    "hold_usd": "0.20",
+    "reconciled_operations": 0
+  },
+  "removed_funding_configuration": {
+    "published": 0,
+    "sender_calls": 0,
+    "operation_status": "queued"
+  }
+}

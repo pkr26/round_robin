@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-17",
+  "status": "design only; no product edits or test reruns",
+  "recommendation": "Use bounded typed evidence and obligation protocols before adding learned complexity.",
+  "contracts": [
+    "Assertion",
+    "RelationAssessment",
+    "EvidenceSpan",
+    "AssessmentReview",
+    "Objection",
+    "ObjectionEvent",
+    "ConstraintVerdict",
+    "SearchObjective"
+  ],
+  "closure_map": [
+    {
+      "finding": "E-F01",
+      "improvement": "Deterministic constraint reducer preserves each assessment polarity, scope, citation set and assessor. Unsupported auditor failure becomes unknown/contested. Demonstrated failure needs accepted adverse basis.",
+      "acceptance": [
+        "Positive synthesis citation cannot become support for adverse audit verdict.",
+        "All-options-infeasible requires an accepted adverse hard-requirement basis for every option.",
+        "Exact arithmetic governs numeric comparison but retains factual-input qualifications."
+      ],
+      "phase": "A"
+    },
+    {
+      "finding": "E-F02",
+      "improvement": "Allocate bounded search/page opportunities across comparison, cost and counterevidence objectives before consuming the first result queue. Record objective shortfalls; avoid search spending with no usable page/context capacity.",
+      "acceptance": [
+        "Eight first-query hits cannot starve reserved counterevidence or cost acquisition.",
+        "All unavailable or unfinished objectives remain visible.",
+        "Existing six-query/eight-page/24-passage and original spending/deadline ceilings hold."
+      ],
+      "phase": "A, D"
+    },
+    {
+      "finding": "E-F03",
+      "improvement": "Immutable proposition-specific supports/refutes/context assessments and an explicit claim-state reducer. AND required premises, OR alternative sufficient bases; preserve contradicted/stale ancestors and require explicit resolution.",
+      "acceptance": [
+        "An identical claim cannot become supported solely through a contradicted ancestor.",
+        "A genuinely opposite proposition can cite a refutation with explicit relation polarity.",
+        "Cyclic justification, missing required premises, stale support and wrong scope cannot qualify."
+      ],
+      "phase": "B, C"
+    },
+    {
+      "finding": "E-F04",
+      "improvement": "Immutable objection/resolution ledger with stable targets and server-derived pending obligations. Later stages must address existing material IDs; omissions stay open. Display critical/material unresolved concerns before bounded optional dissent; link overflow.",
+      "acceptance": [
+        "More than20 earlier objections cannot displace final-audit critical findings.",
+        "A proposal material concern cannot disappear merely because synthesis/audit omits it.",
+        "Answers require a valid resolution receipt; changed evidence reopens dependent resolutions."
+      ],
+      "phase": "A, B, C"
+    },
+    {
+      "finding": "E-G01",
+      "improvement": "Scoped cost/requirement assessment and attestation records replace global source-status promotion. Frozen policy specifies acceptable basis types; readiness exposes input completeness, arithmetic, feasibility support, review coverage, objections and freshness independently.",
+      "acceptance": [
+        "Specific verified/attested fields qualify only for their declared scope and policy.",
+        "User attestation never becomes independent verification; model agreement alone never qualifies.",
+        "Expired, unmatched or incomplete quotes remain conditional with explicit next action."
+      ],
+      "phase": "C"
+    },
+    {
+      "finding": "E-G02",
+      "improvement": "Canonical offset-preserving paragraph windows, requirement-aware lexical ranking, targeted exception search and bounded greedy objective/source-diversity coverage. Expose selected intervals and omitted coverage.",
+      "acceptance": [
+        "Late decisive exclusions are retrieved under the same token/page budget.",
+        "Every passage reproduces the exact saved source span/hash.",
+        "Retrieval recall measures both support and counterevidence on unseen labeled cases."
+      ],
+      "phase": "D"
+    }
+  ],
+  "uncertainty_semantics": {
+    "states": [
+      "unassessed",
+      "provisional",
+      "supported_for_scope",
+      "contested",
+      "refuted_for_scope",
+      "stale"
+    ],
+    "meaning": "Attributed evidence/workflow states under a frozen policy, not probabilities or guarantees of real-world truth.",
+    "prohibitions": [
+      "No majority-vote truth rule.",
+      "No numerical confidence without empirical calibration.",
+      "No global source-is-true flag.",
+      "No assumption that provider diversity proves independent errors.",
+      "No automatic source verification from rereading or agreement."
+    ]
+  },
+  "complexity": {
+    "claim_graph": "O(V+E), affected-subgraph incremental recomputation; bounded current claim/reference limits.",
+    "objection_ledger": "O(objections+events), stable target indexes and bounded display with explicit overflow.",
+    "constraint_reducer": "O(options*requirements+linked assessments).",
+    "retrieval": "O(B+P*R+K*P) bounded by capped fetched bytes, candidate windows, <=20 requirements and <=24 selected passages; no mandatory new model calls."
+  },
+  "rollout": [
+    "A: deterministic report/citation fixes, objection display preservation, objective fetch reservations.",
+    "B: immutable assessments/obligations and versioned reducers computed in shadow mode.",
+    "C: obligation-carrying review and scoped attestation; publication reducer switched after reviewed acceptance.",
+    "D: evaluated requirement-aware passage ranking; learned reranking optional only after held-out advantage."
+  ],
+  "historical_reports": "Keep original algorithm/policy versions; do not silently relabel historical conclusions.",
+  "design_file": "DESIGN.txt"
+}

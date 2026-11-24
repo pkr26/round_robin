@@ -1,0 +1,26 @@
+{
+  "name": "round-robin-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@9.15.9",
+  "scripts": {
+    "dev": "uv run python scripts/dev.py",
+    "dev:web": "pnpm --filter @round-robin/web dev",
+    "build": "pnpm --filter @round-robin/web build",
+    "typecheck": "pnpm --filter @round-robin/web typecheck",
+    "contracts": "PYTHONPATH=backend/src uv run python -m round_robin.export_contracts && openapi-typescript contracts/openapi.json -o packages/api-client/src/schema.ts && openapi-typescript contracts/application.openapi.json -o packages/api-client/src/application.ts",
+    "contracts:check": "PYTHONPATH=backend/src uv run python -m round_robin.export_contracts --check && node scripts/check_client.mjs",
+    "verify": "uv run python scripts/verify.py",
+    "audit:full": "uv run python scripts/audit.py",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.65.1",
+    "istanbul-lib-coverage": "^3.2.2",
+    "istanbul-lib-instrument": "^6.0.3",
+    "istanbul-lib-report": "^3.0.1",
+    "istanbul-reports": "^3.2.0",
+    "openapi-typescript": "7.13.0",
+    "v8-to-istanbul": "^9.3.0"
+  }
+}

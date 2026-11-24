@@ -1,0 +1,226 @@
+{
+  "audit_date": "2026-11-17",
+  "scope": "Current runtime/provider/context implementation and relevant new regression boundaries",
+  "product_source_modified": false,
+  "findings": [
+    {
+      "id": "SESSION-RUNTIME-01",
+      "priority": "P2",
+      "title": "New optional image work bypasses mandatory text finishing priority",
+      "session_relation": "Incomplete integration of the new text priority guard with the unchanged image capacity path.",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/admission.py:129-136",
+        "backend/src/round_robin/worker/image_tasks.py:102-114",
+        "backend/src/round_robin/worker/image_tasks.py:298-300"
+      ],
+      "trigger": "A text run has reached synthesis/audit and a queued optional generation/edit is evaluated while shared slots are available or about to free.",
+      "observed": "provider_capacity_available(... mandatory=False) returns False; image_tasks._capacity returns True for the same shared capacity state. Image execution never consults the new stage-priority guard.",
+      "impact": "New optional image work can acquire shared provider/global capacity ahead of ready mandatory text work. Alongside existing visual critics it can occupy all slots and exhaust the text run's reserved finishing opportunity.",
+      "proof": "probes.py:context_and_capacity; probe-results.json:cross_modal_priority",
+      "fix": "Use one locked shared capacity/admission policy for both text and image authorization, preserving required visual reviews while denying new optional generation/edit ahead of admitted mandatory text work. Include cross-modal scheduling regressions.",
+      "caveat": "The direct probe verifies actual guard disagreement. It does not claim every scheduling order starves text, that a single image call fills all slots, or that monetary/call caps are bypassed."
+    },
+    {
+      "id": "SESSION-RUNTIME-02",
+      "priority": "P2",
+      "title": "Preflight accepts input that configured provider context admission necessarily rejects",
+      "session_relation": "The new exact-byte helper checks the application48K packet ceiling but does not apply configured provider schema/system/output bounds.",
+      "source_refs": [
+        "backend/src/round_robin/api/preflight.py:56-102",
+        "backend/src/round_robin/providers/http.py:138-149",
+        "backend/src/round_robin/worker/tasks.py:150-160"
+      ],
+      "trigger": "A valid brief contains12,000 background characters,4,000 goal characters and4,000 question characters, with verified configured context32,768 and ordinary synthetic prices.",
+      "observed": "input_packet_error returns None; the actual intake packet is32,325 bytes (under48K), while HTTPProvider.conservative_bound rejects context_limit after adding wire schema/system/protocol margin and billable output allowance.",
+      "impact": "A successful-looking funded preflight can admit a run whose intake cannot start; one preflight is consumed and a failed/limited report results without substantive model work. Mandatory finishing contexts can encounter the same configuration mismatch later.",
+      "proof": "probes.py:context_and_capacity; probe-results.json:preflight_context",
+      "fix": "Apply the adapter's no-send conservative payload/context calculation at preflight for configured mandatory roles and credible downstream envelopes, including schemas, instructions, output bound and provider context. Surface a precise blocker before Start.",
+      "caveat": "Pre-send provider checks correctly prevent an oversized external request; this is admission/liveness and misleading readiness-to-start, not a paid context-overflow send. The synthetic configuration uses valid public data and no key/network access."
+    },
+    {
+      "id": "SESSION-RUNTIME-03",
+      "priority": "P2",
+      "title": "Moderator pre-send recovery cycles the first two fallback providers",
+      "session_relation": "Pre-existing unchanged fallback loop remains in a runtime file modified this session; record separately from newly introduced defects.",
+      "source_refs": [
+        "backend/src/round_robin/orchestration/policies.py:78-86",
+        "backend/src/round_robin/worker/tasks.py:59-79",
+        "backend/src/round_robin/worker/tasks.py:137-160"
+      ],
+      "trigger": "OpenAI and Anthropic fail conservative pre-send configuration validation while Google is healthy; declared fallback order is OpenAI, Anthropic, Google.",
+      "observed": "Three infrastructure claims evaluate OpenAI, Anthropic, OpenAI; the run fails with zero authorized model calls and Google is never attempted.",
+      "impact": "A declared healthy moderator fallback is skipped even when it fits the remaining infrastructure and paid-call limits. This can prevent a usable stage from executing after provider credential/configuration availability changes.",
+      "proof": "probes.py:fallback_order; probe-results.json:fallback_order",
+      "fix": "Persist attempted/unavailable providers per logical role and advance through eligible predeclared fallbacks in order, retaining all original call/infrastructure/refusal guards.",
+      "caveat": "Ordinary sent failures still have only the original two-call ceiling; this reproduction uses pre-send failures that consume zero model calls. It does not authorize extra paid calls or fallback to evade refusal."
+    }
+  ],
+  "inventory": [
+    {
+      "algorithm": "Immutable command/start/retry boundaries",
+      "source": "api/preflight.py; api/events.py",
+      "assessment": "Reviewed snapshot/hash/owner lock, one-use preflight, original-command replay, queue guards and explicit parent replacement; no new concrete transaction defect observed."
+    },
+    {
+      "algorithm": "Canonical initial context admission",
+      "source": "api/preflight.py:56-115",
+      "assessment": "SESSION-RUNTIME-02; application packet bound is checked, adapter-specific context envelope omitted."
+    },
+    {
+      "algorithm": "Intake selected evidence and proposed changes",
+      "source": "orchestration/controller.py:114-130; worker/tasks.py:23-56; providers/base.py:160-176",
+      "assessment": "Transient selected text, typed per-field proposals, explicit confirmation, scope-limited changes reviewed; no new concrete defect observed."
+    },
+    {
+      "algorithm": "Proposal independence and scoped peer selection",
+      "source": "worker/tasks.py:23-56; providers/base.py:86-128",
+      "assessment": "Proposals suppress peer outputs/current-run peer claims. Synthesis/audit receive scoped contributions and obligations; no new concrete independence violation observed."
+    },
+    {
+      "algorithm": "Contribution footprint and wire context",
+      "source": "providers/base.py:16-30,86-128,157-159",
+      "assessment": "Reviewed conservative response footprint, claim duplication removal, latest answer compaction and final packet caps; no formal proof of the full heuristic bound supplied; actual cap remains authoritative."
+    },
+    {
+      "algorithm": "Output shape/reference validation and repair",
+      "source": "providers/base.py:157-232; providers/http.py:168-206",
+      "assessment": "Reviewed scoped references, claim bases/refutation, unique proposals/objections/responses, sanitized diagnostic paths and stage instruction handling; no new concrete runtime defect observed."
+    },
+    {
+      "algorithm": "Frozen request/configuration identity",
+      "source": "providers/http.py:79-95; orchestration/configuration.py",
+      "assessment": "Reviewed declared prompt/schema/policy hashing and fail-closed incompatible live runs; generated payload-suffix source is not independently hash-bound beyond declared policy metadata (maintainer must bump identity when changing it)."
+    },
+    {
+      "algorithm": "Finite shared protocol and termination",
+      "source": "orchestration/protocol.py; orchestration/controller.py:299-390",
+      "assessment": "Reviewed distinct profiles, quorum, material-target correction, one correction maximum and limited publication; no unbounded loop observed."
+    },
+    {
+      "algorithm": "Mandatory money/call/time ledger",
+      "source": "orchestration/budget.py; orchestration/controller.py:182-219",
+      "assessment": "Reviewed original aggregate caps, finish-hold transfer, unknown exposure preservation, correction reservation and no authorization renewal; no new concrete monetary bypass observed."
+    },
+    {
+      "algorithm": "Capacity and mandatory finishing priority",
+      "source": "orchestration/admission.py:58-70,129-136; worker/image_tasks.py:102-114",
+      "assessment": "SESSION-RUNTIME-01; newly added priority only applies to text capacity entry point."
+    },
+    {
+      "algorithm": "Retry due/generation fences",
+      "source": "worker/tasks.py:59-83,104-174; database/services.py:64-87; dispatcher/service.py:25-58,172-188",
+      "assessment": "Reviewed durable not_before, immutable publication generation, stale-message rejection and recovery requeue. Direct legacy calls still enforce due time. No premature second-call repro remains."
+    },
+    {
+      "algorithm": "Moderator fallback ordering",
+      "source": "orchestration/policies.py:72-96",
+      "assessment": "SESSION-RUNTIME-03; unchanged loop cycles providers on pre-send failures."
+    },
+    {
+      "algorithm": "Worker authorization/persistence/cancellation",
+      "source": "worker/tasks.py:104-267",
+      "assessment": "Reviewed commit-before-send, lease/generation/fence checks, savepoint atomic claim+issue persistence, accounting settlement and late-result discard; no new concrete mutation leak observed."
+    },
+    {
+      "algorithm": "Dispatcher/reconciler",
+      "source": "dispatcher/service.py",
+      "assessment": "Reviewed at-least-once intent publication, lost authorization unknown settlement, retained finish release, expired claims and pending generation recovery; no new concrete liveness defect beyond listed priority gap observed."
+    },
+    {
+      "algorithm": "Queue/admission quotas and FIFO",
+      "source": "orchestration/admission.py:47-112; api/events.py:243-298; api/preflight.py:201-221",
+      "assessment": "Reviewed shared queued-count guard on all transitions, retained tickets and original expiry; no quota bypass reproduced."
+    },
+    {
+      "algorithm": "Saved report terminal status integration",
+      "source": "orchestration/controller.py:222-390",
+      "assessment": "Reviewed material obligations prevent completed/ready claims, final status preserves missing participation and reports use committed work. Evidence semantics reviewed independently by evidence lane."
+    },
+    {
+      "algorithm": "API event cutoff/replay",
+      "source": "api/events.py:63-149",
+      "assessment": "Reviewed server cutoff and bounded event paging. Parent UI audit found first-load pagination outage hides Stop/report; independently cross-checked and confirmed."
+    },
+    {
+      "algorithm": "Regression quality",
+      "source": "backend/tests/test_runtime_algorithm_fixes.py; test_algorithm_context_and_repair.py; test_orchestration.py; test_providers.py; test_provider_configuration.py",
+      "assessment": "55 existing focused tests pass; current three new probes intentionally assert observed faulty behavior. Passing existing tests did not cover these failures."
+    }
+  ],
+  "inventory_count": 18,
+  "validation": {
+    "existing_tests_passed": 55,
+    "existing_tests_log": "existing-tests.log",
+    "probe_script": "probes.py",
+    "probe_results": "probe-results.json",
+    "offline_probe_assertions_passed": true,
+    "external_requests": 0,
+    "commands": [
+      "uv run pytest -q backend/tests/test_runtime_algorithm_fixes.py backend/tests/test_algorithm_context_and_repair.py backend/tests/test_orchestration.py backend/tests/test_providers.py backend/tests/test_provider_configuration.py",
+      "PYTHONPATH=backend/src:. uv run python docs/evidence/session-audit-2026-11-17/runtime/probes.py"
+    ]
+  },
+  "limitations": [
+    "Synthetic SQLite and injected adapters; no paid calls, fresh service disruption or production mutation.",
+    "No correctness proof or real-model quality estimate; enumerated no-defect results are review observations.",
+    "Third finding is adjacent pre-existing logic, not introduced by this session."
+  ],
+  "source_manifest": [
+    {
+      "path": "backend/src/round_robin/orchestration/protocol.py",
+      "sha256": "29884263c2d5fa7157dda19c9c94890df088cd157aaccb3c11d73ba0a72119ca"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/policies.py",
+      "sha256": "2b3fccacd625d0223ac43c641bbbc2aad6498cffcde4836a4a05066f91f0162d"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/admission.py",
+      "sha256": "ca1b63b707a7a3a38c47b34de17cb70327c26be45933add9d063390673b490b0"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/budget.py",
+      "sha256": "b7e94af7d382e19ad60794662f84c8847617256e57aa448a895d91c09ebcded6"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "sha256": "bbc8cab359848073eaee0d7e70eebd7ca77c002b2b1b11de8b550e832faa595c"
+    },
+    {
+      "path": "backend/src/round_robin/worker/tasks.py",
+      "sha256": "280b2beb4e884d8be2ae2a0f1d02b20d067621734994006e24654f3c6c2cb65a"
+    },
+    {
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "sha256": "e89fb975e5d4a00d31a4a5f99cecad6485098774e645d45617ab5b2ea1acd6f3"
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/service.py",
+      "sha256": "62f688f97c3da785c247d816f610abb52bf263e4cf56959c9ed9fec385179f14"
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "sha256": "fb7cf21332f631a2c529b5b41fc4fa5a086e934e7c6a3a9c239da7dd1227a2a6"
+    },
+    {
+      "path": "backend/src/round_robin/providers/base.py",
+      "sha256": "69cedf852dfef3caa79990d274c3c5b0c82e934212df727cc9cd6ff325215892"
+    },
+    {
+      "path": "backend/src/round_robin/providers/http.py",
+      "sha256": "8c41e2713c4c89a6e9964dc6eee872645ff6897a7ef1ed1076ac0a645aeac751"
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "sha256": "ea0380626a6d7c7c910e1b0345e74d439c1f472ae29e5366bb6ef55ce151ac97"
+    },
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "sha256": "c9361051294fa4d471ed5961be2cf24f143e680d83c6b9bfdfc29b7384cddbb7"
+    }
+  ],
+  "cross_review": {
+    "ROOT-UI01": "Confirmed source flow: snapshot publication waits for all event pages, causing first-load late-page failure to hide running Stop and available report. Existing displayed state is retained rather than deleted.",
+    "ROOT-TOOL01": "Confirmed scope of root reproduction: finalizer can bind stale successful logs to current mutated source. This does not itself invalidate the actual current successful tests."
+  }
+}

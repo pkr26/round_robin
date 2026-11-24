@@ -1,0 +1,701 @@
+{
+  "review_date": "2026-11-16",
+  "recorded_at": "2026-11-16T21:00:31.057559-07:00",
+  "scope": "Second deep audit focused on cross-component state, recovery, concurrency, input semantics, hosted authentication, backups and report export safety.",
+  "new_confirmed_count": 10,
+  "previous_confirmed_count": 17,
+  "total_confirmed_count": 27,
+  "new_severity_counts": {
+    "P1": 2,
+    "P2": 8
+  },
+  "production_source_changed": false,
+  "external_provider_calls": 0,
+  "source_inventory_files": 125,
+  "source_inventory_lines": 17977,
+  "limitations_not_counted_as_defects": [
+    {
+      "title": "No production path currently makes cost evidence supported, so real ready_to_choose is unreachable",
+      "locations": [
+        "backend/src/round_robin/orchestration/controller.py:94-100",
+        "backend/src/round_robin/orchestration/reporting.py:115-117",
+        "backend/src/round_robin/reports/readiness.py:30-32"
+      ],
+      "evidence": "Every original cost component source_ref is rewritten to newly created structured evidence with verification_status=user_supplied. The cost dependency accepts only supported sources. The probe exercises real evidence preparation and real supported-claim persistence, then ideal positive distinct-provider review records: positive included costs and explicit included zero costs both pass all hard requirements yet remain conditional solely due to the unverified cost dependency. Excluded and not-applicable-only cases also remain conditional with their expected additional cost gaps. All four probes accept a supported fact claim without promoting source verification. No runtime evidence-verification mutation route was found.",
+      "why_not_a_confirmed_defect": "Repository documentation consistently says entered costs are not independently verified and readiness requires accepted scoped support; it does not clearly promise that current functionality must let a user promote those sources. Treat this as a product capability limitation until an explicit supported-evidence acceptance workflow is required, rather than weakening the conservative readiness gate.",
+      "proof": "evidence/data-probe-results.json"
+    }
+  ],
+  "all_severity_counts": {
+    "P1": 7,
+    "P2": 20
+  },
+  "findings": [
+    {
+      "id": "RR-001",
+      "original_id": "RUNTIME-01",
+      "priority": "P1",
+      "title": "Mandatory Anthropic image critic sends a schema the provider rejects",
+      "path": "backend/src/round_robin/providers/images.py",
+      "start_line": 293,
+      "end_line": 298,
+      "description": "The visual critic sends the raw Pydantic serialization schema to Anthropic output_config, including minLength/maxLength, minimum/maximum, and maxItems. The documented API rejects these constraints with HTTP 400. Unlike the text adapter, the visual adapter does not transform them. Configured generation uses OpenAI and requires two other distinct critics, so the mandatory Anthropic failure prevents review quorum.",
+      "evidence": "CriticContent.model_json_schema(mode=serialization) contains Finding.description={minLength:1,maxLength:500}; Finding.view_index={minimum:0,maximum:3}; findings.maxItems=20. Official API documentation states unsupported numeric/string/array constraints produce400.",
+      "fix_direction": "Transform the image-critic schema to each provider supported subset, keeping full local validation, and test wire schema against documented constraints.",
+      "sources": [
+        "https://platform.claude.com/docs/en/build-with-claude/structured-outputs#json-schema-limitations"
+      ]
+    },
+    {
+      "id": "RR-002",
+      "original_id": "RUNTIME-03",
+      "priority": "P1",
+      "title": "Generation timeout spends the protected time for mandatory reviews",
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "start_line": 169,
+      "end_line": 172,
+      "description": "Generation/edit receives min(600, remaining_active - 25) seconds, without subtracting the 190 seconds protected for the two required critics. Admission checks that the critic reserve exists but does not include the request duration. With 300 seconds left, a generation is authorized for 275 seconds; after a valid result at 274 seconds both critics are blocked. Paid work can consume the time required to review its own result.",
+      "evidence": {
+        "probe": "generation_consumes_critic_time",
+        "initial_failure": {
+          "status": "persisted"
+        },
+        "remaining_seconds_before_retry": 300,
+        "generation_timeout_seconds": 275.0,
+        "simulated_generation_elapsed_seconds": 274,
+        "generation_result": {
+          "status": "persisted"
+        },
+        "critic_results": [
+          {
+            "status": "blocked"
+          },
+          {
+            "status": "blocked"
+          }
+        ],
+        "critic_calls": {
+          "anthropic": 0,
+          "google": 0
+        },
+        "retained_review_hold_usd": "0.20",
+        "real_provider_calls": 0
+      },
+      "fix_direction": "Subtract the outstanding critic critical-path reserve from generation/edit request allowance, and include request timeout plus reserved work in admission checks.",
+      "related_locations": [
+        "backend/src/round_robin/worker/image_tasks.py:151",
+        "backend/src/round_robin/visual/iterations.py:83"
+      ]
+    },
+    {
+      "id": "RR-003",
+      "original_id": "FV01",
+      "priority": "P1",
+      "title": "Raster dimension validation can permanently break visual history",
+      "path": "backend/src/round_robin/visual/assets.py",
+      "start_line": 45,
+      "end_line": 46,
+      "description": "The raster validator caps pixel count but not each dimension, whereas DesignVersionView caps width and height at 8192. A valid 108-byte PNG sized 9000 x 1 is committed before response validation fails. The upload, subsequent design read, and listing of all designs for that meeting then return HTTP 503. The normal UI cannot reopen this visual history.",
+      "evidence": "probes/round_robin_visual_probes.py; wide_upload:108 bytes, upload503, read503, list503.",
+      "fix_direction": "Validate both dimensions against the serialized contract before storage and commit, and provide a repair path for already-persisted invalid versions."
+    },
+    {
+      "id": "RR-004",
+      "original_id": "FV02",
+      "priority": "P1",
+      "title": "Reloaded uncommitted private commands have no recovery path",
+      "path": "frontend/app/api-client.ts",
+      "start_line": 243,
+      "end_line": 248,
+      "description": "If a private command fails before reaching the server and the tab reloads, the private payload is lost while its sessionStorage receipt survives. Reconciliation sees HTTP 404 and returns unconfirmed; retry cannot recover the payload; the UI disables new writes. This affects create, save, follow-up, clarification, outcome, and text-upload commands. There is no in-app recovery or safe abandonment path.",
+      "evidence": "probes/round_robin_client_recovery_probe.cjs; receipt_still_blocks=true after404; retry only-in-memory error; new action rejected.",
+      "fix_direction": "Provide exact-input re-entry under the original command UUID, or a server-fenced abandonment flow; preserve content privacy without trapping the user."
+    },
+    {
+      "id": "RR-005",
+      "original_id": "FV03",
+      "priority": "P1",
+      "title": "Definitive4xx on retry never releases pending command",
+      "path": "frontend/app/api-client.ts",
+      "start_line": 220,
+      "end_line": 221,
+      "description": "After an uncertain initial send, a retry can receive a definitive non-committed HTTP 409, such as preflight_expired or draft_conflict. The catch block refuses to clear an already-retained receipt. Reconciliation also cannot clear an absent UUID, leaving the tab unable to submit another action even when the original replay body is available.",
+      "evidence": "probes/round_robin_client_conflict_probe.cjs; retryError preflight_expired, reconcilefalse, receiptStillPresenttrue.",
+      "fix_direction": "Handle definitive not-committed responses on retained retries, distinguishing them from genuinely unknown outcomes; clear or safely retire the receipt."
+    },
+    {
+      "id": "RR-006",
+      "original_id": "EVID-02",
+      "priority": "P2",
+      "title": "Research reserve rejection stalls proposals until the active-time cutoff",
+      "path": "backend/src/round_robin/research/service.py",
+      "start_line": 116,
+      "end_line": 120,
+      "description": "Research hardcodes a 215-second reserve instead of using the frozen finish policy. A valid configuration with a 200-second active limit and 50-second finishing reserve therefore always throws before acquiring a lease. The transaction rolls back leaving research_state=pending. Reconciliation handles only running research, while schedule_research blocks proposals for pending research, so every redelivery fails and the run remains stuck until the active-time reserve cutoff. Default configurations encounter the same state when research starts late.",
+      "evidence": {
+        "provider_config_schema_valid": true,
+        "active_limit": 200,
+        "finish_reserved": 50,
+        "errors": [
+          "finish_time_reserve",
+          "finish_time_reserve"
+        ],
+        "run_status": "running",
+        "stage": "proposals",
+        "research_state": "pending",
+        "remaining_active_seconds": 199.942723,
+        "reconciler_progressed": false,
+        "proposal_steps": 0,
+        "search_calls": 0,
+        "external_provider_requests": 0
+      },
+      "fix_direction": "Compute the allowance from the configured finish reserve and terminally settle unavailable research when no research time remains; enqueue advance so conditional text review can proceed.",
+      "related_locations": [
+        "backend/src/round_robin/research/service.py:86-87",
+        "backend/src/round_robin/research/service.py:56-61",
+        "backend/src/round_robin/worker/research_tasks.py:7-14"
+      ],
+      "reproduction_script": "probes/round_robin_research_probe.py"
+    },
+    {
+      "id": "RR-007",
+      "original_id": "EVID-01",
+      "priority": "P2",
+      "title": "Preflight accepts selected files that cannot fit the evidence packet",
+      "path": "backend/src/round_robin/api/preflight.py",
+      "start_line": 44,
+      "end_line": 51,
+      "description": "The upload boundary permits one MiB, but preflight only checks ownership/readiness/hash/recipients. A selected 52,800-byte UTF-8 text file passes preflight without blockers or warnings, starts successfully, consumes an intake attempt and then deterministically fails the 24-passage runtime cap. The source shape and remaining packet capacity are known before Start. Live runs share this intake-first path, so this can waste a paid intake call for an input which cannot succeed.",
+      "evidence": {
+        "upload_bytes": 52800,
+        "upload_status": 201,
+        "upload_state": "ready",
+        "preflight_status": 200,
+        "preflight_blockers": [],
+        "preflight_warnings": [],
+        "start_status": 202,
+        "terminal_status": "failed",
+        "stop_reason": "context_limit_selected_passages",
+        "attempt_stages": [
+          "intake"
+        ],
+        "comparison": [],
+        "provider_requests_external": 0
+      },
+      "fix_direction": "Apply evidence packet and structured-source size validation during preflight and repeat it at Start; return an actionable blocker or provide explicit bounded excerpt selection before admission.",
+      "related_locations": [
+        "backend/src/round_robin/api/artifacts.py:127",
+        "backend/src/round_robin/orchestration/controller.py:89-93"
+      ],
+      "reproduction_script": "probes/round_robin_evidence_probe.py"
+    },
+    {
+      "id": "RR-008",
+      "original_id": "FV04",
+      "priority": "P2",
+      "title": "Accepted JPEGs can normalize into permanently unreviewable images",
+      "path": "backend/src/round_robin/visual/reviews.py",
+      "start_line": 33,
+      "end_line": 36,
+      "description": "Original uploads may be at most 10 MiB, but their normalized PNG may be up to 64 MiB. Review receipt creation applies the original 10 MiB validator to those canonical PNG bytes. A valid 5,687,427-byte JPEG becomes a 14,511,086-byte PNG that is accepted into storage but rejected for review, even with a configured 64 MiB critic input allowance.",
+      "evidence": "probes/round_robin_visual_probes.py; synthetic2200x2200 JPEG5687427 bytes becomes14511086-byte PNG; issue_review_receipt raises UnsafeRaster10MiB.",
+      "fix_direction": "Separate original-upload validation from canonical-image validation and enforce the actual outgoing provider byte limit consistently."
+    },
+    {
+      "id": "RR-009",
+      "original_id": "RUNTIME-02",
+      "priority": "P2",
+      "title": "Image and vision requests can run beyond their total deadlines",
+      "path": "backend/src/round_robin/providers/images.py",
+      "start_line": 201,
+      "end_line": 206,
+      "description": "_http uses ordinary HTTPTransport with per-I/O timeouts. Its elapsed-time check occurs only after response body chunks, so a slow header stream, DNS resolution, or error body stream can exceed the request allowance. The400/422 error-body loop has no elapsed check at all. A90s critic can run until the image worker630s soft limit and heartbeat extends its lease, wasting required review time and occupying shared capacity.",
+      "evidence": {
+        "probe": "image_total_deadline",
+        "declared_timeout_seconds": 0.1,
+        "elapsed_seconds": 0.3679,
+        "error": "response_limit",
+        "confirmed_overrun": true,
+        "network_scope": "loopback only"
+      },
+      "fix_direction": "Use the existing DeadlineHTTPTransport with one absolute deadline for image/vision requests and apply it to error-body parsing."
+    },
+    {
+      "id": "RR-010",
+      "original_id": "FV09",
+      "priority": "P2",
+      "title": "Expired visual sessions retain finish holds and unserviceable queued work",
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "start_line": 387,
+      "end_line": 417,
+      "description": "Image reconciliation inspects authorized operations and releases finish holds only for designs already marked inactive; it never expires an active design at its 1800-second deadline. A failed generation leaves a held USD 0.20 review reserve after 2000 seconds. Queued work whose funding configuration is removed is also left queued indefinitely. Without explicit user cancellation, impossible work and unused reservations remain.",
+      "evidence": "probes/round_robin_visual_expiry_probe.py. Fake generation failure, elapsed2000s; reconciler0, designactive, finishholdheldUSD0.20. Remove funded config and dispatch retry; published0, sender_calls0, operationstillqueued.",
+      "fix_direction": "Expire active sessions when their deadline is exhausted, safely terminalize impossible queued work, and release unused finish holds while preserving unknown sent exposure.",
+      "related_locations": [
+        "backend/src/round_robin/worker/image_tasks.py:159",
+        "backend/src/round_robin/worker/image_tasks.py:371",
+        "backend/src/round_robin/worker/image_tasks.py:381"
+      ]
+    },
+    {
+      "id": "RR-011",
+      "original_id": "ROOT-CURRENCY",
+      "priority": "P2",
+      "title": "Currency rounding can falsely mark an over-budget option affordable",
+      "path": "backend/src/round_robin/research/calculator.py",
+      "start_line": 147,
+      "end_line": 151,
+      "description": "The public schema accepts KWD, but lifecycle_total always quantizes to 0.01 and formats two decimal places. KWD uses three decimal places. A valid KWD 1.005 quote becomes 1.00 and then passes a hard ceiling of 1.001, although the actual amount exceeds that ceiling. This changes both the reported cost and deterministic feasibility.",
+      "evidence": {
+        "input": "1.005 KWD",
+        "hard_ceiling": "1.001 KWD",
+        "observed_total": "1.00",
+        "observed_constraint": "pass",
+        "expected_total": "1.005",
+        "expected_constraint": "fail"
+      },
+      "fix_direction": "Use validated currency-specific minor units consistently in arithmetic and presentation, or reject unsupported currencies.",
+      "sources": [
+        "https://www.cbk.gov.kw/en/banknotes-and-coins/banknotes/introduction"
+      ],
+      "related_locations": [
+        "backend/src/round_robin/schemas/common.py:42",
+        "backend/src/round_robin/orchestration/reporting.py:61"
+      ],
+      "reproduction_script": "probes/root_boundary_checks.py",
+      "evidence_file": "evidence/root-boundary-results.json"
+    },
+    {
+      "id": "RR-012",
+      "original_id": "FV06",
+      "priority": "P2",
+      "title": "Saved nonUSD amounts are presented as USD during editing",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 487,
+      "end_line": 488,
+      "description": "The editor hardcodes USD in the budget and component labels, even when a saved brief and its components use EUR or another supported currency. Editing the displayed value preserves the original currency. A user is therefore told they are editing dollars while the value is silently stored and interpreted as euros.",
+      "evidence": "probes/round_robin_frontend_ui_probe.cjs; saved_currencyEUR, rendered_budget_label Budget(USD). Scope confirmed finding to currency; quantity/status separate concerns not independently probed.",
+      "fix_direction": "Render budget and component labels using their saved currencies; require explicit conversion or currency change rather than relabeling values."
+    },
+    {
+      "id": "RR-013",
+      "original_id": "FV05",
+      "priority": "P2",
+      "title": "Switching drafts retains stale public-term browser validation error",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 489,
+      "end_line": 489,
+      "description": "Public-term customValidity is updated only in the textarea change handler. Entering nine terms, then switching to another valid saved draft, replaces the value but preserves the old custom validation error. The new draft has an empty, valid public-term field, yet form.checkValidity() returns false and browser submission is blocked until that field is edited.",
+      "evidence": "probes/round_robin_frontend_ui_probe.cjs; new_meeting_public_terms empty, validation_error_after_switch remains eight-term error, new_form_valid=false.",
+      "fix_direction": "Derive custom validity from current public-term state in an effect, including draft selection/reset, as the other editor fields do."
+    },
+    {
+      "id": "RR-014",
+      "original_id": "FV07",
+      "priority": "P2",
+      "title": "Native diagrams ignore frozen output dimensions",
+      "path": "backend/src/round_robin/api/visual.py",
+      "start_line": 449,
+      "end_line": 450,
+      "description": "The native diagram endpoint renders dimensions from body.diagram without checking the immutable visual brief. A frozen 1024 x 1024 brief accepts and publishes an 800 x 400 diagram with HTTP 201. The default diagram starter already disagrees with the default frozen dimensions.",
+      "evidence": "probes/round_robin_visual_probes.py; frozen1024x1024; status201; actual800x400.",
+      "fix_direction": "Bind renderer dimensions to the frozen visual brief or reject mismatching diagram dimensions before recording a render attempt."
+    },
+    {
+      "id": "RR-015",
+      "original_id": "FV08",
+      "priority": "P2",
+      "title": "Diagram edge labels can be clipped despite successful required-text validation",
+      "path": "backend/src/round_robin/visual/renderers/diagram.py",
+      "start_line": 113,
+      "end_line": 116,
+      "description": "Only node labels are checked for fit. Edge labels are drawn starting at their edge midpoint without validating their extent. A valid 1000-pixel-wide diagram accepts a 219-pixel label starting at x=830, clipping 49 pixels. Required-text checking merely finds the string in the source, so a candidate can be ready while required text is visibly cut off.",
+      "evidence": "Direct Diagram.model_validate+render_diagram probe with width1000,height300, nodes x700/y0 andx900/y200 widths60, heights70, edge text above succeeds; font.getlength219.0.",
+      "fix_direction": "Validate edge-label bounds or wrap/reposition labels within the viewport before publishing a candidate as ready.",
+      "reproduction_script": "probes/root_boundary_checks.py",
+      "evidence_file": "evidence/root-boundary-results.json"
+    },
+    {
+      "id": "RR-016",
+      "original_id": "EVID-03",
+      "priority": "P2",
+      "title": "Every maintenance cycle re-purges the complete permanent deletion history",
+      "path": "backend/src/round_robin/operations/maintenance.py",
+      "start_line": 56,
+      "end_line": 57,
+      "description": "The minute-based dispatcher invokes maintenance synchronously. Maintenance reads the whole independently retained manifest and repeats purge_record for all historical entries without a batch bound or checking already-purged status. One already-purged meeting with one run executes 25 SQL statements on every pass and increments its fence again. As history grows, cleanup work grows with all past deletions and blocks the same loop responsible for dispatch and lease reconciliation; ordinary create/delete cycles are not constrained by the active meeting quota.",
+      "evidence": {
+        "pass1": {
+          "sql_statements": 25,
+          "deletion_records_reapplied": 1,
+          "run_execution_fence": 2
+        },
+        "pass2": {
+          "sql_statements": 25,
+          "deletion_records_reapplied": 1,
+          "run_execution_fence": 3
+        }
+      },
+      "fix_direction": "Retain the full independent manifest for restore verification, but process active pending deletions in bounded batches and skip proven completed records during routine maintenance. Keep full replay as an explicit restore/purge operation.",
+      "related_locations": [
+        "backend/src/round_robin/operations/recovery.py:123-128",
+        "backend/src/round_robin/operations/recovery.py:93",
+        "backend/src/round_robin/dispatcher/service.py:169-177"
+      ],
+      "reproduction_script": "probes/round_robin_maintenance_probe.py"
+    },
+    {
+      "id": "RR-017",
+      "original_id": "EVID-04",
+      "priority": "P2",
+      "title": "The expiry regression uses UTC yesterday against a Phoenix comparison date",
+      "path": "backend/tests/test_evidence_regressions.py",
+      "start_line": 225,
+      "end_line": 226,
+      "description": "The regression creates expiry as utcnow().date()-1 while the sample brief uses America/Phoenix. Between midnight and 06:59 UTC that date is the current Phoenix date, so the quote is correctly considered current and the test incorrectly expects it to be expired. Root observed this failure in the full suite; the source inspection and current UTC/Phoenix calendars establish the cause. This is a test defect, not a stale-quote product defect.",
+      "evidence": {
+        "utc_observed": "2026-11-17 03:24 UTC",
+        "phoenix_observed": "2026-11-16 20:24 MST",
+        "expiry_constructed": "2026-11-16",
+        "accepted_comparison_date": "2026-11-16",
+        "actual_total": "1600.00",
+        "incorrect_expected_total": null,
+        "failure_window": "00:00 through 06:59 UTC each day"
+      },
+      "fix_direction": "Freeze the clock and explicit comparison date in this test, or derive the expired quote date from the brief timezone.",
+      "related_locations": [
+        "backend/src/round_robin/orchestration/reporting.py:29-33"
+      ]
+    },
+    {
+      "id": "RR-018",
+      "priority": "P1",
+      "title": "Waiting runs multiply scheduler records and saturate dispatch",
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "start_line": 279,
+      "end_line": 281,
+      "description": "Whenever admission waits, advance_run unconditionally inserts a new advance Outbox record. The one-second reconciler invokes this path independently, and a delivered advance invokes it again. Meanwhile, the previously delivered record remains published as long as the run is queued, so reconcile_once republishes it after 15 seconds. A successfully consumed timer therefore leaves behind both a replayable predecessor and a successor. One valid queued run under supported operator draining produced 2,781 outbox rows and 2,689 successful advance deliveries in 90 seconds, with 2,031 still pending; no message loss occurred. By 60 seconds duplicate advance deliveries saturated the default 50-record dispatch batch. This wastes database transactions, repeatedly takes the global deployment-policy lock, grows the persistent scheduler table, and delays useful work sharing the dispatcher and worker queues. The same insertion branch is used when another run occupies the single admission slot.",
+      "trigger": "Keep a queued run waiting for admission, for example during a normal deployment drain or while another run is running, and run the normal reconciler and dispatcher loops.",
+      "evidence": {
+        "script": "probes/concurrency-probe_queued_advance_growth.py",
+        "command": "PYTHONPATH=backend/src:. .venv/bin/python probes/concurrency-probe_queued_advance_growth.py",
+        "result": "evidence/concurrency-queued_advance_growth_result.json",
+        "setup": "Disposable PostgreSQL schema, schema-valid sample brief and normal simulated run configuration from the existing orchestration seed helper. A supported draining policy keeps admission closed. A synchronous fake broker executes and commits every delivered advance; no Redis or provider network request is made. The clock advances in one-second increments and each tick calls the production reconcile_once and dispatch_once functions with their normal batch limit.",
+        "observed": [
+          {
+            "seconds": 15,
+            "outbox_rows": 40,
+            "successful_deliveries": 23
+          },
+          {
+            "seconds": 45,
+            "outbox_rows": 517,
+            "successful_deliveries": 470
+          },
+          {
+            "seconds": 60,
+            "outbox_rows": 1251,
+            "successful_deliveries": 1189
+          },
+          {
+            "seconds": 90,
+            "outbox_rows": 2781,
+            "successful_deliveries": 2689,
+            "pending_rows": 2031
+          }
+        ],
+        "cleanup": "The random PostgreSQL schema was dropped. No application source was changed."
+      },
+      "fix_direction": "Use a unique active advance intention per run/generation, and reschedule or upsert that intention when admission waits. Make consumption/recovery distinguish the already-handled intention from a genuinely lost delivery so predecessor and successor records cannot both be replayed. Keep the same invariant for reconcile-triggered and broker-triggered advancement.",
+      "limits": "The exact growth rate was measured with deterministic time and a synchronous successful sender; real broker throughput changes the rate. Queue amplification and batch saturation are directly observed. Delay to a separate real user request is an operational implication, not a separately measured latency result.",
+      "related_locations": [
+        {
+          "path": "backend/src/round_robin/dispatcher/service.py",
+          "start_line": 129,
+          "end_line": 131
+        },
+        {
+          "path": "backend/src/round_robin/dispatcher/service.py",
+          "start_line": 135,
+          "end_line": 150
+        },
+        {
+          "path": "backend/src/round_robin/orchestration/admission.py",
+          "start_line": 50,
+          "end_line": 62
+        }
+      ]
+    },
+    {
+      "id": "RR-019",
+      "priority": "P1",
+      "title": "Concurrent deletion can fail a normal backup and close all writes and dispatch",
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "start_line": 168,
+      "end_line": 172,
+      "description": "The database snapshot is closed before referenced files are copied, with no shared lifecycle lock or retained-file lease. A normal meeting deletion followed by cleanup can therefore remove an export that the snapshot still marks ready. The backup then raises FileNotFoundError, deletes the unpublished temporary backup, and intentionally records backup_failed, persistently closing writes and dispatch across the deployment. The defect is the uncoordinated database/filesystem snapshot; the fail-closed durability response is intentional. Daily backup instructions do not require stopping services.",
+      "trigger": "Delete and purge a comparison after backup has captured its database rows but before it reads the export file.",
+      "evidence": {
+        "probe": "probes/backup_race.py",
+        "result": "evidence/backup-race-result.json",
+        "observed": {
+          "ready_before_backup": 200,
+          "export_exists_before_backup": true,
+          "delete_status": 200,
+          "cleanup": {
+            "expired_uploads": 0,
+            "expired_exports": 0,
+            "interrupted_exports": 0,
+            "orphaned_export_files": 0,
+            "deletion_records_reapplied": 1,
+            "provider_requests": 0
+          },
+          "export_exists_after_cleanup": false,
+          "backup_outcome": "FileNotFoundError",
+          "ready_after_backup": 503,
+          "readiness_reason": {
+            "status": "not_ready",
+            "reason": "durability_compromised"
+          },
+          "backup_published": false
+        },
+        "method": "Real ready export API; deterministic legal DELETE + maintenance interleaved after the database snapshot; temporary SQLite/artifact storage only."
+      },
+      "fix_direction": "Coordinate artifact snapshotting with deletion/retention, for example using a shared lifecycle lock, immutable retained references, or a snapshot/purge protocol. Reconcile legitimately deleted records consistently before publishing a backup; do not merely suppress missing-file errors or weaken the durability gate.",
+      "limits": "No corrupted published backup, data resurrection, or lost original report was demonstrated. The broad impact is the observed persistent write/dispatch gate after the race.",
+      "related_locations": [
+        "backend/src/round_robin/operations/recovery.py:150",
+        "backend/src/round_robin/operations/recovery.py:203",
+        "backend/src/round_robin/operations/maintenance.py:27",
+        "docs/OPERATIONS.md:191"
+      ]
+    },
+    {
+      "id": "RR-020",
+      "priority": "P2",
+      "title": "An older autosave can overwrite the newly opened linked follow-up brief",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 361,
+      "end_line": 363,
+      "description": "followUp replaces the draft with snapshot.brief but does not increment editGeneration. History/follow-up remain enabled during autosave. Its late handler sees the same meeting and generation, replaces the follow-up with the older working draft, and marks it clean. The next Save linked follow-up submits that wrong brief with the selected parent_run_id. Follow-up creation silently uses facts from a different draft instead of the frozen reviewed input, and can persist that substituted content.",
+      "trigger": "Edit the current meeting draft and let its 700ms autosave PATCH begin. Before the reply, click its saved review in Review history, then Create a linked follow-up. Allow the older PATCH to complete.",
+      "evidence": {
+        "observed": "The real component showed Frozen reviewed brief before the deferred response, Edited working draft afterwards, no Unsaved changes indicator, then posted parent run_e841230d629649bbb4119a6b88401d39 with brief.title Edited working draft and expected_draft_revision 2.",
+        "probe": "probes/client-live-component-probes.cjs",
+        "result": "evidence/client-live-component-results.json#/autosave_overwrites_followup"
+      },
+      "fix_direction": "Advance the edit/scope generation when entering follow-up or clarification, and fence existing autosave completions to the editor mode they originated from.",
+      "related_locations": [
+        "frontend/app/live-workspace.tsx:235",
+        "frontend/app/live-workspace.tsx:320",
+        "frontend/app/live-workspace.tsx:502"
+      ],
+      "limits": "Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted."
+    },
+    {
+      "id": "RR-021",
+      "priority": "P2",
+      "title": "Editing any requirements line erases existing typed constraints",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 306,
+      "end_line": 309,
+      "description": "The textarea serializes all its rows to new requirement_manual_N ids with metric manual, operator manual and threshold null. The original numeric requirement is not preserved even if its displayed text was untouched. An ordinary edit silently removes deterministic enforcement and changes requirement identities used by the saved decision evidence; live model assessments can now replace a previously mandatory arithmetic check.",
+      "trigger": "Open a valid saved draft containing a numeric requirement whose id is not the UI-reserved requirement_budget or requirement_deadline, then add an unrelated line in Hard requirements and save.",
+      "evidence": {
+        "observed": "A total_cost/gte/1200 constraint minimum_project_spend became requirement_manual_1/manual/manual/null. Both payloads pass real contracts. Production comparison_data changed its pass/pass/fail results into unknown/unknown/unknown for the same option totals.",
+        "probe": "probes/client-live-component-probes.cjs",
+        "result": "evidence/client-contract-semantic-results.json#/typed_requirement_after",
+        "supporting_probe": "probes/client-contract-semantic-probes.py"
+      },
+      "fix_direction": "Preserve each existing requirement's identity/type/operator/threshold when editing unrelated text; represent typed constraints explicitly or keep them out of the lossy manual textarea.",
+      "related_locations": [
+        "frontend/app/live-workspace.tsx:167",
+        "backend/src/round_robin/orchestration/reporting.py:61"
+      ],
+      "limits": "Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted."
+    },
+    {
+      "id": "RR-022",
+      "priority": "P2",
+      "title": "Entering a price can leave it excluded from every cost calculation",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 293,
+      "end_line": 294,
+      "description": "editCost changes amount and unknown_reason but preserves the hidden status. No UI label or control reveals not_applicable/excluded state. A new amount remains not_applicable and is skipped by the calculator (excluded similarly stays an unresolved charge). Users can believe they supplied a missing or newly applicable cost while the application omits that value from budget checks and comparisons.",
+      "trigger": "Open a contract-valid draft with a not_applicable cost component, enter a real price in its ordinary USD amount input, and save.",
+      "evidence": {
+        "observed": "The real component accepted and saved 9000 in Upfront purchase (USD), retaining status not_applicable. The backend validates this payload. Production lifecycle_total ignored the 9000 entirely and returned 600.00 from the monthly and installation lines.",
+        "probe": "probes/client-live-component-probes.cjs",
+        "result": "evidence/client-contract-semantic-results.json#/entered_9000_upfront",
+        "supporting_probe": "probes/client-contract-semantic-probes.py"
+      },
+      "fix_direction": "Expose inclusion status alongside every editable amount and require an explicit status transition when supplying a cost; do not present skipped values as ordinary included price fields.",
+      "related_locations": [
+        "frontend/app/live-workspace.tsx:488",
+        "backend/src/round_robin/research/calculator.py:121"
+      ],
+      "limits": "Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted."
+    },
+    {
+      "id": "RR-023",
+      "priority": "P2",
+      "title": "Review-history navigation reuses another run's unsaved choice and notes",
+      "path": "frontend/app/live-workspace.tsx",
+      "start_line": 502,
+      "end_line": 502,
+      "description": "History changes runId and snapshot but leaves choiceOption, choiceNote and outcomeNote intact. The new select has no matching option so displays its empty placeholder, while Save remains enabled because the stale state is nonempty. outcomePayload posts to the new run using the old note and classifies the absent option as modified with a Decision deferred reason. User choice/outcome records become attached to the wrong saved decision, including contradictory classification and reason.",
+      "trigger": "Select an approach and type its reason on one report, then use Review history to open another report with a replaced option id and click Save my choice.",
+      "evidence": {
+        "observed": "With two valid backend-validated snapshots, the selector displayed an empty value yet Save was enabled. It submitted run_other_history, choice modified, reason Decision deferred. The first report has the best quote. The same stale outcome textarea can be saved to the new run.",
+        "probe": "probes/client-live-component-probes.cjs",
+        "result": "evidence/client-live-component-results.json#/stale_outcome"
+      },
+      "fix_direction": "Reset or key the outcome editor by run/report identity and validate that the chosen id belongs to the currently displayed comparison before enabling or submitting.",
+      "related_locations": [
+        "frontend/app/live-workspace.tsx:447",
+        "frontend/app/live-workspace.tsx:467",
+        "backend/src/round_robin/api/drafts.py:137"
+      ],
+      "limits": "Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted."
+    },
+    {
+      "id": "RR-024",
+      "priority": "P2",
+      "title": "Saving a native interface clears its browser actions and assertions",
+      "path": "frontend/app/design/workspace.tsx",
+      "start_line": 112,
+      "end_line": 112,
+      "description": "renderNative invokes open(result), which unconditionally sets actions to []. The HTML is rehydrated but the interaction plan is not. Saved provenance only contains action type, hashed selectors and result statuses, so reopening cannot reconstruct the lost plan either. Declared functional checks disappear after every successful save and are silently omitted from subsequent candidate renders; an interaction regression is no longer exercised unless the user manually reconstructs the plan.",
+      "trigger": "Enter native HTML plus declared browser actions/assertions, render V1 successfully, change only the HTML and render the next version.",
+      "evidence": {
+        "observed": "The actual React component's first submission included a click #submit with assertion #result text Saved. Immediately after success its actions field was []. The second render of HTML with the click handler removed submitted actions: [].",
+        "probe": "probes/client-native-component-probe.cjs",
+        "result": "evidence/client-native-component-results.json"
+      },
+      "fix_direction": "Preserve actions while rendering another revision of the same design, and retain the exact private interaction plan with the version if reopen is intended to restore editable native input.",
+      "related_locations": [
+        "frontend/app/design/workspace.tsx:180",
+        "frontend/app/design/workspace.tsx:182",
+        "backend/src/round_robin/visual/service.py:143",
+        "backend/src/round_robin/visual/renderers/interface.py:80"
+      ],
+      "limits": "Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted."
+    },
+    {
+      "id": "RR-025",
+      "priority": "P2",
+      "title": "Expired terminal retries retain unused finish funds and block new runs",
+      "path": "backend/src/round_robin/dispatcher/service.py",
+      "start_line": 74,
+      "end_line": 76,
+      "description": "A retry-eligible synthesis failure intentionally retains the unused finish hold, but terminal runs are excluded from the ordinary reconciliation scan. The separate terminal scan only handles unfinished authorized attempts, so it never revisits an unused hold after the frozen provider configuration expires. Retry eligibility itself checks frozen active time and call counters, not configuration validity; terminal active time no longer decreases. The hold consequently remains charged against current owner and deployment windows even though the old run can no longer authorize work. In a real API-created live run with fake adapters, synthesis worker loss left a $.38 hold plus a $.02 unknown attempt. Two days later, the old configuration correctly failed with frozen_configuration_expired, but three reconciliation passes retained the $.38 hold. A terminal cancel did not release it. A new explicitly accepted run under a fresh valid configuration then failed owner_daily_budget_exhausted against a $.60 owner ceiling, although retaining only the legitimately unknown $.02 attempt and reserving the new $.40 finish pool would require $.42.",
+      "trigger": "A final-stage failure leaves a terminal, manually retryable run with unused finish funds; the user leaves it alone until the frozen provider configuration expires or becomes permanently unusable.",
+      "evidence": {
+        "script": "probes/concurrency-probe_retained_hold.py",
+        "command": "PYTHONPATH=backend/src:. .venv/bin/python probes/concurrency-probe_retained_hold.py",
+        "result": "evidence/concurrency-retained_hold_result.json",
+        "setup": "Disposable PostgreSQL schema and real create/preflight/start/cancel endpoints with a Pydantic-valid live provider configuration. Fake adapters complete intake and proposals, then simulate process death after committed synthesis authorization. Deterministic time expires the worker lease and later the frozen configuration. No upstream request occurs.",
+        "observed": {
+          "after_worker_loss_status": "completed_with_limitations",
+          "retryable_stages": [
+            "synthesis"
+          ],
+          "unused_finish_hold_usd": "0.38",
+          "expiry_denial": "frozen_configuration_expired",
+          "current_daily_exposure_after_two_days": "0.40",
+          "terminal_cancel_status": "completed_with_limitations",
+          "fresh_run_stop_reason": "owner_daily_budget_exhausted",
+          "owner_daily_ceiling_usd": "0.60",
+          "expected_new_exposure_after_releasing_only_unused_hold_usd": "0.42"
+        },
+        "cleanup": "The random PostgreSQL schema was dropped. Provider configuration and artifact directories were temporary. No application source was changed."
+      },
+      "fix_direction": "Include terminal runs with held finish reservations in reconciliation, and release only unused hold money once frozen authorization or retry eligibility has permanently expired. Preserve unknown attempt exposure. A terminal retry-retention policy should have an explicit bounded lifetime or revalidate configuration authority; cancel should also provide a way to abandon retained retry funds without deleting the meeting.",
+      "limits": "The expiry path and owner-budget denial are directly reproduced. Deployment ceilings use the same exposure collection, so accumulated unused holds can also block deployment-wide budget. Deleting the old meeting or attempting a now-doomed retry can eventually release the hold, but neither happens automatically.",
+      "related_locations": [
+        {
+          "path": "backend/src/round_robin/orchestration/controller.py",
+          "start_line": 237,
+          "end_line": 242
+        },
+        {
+          "path": "backend/src/round_robin/orchestration/policies.py",
+          "start_line": 13,
+          "end_line": 21
+        },
+        {
+          "path": "backend/src/round_robin/orchestration/budget.py",
+          "start_line": 74,
+          "end_line": 86
+        },
+        {
+          "path": "backend/src/round_robin/api/events.py",
+          "start_line": 199,
+          "end_line": 208
+        }
+      ]
+    },
+    {
+      "id": "RR-026",
+      "priority": "P2",
+      "title": "Anonymous sign-in blocks the ASGI event loop during database contention",
+      "path": "backend/src/round_robin/security/hosted.py",
+      "start_line": 123,
+      "end_line": 127,
+      "description": "OpaqueLoginState performs synchronous SQLAlchemy transactions and deployment-policy row locking directly inside its async ASGI entry point. An anonymous /auth/login request waiting for that normal shared database lock blocks the event loop, including otherwise unrelated requests and SSE timers handled by the same worker. The response-save callback also performs synchronous database work.",
+      "trigger": "An ordinary competing transaction holds the deployment policy row when a hosted login starts.",
+      "evidence": {
+        "probe": "probes/hosted_event_loop.py",
+        "result": "evidence/hosted-event-loop-result.json",
+        "observed": {
+          "provider_calls": 0,
+          "lock_hold_seconds": 1.0,
+          "baseline_health": 200,
+          "twenty_ms_heartbeat_seconds": 1.027,
+          "concurrent_health": 200,
+          "login_status": 307,
+          "schema_cleaned": true
+        },
+        "method": "Actual PostgreSQL row contention in a random owned schema, ASGI HTTP client, and local fake OIDC redirect. A 20ms heartbeat took 1.027 seconds while another thread held the lock for one second."
+      },
+      "fix_direction": "Move complete blocking transaction phases off the event loop, or use an asynchronous database implementation. Preserve atomic quota reservation and login-state fencing. Apply the same discipline to the response-save callback.",
+      "limits": "This proves blocking of the affected ASGI worker during database waits. It does not establish an attacker-controlled indefinite deadlock, typical production latency, or an outage across multiple independent workers.",
+      "related_locations": [
+        "backend/src/round_robin/security/hosted.py:158",
+        "backend/src/round_robin/database/services.py:33"
+      ]
+    },
+    {
+      "id": "RR-027",
+      "priority": "P2",
+      "title": "Markdown export turns untrusted evidence into active image/HTML markup",
+      "path": "backend/src/round_robin/reports/exports.py",
+      "start_line": 74,
+      "end_line": 75,
+      "description": "report_markdown places exact uploaded/retrieved source text directly in a Markdown blockquote without escaping Markdown syntax or HTML. Prefixing a line with '> ' does not disable images or HTML. A supplier attachment containing ![supplier tracking pixel](https://tracking.invalid/supplier-pixel) and <img src=\"https://tracking.invalid/raw-html-pixel\"> passes upload, preflight, the full simulated worker pipeline, saved-report validation, and export; the downloaded ready Markdown retains both as active markup. Titles, option labels and model summaries have the same interpolation problem. An image-capable Markdown preview can therefore fetch an attacker-selected remote image merely when the exported report is viewed; HTML-capable viewers additionally receive raw HTML. This is an export rendering-policy defect, not a claim that the application itself executed the image or script.",
+      "trigger": "Export a saved report containing Markdown images or raw HTML in source text, title, option label or generated summary.",
+      "evidence": {
+        "command": "PYTHONPATH=backend/src:backend/tests:. .venv/bin/python probes/data-probe_exports_and_readiness.py",
+        "probe": "probes/data-probe_exports_and_readiness.py",
+        "results": "evidence/data-probe-results.json",
+        "artifact": "evidence/data-export-unsafe-markup.txt",
+        "observed": "HTTP meeting create 201; text upload ready; preflight blockers []; start 202; real simulated worker drain completed; Markdown export ready; download 200; four raw external image expressions retained, including two from uploaded supplier evidence.",
+        "network_scope": "No external request or paid call was made. tracking.invalid is a synthetic inert destination."
+      },
+      "fix_direction": "Escape untrusted text into inert Markdown literals (or render it with a consistent allowlisted policy), preserve exact bytes separately if needed, and prohibit remote images/raw HTML in report rendering.",
+      "repository_contract": {
+        "file": "docs/FAILURE_HANDLING.md",
+        "line": 371,
+        "requirement": "RPT-04 requires no arbitrary HTML or remote image/tracking loads, and explicitly says browser and export paths enforce the same renderer policy."
+      },
+      "related_locations": [
+        "backend/src/round_robin/reports/exports.py:56",
+        "backend/src/round_robin/reports/exports.py:65",
+        "backend/src/round_robin/api/artifacts.py:231",
+        "backend/src/round_robin/api/artifacts.py:235"
+      ],
+      "limits": "The ready downloaded export preserved active markup; remote fetching depends on the downstream Markdown viewer. No external image was requested during this audit."
+    }
+  ],
+  "prior_evidence_base": "../code-review-2026-11-16; paths in RR-001 through RR-017 refer to the first audit directory"
+}

@@ -1,0 +1,10 @@
+
+> round-robin-workspace@0.1.0 contracts /Users/pradeepreddy/Desktop/round_robin
+> PYTHONPATH=backend/src uv run python -m round_robin.export_contracts && openapi-typescript contracts/openapi.json -o packages/api-client/src/schema.ts && openapi-typescript contracts/application.openapi.json -o packages/api-client/src/application.ts
+
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+  from ._compat import httpx2
+✨ openapi-typescript 7.13.0
+🚀 contracts/openapi.json → packages/api-client/src/schema.ts [33.6ms]
+✨ openapi-typescript 7.13.0
+🚀 contracts/application.openapi.json → packages/api-client/src/application.ts [95.5ms]

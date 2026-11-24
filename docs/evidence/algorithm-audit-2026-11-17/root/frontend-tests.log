@@ -1,0 +1,13 @@
+
+> @round-robin/web@0.1.0 test /Users/pradeepreddy/Desktop/round_robin/frontend
+> vitest run
+
+
+ RUN  v5.1.0 /Users/pradeepreddy/Desktop/round_robin/frontend
+
+
+ Test Files  5 passed (5)
+      Tests  247 passed (247)
+   Start at  04:29:35
+   Duration  5.67s (tests 72%, environment 16%, setup 6%, import 4%, transform 1%)
+

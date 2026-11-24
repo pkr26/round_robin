@@ -1,0 +1,11 @@
+{
+  "frontend/app/api-client.ts": "d5098b2b514eee9f7a8c12499f177fa027adfa0bb3a67cf46f19e1b1fc3f64a6",
+  "frontend/app/contracts.ts": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+  "frontend/app/design/page.tsx": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+  "frontend/app/design/workspace.tsx": "543219b4126096089298aed818b135be76a1dd14b22777c9e1153f907c080db3",
+  "frontend/app/layout.tsx": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+  "frontend/app/live/page.tsx": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+  "frontend/app/live-workspace.tsx": "a916e0e45aa16f706c5534da844af997e6e6f0c0a3543d9e36836ff047c99a37",
+  "frontend/app/page.tsx": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+  "frontend/app/workspace.tsx": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34"
+}

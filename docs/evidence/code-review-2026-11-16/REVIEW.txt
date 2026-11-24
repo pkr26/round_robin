@@ -1,0 +1,147 @@
+ROUND ROBIN — FRESH CODE REVIEW
+Reviewed: November 16, 2026 (America/Phoenix)
+
+Confirmed findings: 17 (5 P1/high, 12 P2/medium)
+Production source inventory: 125 files, 17,977 lines.
+No production source fixes or paid provider requests were made.
+
+Fresh repository code review across backend, API, persistence, security, research, reporting, workers, providers, experiments, frontend, visual/native features, migrations and operational/verification tooling.
+
+P1 = high impact; prioritize. P2 = actionable medium priority.
+
+RR-001 [P1] Mandatory Anthropic image critic sends a schema the provider rejects
+Location: backend/src/round_robin/providers/images.py:293-298
+The visual critic sends the raw Pydantic serialization schema to Anthropic output_config, including minLength/maxLength, minimum/maximum, and maxItems. The documented API rejects these constraints with HTTP 400. Unlike the text adapter, the visual adapter does not transform them. Configured generation uses OpenAI and requires two other distinct critics, so the mandatory Anthropic failure prevents review quorum.
+Evidence: CriticContent.model_json_schema(mode=serialization) contains Finding.description={minLength:1,maxLength:500}; Finding.view_index={minimum:0,maximum:3}; findings.maxItems=20. Official API documentation states unsupported numeric/string/array constraints produce400.
+Fix direction: Transform the image-critic schema to each provider supported subset, keeping full local validation, and test wire schema against documented constraints.
+External basis: https://platform.claude.com/docs/en/build-with-claude/structured-outputs#json-schema-limitations
+
+RR-002 [P1] Generation timeout spends the protected time for mandatory reviews
+Location: backend/src/round_robin/worker/image_tasks.py:169-172
+Generation/edit receives min(600, remaining_active - 25) seconds, without subtracting the 190 seconds protected for the two required critics. Admission checks that the critic reserve exists but does not include the request duration. With 300 seconds left, a generation is authorized for 275 seconds; after a valid result at 274 seconds both critics are blocked. Paid work can consume the time required to review its own result.
+Evidence: {"probe": "generation_consumes_critic_time", "initial_failure": {"status": "persisted"}, "remaining_seconds_before_retry": 300, "generation_timeout_seconds": 275.0, "simulated_generation_elapsed_seconds": 274, "generation_result": {"status": "persisted"}, "critic_results": [{"status": "blocked"}, {"status": "blocked"}], "critic_calls": {"anthropic": 0, "google": 0}, "retained_review_hold_usd": "0.20", "real_provider_calls": 0}
+Fix direction: Subtract the outstanding critic critical-path reserve from generation/edit request allowance, and include request timeout plus reserved work in admission checks.
+
+RR-003 [P1] Raster dimension validation can permanently break visual history
+Location: backend/src/round_robin/visual/assets.py:45-46
+The raster validator caps pixel count but not each dimension, whereas DesignVersionView caps width and height at 8192. A valid 108-byte PNG sized 9000 x 1 is committed before response validation fails. The upload, subsequent design read, and listing of all designs for that meeting then return HTTP 503. The normal UI cannot reopen this visual history.
+Evidence: probes/round_robin_visual_probes.py; wide_upload:108 bytes, upload503, read503, list503.
+Fix direction: Validate both dimensions against the serialized contract before storage and commit, and provide a repair path for already-persisted invalid versions.
+
+RR-004 [P1] Reloaded uncommitted private commands have no recovery path
+Location: frontend/app/api-client.ts:243-248
+If a private command fails before reaching the server and the tab reloads, the private payload is lost while its sessionStorage receipt survives. Reconciliation sees HTTP 404 and returns unconfirmed; retry cannot recover the payload; the UI disables new writes. This affects create, save, follow-up, clarification, outcome, and text-upload commands. There is no in-app recovery or safe abandonment path.
+Evidence: probes/round_robin_client_recovery_probe.cjs; receipt_still_blocks=true after404; retry only-in-memory error; new action rejected.
+Fix direction: Provide exact-input re-entry under the original command UUID, or a server-fenced abandonment flow; preserve content privacy without trapping the user.
+
+RR-005 [P1] Definitive4xx on retry never releases pending command
+Location: frontend/app/api-client.ts:220-221
+After an uncertain initial send, a retry can receive a definitive non-committed HTTP 409, such as preflight_expired or draft_conflict. The catch block refuses to clear an already-retained receipt. Reconciliation also cannot clear an absent UUID, leaving the tab unable to submit another action even when the original replay body is available.
+Evidence: probes/round_robin_client_conflict_probe.cjs; retryError preflight_expired, reconcilefalse, receiptStillPresenttrue.
+Fix direction: Handle definitive not-committed responses on retained retries, distinguishing them from genuinely unknown outcomes; clear or safely retire the receipt.
+
+RR-006 [P2] Research reserve rejection stalls proposals until the active-time cutoff
+Location: backend/src/round_robin/research/service.py:116-120
+Research hardcodes a 215-second reserve instead of using the frozen finish policy. A valid configuration with a 200-second active limit and 50-second finishing reserve therefore always throws before acquiring a lease. The transaction rolls back leaving research_state=pending. Reconciliation handles only running research, while schedule_research blocks proposals for pending research, so every redelivery fails and the run remains stuck until the active-time reserve cutoff. Default configurations encounter the same state when research starts late.
+Evidence: {"provider_config_schema_valid": true, "active_limit": 200, "finish_reserved": 50, "errors": ["finish_time_reserve", "finish_time_reserve"], "run_status": "running", "stage": "proposals", "research_state": "pending", "remaining_active_seconds": 199.942723, "reconciler_progressed": false, "proposal_steps": 0, "search_calls": 0, "external_provider_requests": 0}
+Fix direction: Compute the allowance from the configured finish reserve and terminally settle unavailable research when no research time remains; enqueue advance so conditional text review can proceed.
+Reproduction: probes/round_robin_research_probe.py
+
+RR-007 [P2] Preflight accepts selected files that cannot fit the evidence packet
+Location: backend/src/round_robin/api/preflight.py:44-51
+The upload boundary permits one MiB, but preflight only checks ownership/readiness/hash/recipients. A selected 52,800-byte UTF-8 text file passes preflight without blockers or warnings, starts successfully, consumes an intake attempt and then deterministically fails the 24-passage runtime cap. The source shape and remaining packet capacity are known before Start. Live runs share this intake-first path, so this can waste a paid intake call for an input which cannot succeed.
+Evidence: {"upload_bytes": 52800, "upload_status": 201, "upload_state": "ready", "preflight_status": 200, "preflight_blockers": [], "preflight_warnings": [], "start_status": 202, "terminal_status": "failed", "stop_reason": "context_limit_selected_passages", "attempt_stages": ["intake"], "comparison": [], "provider_requests_external": 0}
+Fix direction: Apply evidence packet and structured-source size validation during preflight and repeat it at Start; return an actionable blocker or provide explicit bounded excerpt selection before admission.
+Reproduction: probes/round_robin_evidence_probe.py
+
+RR-008 [P2] Accepted JPEGs can normalize into permanently unreviewable images
+Location: backend/src/round_robin/visual/reviews.py:33-36
+Original uploads may be at most 10 MiB, but their normalized PNG may be up to 64 MiB. Review receipt creation applies the original 10 MiB validator to those canonical PNG bytes. A valid 5,687,427-byte JPEG becomes a 14,511,086-byte PNG that is accepted into storage but rejected for review, even with a configured 64 MiB critic input allowance.
+Evidence: probes/round_robin_visual_probes.py; synthetic2200x2200 JPEG5687427 bytes becomes14511086-byte PNG; issue_review_receipt raises UnsafeRaster10MiB.
+Fix direction: Separate original-upload validation from canonical-image validation and enforce the actual outgoing provider byte limit consistently.
+
+RR-009 [P2] Image and vision requests can run beyond their total deadlines
+Location: backend/src/round_robin/providers/images.py:201-206
+_http uses ordinary HTTPTransport with per-I/O timeouts. Its elapsed-time check occurs only after response body chunks, so a slow header stream, DNS resolution, or error body stream can exceed the request allowance. The400/422 error-body loop has no elapsed check at all. A90s critic can run until the image worker630s soft limit and heartbeat extends its lease, wasting required review time and occupying shared capacity.
+Evidence: {"probe": "image_total_deadline", "declared_timeout_seconds": 0.1, "elapsed_seconds": 0.3679, "error": "response_limit", "confirmed_overrun": true, "network_scope": "loopback only"}
+Fix direction: Use the existing DeadlineHTTPTransport with one absolute deadline for image/vision requests and apply it to error-body parsing.
+
+RR-010 [P2] Expired visual sessions retain finish holds and unserviceable queued work
+Location: backend/src/round_robin/worker/image_tasks.py:387-417
+Image reconciliation inspects authorized operations and releases finish holds only for designs already marked inactive; it never expires an active design at its 1800-second deadline. A failed generation leaves a held USD 0.20 review reserve after 2000 seconds. Queued work whose funding configuration is removed is also left queued indefinitely. Without explicit user cancellation, impossible work and unused reservations remain.
+Evidence: probes/round_robin_visual_expiry_probe.py. Fake generation failure, elapsed2000s; reconciler0, designactive, finishholdheldUSD0.20. Remove funded config and dispatch retry; published0, sender_calls0, operationstillqueued.
+Fix direction: Expire active sessions when their deadline is exhausted, safely terminalize impossible queued work, and release unused finish holds while preserving unknown sent exposure.
+
+RR-011 [P2] Currency rounding can falsely mark an over-budget option affordable
+Location: backend/src/round_robin/research/calculator.py:147-151
+The public schema accepts KWD, but lifecycle_total always quantizes to 0.01 and formats two decimal places. KWD uses three decimal places. A valid KWD 1.005 quote becomes 1.00 and then passes a hard ceiling of 1.001, although the actual amount exceeds that ceiling. This changes both the reported cost and deterministic feasibility.
+Evidence: {"input": "1.005 KWD", "hard_ceiling": "1.001 KWD", "observed_total": "1.00", "observed_constraint": "pass", "expected_total": "1.005", "expected_constraint": "fail"}
+Fix direction: Use validated currency-specific minor units consistently in arithmetic and presentation, or reject unsupported currencies.
+External basis: https://www.cbk.gov.kw/en/banknotes-and-coins/banknotes/introduction
+
+RR-012 [P2] Saved nonUSD amounts are presented as USD during editing
+Location: frontend/app/live-workspace.tsx:487-488
+The editor hardcodes USD in the budget and component labels, even when a saved brief and its components use EUR or another supported currency. Editing the displayed value preserves the original currency. A user is therefore told they are editing dollars while the value is silently stored and interpreted as euros.
+Evidence: probes/round_robin_frontend_ui_probe.cjs; saved_currencyEUR, rendered_budget_label Budget(USD). Scope confirmed finding to currency; quantity/status separate concerns not independently probed.
+Fix direction: Render budget and component labels using their saved currencies; require explicit conversion or currency change rather than relabeling values.
+
+RR-013 [P2] Switching drafts retains stale public-term browser validation error
+Location: frontend/app/live-workspace.tsx:489-489
+Public-term customValidity is updated only in the textarea change handler. Entering nine terms, then switching to another valid saved draft, replaces the value but preserves the old custom validation error. The new draft has an empty, valid public-term field, yet form.checkValidity() returns false and browser submission is blocked until that field is edited.
+Evidence: probes/round_robin_frontend_ui_probe.cjs; new_meeting_public_terms empty, validation_error_after_switch remains eight-term error, new_form_valid=false.
+Fix direction: Derive custom validity from current public-term state in an effect, including draft selection/reset, as the other editor fields do.
+
+RR-014 [P2] Native diagrams ignore frozen output dimensions
+Location: backend/src/round_robin/api/visual.py:449-450
+The native diagram endpoint renders dimensions from body.diagram without checking the immutable visual brief. A frozen 1024 x 1024 brief accepts and publishes an 800 x 400 diagram with HTTP 201. The default diagram starter already disagrees with the default frozen dimensions.
+Evidence: probes/round_robin_visual_probes.py; frozen1024x1024; status201; actual800x400.
+Fix direction: Bind renderer dimensions to the frozen visual brief or reject mismatching diagram dimensions before recording a render attempt.
+
+RR-015 [P2] Diagram edge labels can be clipped despite successful required-text validation
+Location: backend/src/round_robin/visual/renderers/diagram.py:113-116
+Only node labels are checked for fit. Edge labels are drawn starting at their edge midpoint without validating their extent. A valid 1000-pixel-wide diagram accepts a 219-pixel label starting at x=830, clipping 49 pixels. Required-text checking merely finds the string in the source, so a candidate can be ready while required text is visibly cut off.
+Evidence: Direct Diagram.model_validate+render_diagram probe with width1000,height300, nodes x700/y0 andx900/y200 widths60, heights70, edge text above succeeds; font.getlength219.0.
+Fix direction: Validate edge-label bounds or wrap/reposition labels within the viewport before publishing a candidate as ready.
+
+RR-016 [P2] Every maintenance cycle re-purges the complete permanent deletion history
+Location: backend/src/round_robin/operations/maintenance.py:56-57
+The minute-based dispatcher invokes maintenance synchronously. Maintenance reads the whole independently retained manifest and repeats purge_record for all historical entries without a batch bound or checking already-purged status. One already-purged meeting with one run executes 25 SQL statements on every pass and increments its fence again. As history grows, cleanup work grows with all past deletions and blocks the same loop responsible for dispatch and lease reconciliation; ordinary create/delete cycles are not constrained by the active meeting quota.
+Evidence: {"pass1": {"sql_statements": 25, "deletion_records_reapplied": 1, "run_execution_fence": 2}, "pass2": {"sql_statements": 25, "deletion_records_reapplied": 1, "run_execution_fence": 3}}
+Fix direction: Retain the full independent manifest for restore verification, but process active pending deletions in bounded batches and skip proven completed records during routine maintenance. Keep full replay as an explicit restore/purge operation.
+Reproduction: probes/round_robin_maintenance_probe.py
+
+RR-017 [P2] The expiry regression uses UTC yesterday against a Phoenix comparison date
+Location: backend/tests/test_evidence_regressions.py:225-226
+The regression creates expiry as utcnow().date()-1 while the sample brief uses America/Phoenix. Between midnight and 06:59 UTC that date is the current Phoenix date, so the quote is correctly considered current and the test incorrectly expects it to be expired. Root observed this failure in the full suite; the source inspection and current UTC/Phoenix calendars establish the cause. This is a test defect, not a stale-quote product defect.
+Evidence: {"utc_observed": "2026-11-17 03:24 UTC", "phoenix_observed": "2026-11-16 20:24 MST", "expiry_constructed": "2026-11-16", "accepted_comparison_date": "2026-11-16", "actual_total": "1600.00", "incorrect_expected_total": null, "failure_window": "00:00 through 06:59 UTC each day"}
+Fix direction: Freeze the clock and explicit comparison date in this test, or derive the expired quote date from the brief timezone.
+
+VALIDATION
+
+- Complete default backend pytest suite: failed (passed=1922, failed=1, skipped=31)
+- Disposable PostgreSQL, Redis, worker, migration, restore, TLS and fetcher profile: passed (passed=23, skipped=8)
+- Actual native renderer and isolated broker restart profile: passed (passed=8, skipped=0)
+- Frontend Vitest: passed (passed=215)
+- TypeScript: passed
+- Generated contracts: passed
+- Production frontend build in disposable source copy: passed
+- Sample browser journeys using repository preview server on isolated port 13000: passed (passed=8)
+- Frontend coverage utility tests: passed (passed=3)
+- Native renderer JavaScript tests: passed (passed=45)
+- JavaScript production dependency advisory scan: no_known_vulnerabilities (dependencies=104)
+- Python production dependency advisory scan: no_known_vulnerabilities (skipped=0, dependencies=48)
+
+LIMITATIONS
+
+- This records confirmed findings, not a proof that no other defects exist.
+- Live paid providers and hosted OIDC staging were not exercised. The Anthropic compatibility finding was checked against current official API documentation.
+- Connected /live and /design Playwright suites were not rerun against the user's active development stack. Those paths were reviewed and exercised through isolated API, worker and React probes; the sample browser suite ran against a fresh isolated build.
+- The full audit coverage gate was not rerun; existing historical coverage was not treated as proof of correctness.
+- Container OS vulnerability scanning was not rerun; dependency scan results cover the package sets stated above.
+- An initial browser harness using the generic Python HTTP server timed out on four tests. Replacing it with the repository preview server, with its configured backlog and HTTP/1.1 behavior, passed all eight tests; the harness failures are not reported as product defects.
+- The directory has no Git metadata; source hashes identify the reviewed snapshot.
+
+REPRODUCTION NOTES
+
+Run Python probes from the repository root with PYTHONPATH=backend/src:. and the project .venv Python. Run .cjs probes with node from the repository root. Probes use temporary databases, synthetic providers, or mocked browser/API responses; the deadline probe opens a loopback-only TCP listener. Probe scripts are diagnostic evidence, not production changes. Captured results are in evidence/.
+The agent review files retain original temporary paths as provenance; copied runnable probes are in probes/.

@@ -1,0 +1,276 @@
+{
+  "scope": "Discussion runtime, admission, transactional stage barriers, resource ledger, retry and recovery, worker and outbox dispatch, command and resumption boundaries",
+  "date": "2026-11-17",
+  "product_source_modified": false,
+  "findings": [
+    {
+      "id": "RUNTIME-01",
+      "severity": "P1",
+      "title": "Optional retry waiting can consume the protected synthesis and audit time",
+      "source": "backend/src/round_robin/orchestration/policies.py:88-93",
+      "related_sources": [
+        "backend/src/round_robin/worker/tasks.py:47-68",
+        "backend/src/round_robin/worker/tasks.py:41-45",
+        "backend/src/round_robin/orchestration/controller.py:296-298"
+      ],
+      "trigger": "A proposal fails with a valid long Retry-After while the other two independent proposals succeed.",
+      "actual": "plan_recovery checks only wait + 30 seconds. A 500-second wait is accepted within the default 600-second allowance although 190 seconds are reserved for synthesis/audit. The proposal barrier remains open. At the accepted retry time the failed proposal is skipped and synthesis immediately fails finish_time_reserve before making any model call.",
+      "impact": "A run with sufficient useful proposals loses both mandatory final stages because optional backoff was allowed to spend protected finishing time. No recommendation is published.",
+      "proof": "probe-results.json:retry_wait_consumes_mandatory_finish_time",
+      "recommendation": "Compute retry eligibility from the same mandatory-stage time reserve used by authorization and request construction. If wait plus the proposed request envelope plus persistence and still-required final work cannot fit, settle the optional proposal immediately and advance with the other two. Add a deadline-triggered barrier cutoff so previously scheduled backoff cannot consume the reserve."
+    },
+    {
+      "id": "RUNTIME-02",
+      "severity": "P2",
+      "title": "At-least-once duplicate execution bypasses Retry-After",
+      "source": "backend/src/round_robin/worker/tasks.py:94-139",
+      "related_sources": [
+        "backend/src/round_robin/worker/tasks.py:59-68",
+        "backend/src/round_robin/database/models.py:98-116",
+        "backend/src/round_robin/dispatcher/service.py:35-47"
+      ],
+      "trigger": "A worker saves a retryable failure and its future outbox intention; an older duplicate message for the same Step is delivered before that intention is due.",
+      "actual": "Retry eligibility is represented only by Outbox.due_at. execute_step sees status=pending and immediately authorizes another call. The probe's requested wait was 120 seconds; the second provider invocation occurred about 0.012 seconds later and consumed the last allowed call.",
+      "impact": "Provider Retry-After is not an execution invariant. Expected duplicate delivery can exhaust retries during a rate-limit period, reduce discussion completeness, and amplify provider pressure.",
+      "proof": "probe-results.json:retry_after_bypassed_by_duplicate",
+      "recommendation": "Persist a step/attempt not-before timestamp or retry generation, enforce it under the step lock before authorization, and carry the generation in delivery identifiers. Keep at-least-once delivery harmless across retry state transitions."
+    },
+    {
+      "id": "RUNTIME-03",
+      "severity": "P2",
+      "title": "Clarification and manual retry bypass queue quotas",
+      "source": "backend/src/round_robin/api/events.py:242-253",
+      "related_sources": [
+        "backend/src/round_robin/api/events.py:269-279",
+        "backend/src/round_robin/api/preflight.py:162-168",
+        "docs/IMPLEMENTATION_BLUEPRINT.md:126"
+      ],
+      "trigger": "An owner already has the allowed three queued runs and confirms an awaiting-input run (or requests an eligible retry).",
+      "actual": "Only initial Start counts queued work. The resumption endpoints set queued and issue a ticket without checking owner/global queue counts. The direct clarification probe increased the owner's queue from three to four with a configured limit of three.",
+      "impact": "The documented owner/global admission backlog bounds are not maintained across all enqueue transitions, weakening fairness and overload protection. This does not bypass single-executing-run or monetary limits.",
+      "proof": "probe-queue-results.json",
+      "recommendation": "Apply one owner/global queue-capacity guard under the existing policy lock to every transition into queued, including clarification and retry; leave the resumable state intact when capacity is unavailable."
+    }
+  ],
+  "inventory": [
+    {
+      "algorithm": "Command UUID idempotency and abandonment tombstones",
+      "source": "backend/src/round_robin/api/commands.py:27-84",
+      "assessment": "Owner lock serializes original/replay/abandon; HMAC binds kind/body; gone and abandoned resources are not re-executed.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Owner lock serializes original/replay/abandon; HMAC binds kind/body; gone and abandoned resources are not re-executed."
+    },
+    {
+      "algorithm": "Preflight snapshot and Start validation",
+      "source": "backend/src/round_robin/api/preflight.py:21-184",
+      "assessment": "Frozen model/request contract/configuration, revision/hash, attachment scope, one-use preflight, queue quota and explicit parent replacement are checked. Quotas are incomplete on resumption paths (RUNTIME-03).",
+      "status": "initial_start_reviewed_resumption_boundary_defect",
+      "finding_ids": [
+        "RUNTIME-03"
+      ],
+      "main_invariant": "Frozen model/request contract/configuration, revision/hash, attachment scope, one-use preflight, queue quota and explicit parent replacement are checked"
+    },
+    {
+      "algorithm": "Atomic active-parent replacement",
+      "source": "backend/src/round_robin/api/lineage.py:11-48",
+      "assessment": "Explicit accepted parent version/status, common transaction with child creation, execution-fence increment; reservations remain accounted.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Explicit accepted parent version/status, common transaction with child creation, execution-fence increment; reservations remain accounted."
+    },
+    {
+      "algorithm": "Cancellation and resumption commands",
+      "source": "backend/src/round_robin/api/events.py:194-283",
+      "assessment": "Expected versions and command UUIDs preserve single intent. Cancellation fences future authorization, manual retry preserves counters/generation, clarification has immutable scope. RUNTIME-03 applies.",
+      "status": "concrete_defect_reproduced",
+      "finding_ids": [
+        "RUNTIME-03"
+      ],
+      "main_invariant": "Expected versions and command UUIDs preserve single intent"
+    },
+    {
+      "algorithm": "Run admission and FIFO scheduling",
+      "source": "backend/src/round_robin/orchestration/admission.py:14-84",
+      "assessment": "Global policy lock, one running run, initial/resumption expiration, fresh ticket ordering, frozen configuration and deleted/terminal checks. Linear queue scan is reasonable only for the intended bounded pilot queue.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Global policy lock, one running run, initial/resumption expiration, fresh ticket ordering, frozen configuration and deleted/terminal checks"
+    },
+    {
+      "algorithm": "Provider and global physical-call capacity",
+      "source": "backend/src/round_robin/orchestration/admission.py:87-103",
+      "assessment": "Maximum three global and two/provider; bounded execution leases are separated from indefinitely retained uncertain monetary exposure; image operations share capacity.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Maximum three global and two/provider; bounded execution leases are separated from indefinitely retained uncertain monetary exposure; image operations share capacity."
+    },
+    {
+      "algorithm": "Input evidence preparation and explicit hard constraints",
+      "source": "backend/src/round_robin/orchestration/controller.py:21-110",
+      "assessment": "Canonical hashes, exact recipient/owner/meeting scope, 24 passages, 2000 characters per passage, server-derived budget/deadline constraints. Preparation runs after intake, so newly attached passages are absent from intake (root cross-review).",
+      "status": "reviewed_with_design_limitations_cross_reviewed",
+      "finding_ids": [],
+      "main_invariant": "Canonical hashes, exact recipient/owner/meeting scope, 24 passages, 2000 characters per passage, server-derived budget/deadline constraints"
+    },
+    {
+      "algorithm": "Stage planning and independent proposals",
+      "source": "backend/src/round_robin/orchestration/controller.py:113-159",
+      "assessment": "Three fixed provider slots and iteration-keyed steps; durable enqueue intent; synthesis needs two successful independent providers, audit provider must differ from the actual successful synthesizer.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Three fixed provider slots and iteration-keyed steps; durable enqueue intent; synthesis needs two successful independent providers, audit provider must differ from the actual successful synthesizer."
+    },
+    {
+      "algorithm": "Transactional stage barriers and state machine",
+      "source": "backend/src/round_robin/orchestration/controller.py:279-350",
+      "assessment": "All scheduled steps settle before advancing; closed barriers keyed by stage/generation/iteration prevent repeat transitions. Proposed brief is copied unchanged rather than model-normalized. Pending long retry can block mandatory work (RUNTIME-01).",
+      "status": "concrete_defect_reproduced",
+      "finding_ids": [
+        "RUNTIME-01"
+      ],
+      "main_invariant": "All scheduled steps settle before advancing; closed barriers keyed by stage/generation/iteration prevent repeat transitions"
+    },
+    {
+      "algorithm": "Bounded correction/re-audit",
+      "source": "backend/src/round_robin/orchestration/controller.py:162-199",
+      "assessment": "At most one extra synthesis/audit pair; checks original request/money/active limits and aggregate logical-role counters. No convergence claim; after one correction publishes honest limitations if needed.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "At most one extra synthesis/audit pair; checks original request/money/active limits and aggregate logical-role counters"
+    },
+    {
+      "algorithm": "Finalization and saved partial report",
+      "source": "backend/src/round_robin/orchestration/controller.py:202-276",
+      "assessment": "Transactional report version, terminal state, active-clock freeze, unfinished step fence, retained eligible retry resources, unknown-exposure accounting, integrity fallback and mandatory-completion flag. Existing report makes duplicate ordinary finalization idempotent.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Transactional report version, terminal state, active-clock freeze, unfinished step fence, retained eligible retry resources, unknown-exposure accounting, integrity fallback and mandatory-completion flag"
+    },
+    {
+      "algorithm": "Request construction and peer routing",
+      "source": "backend/src/round_robin/worker/tasks.py:24-47",
+      "assessment": "Proposals receive no peer outputs and imported-only claims; synthesis/audit receive selected committed outputs. Exact allowed-reference set and calculated timeout preserve finishing margin at dispatch. Error repair is regeneration with repair=true, no rejected output or validation details (root cross-review).",
+      "status": "reviewed_with_design_limitations_cross_reviewed",
+      "finding_ids": [],
+      "main_invariant": "Proposals receive no peer outputs and imported-only claims; synthesis/audit receive selected committed outputs"
+    },
+    {
+      "algorithm": "Worker claim, durable authorization and content fencing",
+      "source": "backend/src/round_robin/worker/tasks.py:94-244",
+      "assessment": "Checks generation, iteration, expected stage, capacity, independent audit identity; commits authorization before I/O; reconciles usage even for fenced content; bounded persistence retry. Retry not-before is absent (RUNTIME-02).",
+      "status": "concrete_defect_reproduced",
+      "finding_ids": [
+        "RUNTIME-02"
+      ],
+      "main_invariant": "Checks generation, iteration, expected stage, capacity, independent audit identity; commits authorization before I/O; reconciles usage even for fenced content; bounded persistence retry"
+    },
+    {
+      "algorithm": "Heartbeats and bounded worker execution",
+      "source": "backend/src/round_robin/worker/tasks.py:76-92; backend/src/round_robin/worker/app.py:9-17",
+      "assessment": "10-second heartbeat with 150-second lease, no extension without authority; ordinary requests max 90 seconds and task hard limit 120 seconds. These are engineering bounds rather than model-quality guarantees.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "10-second heartbeat with 150-second lease, no extension without authority; ordinary requests max 90 seconds and task hard limit 120 seconds"
+    },
+    {
+      "algorithm": "Automatic retry and provider fallback",
+      "source": "backend/src/round_robin/orchestration/policies.py:72-93",
+      "assessment": "At most two calls/logical role and three infrastructure claims; refusal does not trigger fallback; auditor cannot fall back to synthesizer. Long waits ignore final-stage time reserve (RUNTIME-01), and fixed 2.5-second default has no documented jitter.",
+      "status": "concrete_defect_reproduced",
+      "finding_ids": [
+        "RUNTIME-01"
+      ],
+      "main_invariant": "At most two calls/logical role and three infrastructure claims; refusal does not trigger fallback; auditor cannot fall back to synthesizer"
+    },
+    {
+      "algorithm": "Manual retry eligibility and retained finishing funds",
+      "source": "backend/src/round_robin/orchestration/policies.py:15-62",
+      "assessment": "Only failed synthesis/audit in latest iteration, eligible failure codes, original active/request/logical limits and live funding expiry. No successful negative audit is treated as an execution retry.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Only failed synthesis/audit in latest iteration, eligible failure codes, original active/request/logical limits and live funding expiry"
+    },
+    {
+      "algorithm": "Active clock and exact monetary ledger",
+      "source": "backend/src/round_robin/orchestration/budget.py:20-230",
+      "assessment": "Isolated high-precision Decimal arithmetic, clock regression closure, run/owner/deployment ceilings, unknown exposure across periods, protected finish money/calls/time, immutable authorization IDs, high-water unknown usage and explicit settlement. Every authorization scans ledger history; future scaling needs indexed aggregate accounting without losing conservative exposure.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Isolated high-precision Decimal arithmetic, clock regression closure, run/owner/deployment ceilings, unknown exposure across periods, protected finish money/calls/time, immutable authorization IDs, high-water unknown usage and explicit settlement"
+    },
+    {
+      "algorithm": "Scoped circuit breaker",
+      "source": "backend/src/round_robin/orchestration/circuits.py:15-58",
+      "assessment": "Provider/model/credential-version scope; three transient failures within 60 seconds open 30 seconds; bounded single half-open probe; counted authorizations and expired-probe recovery. Heuristic availability control, not accuracy weighting.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Provider/model/credential-version scope; three transient failures within 60 seconds open 30 seconds; bounded single half-open probe; counted authorizations and expired-probe recovery"
+    },
+    {
+      "algorithm": "Frozen live configuration compatibility",
+      "source": "backend/src/round_robin/orchestration/configuration.py:12-43",
+      "assessment": "Operator funding, immutable expiry/config hash/deployment epoch/request-contract hash checked on admission/authorization. Live validation was not exercised against an actual provider.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Operator funding, immutable expiry/config hash/deployment epoch/request-contract hash checked on admission/authorization"
+    },
+    {
+      "algorithm": "Transactional outbox dispatch and delivery recovery",
+      "source": "backend/src/round_robin/dispatcher/service.py:25-49; backend/src/round_robin/database/services.py:64-79",
+      "assessment": "Outbox intent in same transaction; identifier-only at-least-once publish; publication failure keeps pending intention; advance dedup. Worker correctness must tolerate old duplicate deliveries (RUNTIME-02).",
+      "status": "concrete_defect_reproduced",
+      "finding_ids": [
+        "RUNTIME-02"
+      ],
+      "main_invariant": "Outbox intent in same transaction; identifier-only at-least-once publish; publication failure keeps pending intention; advance dedup"
+    },
+    {
+      "algorithm": "Lease expiry, orphan authorization and retained-hold reconciliation",
+      "source": "backend/src/round_robin/dispatcher/service.py:52-179",
+      "assessment": "Authorized abandoned attempts become unknown and are not blindly resent; unstarted claims retry at most three; terminal orphan exposure retained; expired eligible retry funds released; current-state barriers reconciled.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Authorized abandoned attempts become unknown and are not blindly resent; unstarted claims retry at most three; terminal orphan exposure retained; expired eligible retry funds released; current-state barriers reconciled."
+    },
+    {
+      "algorithm": "Event sequence, snapshot and reconnect replay",
+      "source": "backend/src/round_robin/database/services.py:52-61; backend/src/round_robin/api/events.py:28-152",
+      "assessment": "Run-locked monotonic event sequence and uniqueness; snapshot/read pages bounded to cutoff; SSE cursor clamping, bounded read batches and per-delivery owner/deletion/epoch checks. No DB transaction held over client stream.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Run-locked monotonic event sequence and uniqueness; snapshot/read pages bounded to cutoff; SSE cursor clamping, bounded read batches and per-delivery owner/deletion/epoch checks"
+    },
+    {
+      "algorithm": "Durability/restore boundary at worker admission",
+      "source": "backend/src/round_robin/orchestration/admission.py:22-41; backend/src/round_robin/operations/durability.py:45-79",
+      "assessment": "Independent failure marker, dispatch lock, restore quarantine and deployment epoch stop authorization. Full backup/restore implementation is outside this focused discussion-algorithm lane.",
+      "status": "reviewed_no_concrete_defect_observed",
+      "finding_ids": [],
+      "main_invariant": "Independent failure marker, dispatch lock, restore quarantine and deployment epoch stop authorization"
+    }
+  ],
+  "validation": {
+    "targeted_existing_tests": "154 passed, 3 warnings in 14.13 seconds",
+    "test_log": "baseline-tests.log",
+    "offline_probes": [
+      "probe_runtime.py",
+      "probe_queue.py"
+    ],
+    "probe_results": [
+      "probe-results.json",
+      "probe-queue-results.json"
+    ],
+    "limitations": [
+      "SQLite deterministic offline probes; no fresh real PostgreSQL concurrency run in this lane",
+      "No paid providers, external requests, deployment or service disruptions",
+      "Passing existing tests do not prove semantic model accuracy or exhaustive absence of faults"
+    ],
+    "command": "uv run pytest -q backend/tests/test_orchestration.py backend/tests/test_runtime_audit.py backend/tests/test_runtime_regressions.py backend/tests/test_admission_audit.py backend/tests/test_exhaustive_runtime_controller.py backend/tests/test_exhaustive_runtime_workers.py backend/tests/test_deep_runtime_clock.py backend/tests/test_deep_runtime_money.py",
+    "probe_commands": [
+      "PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/runtime/probe_runtime.py",
+      "PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/runtime/probe_queue.py"
+    ]
+  },
+  "inventory_count": 23
+}

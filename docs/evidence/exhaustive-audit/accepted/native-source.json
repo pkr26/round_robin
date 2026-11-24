@@ -1,0 +1,58 @@
+{
+  "kind": "istanbul_source",
+  "files": {
+    "scripts/native-renderer.mjs": {
+      "sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+      "lines": {
+        "total": 94,
+        "covered": 94,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 24,
+        "covered": 23,
+        "skipped": 0,
+        "pct": 95.83
+      },
+      "statements": {
+        "total": 127,
+        "covered": 127,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 103,
+        "covered": 103,
+        "skipped": 0,
+        "pct": 100
+      }
+    }
+  },
+  "metrics": {
+    "lines": {
+      "total": 94,
+      "covered": 94,
+      "skipped": 0,
+      "pct": 100
+    },
+    "functions": {
+      "total": 24,
+      "covered": 23,
+      "skipped": 0,
+      "pct": 95.83
+    },
+    "statements": {
+      "total": 127,
+      "covered": 127,
+      "skipped": 0,
+      "pct": 100
+    },
+    "branches": {
+      "total": 103,
+      "covered": 103,
+      "skipped": 0,
+      "pct": 100
+    }
+  }
+}

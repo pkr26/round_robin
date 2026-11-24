@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-17",
+  "scope": "Protocol selection, live input/context/prompt contracts, provider transport, user-visible discussion replay and cross-domain synthesis",
+  "product_source_modified": false,
+  "findings": [
+    {
+      "id": "ROOT-01",
+      "priority": "P2",
+      "kind": "implementation_bug",
+      "title": "Preflight accepts selected evidence that cannot fit any proposal request",
+      "source_refs": ["backend/src/round_robin/api/preflight.py:54-75", "backend/src/round_robin/orchestration/controller.py:87-90", "backend/src/round_robin/providers/base.py:71-76"],
+      "trigger": "A selected UTF-8 attachment has 40,000 CJK characters (120,000 bytes), fits the upload limit and 20 evidence passages, with the ordinary sample brief.",
+      "impact": "The real preflight input check returns no error. Intake succeeds; all three proposals fail context_limit before authorization, and the run fails without a recommendation. Character/passage limits do not imply the 128,000-byte complete JSON packet fits.",
+      "proof": "root/probe-results.json:unicode_packet_preflight",
+      "recommendation": "Build and size the exact canonical initial packet during preflight, including UTF-8 encoding and all overhead. Reserve a bounded peer/claim context envelope for mandatory downstream stages, with explicit coverage when selecting context. Reject or ask for narrower excerpts before starting.",
+      "acceptance_check": "Boundary/property cases across ASCII, multi-byte UTF-8, quotes/escapes, maximum selected passages and peer/claim growth must either fit the declared envelopes or produce a preflight blocker."
+    },
+    {
+      "id": "ROOT-02",
+      "priority": "P2",
+      "kind": "implementation_bug",
+      "title": "The discussion activity view silently stops at the first 100 events",
+      "source_refs": ["backend/src/round_robin/api/events.py:63-80", "frontend/app/live-workspace.tsx:274-294", "frontend/app/live-workspace.tsx:532"],
+      "trigger": "A run accumulates more than 100 committed events, such as through retries, research or reconciliation.",
+      "impact": "Snapshot intentionally returns the first 100 events plus next_event_cursor, but the frontend never consumes the cursor or events endpoint. A 134-event reproduction shows only sequences 1-100 and omits the late concern. Polling repeats the same prefix and stops on terminal status; raw server history remains available.",
+      "proof": "root/probe-results.json:event_snapshot_pagination; API reproduction plus static client call-path inspection",
+      "recommendation": "Fetch bounded event pages through the snapshot cutoff and merge by (run_id, sequence); expose loading/remaining history and retain generation fences when changing runs.",
+      "acceptance_check": "A component/API test with 250 events, late critical concerns, duplicate pages, reconnection and a run switch must show the complete correctly ordered history exactly once."
+    },
+    {
+      "id": "ROOT-G01",
+      "priority": "P2",
+      "kind": "process_capability_gap",
+      "title": "Intake cannot inspect newly selected attachment content or propose a normalized brief",
+      "source_refs": ["backend/src/round_robin/worker/tasks.py:23-50", "backend/src/round_robin/orchestration/controller.py:119-124", "backend/src/round_robin/orchestration/controller.py:309-310", "backend/src/round_robin/providers/base.py:28-39"],
+      "trigger": "Selected attachment text contains details relevant to resolving intake questions.",
+      "impact": "The first intake packet contains attachment IDs but no selected attachment passages; evidence is prepared only for proposals. ProviderOutput has no normalized-brief proposal field and proposed_brief is copied unchanged from the input. Intake is a bounded question generator, not full document-aware normalization.",
+      "proof": "root/probe-results.json:attachment_visibility",
+      "recommendation": "Expose a validated read-only intake evidence view and a typed proposed change set with provenance. Require explicit user confirmation for changed assumptions, options or requirements before freezing the proposal brief.",
+      "caveat": "The blueprint orders intake before evidence preparation. This is a capability gap, not evidence that proposal agents lose the attachment; the proposal packet includes it. No live intake quality was measured."
+    },
+    {
+      "id": "ROOT-G02",
+      "priority": "P2",
+      "kind": "process_capability_gap",
+      "title": "Schema repair retries receive no actionable validation feedback",
+      "source_refs": ["backend/src/round_robin/worker/tasks.py:50", "backend/src/round_robin/worker/tasks.py:237-238", "backend/src/round_robin/providers/http.py:26", "backend/src/round_robin/providers/base.py:62-69"],
+      "trigger": "A provider returns an invalid reference or malformed/schema-invalid output and has one retry remaining.",
+      "impact": "The second packet differs only by repair=true. The rejected reference, failed JSON path and validation reason are absent, and the common prompt does not define repair. This implements bounded regeneration, with no demonstrated targeted correction capability.",
+      "proof": "root/probe-results.json:repair_feedback",
+      "recommendation": "Include sanitized bounded diagnostics with offending field paths and permitted identities, optionally the bounded rejected structured output as untrusted data; distinguish execution retry from output repair and substantive correction.",
+      "caveat": "A fresh generation can succeed. The reproduction proves missing feedback, not that every retry fails or that real-provider quality decreases by a measured amount."
+    }
+  ],
+  "inventory": [
+    {"algorithm":"Protocol selection and typed stage surface","source":"backend/src/round_robin/schemas/provider_configuration.py:53; backend/src/round_robin/orchestration/controller.py:304-343","main_invariant":"Only independent_review_provisional is accepted in the application; critique/revision/evidence_review exist in experimental paths, not the live state graph.","status":"reviewed_provisional_capability","finding_ids":[]},
+    {"algorithm":"Frozen input manifest, canonical bytes and preflight context admission","source":"backend/src/round_robin/api/preflight.py:44-75; backend/src/round_robin/orchestration/controller.py:60-109","main_invariant":"The selected inputs must match ownership/hash/recipient scope and be representable by admitted packets.","status":"defect","finding_ids":["ROOT-01"]},
+    {"algorithm":"Intake questions, normalized-brief handoff and confirmation","source":"backend/src/round_robin/orchestration/controller.py:304-321; backend/src/round_robin/api/events.py:222-255","main_invariant":"At most three questions; confirmed options/horizon and original authorized scope precede proposals.","status":"capability_gap","finding_ids":["ROOT-G01"]},
+    {"algorithm":"Peer packet selection and proposal independence","source":"backend/src/round_robin/worker/tasks.py:23-50; backend/src/round_robin/providers/base.py:59-79","main_invariant":"Initial proposals receive no peer outputs or current-run peer claims; synthesis sees proposals; correction sees prior synthesis/audit; audit sees latest synthesis.","status":"reviewed_no_new_defect_observed","finding_ids":[]},
+    {"algorithm":"Common role prompt and structured output semantics","source":"backend/src/round_robin/providers/http.py:26; backend/src/round_robin/providers/base.py:28-39","main_invariant":"No tool authority from supplied text, preserve uncertainty/dissent, scoped references, JSON contract. Distinct provider names are the proposal roles; there is no explicit role-specialization or argument-adjudication schema.","status":"reviewed_quality_not_empirically_validated","finding_ids":["ROOT-G02"]},
+    {"algorithm":"Provider wire schema transformation and local schema/reference validation","source":"backend/src/round_robin/providers/structured.py:5-27; backend/src/round_robin/providers/http.py:40-67; backend/src/round_robin/providers/base.py:107-147","main_invariant":"Local validation retains constraints omitted by provider wire dialects; references/options/requirements are scoped; empty audit verdicts and duplicate assessments fail.","status":"reviewed_with_evidence_polarity_finding_in_evidence_review","finding_ids":["E-F03"]},
+    {"algorithm":"Schema repair classification and feedback packet","source":"backend/src/round_robin/providers/http.py:169-189; backend/src/round_robin/worker/tasks.py:50","main_invariant":"A second generation remains within the two-call logical-role ceiling; actual targeted repair needs explicit diagnostics.","status":"capability_gap","finding_ids":["ROOT-G02"]},
+    {"algorithm":"Provider envelope decoding, refusal and usage certainty","source":"backend/src/round_robin/providers/http.py:135-289","main_invariant":"Explicit refusal is not retried to evade refusal; valid content may retain unknown usage; malformed accounting does not imply zero exposure.","status":"reviewed_no_new_defect_observed","finding_ids":[]},
+    {"algorithm":"Conservative request cost and context bound","source":"backend/src/round_robin/providers/http.py:120-133; backend/src/round_robin/providers/base.py:71-78","main_invariant":"Bound encoded bytes plus protocol overhead and explicit billable output ceiling before send; money and context fit configured limits.","status":"runtime_bound_enforced_preflight_gap","finding_ids":["ROOT-01"]},
+    {"algorithm":"Absolute provider transport deadline through DNS, socket and TLS","source":"backend/src/round_robin/providers/transport.py:21-138","main_invariant":"Every operation uses the remaining absolute deadline; DNS threads have bounded outstanding capacity; no hidden transport retry.","status":"reviewed_no_new_defect_observed","finding_ids":[]},
+    {"algorithm":"Frozen provider configuration and request contract hash","source":"backend/src/round_robin/orchestration/configuration.py:13-43; backend/src/round_robin/providers/http.py:70-80","main_invariant":"Funding, expiry, deployment epoch and current declared prompt/schema contract must match the accepted run before a paid authorization.","status":"reviewed_no_new_defect_observed","finding_ids":[]},
+    {"algorithm":"Simulation choice and synthetic audit","source":"backend/src/round_robin/providers/simulated.py:24-60","main_invariant":"Choose lowest complete known feasible cost only as a labeled simulation; never represent simulated agreement as measured factual accuracy.","status":"reviewed_not_accuracy_evidence","finding_ids":[]},
+    {"algorithm":"Ordered event replay, snapshot cutoff and browser history consumption","source":"backend/src/round_robin/database/services.py:52-60; backend/src/round_robin/api/events.py:63-149; frontend/app/live-workspace.tsx:274-294","main_invariant":"Committed events have unique per-run sequence; readers stay within a cutoff and consume every page without stale-run mixing.","status":"client_pagination_defect","finding_ids":["ROOT-02"]},
+    {"algorithm":"Browser mutation receipt, uncertain-command reconciliation and owner fence","source":"frontend/app/api-client.ts:133-270; frontend/app/live-workspace.tsx:274-294","main_invariant":"An uncertain command retains its UUID/body hash and is reconciled before replay; polling does not authorize new model work; late reads are fenced.","status":"reviewed_no_new_defect_observed","finding_ids":[]}
+  ],
+  "validation": {
+    "backend": {"command":"uv run pytest -q", "exit_code":0,"passed":1971,"skipped":43,"warnings":16,"duration_seconds":154.42,"log":"root/pytest-all.log"},
+    "frontend": {"command":"pnpm --filter @round-robin/web test", "exit_code":0,"passed":247,"test_files":5,"log":"root/frontend-tests.log"},
+    "probes": {"command":"PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/root/probe_protocol.py", "exit_code":0,"checks":4,"results":"root/probe-results.json"},
+    "limitations":["No real-provider or paid evaluation; no fresh actual PostgreSQL/Redis/native-browser service checks; 43 backend service/profile-dependent tests skipped.","No Git metadata exists at this workspace root, so source hashes record the observed audit snapshot rather than a commit identity.","This audits discussion algorithms and their relevant correctness boundaries, not every unrelated UI layout, export renderer, hosting or backup-security property."]
+  }
+}

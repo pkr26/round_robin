@@ -1,0 +1,305 @@
+{
+  "unique_cases": 33,
+  "passed": 33,
+  "failed": 0,
+  "method": "Full connected run passed32/33. Focused rerun passed the remaining case after correcting its source-reference fixture. Production source was unchanged between runs.",
+  "cases": [
+    {
+      "title": "failed source reopening clears previous source and exposes an accessible recoverable error",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "late native source response cannot overwrite source typed after opening",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "expired visual access removes private candidates, history and source before offering another action",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "a changed account cannot send the previous account's captured visual action",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "malformed visual history fails validation before hostile text reaches the screen",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "expired live access removes the previous private draft and saved history",
+      "file": "deep_visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "explicit parent evidence selection crosses the real browser, preflight and worker boundary without implicit imports",
+      "file": "fresh_reuse.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "server-saved comparison reopens, inspects exact evidence and exports its saved version",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "lost Start response retains its UUID and reconciles without a second review",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "changed-input follow-up preserves the original report",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "unknown cost stays unknown and narrow layout remains keyboard operable",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "Stop remains unconfirmed until acknowledgement and preserves saved partial work",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "actual CORS text upload freezes only selected ready bytes in preflight",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "debounced draft save preserves edits made while an older acknowledgement is delayed",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "requirement and preference limits preserve entered lines and reserve budget and deadline slots",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "retry controls use authoritative eligible stages instead of historical failure events",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "unconfirmed private autosave retains a noncontent receipt and reconciles after reload",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "expired hosted access offers sign-in without replaying any saved action",
+      "file": "live.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "sample passages, exact calculations, keyboard dialog and immutable JSON export",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "custom draft saves without presenting an unrelated report and opt-in storage restores",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "changed horizon creates a linked walkthrough and preserves the original report",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "unknown installation retains unknown total and conditional readiness",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "partial result does not invent a recommendation or readiness",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "expired preflight cannot start a new simulated review",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "narrow viewport reflows and tabs support arrow-key navigation",
+      "file": "prototype.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "lost private draft acknowledgement can fence a late original request after reload",
+      "file": "review_fixes.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "lost private draft acknowledgement can recover committed input after reload",
+      "file": "review_fixes.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "edited currency, cost inclusion and numeric requirements reach the real calculator unchanged",
+      "file": "review_fixes.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser-final/playwright-results.json"
+    },
+    {
+      "title": "unsaved invalid draft survives cancelled browser navigation and is discarded only after approval",
+      "file": "review_regressions.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "canonical original remains honestly unreviewed, selectable and bounded behind preflight",
+      "file": "visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    },
+    {
+      "title": "structured native source produces immutable editable pixels without an image provider",
+      "file": "visual.spec.ts",
+      "passed": true,
+      "attempts": [
+        "passed"
+      ],
+      "evidence": "browser/playwright-results.json"
+    }
+  ]
+}

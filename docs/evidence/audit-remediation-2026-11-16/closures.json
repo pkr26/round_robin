@@ -1,0 +1,411 @@
+{
+  "confirmed_findings": 27,
+  "closed_findings": 27,
+  "findings": [
+    {
+      "id": "RR-001",
+      "priority": "P1",
+      "title": "Mandatory Anthropic image critic sends a schema the provider rejects",
+      "status": "fixed",
+      "change": "Use a shared provider wire-schema transformer for image and text structured outputs, retaining strict local response validation.",
+      "files": [
+        "backend/src/round_robin/providers/structured.py",
+        "backend/src/round_robin/providers/images.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_anthropic_critic_wire_subset_preserves_full_local_validation"
+      ]
+    },
+    {
+      "id": "RR-002",
+      "priority": "P1",
+      "title": "Generation timeout spends the protected time for mandatory reviews",
+      "status": "fixed",
+      "change": "Reserve time for outstanding required critics and persistence before authorizing generation or another critic. Admission includes the actual request allowance.",
+      "files": [
+        "backend/src/round_robin/worker/image_tasks.py",
+        "backend/src/round_robin/visual/iterations.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_generation_and_each_critic_leave_the_other_required_work_time"
+      ]
+    },
+    {
+      "id": "RR-003",
+      "priority": "P1",
+      "title": "Raster dimension validation can permanently break visual history",
+      "status": "fixed",
+      "change": "Reject new images with either axis over 8192 before commit. Keep previously saved wide images readable under the pixel-area bound, with an actionable preflight blocker.",
+      "files": [
+        "backend/src/round_robin/visual/assets.py",
+        "backend/src/round_robin/visual/views.py",
+        "backend/src/round_robin/api/visual.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_out_of_axis_upload_is_rejected_without_breaking_history",
+        "backend/tests/test_visual_audit_fixes.py::test_legacy_wide_image_remains_readable_with_an_actionable_preflight_blocker"
+      ]
+    },
+    {
+      "id": "RR-004",
+      "priority": "P1",
+      "title": "Reloaded uncommitted private commands have no recovery path",
+      "status": "fixed",
+      "change": "Add an owner-serialized durable abandonment endpoint and browser recovery action. A missing command is fenced against late arrival; an already committed command returns its original outcome.",
+      "files": [
+        "backend/src/round_robin/api/commands.py",
+        "frontend/app/api-client.ts",
+        "frontend/app/live-workspace.tsx",
+        "frontend/app/design/workspace.tsx"
+      ],
+      "verification": [
+        "backend/tests/test_review_command_recovery.py",
+        "backend/tests/integration/test_review_command_races.py",
+        "tests/e2e/review_fixes.spec.ts",
+        "frontend/tests/api-client.test.ts"
+      ]
+    },
+    {
+      "id": "RR-005",
+      "priority": "P1",
+      "title": "Definitive4xx on retry never releases pending command",
+      "status": "fixed",
+      "change": "Retire retained receipts after explicitly annotated not-committed 4xx rejections, while preserving unknown outcomes and UUID conflicts.",
+      "files": [
+        "frontend/app/api-client.ts"
+      ],
+      "verification": [
+        "frontend/tests/api-client.test.ts"
+      ]
+    },
+    {
+      "id": "RR-006",
+      "priority": "P2",
+      "title": "Research reserve rejection stalls proposals until the active-time cutoff",
+      "status": "fixed",
+      "change": "Use the frozen finish reserve for research allowance. Settle pending research as unavailable when no research time remains so proposals can proceed.",
+      "files": [
+        "backend/src/round_robin/research/service.py"
+      ],
+      "verification": [
+        "backend/tests/test_audit_runtime_fixes.py::test_research_uses_frozen_finish_reserve_instead_of_default",
+        "backend/tests/test_audit_runtime_fixes.py::test_unstarted_research_settles_when_only_finishing_time_remains"
+      ]
+    },
+    {
+      "id": "RR-007",
+      "priority": "P2",
+      "title": "Preflight accepts selected files that cannot fit the evidence packet",
+      "status": "fixed",
+      "change": "Share exact evidence-packet planning between preflight, Start and runtime. Reject passage overflow and oversized structured sources before intake, including selected parent evidence.",
+      "files": [
+        "backend/src/round_robin/api/preflight.py",
+        "backend/src/round_robin/orchestration/controller.py"
+      ],
+      "verification": [
+        "backend/tests/test_audit_runtime_fixes.py::test_preflight_and_start_share_exact_selected_passage_capacity",
+        "backend/tests/test_audit_runtime_fixes.py::test_oversized_structured_source_is_rejected_before_intake"
+      ]
+    },
+    {
+      "id": "RR-008",
+      "priority": "P2",
+      "title": "Accepted JPEGs can normalize into permanently unreviewable images",
+      "status": "fixed",
+      "change": "Separate the original 10 MiB upload limit from canonical 64 MiB PNG validation. Review still enforces the actual configured outgoing provider limit.",
+      "files": [
+        "backend/src/round_robin/visual/assets.py",
+        "backend/src/round_robin/visual/reviews.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_large_normalized_jpeg_can_be_reviewed_under_its_canonical_allowance"
+      ]
+    },
+    {
+      "id": "RR-009",
+      "priority": "P2",
+      "title": "Image and vision requests can run beyond their total deadlines",
+      "status": "fixed",
+      "change": "Use the absolute-deadline HTTP transport for image and vision requests, including headers and bounded error-body parsing.",
+      "files": [
+        "backend/src/round_robin/providers/images.py"
+      ],
+      "verification": [
+        "backend/tests/integration/test_image_total_deadline.py",
+        "backend/tests/test_visual_audit_fixes.py::test_error_response_stream_cannot_renew_the_absolute_image_allowance"
+      ]
+    },
+    {
+      "id": "RR-010",
+      "priority": "P2",
+      "title": "Expired visual sessions retain finish holds and unserviceable queued work",
+      "status": "fixed",
+      "change": "Expire visual sessions at the paid deadline or queued consent expiry. Quarantine unserviceable funding configurations, fence queued publication and release only unused review funds.",
+      "files": [
+        "backend/src/round_robin/worker/image_tasks.py",
+        "backend/src/round_robin/visual/views.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_expired_visual_work_releases_only_unused_review_hold",
+        "backend/tests/test_visual_audit_fixes.py::test_unserviceable_queued_images_become_terminal_without_spending"
+      ]
+    },
+    {
+      "id": "RR-011",
+      "priority": "P2",
+      "title": "Currency rounding can falsely mark an over-budget option affordable",
+      "status": "fixed",
+      "change": "Calculate and format totals using a pinned ISO 4217 minor-unit table. Reject unsupported currency codes in preflight; preserve three-decimal amounts in the UI.",
+      "files": [
+        "backend/src/round_robin/research/currencies.py",
+        "backend/src/round_robin/research/calculator.py",
+        "backend/src/round_robin/api/preflight.py",
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "backend/tests/test_audit_runtime_fixes.py::test_lifecycle_totals_use_the_currency_minor_unit",
+        "backend/tests/test_audit_runtime_fixes.py::test_three_decimal_currency_cannot_pass_a_lower_hard_budget",
+        "backend/tests/test_audit_runtime_fixes.py::test_unsupported_currency_is_a_preflight_blocker_not_an_implicit_cent"
+      ]
+    },
+    {
+      "id": "RR-012",
+      "priority": "P2",
+      "title": "Saved nonUSD amounts are presented as USD during editing",
+      "status": "fixed",
+      "change": "Label budget and component inputs with their saved currencies and inherit the brief currency for new candidates.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx",
+        "tests/e2e/review_fixes.spec.ts"
+      ]
+    },
+    {
+      "id": "RR-013",
+      "priority": "P2",
+      "title": "Switching drafts retains stale public-term browser validation error",
+      "status": "fixed",
+      "change": "Recompute public-research field validity when the selected draft changes.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx"
+      ]
+    },
+    {
+      "id": "RR-014",
+      "priority": "P2",
+      "title": "Native diagrams ignore frozen output dimensions",
+      "status": "fixed",
+      "change": "Validate native diagram dimensions against the frozen brief before reservation/rendering; derive the browser starter from those dimensions.",
+      "files": [
+        "backend/src/round_robin/api/visual.py",
+        "frontend/app/design/workspace.tsx"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_diagram_dimensions_are_bound_before_reserving_renderer_capacity",
+        "frontend/tests/design-workspace.test.tsx"
+      ]
+    },
+    {
+      "id": "RR-015",
+      "priority": "P2",
+      "title": "Diagram edge labels can be clipped despite successful required-text validation",
+      "status": "fixed",
+      "change": "Validate edge-label ink bounds before rendering. Embed the exact trusted packaged font and fix SVG text-run lengths to the validated advances, including whitespace. Preserve the attachment sandbox and remote-resource restrictions while permitting its fixed embedded font. Retain historical version1/2 read behavior.",
+      "files": [
+        "backend/src/round_robin/visual/renderers/diagram.py",
+        "backend/src/round_robin/api/visual.py",
+        "backend/src/round_robin/app.py"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_edge_label_extent_is_checked_before_rendering",
+        "backend/tests/test_exhaustive_visual_renderer.py",
+        "backend/tests/integration/test_native_renderer.py",
+        "validation/svg-independent-review/csp-probe.json"
+      ]
+    },
+    {
+      "id": "RR-016",
+      "priority": "P2",
+      "title": "Every maintenance cycle re-purges the complete permanent deletion history",
+      "status": "fixed",
+      "change": "Process at most 100 new manifest entries per routine cycle using a transactionally committed identity/offset/anchor cursor. Skip already completed fences; keep full manifest replay for explicit restore/operations.",
+      "files": [
+        "backend/src/round_robin/operations/recovery.py",
+        "backend/src/round_robin/operations/maintenance.py"
+      ],
+      "verification": [
+        "backend/tests/test_review_operations_fixes.py"
+      ]
+    },
+    {
+      "id": "RR-017",
+      "priority": "P2",
+      "title": "The expiry regression uses UTC yesterday against a Phoenix comparison date",
+      "status": "fixed",
+      "change": "Construct the expiry test date in the brief timezone using ZoneInfo, matching production comparison semantics.",
+      "files": [
+        "backend/tests/test_evidence_regressions.py"
+      ],
+      "verification": [
+        "backend/tests/test_evidence_regressions.py"
+      ]
+    },
+    {
+      "id": "RR-018",
+      "priority": "P1",
+      "title": "Waiting runs multiply scheduler records and saturate dispatch",
+      "status": "fixed",
+      "change": "Keep one active advance intention under existing run locks without locking/mutating publisher-held outbox rows. Reconciliation retires legacy duplicates.",
+      "files": [
+        "backend/src/round_robin/database/services.py",
+        "backend/src/round_robin/dispatcher/service.py"
+      ],
+      "verification": [
+        "backend/tests/test_audit_runtime_fixes.py::test_waiting_advances_do_not_multiply_and_resume_after_drain",
+        "backend/tests/test_audit_runtime_fixes.py::test_reconciler_retires_legacy_duplicate_advance_records",
+        "backend/tests/integration/test_audit_runtime_postgres.py::test_immediate_broker_delivery_deduplicates_waiting_advances",
+        "backend/tests/integration/test_audit_runtime_postgres.py::test_competing_advance_producers_retain_one_durable_intention"
+      ]
+    },
+    {
+      "id": "RR-019",
+      "priority": "P1",
+      "title": "Concurrent deletion can fail a normal backup and close all writes and dispatch",
+      "status": "fixed",
+      "change": "Coordinate backup database snapshots/file copies with deletion using a cross-process artifact guard. Deletion retains the guard through transaction commit; backup releases it before recording database status.",
+      "files": [
+        "backend/src/round_robin/operations/artifact_lifecycle.py",
+        "backend/src/round_robin/operations/recovery.py",
+        "backend/src/round_robin/operations/maintenance.py",
+        "backend/src/round_robin/reports/storage.py",
+        "backend/src/round_robin/visual/service.py"
+      ],
+      "verification": [
+        "backend/tests/test_review_operations_fixes.py::test_backup_and_legal_delete_cleanup_share_one_consistent_artifact_snapshot",
+        "backend/tests/test_review_backup_retention.py::test_backup_waits_for_retention_file_deletion_and_database_commit"
+      ]
+    },
+    {
+      "id": "RR-020",
+      "priority": "P2",
+      "title": "An older autosave can overwrite the newly opened linked follow-up brief",
+      "status": "fixed",
+      "change": "Fence autosave completions by editor generation and mode so switching into follow-up or clarification cannot be overwritten by an older save.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx"
+      ]
+    },
+    {
+      "id": "RR-021",
+      "priority": "P2",
+      "title": "Editing any requirements line erases existing typed constraints",
+      "status": "fixed",
+      "change": "Keep typed constraints and their stable IDs outside the manual requirements textarea; show them as saved numeric checks.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx",
+        "tests/e2e/review_fixes.spec.ts"
+      ]
+    },
+    {
+      "id": "RR-022",
+      "priority": "P2",
+      "title": "Entering a price can leave it excluded from every cost calculation",
+      "status": "fixed",
+      "change": "Expose cost inclusion status. Disable amount entry for excluded/not-applicable costs until the user explicitly includes them.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx",
+        "tests/e2e/review_fixes.spec.ts"
+      ]
+    },
+    {
+      "id": "RR-023",
+      "priority": "P2",
+      "title": "Review-history navigation reuses another run's unsaved choice and notes",
+      "status": "fixed",
+      "change": "Reset unsaved choice/reason/outcome fields when changing report history, and require the selected option to belong to the current comparison.",
+      "files": [
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "frontend/tests/live-workspace.test.tsx"
+      ]
+    },
+    {
+      "id": "RR-024",
+      "priority": "P2",
+      "title": "Saving a native interface clears its browser actions and assertions",
+      "status": "fixed",
+      "change": "Persist the exact private native-interface interaction plan in version provenance, restore it on reopen, and retain it across candidate renders.",
+      "files": [
+        "backend/src/round_robin/api/visual.py",
+        "frontend/app/design/workspace.tsx"
+      ],
+      "verification": [
+        "backend/tests/test_visual_audit_fixes.py::test_native_interface_exact_actions_survive_saved_version_reopen",
+        "frontend/tests/design-workspace.test.tsx"
+      ]
+    },
+    {
+      "id": "RR-025",
+      "priority": "P2",
+      "title": "Expired terminal retries retain unused finish funds and block new runs",
+      "status": "fixed",
+      "change": "Reconcile held finish funds on terminal runs after frozen authorization expires. Allow explicit terminal retry abandonment, retaining unknown attempt exposure and saved history.",
+      "files": [
+        "backend/src/round_robin/orchestration/policies.py",
+        "backend/src/round_robin/orchestration/controller.py",
+        "backend/src/round_robin/dispatcher/service.py",
+        "backend/src/round_robin/api/events.py",
+        "frontend/app/live-workspace.tsx"
+      ],
+      "verification": [
+        "backend/tests/test_audit_runtime_fixes.py::test_expired_terminal_retry_releases_only_unused_hold",
+        "backend/tests/test_audit_runtime_fixes.py::test_terminal_cancel_abandons_retry_without_releasing_unknown_exposure",
+        "backend/tests/integration/test_audit_runtime_postgres.py::test_expired_retry_funds_do_not_block_a_fresh_accepted_run"
+      ]
+    },
+    {
+      "id": "RR-026",
+      "priority": "P2",
+      "title": "Anonymous sign-in blocks the ASGI event loop during database contention",
+      "status": "fixed",
+      "change": "Offload complete hosted login reservation, login-state save and callback-session transactions to the threadpool, preserving database locking and identity fencing.",
+      "files": [
+        "backend/src/round_robin/security/hosted.py",
+        "backend/src/round_robin/api/hosted.py"
+      ],
+      "verification": [
+        "backend/tests/test_review_hosted_async.py",
+        "probes/hosted_event_loop_fixed.py"
+      ]
+    },
+    {
+      "id": "RR-027",
+      "priority": "P2",
+      "title": "Markdown export turns untrusted evidence into active image/HTML markup",
+      "status": "fixed",
+      "change": "Escape all interpolated report/evidence strings as inert Markdown literals and HTML text. Keep raw JSON exports unchanged.",
+      "files": [
+        "backend/src/round_robin/reports/exports.py"
+      ],
+      "verification": [
+        "backend/tests/test_exports.py::test_markdown_keeps_untrusted_images_html_and_delimiters_literal",
+        "backend/tests/test_deep_evidence_boundaries.py"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2619 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Round Robin offline fixture API",
+    "description": "Fictional read-only Phase 0 preparation. No mutation, paid access or provider calls.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/sample": {
+      "get": {
+        "summary": "Read Sample",
+        "operationId": "read_sample_api_sample_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SampleBundle"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schemas/brief": {
+      "get": {
+        "summary": "Read Brief Schema",
+        "operationId": "read_brief_schema_api_schemas_brief_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Read Brief Schema Api Schemas Brief Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schemas/sample": {
+      "get": {
+        "summary": "Read Sample Schema",
+        "operationId": "read_sample_schema_api_schemas_sample_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Read Sample Schema Api Schemas Sample Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Health Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ActivityItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "stage": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Stage"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "simulated",
+              "saved",
+              "limited"
+            ],
+            "title": "Status"
+          },
+          "provider": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "anthropic",
+                  "google"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Provider"
+          },
+          "reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Reference Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "stage",
+          "title",
+          "description",
+          "status",
+          "provider",
+          "reference_ids"
+        ],
+        "title": "ActivityItem"
+      },
+      "Calculation": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "operation": {
+            "type": "string",
+            "enum": [
+              "lifecycle_total",
+              "break_even",
+              "add",
+              "subtract",
+              "multiply",
+              "divide",
+              "convert"
+            ],
+            "title": "Operation"
+          },
+          "inputs": {
+            "items": {
+              "$ref": "#/components/schemas/CalculationInput"
+            },
+            "type": "array",
+            "maxItems": 120,
+            "title": "Inputs"
+          },
+          "formula": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Formula"
+          },
+          "output": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 96,
+                "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Output"
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Unit"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[A-Z]{3}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Currency"
+          },
+          "horizon_months": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Months"
+          },
+          "rounding": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Rounding"
+          },
+          "decimal_precision": {
+            "type": "integer",
+            "const": 64,
+            "title": "Decimal Precision",
+            "default": 64
+          },
+          "flags": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Flags"
+          },
+          "missing_components": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 35,
+            "title": "Missing Components"
+          },
+          "known_subtotal": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Known Subtotal"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "operation",
+          "inputs",
+          "formula",
+          "output",
+          "unit",
+          "currency",
+          "horizon_months",
+          "rounding",
+          "decimal_precision",
+          "flags",
+          "missing_components",
+          "known_subtotal"
+        ],
+        "title": "Calculation"
+      },
+      "CalculationInput": {
+        "properties": {
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "amount": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^-?[0-9]+(?:\\.[0-9]+)?$",
+            "title": "Amount"
+          },
+          "unit": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Unit"
+          },
+          "source_ref": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Source Ref"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "label",
+          "amount",
+          "unit",
+          "source_ref"
+        ],
+        "title": "CalculationInput"
+      },
+      "Claim": {
+        "properties": {
+          "alias": {
+            "type": "string",
+            "maxLength": 32,
+            "pattern": "^new_claim_[1-9][0-9]*$",
+            "title": "Alias"
+          },
+          "proposition": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Proposition"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "fact",
+              "calculation",
+              "assumption",
+              "preference",
+              "recommendation"
+            ],
+            "title": "Kind"
+          },
+          "evidence_status": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "contradicted",
+              "mixed",
+              "not_checked",
+              "fictional"
+            ],
+            "title": "Evidence Status"
+          },
+          "reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Reference Ids"
+          },
+          "predecessor_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 96,
+                "minLength": 3,
+                "pattern": "^[a-z][a-z0-9_:-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predecessor Id"
+          },
+          "support_bases": {
+            "items": {
+              "$ref": "#/components/schemas/ClaimSupportBasis"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Support Bases"
+          },
+          "refuting_reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Refuting Reference Ids"
+          },
+          "support_scope": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Support Scope"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "alias",
+          "proposition",
+          "kind",
+          "evidence_status",
+          "reference_ids",
+          "predecessor_id",
+          "support_bases",
+          "refuting_reference_ids",
+          "support_scope"
+        ],
+        "title": "Claim"
+      },
+      "ClaimSupportBasis": {
+        "properties": {
+          "reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "minItems": 1,
+            "title": "Reference Ids"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "reference_ids"
+        ],
+        "title": "ClaimSupportBasis",
+        "description": "All references in one basis are required; bases are alternatives."
+      },
+      "Constraint": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "user_supplied",
+              "assumed",
+              "fictional"
+            ],
+            "title": "Origin"
+          },
+          "metric": {
+            "type": "string",
+            "enum": [
+              "total_cost",
+              "lead_time_days",
+              "manual"
+            ],
+            "title": "Metric"
+          },
+          "operator": {
+            "type": "string",
+            "enum": [
+              "lte",
+              "gte",
+              "eq",
+              "manual"
+            ],
+            "title": "Operator"
+          },
+          "threshold": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "origin",
+          "metric",
+          "operator",
+          "threshold"
+        ],
+        "title": "Constraint"
+      },
+      "ConstraintResult": {
+        "properties": {
+          "requirement_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Requirement Id"
+          },
+          "result": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "unknown",
+              "not_applicable"
+            ],
+            "title": "Result"
+          },
+          "basis_refs": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Basis Refs"
+          },
+          "method": {
+            "type": "string",
+            "enum": [
+              "deterministic_calculation",
+              "fixture_assessment",
+              "human",
+              "model"
+            ],
+            "title": "Method"
+          },
+          "assessor": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Assessor",
+            "default": "offline fixture"
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Reason"
+          },
+          "counter_basis_refs": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Counter Basis Refs"
+          },
+          "assessment_scope": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Assessment Scope"
+          },
+          "disputed": {
+            "type": "boolean",
+            "title": "Disputed",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "requirement_id",
+          "result",
+          "basis_refs",
+          "method",
+          "assessor",
+          "reason",
+          "counter_basis_refs",
+          "assessment_scope",
+          "disputed"
+        ],
+        "title": "ConstraintResult"
+      },
+      "Contribution": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "provider": {
+            "type": "string",
+            "enum": [
+              "openai",
+              "anthropic",
+              "google"
+            ],
+            "title": "Provider"
+          },
+          "model": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Model"
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Role"
+          },
+          "stage": {
+            "type": "string",
+            "enum": [
+              "intake",
+              "proposal",
+              "critique",
+              "revision",
+              "synthesis",
+              "audit"
+            ],
+            "title": "Stage"
+          },
+          "fictional": {
+            "type": "boolean",
+            "const": true,
+            "title": "Fictional",
+            "default": true
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 4000,
+            "minLength": 1,
+            "title": "Summary"
+          },
+          "public_rationale": {
+            "type": "string",
+            "maxLength": 12000,
+            "minLength": 1,
+            "title": "Public Rationale"
+          },
+          "claims": {
+            "items": {
+              "$ref": "#/components/schemas/Claim"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Claims"
+          },
+          "alternatives": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Alternatives"
+          },
+          "objections": {
+            "items": {
+              "$ref": "#/components/schemas/Objection"
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Objections"
+          },
+          "revision_responses": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 12,
+            "title": "Revision Responses"
+          },
+          "reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Reference Ids"
+          },
+          "constraint_results": {
+            "items": {
+              "$ref": "#/components/schemas/ConstraintResult"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Constraint Results"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Assumptions"
+          },
+          "open_questions": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Open Questions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "provider",
+          "model",
+          "role",
+          "stage",
+          "fictional",
+          "summary",
+          "public_rationale",
+          "claims",
+          "alternatives",
+          "objections",
+          "revision_responses",
+          "reference_ids",
+          "constraint_results",
+          "assumptions",
+          "open_questions"
+        ],
+        "title": "Contribution"
+      },
+      "CostComponent": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "upfront",
+              "installation",
+              "recurring",
+              "maintenance",
+              "tax_delivery",
+              "discount",
+              "other"
+            ],
+            "title": "Kind"
+          },
+          "amount": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Amount"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency"
+          },
+          "quantity": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Quantity",
+            "default": "1"
+          },
+          "frequency": {
+            "type": "string",
+            "enum": [
+              "once",
+              "monthly"
+            ],
+            "title": "Frequency"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "included",
+              "excluded",
+              "not_applicable"
+            ],
+            "title": "Status",
+            "default": "included"
+          },
+          "unknown_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unknown Reason"
+          },
+          "source_ref": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Source Ref"
+          },
+          "unit": {
+            "type": "string",
+            "enum": [
+              "item",
+              "month"
+            ],
+            "title": "Unit",
+            "default": "item"
+          },
+          "quote_valid_until": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Quote Valid Until"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "kind",
+          "amount",
+          "currency",
+          "quantity",
+          "frequency",
+          "status",
+          "unknown_reason",
+          "source_ref",
+          "unit",
+          "quote_valid_until"
+        ],
+        "title": "CostComponent"
+      },
+      "DecisionReport": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1.0",
+            "title": "Schema Version",
+            "default": "1.0"
+          },
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "run_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Run Id"
+          },
+          "parent_report_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 96,
+                "minLength": 3,
+                "pattern": "^[a-z][a-z0-9_:-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Report Id"
+          },
+          "fictional": {
+            "type": "boolean",
+            "const": true,
+            "title": "Fictional",
+            "default": true
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "event_cutoff": {
+            "type": "integer",
+            "minimum": 0.0,
+            "title": "Event Cutoff"
+          },
+          "execution_status": {
+            "type": "string",
+            "enum": [
+              "completed",
+              "completed_with_limitations",
+              "cancelled",
+              "failed"
+            ],
+            "title": "Execution Status"
+          },
+          "recommendation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Recommendation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "readiness": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "ready_to_choose",
+                  "conditional",
+                  "no_feasible_option",
+                  "insufficient_evidence"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Readiness"
+          },
+          "readiness_reasons": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "minItems": 1,
+            "title": "Readiness Reasons"
+          },
+          "readiness_unavailable_reason": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Readiness Unavailable Reason"
+          },
+          "main_reasons": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Main Reasons"
+          },
+          "tradeoff": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Tradeoff"
+          },
+          "largest_uncertainty": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Largest Uncertainty"
+          },
+          "what_would_change_answer": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "What Would Change Answer"
+          },
+          "next_action": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Next Action"
+          },
+          "comparison": {
+            "items": {
+              "$ref": "#/components/schemas/OptionComparison"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Comparison"
+          },
+          "hard_requirement_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Hard Requirement Ids"
+          },
+          "essential_dependencies": {
+            "items": {
+              "$ref": "#/components/schemas/EssentialDependency"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Essential Dependencies"
+          },
+          "dissent": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Dissent"
+          },
+          "next_evidence": {
+            "items": {
+              "$ref": "#/components/schemas/NextEvidenceItem"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Next Evidence"
+          },
+          "calculations": {
+            "items": {
+              "$ref": "#/components/schemas/Calculation"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Calculations"
+          },
+          "coverage": {
+            "items": {
+              "$ref": "#/components/schemas/ParticipantCoverage"
+            },
+            "type": "array",
+            "maxItems": 6,
+            "title": "Coverage"
+          },
+          "assessment": {
+            "$ref": "#/components/schemas/ReviewCoverage"
+          },
+          "usage": {
+            "$ref": "#/components/schemas/Usage"
+          },
+          "stop_reason": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Stop Reason"
+          },
+          "change_summary": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Change Summary"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "id",
+          "run_id",
+          "parent_report_id",
+          "fictional",
+          "version",
+          "event_cutoff",
+          "execution_status",
+          "recommendation",
+          "readiness",
+          "readiness_reasons",
+          "readiness_unavailable_reason",
+          "main_reasons",
+          "tradeoff",
+          "largest_uncertainty",
+          "what_would_change_answer",
+          "next_action",
+          "comparison",
+          "hard_requirement_ids",
+          "essential_dependencies",
+          "dissent",
+          "next_evidence",
+          "calculations",
+          "coverage",
+          "assessment",
+          "usage",
+          "stop_reason",
+          "change_summary"
+        ],
+        "title": "DecisionReport"
+      },
+      "DraftBrief": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1.0",
+            "title": "Schema Version",
+            "default": "1.0"
+          },
+          "revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Revision"
+          },
+          "title": {
+            "type": "string",
+            "maxLength": 200,
+            "minLength": 1,
+            "title": "Title"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Question"
+          },
+          "background": {
+            "type": "string",
+            "maxLength": 12000,
+            "title": "Background",
+            "default": ""
+          },
+          "goal": {
+            "type": "string",
+            "maxLength": 4000,
+            "title": "Goal"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency"
+          },
+          "budget": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Budget"
+          },
+          "deadline": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deadline"
+          },
+          "timezone": {
+            "type": "string",
+            "maxLength": 64,
+            "title": "Timezone",
+            "default": "America/Phoenix"
+          },
+          "location": {
+            "type": "string",
+            "maxLength": 500,
+            "title": "Location",
+            "default": ""
+          },
+          "horizon_months": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Horizon Months"
+          },
+          "options": {
+            "items": {
+              "$ref": "#/components/schemas/Option"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Options"
+          },
+          "hard_requirements": {
+            "items": {
+              "$ref": "#/components/schemas/Constraint"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Hard Requirements"
+          },
+          "preferences": {
+            "items": {
+              "$ref": "#/components/schemas/Preference"
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Preferences"
+          },
+          "user_facts": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "User Facts"
+          },
+          "selected_attachment_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Selected Attachment Ids"
+          },
+          "public_research_terms": {
+            "items": {
+              "$ref": "#/components/schemas/PublicTerm"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Public Research Terms"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "revision",
+          "title",
+          "question",
+          "background",
+          "goal",
+          "currency",
+          "budget",
+          "deadline",
+          "timezone",
+          "location",
+          "horizon_months",
+          "options",
+          "hard_requirements",
+          "preferences",
+          "user_facts",
+          "selected_attachment_ids",
+          "public_research_terms"
+        ],
+        "title": "DraftBrief"
+      },
+      "EssentialDependency": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "supported",
+              "assumed",
+              "unverified",
+              "mixed",
+              "contradicted"
+            ],
+            "title": "Status"
+          },
+          "accepted_scoped_support": {
+            "type": "boolean",
+            "title": "Accepted Scoped Support"
+          },
+          "reference_ids": {
+            "items": {
+              "type": "string",
+              "maxLength": 96,
+              "minLength": 3,
+              "pattern": "^[a-z][a-z0-9_:-]+$"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Reference Ids"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "fictional",
+              "user_supplied",
+              "retrieved",
+              "calculated"
+            ],
+            "title": "Origin"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "status",
+          "accepted_scoped_support",
+          "reference_ids",
+          "origin"
+        ],
+        "title": "EssentialDependency"
+      },
+      "EvidencePassage": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "owner_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Owner Id"
+          },
+          "run_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Run Id"
+          },
+          "source_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Source Id"
+          },
+          "source_version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Source Version",
+            "default": 1
+          },
+          "source_title": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Source Title"
+          },
+          "locator": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Locator"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Text"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Sha256"
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Verified At"
+          },
+          "effective_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Effective Date"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "fictional",
+              "user_supplied",
+              "retrieved"
+            ],
+            "title": "Origin"
+          },
+          "verification_status": {
+            "type": "string",
+            "enum": [
+              "fictional",
+              "user_supplied",
+              "not_checked",
+              "supported",
+              "contradicted",
+              "mixed"
+            ],
+            "title": "Verification Status"
+          },
+          "scope": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Scope"
+          },
+          "time_sensitive": {
+            "type": "boolean",
+            "title": "Time Sensitive"
+          },
+          "origin_group": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Origin Group"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "owner_id",
+          "run_id",
+          "source_id",
+          "source_version",
+          "source_title",
+          "locator",
+          "text",
+          "sha256",
+          "verified_at",
+          "effective_date",
+          "origin",
+          "verification_status",
+          "scope",
+          "time_sensitive",
+          "origin_group"
+        ],
+        "title": "EvidencePassage"
+      },
+      "FinishPolicy": {
+        "properties": {
+          "reserved_requests": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 2.0,
+            "title": "Reserved Requests",
+            "default": 2
+          },
+          "reserved_usd": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Reserved Usd",
+            "default": "0.40"
+          },
+          "reserved_active_seconds": {
+            "type": "integer",
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Reserved Active Seconds",
+            "default": 190
+          },
+          "version": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Version",
+            "default": "fictional-finish-v1"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "reserved_requests",
+          "reserved_usd",
+          "reserved_active_seconds",
+          "version"
+        ],
+        "title": "FinishPolicy"
+      },
+      "InputItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Version"
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Content Hash"
+          },
+          "recipients": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic",
+                "google"
+              ]
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Recipients"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "version",
+          "content_hash",
+          "recipients"
+        ],
+        "title": "InputItem"
+      },
+      "InputManifest": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InputItem"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "title": "Items"
+          },
+          "content_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Content Hash"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "items",
+          "content_hash"
+        ],
+        "title": "InputManifest"
+      },
+      "Limits": {
+        "properties": {
+          "max_requests": {
+            "type": "integer",
+            "maximum": 24.0,
+            "minimum": 1.0,
+            "title": "Max Requests",
+            "default": 24
+          },
+          "max_calls_per_step": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 1.0,
+            "title": "Max Calls Per Step",
+            "default": 2
+          },
+          "active_seconds": {
+            "type": "integer",
+            "maximum": 600.0,
+            "minimum": 1.0,
+            "title": "Active Seconds",
+            "default": 600
+          },
+          "per_run_usd": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Per Run Usd",
+            "default": "2"
+          },
+          "owner_daily_usd": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Owner Daily Usd",
+            "default": "10"
+          },
+          "owner_monthly_usd": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Owner Monthly Usd",
+            "default": "50"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "max_requests",
+          "max_calls_per_step",
+          "active_seconds",
+          "per_run_usd",
+          "owner_daily_usd",
+          "owner_monthly_usd"
+        ],
+        "title": "Limits"
+      },
+      "NextEvidenceItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "question": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Question"
+          },
+          "affected_conclusion": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Affected Conclusion"
+          },
+          "verification_method": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Verification Method"
+          },
+          "request_text": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Request Text"
+          },
+          "responsible_person": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 500,
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Responsible Person"
+          },
+          "revisit_date": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Revisit Date"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "question",
+          "affected_conclusion",
+          "verification_method",
+          "request_text",
+          "responsible_person",
+          "revisit_date"
+        ],
+        "title": "NextEvidenceItem"
+      },
+      "Objection": {
+        "properties": {
+          "target_reference_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Target Reference Id"
+          },
+          "concern": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Concern"
+          },
+          "material": {
+            "type": "boolean",
+            "title": "Material"
+          },
+          "disposition": {
+            "type": "string",
+            "enum": [
+              "accepted",
+              "qualified",
+              "rejected",
+              "unresolved"
+            ],
+            "title": "Disposition"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "target_reference_id",
+          "concern",
+          "material",
+          "disposition"
+        ],
+        "title": "Objection"
+      },
+      "Option": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "candidate",
+              "status_quo"
+            ],
+            "title": "Role",
+            "default": "candidate"
+          },
+          "provenance": {
+            "type": "string",
+            "enum": [
+              "user_supplied",
+              "assumed",
+              "fictional"
+            ],
+            "title": "Provenance"
+          },
+          "cost_components": {
+            "items": {
+              "$ref": "#/components/schemas/CostComponent"
+            },
+            "type": "array",
+            "maxItems": 30,
+            "title": "Cost Components"
+          },
+          "consequences": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 10,
+            "title": "Consequences"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "role",
+          "provenance",
+          "cost_components",
+          "consequences"
+        ],
+        "title": "Option"
+      },
+      "OptionComparison": {
+        "properties": {
+          "option_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Option Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "candidate",
+              "status_quo"
+            ],
+            "title": "Role"
+          },
+          "total": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total"
+          },
+          "known_subtotal": {
+            "type": "string",
+            "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$",
+            "title": "Known Subtotal"
+          },
+          "missing_components": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 35,
+            "title": "Missing Components"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency"
+          },
+          "horizon_months": {
+            "type": "integer",
+            "maximum": 120.0,
+            "minimum": 1.0,
+            "title": "Horizon Months"
+          },
+          "constraint_results": {
+            "items": {
+              "$ref": "#/components/schemas/ConstraintResult"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Constraint Results"
+          },
+          "calculation_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Calculation Id"
+          },
+          "caveat": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Caveat"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "option_id",
+          "label",
+          "role",
+          "total",
+          "known_subtotal",
+          "missing_components",
+          "currency",
+          "horizon_months",
+          "constraint_results",
+          "calculation_id",
+          "caveat"
+        ],
+        "title": "OptionComparison"
+      },
+      "ParticipantCoverage": {
+        "properties": {
+          "provider": {
+            "type": "string",
+            "enum": [
+              "openai",
+              "anthropic",
+              "google"
+            ],
+            "title": "Provider"
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Role"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "simulated",
+              "missing",
+              "unavailable"
+            ],
+            "title": "Status"
+          },
+          "notes": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Notes"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "provider",
+          "role",
+          "status",
+          "notes"
+        ],
+        "title": "ParticipantCoverage"
+      },
+      "Preference": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "rank": {
+            "type": "integer",
+            "maximum": 10.0,
+            "minimum": 1.0,
+            "title": "Rank"
+          },
+          "origin": {
+            "type": "string",
+            "enum": [
+              "user_supplied",
+              "assumed",
+              "fictional"
+            ],
+            "title": "Origin"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "rank",
+          "origin"
+        ],
+        "title": "Preference"
+      },
+      "Preflight": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "fictional": {
+            "type": "boolean",
+            "const": true,
+            "title": "Fictional",
+            "default": true
+          },
+          "draft_revision": {
+            "type": "integer",
+            "minimum": 1.0,
+            "title": "Draft Revision"
+          },
+          "input_manifest": {
+            "$ref": "#/components/schemas/InputManifest"
+          },
+          "draft_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Draft Hash"
+          },
+          "configuration_hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Configuration Hash"
+          },
+          "fingerprint": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "title": "Fingerprint"
+          },
+          "recipients": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic",
+                "google"
+              ]
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Recipients"
+          },
+          "approved_public_terms": {
+            "items": {
+              "$ref": "#/components/schemas/PublicTerm"
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Approved Public Terms"
+          },
+          "query_templates": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 8,
+            "title": "Query Templates"
+          },
+          "protocol": {
+            "type": "string",
+            "const": "independent_review_provisional",
+            "title": "Protocol",
+            "default": "independent_review_provisional"
+          },
+          "models": {
+            "additionalProperties": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "propertyNames": {
+              "enum": [
+                "openai",
+                "anthropic",
+                "google"
+              ]
+            },
+            "type": "object",
+            "title": "Models"
+          },
+          "prompt_version": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Prompt Version",
+            "default": "fictional-prompts-v1"
+          },
+          "schema_version": {
+            "type": "string",
+            "const": "1.0",
+            "title": "Schema Version",
+            "default": "1.0"
+          },
+          "pricing_version": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Pricing Version",
+            "default": "simulated-no-prices-v1"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/Limits"
+          },
+          "finish_policy": {
+            "$ref": "#/components/schemas/FinishPolicy"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          },
+          "initial_admission_window_minutes": {
+            "type": "integer",
+            "const": 30,
+            "title": "Initial Admission Window Minutes",
+            "default": 30
+          },
+          "consumed_by_run_id": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 96,
+                "minLength": 3,
+                "pattern": "^[a-z][a-z0-9_:-]+$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Consumed By Run Id"
+          },
+          "paid_access_enabled": {
+            "type": "boolean",
+            "const": false,
+            "title": "Paid Access Enabled",
+            "default": false
+          },
+          "blockers": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Blockers"
+          },
+          "warnings": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Warnings"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "fictional",
+          "draft_revision",
+          "input_manifest",
+          "draft_hash",
+          "configuration_hash",
+          "fingerprint",
+          "recipients",
+          "approved_public_terms",
+          "query_templates",
+          "protocol",
+          "models",
+          "prompt_version",
+          "schema_version",
+          "pricing_version",
+          "limits",
+          "finish_policy",
+          "created_at",
+          "expires_at",
+          "initial_admission_window_minutes",
+          "consumed_by_run_id",
+          "paid_access_enabled",
+          "blockers",
+          "warnings"
+        ],
+        "title": "Preflight"
+      },
+      "PublicTerm": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Id"
+          },
+          "text": {
+            "type": "string",
+            "maxLength": 120,
+            "minLength": 1,
+            "title": "Text"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "text"
+        ],
+        "title": "PublicTerm"
+      },
+      "Recommendation": {
+        "properties": {
+          "option_id": {
+            "type": "string",
+            "maxLength": 96,
+            "minLength": 3,
+            "pattern": "^[a-z][a-z0-9_:-]+$",
+            "title": "Option Id"
+          },
+          "summary": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Summary"
+          },
+          "conditions": {
+            "items": {
+              "type": "string",
+              "maxLength": 500,
+              "minLength": 1
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Conditions"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "option_id",
+          "summary",
+          "conditions"
+        ],
+        "title": "Recommendation"
+      },
+      "ReviewCoverage": {
+        "properties": {
+          "proposal_providers": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "openai",
+                "anthropic",
+                "google"
+              ]
+            },
+            "type": "array",
+            "maxItems": 3,
+            "title": "Proposal Providers"
+          },
+          "synthesizer": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "anthropic",
+                  "google"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Synthesizer"
+          },
+          "auditor": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "openai",
+                  "anthropic",
+                  "google"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Auditor"
+          },
+          "synthesis_valid": {
+            "type": "boolean",
+            "title": "Synthesis Valid"
+          },
+          "audit_succeeded": {
+            "type": "boolean",
+            "title": "Audit Succeeded"
+          },
+          "unresolved_critical_defect": {
+            "type": "boolean",
+            "title": "Unresolved Critical Defect",
+            "default": false
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "proposal_providers",
+          "synthesizer",
+          "auditor",
+          "synthesis_valid",
+          "audit_succeeded",
+          "unresolved_critical_defect"
+        ],
+        "title": "ReviewCoverage"
+      },
+      "SampleBundle": {
+        "properties": {
+          "schema_version": {
+            "type": "string",
+            "const": "1.0",
+            "title": "Schema Version",
+            "default": "1.0"
+          },
+          "fictional": {
+            "type": "boolean",
+            "const": true,
+            "title": "Fictional",
+            "default": true
+          },
+          "brief": {
+            "$ref": "#/components/schemas/DraftBrief"
+          },
+          "evidence": {
+            "items": {
+              "$ref": "#/components/schemas/EvidencePassage"
+            },
+            "type": "array",
+            "maxItems": 24,
+            "title": "Evidence"
+          },
+          "contributions": {
+            "items": {
+              "$ref": "#/components/schemas/Contribution"
+            },
+            "type": "array",
+            "maxItems": 20,
+            "title": "Contributions"
+          },
+          "scenarios": {
+            "items": {
+              "$ref": "#/components/schemas/SampleScenario"
+            },
+            "type": "array",
+            "maxItems": 3,
+            "minItems": 3,
+            "title": "Scenarios"
+          },
+          "partial_report": {
+            "$ref": "#/components/schemas/DecisionReport"
+          },
+          "cancelled_report": {
+            "$ref": "#/components/schemas/DecisionReport"
+          },
+          "activity": {
+            "items": {
+              "$ref": "#/components/schemas/ActivityItem"
+            },
+            "type": "array",
+            "maxItems": 40,
+            "title": "Activity"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "schema_version",
+          "fictional",
+          "brief",
+          "evidence",
+          "contributions",
+          "scenarios",
+          "partial_report",
+          "cancelled_report",
+          "activity"
+        ],
+        "title": "SampleBundle"
+      },
+      "SampleScenario": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "enum": [
+              "base12",
+              "horizon24",
+              "missing_installation"
+            ],
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Label"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 1,
+            "title": "Description"
+          },
+          "brief": {
+            "$ref": "#/components/schemas/DraftBrief"
+          },
+          "report": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/DecisionReport"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "preflight": {
+            "$ref": "#/components/schemas/Preflight"
+          },
+          "partial_report": {
+            "$ref": "#/components/schemas/DecisionReport"
+          },
+          "cancelled_report": {
+            "$ref": "#/components/schemas/DecisionReport"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "description",
+          "brief",
+          "report",
+          "preflight",
+          "partial_report",
+          "cancelled_report"
+        ],
+        "title": "SampleScenario"
+      },
+      "Usage": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "const": "fictional_no_spend",
+            "title": "Status",
+            "default": "fictional_no_spend"
+          },
+          "actual_cost": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^(?:0|[1-9][0-9]*)(?:\\.[0-9]{1,6})?$"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Actual Cost",
+            "default": "0"
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "default": "USD"
+          },
+          "request_count": {
+            "type": "integer",
+            "const": 0,
+            "title": "Request Count",
+            "default": 0
+          },
+          "simulated": {
+            "type": "boolean",
+            "const": true,
+            "title": "Simulated",
+            "default": true
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": [
+          "status",
+          "actual_cost",
+          "currency",
+          "request_count",
+          "simulated"
+        ],
+        "title": "Usage"
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema": "rr_fix_967451e18b794056806ab1f4f332b075",
+  "queue": "rr_fix_f25c4d3e67984ba9a3ac7d6183b8d2f6",
+  "api_port": 18000,
+  "browser_port": 13000,
+  "paid_provider_calls": 0,
+  "checks": [
+    {
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 5.7,
+      "log": "check-01.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "upgrade",
+        "head"
+      ],
+      "exit_code": 0,
+      "seconds": 0.57,
+      "log": "check-02.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.4,
+      "log": "check-03.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "exec",
+        "playwright",
+        "test",
+        "review_fixes.spec.ts",
+        "--grep",
+        "edited currency",
+        "--config",
+        "/tmp/rr-fix-validation/browser-final/playwright.config.cjs"
+      ],
+      "exit_code": 0,
+      "seconds": 7.35,
+      "log": "check-04.log"
+    }
+  ],
+  "status": "passed",
+  "owned_resources_cleaned": true
+}

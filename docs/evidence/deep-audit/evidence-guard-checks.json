@@ -1,0 +1,34 @@
+{
+  "recorded_at_utc": "2026-11-16T15:15:57.158226+00:00",
+  "all_checks_passed": true,
+  "assembler_sha256": "736be5ecd6b85c0b0fd425c674bd40e704f761fcbedbe390357320f4e5e67534",
+  "checks": [
+    {
+      "case": "missing required coverage artifact",
+      "passed": true,
+      "rejected_with": "Integrity binding omits required audit/review artifacts"
+    },
+    {
+      "case": "changed source bytes",
+      "passed": true,
+      "rejected_with": "Code changed after verified evidence binding: .coveragerc"
+    },
+    {
+      "case": "missing inventoried code input",
+      "passed": true,
+      "rejected_with": "Integrity code inventory is incomplete or differs from the current inventory"
+    },
+    {
+      "case": "failed latest combined verification",
+      "passed": true,
+      "rejected_with": "Latest combined verification did not complete successfully"
+    },
+    {
+      "case": "file review cannot replace symbol review",
+      "passed": true,
+      "rejected_with": "Explicit symbol review remains missing: [{\"path\": \"backend/src/round_robin/app.py\", \"name\": \"JsonBodyLimit\", \"line\": 21}]"
+    }
+  ],
+  "existing_reports_unchanged": true,
+  "scope": "Five negative audit-tooling checks only; these are not additional unique application tests."
+}

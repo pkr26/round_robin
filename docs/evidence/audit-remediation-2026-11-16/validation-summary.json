@@ -1,0 +1,43 @@
+{
+  "completed_at_utc": "2026-11-17T04:49:52.036722+00:00",
+  "confirmed_findings_fixed": 27,
+  "new_regression_cases": 95,
+  "backend": {
+    "tests": 2014,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "frontend": {
+    "passed": 247,
+    "failed": 0
+  },
+  "connected_browser": {
+    "passed": 33,
+    "failed": 0,
+    "method": "Full connected run passed 32/33. Focused rerun passed the remaining case after correcting its source-reference fixture. Production source was unchanged between runs."
+  },
+  "native_javascript": {
+    "passed": 45,
+    "failed": 0
+  },
+  "coverage_tooling_javascript": {
+    "passed": 3,
+    "failed": 0
+  },
+  "coverage_gate": {
+    "passed": true,
+    "services": 18,
+    "threshold": "Strictly greater than 95% lines and branches in every service",
+    "source_manifest_verified": true,
+    "verification_inputs_verified": true
+  },
+  "paid_provider_calls": 0,
+  "migrations_required": false,
+  "source_files": 122,
+  "verification_inputs": 172,
+  "changed_files": 65,
+  "prior_audit": "../code-review-second-pass-2026-11-16/combined-findings.json",
+  "verification_method": "Repository checks executed in isolated equivalent lanes with alternative owned browser ports 18000/13000. The audit:full supervisor itself was not used because the user already had development servers on 8000/3000. Fresh complete backend coverage and the unchanged repository coverage gate were used.",
+  "patch_verified_against_before_snapshot": true
+}

@@ -1,0 +1,31 @@
+SESSION RUNTIME / PROVIDER / CONTEXT AUDIT
+November17,2026 — audit only, product source unchanged
+
+18 responsibility groups inspected.55 existing focused tests passed;3 offline current-behavior probes reproduced faults. Two findings concern incomplete new integration; the fallback-order finding is unchanged pre-existing logic.
+
+SESSION-RUNTIME-01 — P2 — New optional image work bypasses mandatory text finishing priority
+Source: backend/src/round_robin/orchestration/admission.py:129-136; backend/src/round_robin/worker/image_tasks.py:102-114; backend/src/round_robin/worker/image_tasks.py:298-300
+Session relation: Incomplete integration of the new text priority guard with the unchanged image capacity path.
+Trigger: A text run has reached synthesis/audit and a queued optional generation/edit is evaluated while shared slots are available or about to free.
+Observed: provider_capacity_available(... mandatory=False) returns False; image_tasks._capacity returns True for the same shared capacity state. Image execution never consults the new stage-priority guard.
+Impact: New optional image work can acquire shared provider/global capacity ahead of ready mandatory text work. Alongside existing visual critics it can occupy all slots and exhaust the text run's reserved finishing opportunity.
+Fix: Use one locked shared capacity/admission policy for both text and image authorization, preserving required visual reviews while denying new optional generation/edit ahead of admitted mandatory text work. Include cross-modal scheduling regressions.
+Limit: The direct probe verifies actual guard disagreement. It does not claim every scheduling order starves text, that a single image call fills all slots, or that monetary/call caps are bypassed.
+
+SESSION-RUNTIME-02 — P2 — Preflight accepts input that configured provider context admission necessarily rejects
+Source: backend/src/round_robin/api/preflight.py:56-102; backend/src/round_robin/providers/http.py:138-149; backend/src/round_robin/worker/tasks.py:150-160
+Session relation: The new exact-byte helper checks the application48K packet ceiling but does not apply configured provider schema/system/output bounds.
+Trigger: A valid brief contains12,000 background characters,4,000 goal characters and4,000 question characters, with verified configured context32,768 and ordinary synthetic prices.
+Observed: input_packet_error returns None; the actual intake packet is32,325 bytes (under48K), while HTTPProvider.conservative_bound rejects context_limit after adding wire schema/system/protocol margin and billable output allowance.
+Impact: A successful-looking funded preflight can admit a run whose intake cannot start; one preflight is consumed and a failed/limited report results without substantive model work. Mandatory finishing contexts can encounter the same configuration mismatch later.
+Fix: Apply the adapter's no-send conservative payload/context calculation at preflight for configured mandatory roles and credible downstream envelopes, including schemas, instructions, output bound and provider context. Surface a precise blocker before Start.
+Limit: Pre-send provider checks correctly prevent an oversized external request; this is admission/liveness and misleading readiness-to-start, not a paid context-overflow send. The synthetic configuration uses valid public data and no key/network access.
+
+SESSION-RUNTIME-03 — P2 — Moderator pre-send recovery cycles the first two fallback providers
+Source: backend/src/round_robin/orchestration/policies.py:78-86; backend/src/round_robin/worker/tasks.py:59-79; backend/src/round_robin/worker/tasks.py:137-160
+Session relation: Pre-existing unchanged fallback loop remains in a runtime file modified this session; record separately from newly introduced defects.
+Trigger: OpenAI and Anthropic fail conservative pre-send configuration validation while Google is healthy; declared fallback order is OpenAI, Anthropic, Google.
+Observed: Three infrastructure claims evaluate OpenAI, Anthropic, OpenAI; the run fails with zero authorized model calls and Google is never attempted.
+Impact: A declared healthy moderator fallback is skipped even when it fits the remaining infrastructure and paid-call limits. This can prevent a usable stage from executing after provider credential/configuration availability changes.
+Fix: Persist attempted/unavailable providers per logical role and advance through eligible predeclared fallbacks in order, retaining all original call/infrastructure/refusal guards.
+Limit: Ordinary sent failures still have only the original two-call ceiling; this reproduction uses pre-send failures that consume zero model calls. It does not authorize extra paid calls or fallback to evade refusal.

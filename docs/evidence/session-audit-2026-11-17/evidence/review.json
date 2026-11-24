@@ -1,0 +1,253 @@
+{
+  "audit_date": "2026-11-17",
+  "scope": "Independent evidence, epistemic state, scoped attestation, retrieval and report additions built in this session",
+  "product_source_modified": false,
+  "findings": [
+    {
+      "id": "SESSION-E01",
+      "priority": "P1",
+      "title": "New reassessment reports can certify a choice using explicitly expired supplier quotes",
+      "source_refs": [
+        "backend/src/round_robin/research/discussion.py:160",
+        "backend/src/round_robin/orchestration/reporting.py:31",
+        "backend/src/round_robin/orchestration/reporting.py:77",
+        "backend/src/round_robin/api/assessments.py:76",
+        "backend/src/round_robin/api/assessments.py:103"
+      ],
+      "trigger": "Cost inputs were valid at the run start and received owner attestations with valid_until=null. After the quoted valid-through date passes, another requirement attestation republishes the report.",
+      "actual": "current_assessments checks only attestation.valid_until and exact hashes, not the embedded quote_valid_until. comparison_as_of always uses run.created_at, including the new report version. The new publication retains both accepted cost receipts and known cost totals and returns ready_to_choose.",
+      "impact": "A freshly published reassessment presents a ready choice after a known price validity boundary has passed. The option_costs POST expiry check does not protect requirement-only re-publication.",
+      "proof": "probe.py:expired_reassessment plus actual owner API api_expiry.py/api-expiry-results.json: Oct28 cost receipts, Nov10 quote expiry, Nov17 requirement-only POST201 publishes ready_to_choose version7 after version6; cost totals1600/1840/0 and all old cost receipts retained; zero added model calls.",
+      "recommendation": "Separate immutable original comparison-as-of from a new reassessment-as-of. Recheck every accepted cost receipt and each included quote validity at reassessment publication; drop stale support and keep costs/readiness conditional. Preserve the original historical report, and serialize the assessment date explicitly.",
+      "caveat": "The authenticated API path is exercised on a completed synthetic live-labeled fixture derived from the actual simulated pipeline. Initial fixture labels/usage are converted only to exercise live readiness; no paid provider quality is claimed. The subsequent owner attestation POST and saved-report GET are actual application routes."
+    },
+    {
+      "id": "SESSION-E02",
+      "priority": "P1",
+      "title": "An audit can close an objection using an answer from an obsolete synthesis",
+      "source_refs": [
+        "backend/src/round_robin/research/discussion.py:17",
+        "backend/src/round_robin/research/discussion.py:45",
+        "backend/src/round_robin/research/discussion.py:91",
+        "backend/src/round_robin/research/discussion.py:100"
+      ],
+      "trigger": "Synthesis0 answers a critical issue. A later replacement synthesis omits that answer or its required condition. Audit1 returns resolved for the issue.",
+      "actual": "The reducer accepts any prior answered event from a different provider if the frozen brief hash matches. It does not require the latest synthesis to answer, bind the answer/resolution to the current synthesis or claim versions, or reopen resolved issues on a replacement synthesis. The reproduced ledger closes the issue despite no response in synthesis1, and build_report returns ready_to_choose.",
+      "impact": "The new objection mechanism can certify an obsolete correction and hide a regression in the actual final recommendation. The main invariant that each current material concern gets an inspectable current resolution is not enforced.",
+      "proof": "probe.py:stale_answer_resolution; probe-results.json:stale_answer_resolution. Events opened by proposal1, answered by synthesis0, resolved by audit1; no synthesis1 answer. New report ready_to_choose.",
+      "recommendation": "Bind answers and reviewer resolutions to an explicit current synthesis ID, issue/claim versions and input packet hash. On replacement, carry or invalidate each resolution through an explicit recheck; require an answer in the current synthesis or an explicit verified carry-forward record before independent resolution.",
+      "caveat": "The auditor does receive the latest synthesis in the live packet, so a careful model could avoid this. The defect is deterministic acceptance of a stale disposition, not proof every real auditor would make the mistake or a demand that the application prove natural-language truth."
+    },
+    {
+      "id": "SESSION-E03",
+      "priority": "P2",
+      "title": "Markdown/PDF omit the actual objection-resolution event ledger",
+      "source_refs": [
+        "backend/src/round_robin/reports/exports.py:44",
+        "backend/src/round_robin/reports/exports.py:68",
+        "backend/src/round_robin/reports/exports.py:154",
+        "backend/src/round_robin/schemas/discussion.py:35"
+      ],
+      "trigger": "A saved issue has opening, synthesis-answer and independent-resolution events and is exported to Markdown or PDF.",
+      "actual": "describe() renders value.responses/value.resolutions, but DiscussionIssue stores events. Both export paths therefore print an empty list after the issue status instead of the actual response explanations/provenance/citations, under a heading claiming Complete objection and resolution ledger.",
+      "impact": "Downloaded decision briefs cannot explain how an objection was resolved even though JSON and the UI retain that explanation. The completion claim that the full issue ledger survives all exports is false.",
+      "proof": "probe.py:export_loss; probe-results.json:export_ledger_loss. Both resolution sentinels present in JSON and absent in Markdown and independently extracted PDF text.",
+      "recommendation": "Render each actual events entry including disposition, response, actor/stage, step/input identity and basis refs; preserve all entries rather than summary limits. Add extraction checks for unique resolution explanations and adverse/supporting citations across JSON/Markdown/PDF.",
+      "caveat": "Saved JSON and UI event history remain intact; the defect is export fidelity rather than deletion of original evidence. General PDF geometry was not audited in this lane."
+    }
+  ],
+  "inventory": [
+    {
+      "name": "Claim graph cycles, AND premises/OR alternatives and status/kind propagation",
+      "source": "backend/src/round_robin/research/claims.py:12",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Alias scoping, identity assignment and recursive reference rewrite",
+      "source": "backend/src/round_robin/research/claims.py:55",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Immutable claim content hash and old-shape read compatibility",
+      "source": "backend/src/round_robin/research/reuse.py:32",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Claim persistence and source status qualification",
+      "source": "backend/src/round_robin/research/reuse.py:76",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Explicit parent selection, reference closure and freshness downgrade",
+      "source": "backend/src/round_robin/research/reuse.py:122",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Issue opening identity, complete bounded storage and material filtering",
+      "source": "backend/src/round_robin/research/discussion.py:21",
+      "status": "reviewed_with_version_binding_finding"
+    },
+    {
+      "name": "Independent issue response/resolution and stale input handling",
+      "source": "backend/src/round_robin/research/discussion.py:64",
+      "status": "SESSION-E02"
+    },
+    {
+      "name": "Assessment target hash, ownership and exact evidence binding",
+      "source": "backend/src/round_robin/research/discussion.py:117",
+      "status": "reviewed_no_new_identity_scope_defect_observed"
+    },
+    {
+      "name": "Assessment latest-record reduction and expiry handling",
+      "source": "backend/src/round_robin/research/discussion.py:141",
+      "status": "SESSION-E01"
+    },
+    {
+      "name": "Attestation command replay, concurrency/version guard and zero-inference publication",
+      "source": "backend/src/round_robin/api/assessments.py:53",
+      "status": "SESSION-E01"
+    },
+    {
+      "name": "Conservative synthesis/audit constraint disagreement reducer",
+      "source": "backend/src/round_robin/orchestration/reporting.py:93",
+      "status": "reviewed_no_new_disagreement_attribution_defect_observed"
+    },
+    {
+      "name": "Scoped owner requirement and comparative cost support",
+      "source": "backend/src/round_robin/orchestration/reporting.py:120",
+      "status": "SESSION-E01"
+    },
+    {
+      "name": "Full issue/readiness/report construction and display overflow",
+      "source": "backend/src/round_robin/orchestration/reporting.py:165",
+      "status": "SESSION-E02"
+    },
+    {
+      "name": "Readiness reducer and scoped qualification text",
+      "source": "backend/src/round_robin/reports/readiness.py:6",
+      "status": "reviewed_with_upstream_expiry_and_resolution_findings"
+    },
+    {
+      "name": "Cost frontier, ordinal preferences and exact margin calculations",
+      "source": "backend/src/round_robin/reports/insights.py:5",
+      "status": "reviewed_no_new_defect_observed"
+    },
+    {
+      "name": "Current and legacy saved-report reference/cutoff adaptation",
+      "source": "backend/src/round_robin/reports/read_adapters.py:26",
+      "status": "reviewed_no_new_normal_API_mutation_defect_observed"
+    },
+    {
+      "name": "Report schemas for issue/assessment provenance, scope and dimensions",
+      "source": "backend/src/round_robin/schemas/runtime.py:126",
+      "status": "reviewed_with_upstream_version_binding_finding"
+    },
+    {
+      "name": "Structured premise/objection/assessment data contracts",
+      "source": "backend/src/round_robin/schemas/contributions.py:22; schemas/discussion.py:11",
+      "status": "reviewed_no_new_shape_defect_observed"
+    },
+    {
+      "name": "Fair objective queries, source/passages allocation and explicit shortfalls",
+      "source": "backend/src/round_robin/research/service.py:192",
+      "status": "reviewed_no_new_allocation_defect_observed"
+    },
+    {
+      "name": "Canonical proposal context guard before search and each source commit",
+      "source": "backend/src/round_robin/research/service.py:164",
+      "status": "reviewed_no_new_local_guard_defect_observed"
+    },
+    {
+      "name": "Relevance/exception passage windows, offsets, hashes and omitted coverage",
+      "source": "backend/src/round_robin/research/fetcher.py:307",
+      "status": "reviewed_bounded_heuristic_not_semantic_verification"
+    },
+    {
+      "name": "Markdown/PDF issue and constraint serialization",
+      "source": "backend/src/round_robin/reports/exports.py:40",
+      "status": "SESSION-E03"
+    }
+  ],
+  "inventory_entries": 22,
+  "reviewed_source_files": 15,
+  "validation": {
+    "existing_test_command": "uv run pytest -q backend/tests/test_algorithm_evidence_fixes.py backend/tests/test_evidence_regressions.py backend/tests/test_runtime_report.py backend/tests/test_readiness.py backend/tests/test_research_service.py backend/tests/test_research.py",
+    "existing_tests": "115 passed, 2 warnings in 6.03s",
+    "existing_tests_log": "existing-tests.log",
+    "new_probe_command": "PYTHONPATH=backend/src:backend/tests:. uv run python docs/evidence/session-audit-2026-11-17/evidence/probe.py",
+    "new_probes": 3,
+    "probe_result": "probe-results.json",
+    "external_network_calls": 0,
+    "api_probe_command": "PYTHONPATH=backend/src:backend/tests:. uv run python docs/evidence/session-audit-2026-11-17/evidence/api_expiry.py",
+    "api_probe_result": "api-expiry-results.json",
+    "api_attestation_status": 201
+  },
+  "limitations": [
+    "No live provider or human study was performed; semantic truth cannot be inferred from graph shape or agent agreement.",
+    "No fresh database-tampering security audit or PDF visual-layout QA is claimed.",
+    "No concrete defect observed is not a proof of correctness or evidence that all listed controls are formally complete.",
+    "The API expiry fixture is synthetic and uses completed live labels; it does not measure real provider quality."
+  ],
+  "source_manifest": [
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "sha256": "000b61fd6eb8cf7600d3d98857fb4ff05d548afe884f8618f096f7f0b5ad06d7"
+    },
+    {
+      "path": "backend/src/round_robin/research/reuse.py",
+      "sha256": "d715a05a3cc8843a7fe935846fbbe7e09bc56dd292a07b75cb576a62208adc8e"
+    },
+    {
+      "path": "backend/src/round_robin/research/discussion.py",
+      "sha256": "d3ffaaab5239c6bda1675f822aabd087e43b18c3f7d60b784892765ae60b38ad"
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "9b896ab20f8c7963162690c497a54154a0dd7185c219050706d373d39440a21b"
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "a8b8e97680d632c4134842ba73cd76eb1ff6cc35ec6dbbd7eca83f61c1ef4272"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/discussion.py",
+      "sha256": "6ff83236c0620fb56e5c9270970b8beab67fa30f896d332ecd8a08fd596435f4"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/contributions.py",
+      "sha256": "1c55738cc73d221e48c4d3b25ee62af18c20cd506b05061dfc9723ac646bc3b2"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "bb79baef93fd516bc77a0b2b7095fbaaf7ac61d3fc74a2dfcb16fc2372137bc1"
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "00c05db1b159b6117f3af64533d2288b1db4430a77e8f1e9b53e4902003750e8"
+    },
+    {
+      "path": "backend/src/round_robin/reports/insights.py",
+      "sha256": "f21cec9a184639124efcf0b0209060db9efe85fc806b7f072edf41ba2d16047f"
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c"
+    },
+    {
+      "path": "backend/src/round_robin/reports/exports.py",
+      "sha256": "3c5d484aefbced257a9d2ac112da47fa0b59778b1d272f77593ee8a57e363cfa"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "129821b95823615291f9fe20c9aa7d0c52d8d5f5dfd6316fa7ed13649818c0a8"
+    },
+    {
+      "path": "backend/src/round_robin/api/assessments.py",
+      "sha256": "dc8b60b7f281a84266c18228f124729510148cd722a2bc322e90f7da207a78bf"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/views.py",
+      "sha256": "5462f2ef3842352b5c46a47b9e65db997b77cace0c648ebbd78b19c5678a89f2"
+    }
+  ]
+}

@@ -1,0 +1,385 @@
+{
+  "recorded_at_utc": "2026-11-17T04:49:33.840721+00:00",
+  "passed": true,
+  "threshold_exclusive_percent": 95,
+  "services": {
+    "migrations": {
+      "files": [
+        "backend/migrations/env.py",
+        "backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py",
+        "backend/migrations/versions/c6917df240ab_optional_visual_contracts.py",
+        "backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py",
+        "backend/migrations/versions/e7209a4f361c_claim_versions_and_reuse.py",
+        "backend/migrations/versions/f973196b6714_initial_application.py"
+      ],
+      "lines": {
+        "covered": 170,
+        "total": 170,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 10,
+        "total": 10,
+        "percent": 100.0
+      }
+    },
+    "application": {
+      "files": [
+        "backend/src/round_robin/__init__.py",
+        "backend/src/round_robin/app.py",
+        "backend/src/round_robin/configuration.py",
+        "backend/src/round_robin/export_contracts.py",
+        "backend/src/round_robin/fixture_api.py",
+        "backend/src/round_robin/fixtures.py",
+        "backend/src/round_robin/ops.py"
+      ],
+      "lines": {
+        "covered": 565,
+        "total": 574,
+        "percent": 98.4321
+      },
+      "branches": {
+        "covered": 163,
+        "total": 170,
+        "percent": 95.8824
+      }
+    },
+    "api": {
+      "files": [
+        "backend/src/round_robin/api/__init__.py",
+        "backend/src/round_robin/api/artifacts.py",
+        "backend/src/round_robin/api/auth.py",
+        "backend/src/round_robin/api/commands.py",
+        "backend/src/round_robin/api/drafts.py",
+        "backend/src/round_robin/api/events.py",
+        "backend/src/round_robin/api/hosted.py",
+        "backend/src/round_robin/api/lineage.py",
+        "backend/src/round_robin/api/preflight.py",
+        "backend/src/round_robin/api/reuse.py",
+        "backend/src/round_robin/api/visual.py"
+      ],
+      "lines": {
+        "covered": 1524,
+        "total": 1544,
+        "percent": 98.7047
+      },
+      "branches": {
+        "covered": 445,
+        "total": 458,
+        "percent": 97.1616
+      }
+    },
+    "database": {
+      "files": [
+        "backend/src/round_robin/database/__init__.py",
+        "backend/src/round_robin/database/claim_models.py",
+        "backend/src/round_robin/database/models.py",
+        "backend/src/round_robin/database/safety.py",
+        "backend/src/round_robin/database/services.py",
+        "backend/src/round_robin/database/session.py",
+        "backend/src/round_robin/database/visual_models.py"
+      ],
+      "lines": {
+        "covered": 406,
+        "total": 407,
+        "percent": 99.7543
+      },
+      "branches": {
+        "covered": 25,
+        "total": 26,
+        "percent": 96.1538
+      }
+    },
+    "dispatcher": {
+      "files": [
+        "backend/src/round_robin/dispatcher/__init__.py",
+        "backend/src/round_robin/dispatcher/service.py"
+      ],
+      "lines": {
+        "covered": 173,
+        "total": 175,
+        "percent": 98.8571
+      },
+      "branches": {
+        "covered": 63,
+        "total": 66,
+        "percent": 95.4545
+      }
+    },
+    "operations": {
+      "files": [
+        "backend/src/round_robin/operations/__init__.py",
+        "backend/src/round_robin/operations/artifact_lifecycle.py",
+        "backend/src/round_robin/operations/durability.py",
+        "backend/src/round_robin/operations/maintenance.py",
+        "backend/src/round_robin/operations/processes.py",
+        "backend/src/round_robin/operations/recovery.py"
+      ],
+      "lines": {
+        "covered": 652,
+        "total": 661,
+        "percent": 98.6384
+      },
+      "branches": {
+        "covered": 229,
+        "total": 236,
+        "percent": 97.0339
+      }
+    },
+    "orchestration": {
+      "files": [
+        "backend/src/round_robin/orchestration/__init__.py",
+        "backend/src/round_robin/orchestration/admission.py",
+        "backend/src/round_robin/orchestration/budget.py",
+        "backend/src/round_robin/orchestration/circuits.py",
+        "backend/src/round_robin/orchestration/configuration.py",
+        "backend/src/round_robin/orchestration/controller.py",
+        "backend/src/round_robin/orchestration/policies.py",
+        "backend/src/round_robin/orchestration/reporting.py"
+      ],
+      "lines": {
+        "covered": 850,
+        "total": 854,
+        "percent": 99.5316
+      },
+      "branches": {
+        "covered": 375,
+        "total": 380,
+        "percent": 98.6842
+      }
+    },
+    "providers": {
+      "files": [
+        "backend/src/round_robin/providers/__init__.py",
+        "backend/src/round_robin/providers/base.py",
+        "backend/src/round_robin/providers/http.py",
+        "backend/src/round_robin/providers/images.py",
+        "backend/src/round_robin/providers/simulated.py",
+        "backend/src/round_robin/providers/structured.py",
+        "backend/src/round_robin/providers/transport.py"
+      ],
+      "lines": {
+        "covered": 779,
+        "total": 788,
+        "percent": 98.8579
+      },
+      "branches": {
+        "covered": 263,
+        "total": 272,
+        "percent": 96.6912
+      }
+    },
+    "reports": {
+      "files": [
+        "backend/src/round_robin/reports/exports.py",
+        "backend/src/round_robin/reports/measurements.py",
+        "backend/src/round_robin/reports/read_adapters.py",
+        "backend/src/round_robin/reports/readiness.py",
+        "backend/src/round_robin/reports/storage.py"
+      ],
+      "lines": {
+        "covered": 334,
+        "total": 334,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 151,
+        "total": 152,
+        "percent": 99.3421
+      }
+    },
+    "research": {
+      "files": [
+        "backend/src/round_robin/research/calculator.py",
+        "backend/src/round_robin/research/claims.py",
+        "backend/src/round_robin/research/currencies.py",
+        "backend/src/round_robin/research/fetcher.py",
+        "backend/src/round_robin/research/queries.py",
+        "backend/src/round_robin/research/reuse.py",
+        "backend/src/round_robin/research/search.py",
+        "backend/src/round_robin/research/service.py"
+      ],
+      "lines": {
+        "covered": 894,
+        "total": 900,
+        "percent": 99.3333
+      },
+      "branches": {
+        "covered": 347,
+        "total": 354,
+        "percent": 98.0226
+      }
+    },
+    "schemas": {
+      "files": [
+        "backend/src/round_robin/schemas/__init__.py",
+        "backend/src/round_robin/schemas/application.py",
+        "backend/src/round_robin/schemas/briefs.py",
+        "backend/src/round_robin/schemas/common.py",
+        "backend/src/round_robin/schemas/contributions.py",
+        "backend/src/round_robin/schemas/events.py",
+        "backend/src/round_robin/schemas/evidence.py",
+        "backend/src/round_robin/schemas/preflight.py",
+        "backend/src/round_robin/schemas/provider_configuration.py",
+        "backend/src/round_robin/schemas/reports.py",
+        "backend/src/round_robin/schemas/runtime.py",
+        "backend/src/round_robin/schemas/views.py"
+      ],
+      "lines": {
+        "covered": 921,
+        "total": 921,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 186,
+        "total": 186,
+        "percent": 100.0
+      }
+    },
+    "security": {
+      "files": [
+        "backend/src/round_robin/security/__init__.py",
+        "backend/src/round_robin/security/hosted.py",
+        "backend/src/round_robin/security/logging.py"
+      ],
+      "lines": {
+        "covered": 156,
+        "total": 156,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 50,
+        "total": 50,
+        "percent": 100.0
+      }
+    },
+    "visual": {
+      "files": [
+        "backend/src/round_robin/visual/__init__.py",
+        "backend/src/round_robin/visual/assets.py",
+        "backend/src/round_robin/visual/iterations.py",
+        "backend/src/round_robin/visual/jobs.py",
+        "backend/src/round_robin/visual/renderers/__init__.py",
+        "backend/src/round_robin/visual/renderers/diagram.py",
+        "backend/src/round_robin/visual/renderers/interface.py",
+        "backend/src/round_robin/visual/reviews.py",
+        "backend/src/round_robin/visual/schemas.py",
+        "backend/src/round_robin/visual/service.py",
+        "backend/src/round_robin/visual/views.py"
+      ],
+      "lines": {
+        "covered": 1320,
+        "total": 1330,
+        "percent": 99.2481
+      },
+      "branches": {
+        "covered": 406,
+        "total": 420,
+        "percent": 96.6667
+      }
+    },
+    "worker": {
+      "files": [
+        "backend/src/round_robin/worker/__init__.py",
+        "backend/src/round_robin/worker/app.py",
+        "backend/src/round_robin/worker/image_tasks.py",
+        "backend/src/round_robin/worker/research_tasks.py",
+        "backend/src/round_robin/worker/tasks.py"
+      ],
+      "lines": {
+        "covered": 676,
+        "total": 680,
+        "percent": 99.4118
+      },
+      "branches": {
+        "covered": 226,
+        "total": 232,
+        "percent": 97.4138
+      }
+    },
+    "experiments": {
+      "files": [
+        "experiments/__init__.py",
+        "experiments/adapters.py",
+        "experiments/evaluation.py",
+        "experiments/journal.py",
+        "experiments/release.py",
+        "experiments/runner.py",
+        "experiments/study_runner.py",
+        "experiments/visual_evaluation.py"
+      ],
+      "lines": {
+        "covered": 1774,
+        "total": 1789,
+        "percent": 99.1615
+      },
+      "branches": {
+        "covered": 759,
+        "total": 776,
+        "percent": 97.8093
+      }
+    },
+    "tooling": {
+      "files": [
+        "scripts/audit.py",
+        "scripts/coverage_gate.py",
+        "scripts/dev.py",
+        "scripts/scenario_summary.py",
+        "scripts/serve_prototype.py",
+        "scripts/verify.py"
+      ],
+      "lines": {
+        "covered": 689,
+        "total": 693,
+        "percent": 99.4228
+      },
+      "branches": {
+        "covered": 252,
+        "total": 256,
+        "percent": 98.4375
+      }
+    },
+    "frontend": {
+      "files": [
+        "frontend/app/api-client.ts",
+        "frontend/app/contracts.ts",
+        "frontend/app/design/page.tsx",
+        "frontend/app/design/workspace.tsx",
+        "frontend/app/layout.tsx",
+        "frontend/app/live-workspace.tsx",
+        "frontend/app/live/page.tsx",
+        "frontend/app/page.tsx",
+        "frontend/app/workspace.tsx"
+      ],
+      "lines": {
+        "covered": 992,
+        "total": 992,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 1388,
+        "total": 1444,
+        "percent": 96.1219
+      }
+    },
+    "native_renderer": {
+      "files": [
+        "scripts/native-renderer.mjs"
+      ],
+      "lines": {
+        "covered": 94,
+        "total": 94,
+        "percent": 100.0
+      },
+      "branches": {
+        "covered": 103,
+        "total": 103,
+        "percent": 100.0
+      }
+    }
+  },
+  "failures": [],
+  "source_manifest_verified": true,
+  "verification_inputs_verified": true,
+  "limits": "Execution coverage does not prove correctness or exhaust all concurrency interleavings. Generated types, dependencies, styles and nonexecutable Protocol declarations are outside executable source counts."
+}

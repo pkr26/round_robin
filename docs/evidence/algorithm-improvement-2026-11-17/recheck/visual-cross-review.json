@@ -1,0 +1,21 @@
+{
+  "all_assertions_passed": true,
+  "external_network_calls": 0,
+  "mock_http_requests": 3,
+  "actual_edit_http_prompt_omits_selected_findings_and_dispositions": true,
+  "child_critics_received_both_images_and_prior_critical_finding": [
+    "anthropic",
+    "google"
+  ],
+  "empty_child_findings_accepted": true,
+  "coverage": {
+    "eligible_critic_providers": [
+      "anthropic",
+      "google"
+    ],
+    "complete": true,
+    "generator_provenance": "known",
+    "limitations": []
+  },
+  "qualification": "Quorum measures eligible reviewers, not quality. UI labels this accurately. Missing regression dispositions are a separate completeness gap; parent history is retained."
+}

@@ -1,0 +1,175 @@
+{
+  "findings": [
+    {
+      "id": "FV01",
+      "title": "Raster dimension validation can permanently break visual history",
+      "severity": "P1",
+      "file": "backend/src/round_robin/visual/assets.py",
+      "lines": [
+        45,
+        46
+      ],
+      "description": "validate_raster accepts any width/height under16M pixels, while DesignVersionView allows at most8192 each. Commit precedes response validation. A valid9000x1 PNG is permanently saved; upload/read/list respond503, preventing all visual history for the meeting from opening.",
+      "reproduction": "/tmp/round_robin_visual_probes.py; wide_upload:108 bytes, upload503, read503, list503."
+    },
+    {
+      "id": "FV02",
+      "title": "Reloaded uncommitted private commands have no recovery path",
+      "severity": "P1",
+      "file": "frontend/app/api-client.ts",
+      "lines": [
+        243,
+        248
+      ],
+      "description": "After create/draft/follow-up/outcome/text-upload network failure before delivery, reloading erases privateBodies. Receipt remains, server UUID returns404, reconcile returnsfalse, retry throws absent private input, and both workspaces disable new actions. No re-entry or server-fenced abandonment flow exists.",
+      "reproduction": "/tmp/round_robin_client_recovery_probe.cjs; receipt_still_blocks=true after404; retry only-in-memory error; new action rejected."
+    },
+    {
+      "id": "FV03",
+      "title": "Definitive4xx on retry never releases pending command",
+      "severity": "P1",
+      "file": "frontend/app/api-client.ts",
+      "lines": [
+        220,
+        221
+      ],
+      "description": "A retained command is only cleared on success. When retry receives definitive409 preflight_expired/draft_conflict after initial transport failure, wasRetained skips clearReceipt. Server never committed UUID, so reconciliation404 cannot clear it either; all subsequent writes remain blocked even with original safe replay body in memory.",
+      "reproduction": "/tmp/round_robin_client_conflict_probe.cjs; retryError preflight_expired, reconcilefalse, receiptStillPresenttrue."
+    },
+    {
+      "id": "FV04",
+      "title": "Accepted JPEGs can normalize into permanently unreviewable images",
+      "severity": "P2",
+      "file": "backend/src/round_robin/visual/reviews.py",
+      "lines": [
+        33,
+        36
+      ],
+      "description": "Canonical PNG accepts up to64MiB storage after a <=10MiB original, but review reuses the10MiB upload validator on canonical bytes. Valid compressed JPEGs expand above10MiB and can never get a pixel receipt even when critic maximum_input_bytes permits64MiB.",
+      "reproduction": "/tmp/round_robin_visual_probes.py; synthetic2200x2200 JPEG5687427 bytes becomes14511086-byte PNG; issue_review_receipt raises UnsafeRaster10MiB."
+    },
+    {
+      "id": "FV05",
+      "title": "Switching drafts retains stale public-term browser validation error",
+      "severity": "P2",
+      "file": "frontend/app/live-workspace.tsx",
+      "lines": [
+        489,
+        489
+      ],
+      "description": "Public terms setCustomValidity is updated only onChange. Switching from invalid9-term draft to another valid saved draft replaces textarea value without clearing validity; unlike requirements/preferences, no effect resynchronizes it. New valid draft cannot submit until public terms edited.",
+      "reproduction": "/tmp/round_robin_frontend_ui_probe.cjs; new_meeting_public_terms empty, validation_error_after_switch remains eight-term error, new_form_valid=false."
+    },
+    {
+      "id": "FV06",
+      "title": "Saved nonUSD amounts are presented as USD during editing",
+      "severity": "P2",
+      "file": "frontend/app/live-workspace.tsx",
+      "lines": [
+        487,
+        488
+      ],
+      "description": "Budget and every component label hardcode USD, but API-created/reopened briefs support other currencies and edits preserve the saved currency. A EUR amount is labeledUSD and a user-entered replacement is silently stored/interpretedEUR. Component quantity/status/frequency also remain hidden while amount alone is edited.",
+      "reproduction": "/tmp/round_robin_frontend_ui_probe.cjs; saved_currencyEUR, rendered_budget_label Budget(USD). Scope confirmed finding to currency; quantity/status separate concerns not independently probed."
+    },
+    {
+      "id": "FV07",
+      "title": "Native diagrams ignore frozen output dimensions",
+      "severity": "P2",
+      "file": "backend/src/round_robin/api/visual.py",
+      "lines": [
+        449,
+        450
+      ],
+      "description": "native_diagram renders body.diagram dimensions without checking them against immutable design.frozen_brief dimensions. Default UI brief1024x1024 and starter diagram800x400 already disagree; endpoint publishes800x400 as ready under square frozen scope.",
+      "reproduction": "/tmp/round_robin_visual_probes.py; frozen1024x1024; status201; actual800x400."
+    },
+    {
+      "id": "FV08",
+      "title": "Diagram edge labels can be clipped despite successful required-text validation",
+      "severity": "P2",
+      "file": "backend/src/round_robin/visual/renderers/diagram.py",
+      "lines": [
+        113,
+        116
+      ],
+      "description": "Validator checks node labels fit boxes but does not bound edge label geometry. Renderer anchors whole label at edge midpoint without centering/wrapping. Valid node centers730,30 and930,230 in1000x300 viewport yield midpoint830; required label REQUIRED LABEL MUST REMAIN VISIBLE is219 pixels long and extends to1049, clipping49 pixels. Endpoint only checks required string occurs in source and publishesready.",
+      "reproduction": "Direct Diagram.model_validate+render_diagram probe with width1000,height300, nodes x700/y0 andx900/y200 widths60, heights70, edge text above succeeds; font.getlength219.0."
+    },
+    {
+      "id": "FV09",
+      "title": "Expired visual sessions retain finish holds and unserviceable queued work",
+      "severity": "P2",
+      "file": "backend/src/round_robin/worker/image_tasks.py",
+      "lines": [
+        387,
+        417
+      ],
+      "description": "Reconciliation considers only authorized operations and releases holds only for designs already nonactive. Nothing expires active designs at their1800s deadline. A failed generation can leave unused critic budget held permanently after deadline. Dispatcher catches expired/removed configuration without marking queued work terminal; design pending operations and preflight blockers remain even when no operation can run. Explicit user cancellation is currently required to resolve this otherwise impossible work.",
+      "reproduction": "/tmp/round_robin_visual_expiry_probe.py. Fake generation failure, elapsed2000s; reconciler0, designactive, finishholdheldUSD0.20. Remove funded config and dispatch retry; published0, sender_calls0, operationstillqueued.",
+      "related_locations": [
+        "backend/src/round_robin/worker/image_tasks.py:159",
+        "backend/src/round_robin/worker/image_tasks.py:371",
+        "backend/src/round_robin/worker/image_tasks.py:381"
+      ]
+    }
+  ],
+  "reviewed_source_files": [
+    "backend/src/round_robin/api/visual.py",
+    "backend/src/round_robin/visual/__init__.py",
+    "backend/src/round_robin/visual/assets.py",
+    "backend/src/round_robin/visual/iterations.py",
+    "backend/src/round_robin/visual/jobs.py",
+    "backend/src/round_robin/visual/renderers/__init__.py",
+    "backend/src/round_robin/visual/renderers/diagram.py",
+    "backend/src/round_robin/visual/renderers/interface.py",
+    "backend/src/round_robin/visual/reviews.py",
+    "backend/src/round_robin/visual/schemas.py",
+    "backend/src/round_robin/visual/service.py",
+    "backend/src/round_robin/visual/views.py",
+    "frontend/AGENTS.md",
+    "frontend/app/api-client.ts",
+    "frontend/app/contracts.ts",
+    "frontend/app/design/page.tsx",
+    "frontend/app/design/visual.css",
+    "frontend/app/design/workspace.tsx",
+    "frontend/app/globals.css",
+    "frontend/app/layout.tsx",
+    "frontend/app/live-workspace.tsx",
+    "frontend/app/live.css",
+    "frontend/app/live/page.tsx",
+    "frontend/app/page.tsx",
+    "frontend/app/workspace.tsx",
+    "frontend/next.config.ts",
+    "frontend/package.json",
+    "frontend/tsconfig.json",
+    "frontend/vitest.config.mts",
+    "scripts/native-renderer.Dockerfile",
+    "scripts/native-renderer.mjs",
+    "backend/src/round_robin/worker/image_tasks.py (expiry/dispatch/reservation sections cross-review)"
+  ],
+  "test_review": "Sampled frontend unit tests and browser tests (not all test bodies); root ran complete frontend suite. Fresh isolated API, renderer and actualReact/jsdom probes recorded separately. No existing application data or repository source modified.",
+  "probe_files": [
+    "/tmp/round_robin_visual_probes.py",
+    "/tmp/round_robin_visual_probe_results.json",
+    "/tmp/round_robin_client_recovery_probe.cjs",
+    "/tmp/round_robin_client_recovery_results.json",
+    "/tmp/round_robin_client_conflict_probe.cjs",
+    "/tmp/round_robin_client_conflict_results.json",
+    "/tmp/round_robin_frontend_ui_probe.cjs",
+    "/tmp/round_robin_frontend_ui_results.json",
+    "/tmp/round_robin_visual_expiry_probe.py",
+    "/tmp/round_robin_visual_expiry_results.json"
+  ],
+  "not_reported": [
+    {
+      "file": "backend/src/round_robin/visual/renderers/diagram.py",
+      "lines": [
+        108,
+        112
+      ],
+      "description": "Edge source/target rendered only as undirected line with no arrowheads, so direction is not conveyed. Confirmed source/SVG inspection; whether directed relationships are a required supported feature should be decided against product contract.",
+      "reason": "No explicit directed-edge requirement found in visual workflow contract; omit as a confirmed defect."
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+# Scenario implementation inventory
+
+88 core and 12 visual requirements retained. No scenario or phase is declared passed.
+
+Pending: 1. Partial implementation/test slices: 99.
+
+| Earliest phase | Requirements | Pending | Partial implementation/test slices |
+| --- | ---: | ---: | ---: |
+| 0B | 17 | 0 | 17 |
+| 1 | 20 | 0 | 20 |
+| 2 | 28 | 0 | 28 |
+| 3 | 13 | 1 | 12 |
+| 4 | 4 | 0 | 4 |
+| 5 | 3 | 0 | 3 |
+| 6 | 3 | 0 | 3 |
+| 7 | 5 | 0 | 5 |
+| 8 | 7 | 0 | 7 |
+
+Partial entries cover only their named unit, browser, mocked-provider and actual-process assertions.
+Full scenario invariants, remaining fault combinations, real-provider/human validation and phase
+gates remain pending. The 14 core combined-failure cases
+remain obligations in FAILURE_HANDLING.md and are not counted as new scenario IDs.
+
+11 requirements also retain their original fictional-prototype references.
+Those preparation references remain distinct from later durable API/process/browser evidence.

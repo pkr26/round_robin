@@ -1,0 +1,18 @@
+ 
+ -------------- celery@pradeeps-MacBook-Pro.local v5.7.0 (collider)
+--- ***** ----- 
+-- ******* ---- macOS-27.0.1-arm64-arm-64bit 2026-11-16 20:52:32
+- *** --- * --- 
+- ** ---------- [config]
+- ** ---------- .> app:         round_robin:0x106c32f30
+- ** ---------- .> transport:   redis://:**@127.0.0.1:56379/14
+- ** ---------- .> results:     disabled://
+- *** --- * --- .> concurrency: 3 (prefork)
+-- ******* ---- .> task events: OFF (enable -E to monitor tasks in this worker)
+--- ***** ----- 
+ -------------- [queues]
+                .> rr_audit2_73f24bdd0b974c6f89f2810b21abc651 exchange=rr_audit2_73f24bdd0b974c6f89f2810b21abc651(direct) key=rr_audit2_73f24bdd0b974c6f89f2810b21abc651
+                
+
+
+worker: Warm shutdown (MainProcess)

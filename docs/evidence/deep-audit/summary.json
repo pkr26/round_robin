@@ -1,0 +1,83 @@
+{
+  "recorded_at_utc": "2026-11-16T15:15:47.683239+00:00",
+  "inventory_files": 245,
+  "categories": {
+    "configuration": 14,
+    "documentation": 13,
+    "handwritten_source": 121,
+    "test_code": 78,
+    "test_metadata": 1,
+    "generated_or_locked": 11,
+    "historical_evidence": 7
+  },
+  "handwritten_source_files": 121,
+  "handwritten_source_lines": 17604,
+  "source_files_reviewed": 121,
+  "test_code_files": 78,
+  "test_code_lines": 10171,
+  "configuration_files": 14,
+  "source_symbol_entries": 1281,
+  "all_symbol_entries": 2150,
+  "unreviewed_code_or_configuration_files": [],
+  "symbols_without_explicit_current_review": [],
+  "python_coverage": {
+    "covered_lines": 9374,
+    "num_statements": 10528,
+    "percent_covered": 85.50683371298406,
+    "percent_covered_display": "85.51",
+    "missing_lines": 1154,
+    "excluded_lines": 13,
+    "percent_statements_covered": 89.0387537993921,
+    "percent_statements_covered_display": "89.04",
+    "num_branches": 3520,
+    "num_partial_branches": 764,
+    "covered_branches": 2638,
+    "missing_branches": 882,
+    "percent_branches_covered": 74.94318181818181,
+    "percent_branches_covered_display": "74.94"
+  },
+  "frontend_coverage_metrics": {
+    "lines": {
+      "total": 2765,
+      "covered": 2432,
+      "skipped": 0,
+      "pct": 87.95
+    },
+    "statements": {
+      "total": 2765,
+      "covered": 2432,
+      "skipped": 0,
+      "pct": 87.95
+    },
+    "functions": {
+      "total": 186,
+      "covered": 126,
+      "skipped": 0,
+      "pct": 67.74
+    },
+    "branches": {
+      "total": 951,
+      "covered": 860,
+      "skipped": 0,
+      "pct": 90.43
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "frontend_source_function_totals": {
+    "inventoried": 453,
+    "mapped": 104,
+    "uncovered_mapped": 29,
+    "unmapped": 349
+  },
+  "limits": [
+    "Static whole-file/function review is distinct from test execution and correctness proof.",
+    "Generated outputs are checked against generators; third-party dependencies, compiled/cache output and historical prose/evidence are not claimed as handwritten line audits.",
+    "Python source/function metrics include scripts and migrations. Browser source-map metrics exclude unavailable mappings and are an approximation after compilation.",
+    "Some worker processes are intentionally SIGKILLed; lost in-memory coverage cannot be recovered even though DB/fault assertions execute. The Node-launched Python preview server also lacks trace collection. No recorded hit is not proof that a function never executed."
+  ]
+}

@@ -1,0 +1,4273 @@
+{
+  "summary": {
+    "recorded_at_utc": "2026-11-16T15:15:47.683239+00:00",
+    "inventory_files": 245,
+    "categories": {
+      "configuration": 14,
+      "documentation": 13,
+      "handwritten_source": 121,
+      "test_code": 78,
+      "test_metadata": 1,
+      "generated_or_locked": 11,
+      "historical_evidence": 7
+    },
+    "handwritten_source_files": 121,
+    "handwritten_source_lines": 17604,
+    "source_files_reviewed": 121,
+    "test_code_files": 78,
+    "test_code_lines": 10171,
+    "configuration_files": 14,
+    "source_symbol_entries": 1281,
+    "all_symbol_entries": 2150,
+    "unreviewed_code_or_configuration_files": [],
+    "symbols_without_explicit_current_review": [],
+    "python_coverage": {
+      "covered_lines": 9374,
+      "num_statements": 10528,
+      "percent_covered": 85.50683371298406,
+      "percent_covered_display": "85.51",
+      "missing_lines": 1154,
+      "excluded_lines": 13,
+      "percent_statements_covered": 89.0387537993921,
+      "percent_statements_covered_display": "89.04",
+      "num_branches": 3520,
+      "num_partial_branches": 764,
+      "covered_branches": 2638,
+      "missing_branches": 882,
+      "percent_branches_covered": 74.94318181818181,
+      "percent_branches_covered_display": "74.94"
+    },
+    "frontend_coverage_metrics": {
+      "lines": {
+        "total": 2765,
+        "covered": 2432,
+        "skipped": 0,
+        "pct": 87.95
+      },
+      "statements": {
+        "total": 2765,
+        "covered": 2432,
+        "skipped": 0,
+        "pct": 87.95
+      },
+      "functions": {
+        "total": 186,
+        "covered": 126,
+        "skipped": 0,
+        "pct": 67.74
+      },
+      "branches": {
+        "total": 951,
+        "covered": 860,
+        "skipped": 0,
+        "pct": 90.43
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": "Unknown"
+      }
+    },
+    "frontend_source_function_totals": {
+      "inventoried": 453,
+      "mapped": 104,
+      "uncovered_mapped": 29,
+      "unmapped": 349
+    },
+    "limits": [
+      "Static whole-file/function review is distinct from test execution and correctness proof.",
+      "Generated outputs are checked against generators; third-party dependencies, compiled/cache output and historical prose/evidence are not claimed as handwritten line audits.",
+      "Python source/function metrics include scripts and migrations. Browser source-map metrics exclude unavailable mappings and are an approximation after compilation.",
+      "Some worker processes are intentionally SIGKILLed; lost in-memory coverage cannot be recovered even though DB/fault assertions execute. The Node-launched Python preview server also lacks trace collection. No recorded hit is not proof that a function never executed."
+    ]
+  },
+  "files": [
+    {
+      "path": ".coveragerc",
+      "kind": "configuration",
+      "sha256": "753bfd0d963ca1afb47e9a65d05303fe408a49d5ecf7426cef776caeba5a0e4d",
+      "lines": 29,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": ".dockerignore",
+      "kind": "configuration",
+      "sha256": "78b06819600b72cc577b8b4ef3f8cc12a2bb895cf1be293c0c13df95686df756",
+      "lines": 13,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": ".env.example",
+      "kind": "configuration",
+      "sha256": "ba3a87557ae5c998070d1eb79a311275af249621c5fc7d53b7eb0c99c6115df0",
+      "lines": 23,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": ".github/workflows/verification.yml",
+      "kind": "configuration",
+      "sha256": "d3c1ba08ea02548c1715b9bd86283834105d839625e449d8a4445caaa0785fda",
+      "lines": 72,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": ".gitignore",
+      "kind": "configuration",
+      "sha256": "054f6822f2a8d351eda85fc9fa66c8c7469c98d148e9b71af7d51c05d6f0e626",
+      "lines": 16,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": ".python-version",
+      "kind": "configuration",
+      "sha256": "9ea280e4c89d3f302c1e8b3e5e7db91c46bec0fe761356ae90f32aaf0dbe0e8b",
+      "lines": 2,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "README.md",
+      "kind": "documentation",
+      "sha256": "9b26b02135139eff772d985595c06b6063ca56347efd705e0a44eb89523ae24f",
+      "lines": 93,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "alembic.ini",
+      "kind": "configuration",
+      "sha256": "3dcf5701e529444a5042c432df35071752d5612406163f89a5b9f4108b34ba13",
+      "lines": 32,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/migrations/env.py",
+      "kind": "handwritten_source",
+      "sha256": "43d8fcec9862b557206bec2db07918c735c8bb8216f703114b9ed6bcad72cd96",
+      "lines": 34,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 22,
+        "num_statements": 25,
+        "percent_covered": 83.87096774193549,
+        "percent_covered_display": "83.87",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 88.0,
+        "percent_statements_covered_display": "88.00",
+        "num_branches": 6,
+        "num_partial_branches": 2,
+        "covered_branches": 4,
+        "missing_branches": 2,
+        "percent_branches_covered": 66.66666666666667,
+        "percent_branches_covered_display": "66.67"
+      }
+    },
+    {
+      "path": "backend/migrations/script.py.mako",
+      "kind": "handwritten_source",
+      "sha256": "ee5dd9a388ee59fd3d089670c2f60db5f5904da6f21cfe3bfc44d7f567ee1546",
+      "lines": 14,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py",
+      "kind": "handwritten_source",
+      "sha256": "cd7a41192a99a33de3ab15613c9a926958ae8ed81f5d6c256ff6a0be8f0cbeb0",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 12,
+        "num_statements": 12,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/migrations/versions/c6917df240ab_optional_visual_contracts.py",
+      "kind": "handwritten_source",
+      "sha256": "ad9c5a3a6d89f35772e5445bcde17f9cab98ec892402ba3baf14d9edfaa724d2",
+      "lines": 32,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 22,
+        "num_statements": 22,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py",
+      "kind": "handwritten_source",
+      "sha256": "1aa8f2ed62b8f61a2726c2126a13c4ad00f10aadf2e39ae4a4c219dd5646b334",
+      "lines": 20,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 10,
+        "num_statements": 10,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/migrations/versions/f973196b6714_initial_application.py",
+      "kind": "handwritten_source",
+      "sha256": "fcb134b4ca01400681c17a67318fe55e61c59bf07cb5aa22d9581a36ad4fb534",
+      "lines": 321,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 86,
+        "num_statements": 86,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "f0fe4f5ae2569dfae701fbc51127dea7fcad802614d46c386f6d8ee814473589",
+      "lines": 3,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 1,
+        "num_statements": 1,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "8f846a55f39ad5274695ad70d89fe28b4a383df5806fe30e405675a03e2f8ccb",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/artifacts.py",
+      "kind": "handwritten_source",
+      "sha256": "bdc32519eb063749c8f5a68d9db2bde6e1c093e4a7fd29a91c07773160ed9ce2",
+      "lines": 312,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 243,
+        "num_statements": 273,
+        "percent_covered": 84.22535211267606,
+        "percent_covered_display": "84.23",
+        "missing_lines": 30,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.01098901098901,
+        "percent_statements_covered_display": "89.01",
+        "num_branches": 82,
+        "num_partial_branches": 24,
+        "covered_branches": 56,
+        "missing_branches": 26,
+        "percent_branches_covered": 68.29268292682927,
+        "percent_branches_covered_display": "68.29"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/auth.py",
+      "kind": "handwritten_source",
+      "sha256": "8c29bd8ceb6e8c3848eeaca23dcbd6ad5b6c05f22a45ba9f782db19eb87ebc30",
+      "lines": 38,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 30,
+        "num_statements": 34,
+        "percent_covered": 83.33333333333333,
+        "percent_covered_display": "83.33",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 88.23529411764706,
+        "percent_statements_covered_display": "88.24",
+        "num_branches": 14,
+        "num_partial_branches": 4,
+        "covered_branches": 10,
+        "missing_branches": 4,
+        "percent_branches_covered": 71.42857142857143,
+        "percent_branches_covered_display": "71.43"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/commands.py",
+      "kind": "handwritten_source",
+      "sha256": "a521149e1e337e1bc258606d3c58a7c525229c56b8e7cf218ef15921666839ec",
+      "lines": 60,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 44,
+        "num_statements": 45,
+        "percent_covered": 96.49122807017544,
+        "percent_covered_display": "96.49",
+        "missing_lines": 1,
+        "excluded_lines": 0,
+        "percent_statements_covered": 97.77777777777777,
+        "percent_statements_covered_display": "97.78",
+        "num_branches": 12,
+        "num_partial_branches": 1,
+        "covered_branches": 11,
+        "missing_branches": 1,
+        "percent_branches_covered": 91.66666666666667,
+        "percent_branches_covered_display": "91.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/drafts.py",
+      "kind": "handwritten_source",
+      "sha256": "2bd0c87ffd4581051ee6a56cabaa5d0f5883e89a730e2cb0447982af3b2e8792",
+      "lines": 206,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 169,
+        "num_statements": 178,
+        "percent_covered": 91.59292035398231,
+        "percent_covered_display": "91.59",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 94.9438202247191,
+        "percent_statements_covered_display": "94.94",
+        "num_branches": 48,
+        "num_partial_branches": 10,
+        "covered_branches": 38,
+        "missing_branches": 10,
+        "percent_branches_covered": 79.16666666666667,
+        "percent_branches_covered_display": "79.17"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "kind": "handwritten_source",
+      "sha256": "7026ed2a41d55821a9e992ea15ed9d25ea09c04be6f820179a943cfed6d62e29",
+      "lines": 270,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 192,
+        "num_statements": 221,
+        "percent_covered": 82.43727598566308,
+        "percent_covered_display": "82.44",
+        "missing_lines": 29,
+        "excluded_lines": 0,
+        "percent_statements_covered": 86.87782805429865,
+        "percent_statements_covered_display": "86.88",
+        "num_branches": 58,
+        "num_partial_branches": 16,
+        "covered_branches": 38,
+        "missing_branches": 20,
+        "percent_branches_covered": 65.51724137931035,
+        "percent_branches_covered_display": "65.52"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/hosted.py",
+      "kind": "handwritten_source",
+      "sha256": "a99e9fa456eb277a0f4350777b7f16cdf7e5d3818b9878999641387d89c1b1ad",
+      "lines": 65,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 47,
+        "num_statements": 50,
+        "percent_covered": 93.10344827586206,
+        "percent_covered_display": "93.10",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 94.0,
+        "percent_statements_covered_display": "94.00",
+        "num_branches": 8,
+        "num_partial_branches": 1,
+        "covered_branches": 7,
+        "missing_branches": 1,
+        "percent_branches_covered": 87.5,
+        "percent_branches_covered_display": "87.50"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "kind": "handwritten_source",
+      "sha256": "83e0a593fec30fbf30e207ee7a1e07ffb4b0f40f0e57ac173882139331af8eeb",
+      "lines": 129,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 107,
+        "num_statements": 116,
+        "percent_covered": 88.75,
+        "percent_covered_display": "88.75",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.24137931034483,
+        "percent_statements_covered_display": "92.24",
+        "num_branches": 44,
+        "num_partial_branches": 9,
+        "covered_branches": 35,
+        "missing_branches": 9,
+        "percent_branches_covered": 79.54545454545455,
+        "percent_branches_covered_display": "79.55"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/api/visual.py",
+      "kind": "handwritten_source",
+      "sha256": "60d50673e37cce934148e217111215b08137338d4b7944d192751f85bea29dce",
+      "lines": 587,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 386,
+        "num_statements": 486,
+        "percent_covered": 75.39432176656152,
+        "percent_covered_display": "75.39",
+        "missing_lines": 100,
+        "excluded_lines": 0,
+        "percent_statements_covered": 79.42386831275721,
+        "percent_statements_covered_display": "79.42",
+        "num_branches": 148,
+        "num_partial_branches": 50,
+        "covered_branches": 92,
+        "missing_branches": 56,
+        "percent_branches_covered": 62.16216216216216,
+        "percent_branches_covered_display": "62.16"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/app.py",
+      "kind": "handwritten_source",
+      "sha256": "7d8abca90f575bbdab72f5e26dab32423b00c7dc697d27849c3f06b45801f44f",
+      "lines": 184,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 145,
+        "num_statements": 155,
+        "percent_covered": 90.67357512953367,
+        "percent_covered_display": "90.67",
+        "missing_lines": 10,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.54838709677419,
+        "percent_statements_covered_display": "93.55",
+        "num_branches": 38,
+        "num_partial_branches": 8,
+        "covered_branches": 30,
+        "missing_branches": 8,
+        "percent_branches_covered": 78.94736842105263,
+        "percent_branches_covered_display": "78.95"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/configuration.py",
+      "kind": "handwritten_source",
+      "sha256": "9a848aebbf299774a4ee904187f594315f577636ea04e6bbe4f8689cb65d6f09",
+      "lines": 96,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 67,
+        "num_statements": 74,
+        "percent_covered": 86.53846153846153,
+        "percent_covered_display": "86.54",
+        "missing_lines": 7,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.54054054054055,
+        "percent_statements_covered_display": "90.54",
+        "num_branches": 30,
+        "num_partial_branches": 7,
+        "covered_branches": 23,
+        "missing_branches": 7,
+        "percent_branches_covered": 76.66666666666667,
+        "percent_branches_covered_display": "76.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "5ad531f47b9f73c18da3de4609729488db8adc79e969187f5630779cc26fb461",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/models.py",
+      "kind": "handwritten_source",
+      "sha256": "ba2cc158071fb3a3dafa9e7cfe8beb249b728f87b6578d35af07158f949aed3c",
+      "lines": 269,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 226,
+        "num_statements": 226,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/safety.py",
+      "kind": "handwritten_source",
+      "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a",
+      "lines": 35,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 22,
+        "num_statements": 22,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 8,
+        "num_partial_branches": 0,
+        "covered_branches": 8,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "kind": "handwritten_source",
+      "sha256": "322bfb2386197d01e61024579c4cf8b4f5523770663d20812150f56d51c06796",
+      "lines": 71,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 50,
+        "num_statements": 51,
+        "percent_covered": 96.82539682539682,
+        "percent_covered_display": "96.83",
+        "missing_lines": 1,
+        "excluded_lines": 0,
+        "percent_statements_covered": 98.03921568627452,
+        "percent_statements_covered_display": "98.04",
+        "num_branches": 12,
+        "num_partial_branches": 1,
+        "covered_branches": 11,
+        "missing_branches": 1,
+        "percent_branches_covered": 91.66666666666667,
+        "percent_branches_covered_display": "91.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/session.py",
+      "kind": "handwritten_source",
+      "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f",
+      "lines": 23,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 14,
+        "num_statements": 16,
+        "percent_covered": 88.88888888888889,
+        "percent_covered_display": "88.89",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.5,
+        "percent_statements_covered_display": "87.50",
+        "num_branches": 2,
+        "num_partial_branches": 0,
+        "covered_branches": 2,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/database/visual_models.py",
+      "kind": "handwritten_source",
+      "sha256": "766e323fc9579eb87fe6ae1590f3883583e7874720269c36c390a1377fd5bcee",
+      "lines": 68,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 57,
+        "num_statements": 57,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "ca208ee75aba91f8b7cf3574d3c1ef6f1f113a4b164696e34d04d10327ea50cc",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/service.py",
+      "kind": "handwritten_source",
+      "sha256": "a68c77758effb7b4228e111151799297d7866ad502e983f81dc1d3099a50c42b",
+      "lines": 182,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 129,
+        "num_statements": 155,
+        "percent_covered": 81.04265402843602,
+        "percent_covered_display": "81.04",
+        "missing_lines": 26,
+        "excluded_lines": 0,
+        "percent_statements_covered": 83.2258064516129,
+        "percent_statements_covered_display": "83.23",
+        "num_branches": 56,
+        "num_partial_branches": 10,
+        "covered_branches": 42,
+        "missing_branches": 14,
+        "percent_branches_covered": 75.0,
+        "percent_branches_covered_display": "75.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/export_contracts.py",
+      "kind": "handwritten_source",
+      "sha256": "b8b22e6b87631043561f5c4398722c27a4d5f6a7247294b641fcba73a38d094b",
+      "lines": 45,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 29,
+        "num_statements": 32,
+        "percent_covered": 87.5,
+        "percent_covered_display": "87.50",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.625,
+        "percent_statements_covered_display": "90.62",
+        "num_branches": 8,
+        "num_partial_branches": 2,
+        "covered_branches": 6,
+        "missing_branches": 2,
+        "percent_branches_covered": 75.0,
+        "percent_branches_covered_display": "75.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/fixture_api.py",
+      "kind": "handwritten_source",
+      "sha256": "ce47e5092fac890f423bfb5244288b0e6c183767eb36d290179df3abdaad8a70",
+      "lines": 45,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 31,
+        "num_statements": 31,
+        "percent_covered": 97.29729729729729,
+        "percent_covered_display": "97.30",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 6,
+        "num_partial_branches": 1,
+        "covered_branches": 5,
+        "missing_branches": 1,
+        "percent_branches_covered": 83.33333333333333,
+        "percent_branches_covered_display": "83.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/fixtures.py",
+      "kind": "handwritten_source",
+      "sha256": "8569d95a017f37418a05a4e91bf44e0effc30301d47c5973a208d999f3a2aaf0",
+      "lines": 159,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 115,
+        "num_statements": 122,
+        "percent_covered": 91.13924050632912,
+        "percent_covered_display": "91.14",
+        "missing_lines": 7,
+        "excluded_lines": 0,
+        "percent_statements_covered": 94.26229508196721,
+        "percent_statements_covered_display": "94.26",
+        "num_branches": 36,
+        "num_partial_branches": 7,
+        "covered_branches": 29,
+        "missing_branches": 7,
+        "percent_branches_covered": 80.55555555555556,
+        "percent_branches_covered_display": "80.56"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/operations/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "981502c16e2504ea8cc006f0a9b7156419bc6611db8782d5e7eee80f6de2f7fa",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/operations/durability.py",
+      "kind": "handwritten_source",
+      "sha256": "e77947c41c0699b959241b1658cc3fbe9e97bd45264d237736584eba6604c9a4",
+      "lines": 193,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 140,
+        "num_statements": 157,
+        "percent_covered": 86.38743455497382,
+        "percent_covered_display": "86.39",
+        "missing_lines": 17,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.171974522293,
+        "percent_statements_covered_display": "89.17",
+        "num_branches": 34,
+        "num_partial_branches": 5,
+        "covered_branches": 25,
+        "missing_branches": 9,
+        "percent_branches_covered": 73.52941176470588,
+        "percent_branches_covered_display": "73.53"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/operations/maintenance.py",
+      "kind": "handwritten_source",
+      "sha256": "525761d8dcbc0459f37f90600c37e8f111805e524ceff0130d6b06b1dcfa4292",
+      "lines": 53,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 34,
+        "num_statements": 44,
+        "percent_covered": 72.72727272727273,
+        "percent_covered_display": "72.73",
+        "missing_lines": 10,
+        "excluded_lines": 0,
+        "percent_statements_covered": 77.27272727272727,
+        "percent_statements_covered_display": "77.27",
+        "num_branches": 22,
+        "num_partial_branches": 2,
+        "covered_branches": 14,
+        "missing_branches": 8,
+        "percent_branches_covered": 63.63636363636363,
+        "percent_branches_covered_display": "63.64"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "kind": "handwritten_source",
+      "sha256": "153e2e259f505f4444f7a945ab5125b1593b7d70d41bd8ecd292c6934eed4fcf",
+      "lines": 320,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 260,
+        "num_statements": 285,
+        "percent_covered": 87.77506112469437,
+        "percent_covered_display": "87.78",
+        "missing_lines": 25,
+        "excluded_lines": 0,
+        "percent_statements_covered": 91.2280701754386,
+        "percent_statements_covered_display": "91.23",
+        "num_branches": 124,
+        "num_partial_branches": 25,
+        "covered_branches": 99,
+        "missing_branches": 25,
+        "percent_branches_covered": 79.83870967741936,
+        "percent_branches_covered_display": "79.84"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/ops.py",
+      "kind": "handwritten_source",
+      "sha256": "6459726dc46e850c8fbf65b11cbbbdd2a9bf292398f3c1266b8645d950da22ed",
+      "lines": 157,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 129,
+        "num_statements": 138,
+        "percent_covered": 91.39784946236558,
+        "percent_covered_display": "91.40",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.47826086956522,
+        "percent_statements_covered_display": "93.48",
+        "num_branches": 48,
+        "num_partial_branches": 7,
+        "covered_branches": 41,
+        "missing_branches": 7,
+        "percent_branches_covered": 85.41666666666667,
+        "percent_branches_covered_display": "85.42"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "2ed2e368c32626e0c5942bd57b14ad4b19d6f436fcbde3de0f9a90c76dc2d4d2",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/admission.py",
+      "kind": "handwritten_source",
+      "sha256": "e8d2cb5db5ce077fca2c95925ea555655dc215ee5e9cf73abc1a1949d5793e4f",
+      "lines": 103,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 68,
+        "num_statements": 77,
+        "percent_covered": 83.78378378378379,
+        "percent_covered_display": "83.78",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 88.31168831168831,
+        "percent_statements_covered_display": "88.31",
+        "num_branches": 34,
+        "num_partial_branches": 9,
+        "covered_branches": 25,
+        "missing_branches": 9,
+        "percent_branches_covered": 73.52941176470588,
+        "percent_branches_covered_display": "73.53"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/budget.py",
+      "kind": "handwritten_source",
+      "sha256": "4590bb8e81a56c572b8322f71c9064077c0e77ac522bfa18a2ac5dde33a822da",
+      "lines": 226,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 157,
+        "num_statements": 182,
+        "percent_covered": 82.22222222222223,
+        "percent_covered_display": "82.22",
+        "missing_lines": 25,
+        "excluded_lines": 0,
+        "percent_statements_covered": 86.26373626373626,
+        "percent_statements_covered_display": "86.26",
+        "num_branches": 88,
+        "num_partial_branches": 21,
+        "covered_branches": 65,
+        "missing_branches": 23,
+        "percent_branches_covered": 73.86363636363636,
+        "percent_branches_covered_display": "73.86"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/circuits.py",
+      "kind": "handwritten_source",
+      "sha256": "fb3dcd1665a46bcecc8b4b18a52b60353d4cdfb2e6a6fdb255da55a98fcd2918",
+      "lines": 58,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 42,
+        "num_statements": 45,
+        "percent_covered": 92.98245614035088,
+        "percent_covered_display": "92.98",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.33333333333333,
+        "percent_statements_covered_display": "93.33",
+        "num_branches": 12,
+        "num_partial_branches": 1,
+        "covered_branches": 11,
+        "missing_branches": 1,
+        "percent_branches_covered": 91.66666666666667,
+        "percent_branches_covered_display": "91.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/configuration.py",
+      "kind": "handwritten_source",
+      "sha256": "255b643dcf6ccee97d462fa5486132ccd393051689e0af6618d36ed2c65ee399",
+      "lines": 40,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 29,
+        "num_statements": 35,
+        "percent_covered": 83.6734693877551,
+        "percent_covered_display": "83.67",
+        "missing_lines": 6,
+        "excluded_lines": 0,
+        "percent_statements_covered": 82.85714285714286,
+        "percent_statements_covered_display": "82.86",
+        "num_branches": 14,
+        "num_partial_branches": 2,
+        "covered_branches": 12,
+        "missing_branches": 2,
+        "percent_branches_covered": 85.71428571428571,
+        "percent_branches_covered_display": "85.71"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "kind": "handwritten_source",
+      "sha256": "5969615f49125ddb7ea248f9d276c27c35a3a559acfcd112c13e0c46bb5f6917",
+      "lines": 293,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 237,
+        "num_statements": 263,
+        "percent_covered": 86.23376623376623,
+        "percent_covered_display": "86.23",
+        "missing_lines": 26,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.11406844106465,
+        "percent_statements_covered_display": "90.11",
+        "num_branches": 122,
+        "num_partial_branches": 27,
+        "covered_branches": 95,
+        "missing_branches": 27,
+        "percent_branches_covered": 77.8688524590164,
+        "percent_branches_covered_display": "77.87"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/policies.py",
+      "kind": "handwritten_source",
+      "sha256": "63629a655c1d9afd2c470d2e2767f37cce0609cecf980a1d28c39e1c2cda9785",
+      "lines": 78,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 56,
+        "num_statements": 61,
+        "percent_covered": 87.64044943820225,
+        "percent_covered_display": "87.64",
+        "missing_lines": 5,
+        "excluded_lines": 0,
+        "percent_statements_covered": 91.80327868852459,
+        "percent_statements_covered_display": "91.80",
+        "num_branches": 28,
+        "num_partial_branches": 6,
+        "covered_branches": 22,
+        "missing_branches": 6,
+        "percent_branches_covered": 78.57142857142857,
+        "percent_branches_covered_display": "78.57"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "kind": "handwritten_source",
+      "sha256": "a9df7dc0169f22cc02af171b1fcfa12b9be3aeb13985e5d54a8a0fcbaa9a1cba",
+      "lines": 155,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 121,
+        "num_statements": 124,
+        "percent_covered": 95.6043956043956,
+        "percent_covered_display": "95.60",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 97.58064516129032,
+        "percent_statements_covered_display": "97.58",
+        "num_branches": 58,
+        "num_partial_branches": 5,
+        "covered_branches": 53,
+        "missing_branches": 5,
+        "percent_branches_covered": 91.37931034482759,
+        "percent_branches_covered_display": "91.38"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "f415cb787d28c12ca66037ab855745b4b0ec7aa7fe08ca20cb235db00de37a93",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/base.py",
+      "kind": "handwritten_source",
+      "sha256": "61c9d83621d76a4db6f099ff2e9b3351d737593d8ed1f9e16abe3a2b937dfd11",
+      "lines": 120,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 85,
+        "num_statements": 95,
+        "percent_covered": 84.61538461538461,
+        "percent_covered_display": "84.62",
+        "missing_lines": 10,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.47368421052632,
+        "percent_statements_covered_display": "89.47",
+        "num_branches": 22,
+        "num_partial_branches": 6,
+        "covered_branches": 14,
+        "missing_branches": 8,
+        "percent_branches_covered": 63.63636363636363,
+        "percent_branches_covered_display": "63.64"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/http.py",
+      "kind": "handwritten_source",
+      "sha256": "f31a4d75c39c9489c49aac80db13bf5602e9bd8fcc6b4df84fc5011838468469",
+      "lines": 240,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 179,
+        "num_statements": 201,
+        "percent_covered": 86.92579505300354,
+        "percent_covered_display": "86.93",
+        "missing_lines": 22,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.05472636815921,
+        "percent_statements_covered_display": "89.05",
+        "num_branches": 82,
+        "num_partial_branches": 15,
+        "covered_branches": 67,
+        "missing_branches": 15,
+        "percent_branches_covered": 81.70731707317073,
+        "percent_branches_covered_display": "81.71"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/images.py",
+      "kind": "handwritten_source",
+      "sha256": "8c832478fee46e28a8be65f4cecf2b6eecf80c0aa61699809aaea64001357594",
+      "lines": 319,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 228,
+        "num_statements": 267,
+        "percent_covered": 80.71625344352617,
+        "percent_covered_display": "80.72",
+        "missing_lines": 39,
+        "excluded_lines": 10,
+        "percent_statements_covered": 85.3932584269663,
+        "percent_statements_covered_display": "85.39",
+        "num_branches": 96,
+        "num_partial_branches": 31,
+        "covered_branches": 65,
+        "missing_branches": 31,
+        "percent_branches_covered": 67.70833333333333,
+        "percent_branches_covered_display": "67.71"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/simulated.py",
+      "kind": "handwritten_source",
+      "sha256": "151f8bdfcc36c7018b1b60e1eec0436132c8989ce4a34f2296debadff050b09d",
+      "lines": 59,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 37,
+        "num_statements": 41,
+        "percent_covered": 87.71929824561404,
+        "percent_covered_display": "87.72",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.2439024390244,
+        "percent_statements_covered_display": "90.24",
+        "num_branches": 16,
+        "num_partial_branches": 3,
+        "covered_branches": 13,
+        "missing_branches": 3,
+        "percent_branches_covered": 81.25,
+        "percent_branches_covered_display": "81.25"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/providers/transport.py",
+      "kind": "handwritten_source",
+      "sha256": "94be482853bbc2908e289812dc11b16acdf9e14ee95c5c0264458e443166d202",
+      "lines": 138,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 78,
+        "num_statements": 98,
+        "percent_covered": 75.92592592592592,
+        "percent_covered_display": "75.93",
+        "missing_lines": 20,
+        "excluded_lines": 0,
+        "percent_statements_covered": 79.59183673469387,
+        "percent_statements_covered_display": "79.59",
+        "num_branches": 10,
+        "num_partial_branches": 4,
+        "covered_branches": 4,
+        "missing_branches": 6,
+        "percent_branches_covered": 40.0,
+        "percent_branches_covered_display": "40.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/reports/exports.py",
+      "kind": "handwritten_source",
+      "sha256": "bd02a5799010a2e9db9f6584dba5c98ca453983125e89995f9d1e55b52aec629",
+      "lines": 164,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 136,
+        "num_statements": 137,
+        "percent_covered": 98.49246231155779,
+        "percent_covered_display": "98.49",
+        "missing_lines": 1,
+        "excluded_lines": 0,
+        "percent_statements_covered": 99.27007299270073,
+        "percent_statements_covered_display": "99.27",
+        "num_branches": 62,
+        "num_partial_branches": 2,
+        "covered_branches": 60,
+        "missing_branches": 2,
+        "percent_branches_covered": 96.7741935483871,
+        "percent_branches_covered_display": "96.77"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/reports/measurements.py",
+      "kind": "handwritten_source",
+      "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805",
+      "lines": 53,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 41,
+        "num_statements": 45,
+        "percent_covered": 86.95652173913044,
+        "percent_covered_display": "86.96",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 91.11111111111111,
+        "percent_statements_covered_display": "91.11",
+        "num_branches": 24,
+        "num_partial_branches": 5,
+        "covered_branches": 19,
+        "missing_branches": 5,
+        "percent_branches_covered": 79.16666666666667,
+        "percent_branches_covered_display": "79.17"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "kind": "handwritten_source",
+      "sha256": "f01df247f9f2ea093fa934bf58870b080d5d528c446f3371dfbf0b92301b3d9d",
+      "lines": 59,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 44,
+        "num_statements": 46,
+        "percent_covered": 94.11764705882354,
+        "percent_covered_display": "94.12",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 95.65217391304348,
+        "percent_statements_covered_display": "95.65",
+        "num_branches": 22,
+        "num_partial_branches": 2,
+        "covered_branches": 20,
+        "missing_branches": 2,
+        "percent_branches_covered": 90.9090909090909,
+        "percent_branches_covered_display": "90.91"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "kind": "handwritten_source",
+      "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02",
+      "lines": 34,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 30,
+        "num_statements": 30,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 26,
+        "num_partial_branches": 0,
+        "covered_branches": 26,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/reports/storage.py",
+      "kind": "handwritten_source",
+      "sha256": "aac08f864b31f04361c424ace8f80576dcf40d3f07b59b64b143bb1141c6420b",
+      "lines": 55,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 43,
+        "num_statements": 43,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 6,
+        "num_partial_branches": 0,
+        "covered_branches": 6,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/calculator.py",
+      "kind": "handwritten_source",
+      "sha256": "31bd03f77d7a6122536ef9ef36883a2e795418ff1e122457341b42ce2372985b",
+      "lines": 176,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 135,
+        "num_statements": 145,
+        "percent_covered": 89.85507246376811,
+        "percent_covered_display": "89.86",
+        "missing_lines": 10,
+        "excluded_lines": 0,
+        "percent_statements_covered": 93.10344827586206,
+        "percent_statements_covered_display": "93.10",
+        "num_branches": 62,
+        "num_partial_branches": 9,
+        "covered_branches": 51,
+        "missing_branches": 11,
+        "percent_branches_covered": 82.25806451612904,
+        "percent_branches_covered_display": "82.26"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "kind": "handwritten_source",
+      "sha256": "1398ea7422548da7a7e2a4ab66f8febc4e1a847bfe6adf0de7f377cad9fdfc50",
+      "lines": 61,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 43,
+        "num_statements": 49,
+        "percent_covered": 85.18518518518519,
+        "percent_covered_display": "85.19",
+        "missing_lines": 6,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.75510204081633,
+        "percent_statements_covered_display": "87.76",
+        "num_branches": 32,
+        "num_partial_branches": 4,
+        "covered_branches": 26,
+        "missing_branches": 6,
+        "percent_branches_covered": 81.25,
+        "percent_branches_covered_display": "81.25"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "kind": "handwritten_source",
+      "sha256": "0e26cf21c3b5d294e7ded5a9093e2b353f56f3b2bc4a0cf3eb09fd3f9bf4b38e",
+      "lines": 301,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 230,
+        "num_statements": 246,
+        "percent_covered": 90.9090909090909,
+        "percent_covered_display": "90.91",
+        "missing_lines": 16,
+        "excluded_lines": 3,
+        "percent_statements_covered": 93.4959349593496,
+        "percent_statements_covered_display": "93.50",
+        "num_branches": 84,
+        "num_partial_branches": 14,
+        "covered_branches": 70,
+        "missing_branches": 14,
+        "percent_branches_covered": 83.33333333333333,
+        "percent_branches_covered_display": "83.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/queries.py",
+      "kind": "handwritten_source",
+      "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239",
+      "lines": 44,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 25,
+        "num_statements": 28,
+        "percent_covered": 84.21052631578948,
+        "percent_covered_display": "84.21",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.28571428571429,
+        "percent_statements_covered_display": "89.29",
+        "num_branches": 10,
+        "num_partial_branches": 3,
+        "covered_branches": 7,
+        "missing_branches": 3,
+        "percent_branches_covered": 70.0,
+        "percent_branches_covered_display": "70.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/search.py",
+      "kind": "handwritten_source",
+      "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99",
+      "lines": 47,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 32,
+        "num_statements": 39,
+        "percent_covered": 76.47058823529412,
+        "percent_covered_display": "76.47",
+        "missing_lines": 7,
+        "excluded_lines": 0,
+        "percent_statements_covered": 82.05128205128206,
+        "percent_statements_covered_display": "82.05",
+        "num_branches": 12,
+        "num_partial_branches": 5,
+        "covered_branches": 7,
+        "missing_branches": 5,
+        "percent_branches_covered": 58.333333333333336,
+        "percent_branches_covered_display": "58.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "kind": "handwritten_source",
+      "sha256": "39c43fb7802c74a7f5b2c3ccac73a927c3376cb946f04ef4edb323ae8cf568aa",
+      "lines": 210,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 154,
+        "num_statements": 181,
+        "percent_covered": 82.44897959183673,
+        "percent_covered_display": "82.45",
+        "missing_lines": 27,
+        "excluded_lines": 0,
+        "percent_statements_covered": 85.0828729281768,
+        "percent_statements_covered_display": "85.08",
+        "num_branches": 64,
+        "num_partial_branches": 16,
+        "covered_branches": 48,
+        "missing_branches": 16,
+        "percent_branches_covered": 75.0,
+        "percent_branches_covered_display": "75.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "fbde93a3523d9905c4814b1edaa8c670a1d966fff9ae2f72ede7590516247354",
+      "lines": 8,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 7,
+        "num_statements": 7,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/application.py",
+      "kind": "handwritten_source",
+      "sha256": "12e6805fb698c32e8bf10e8b415ae1a035a4b402d71eb7b21bc2631e491d01c6",
+      "lines": 66,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 44,
+        "num_statements": 44,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/briefs.py",
+      "kind": "handwritten_source",
+      "sha256": "149b80352afb5a9cad730a8b2ac8117b03e0849b73e99e4a3c242ec3a98768d2",
+      "lines": 121,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 92,
+        "num_statements": 102,
+        "percent_covered": 85.71428571428571,
+        "percent_covered_display": "85.71",
+        "missing_lines": 10,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.19607843137256,
+        "percent_statements_covered_display": "90.20",
+        "num_branches": 24,
+        "num_partial_branches": 8,
+        "covered_branches": 16,
+        "missing_branches": 8,
+        "percent_branches_covered": 66.66666666666667,
+        "percent_branches_covered_display": "66.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/common.py",
+      "kind": "handwritten_source",
+      "sha256": "cd709f23e3fe199ea735f4be16c6a9688d470e93f62f00bab5c932343914adc6",
+      "lines": 80,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 53,
+        "num_statements": 57,
+        "percent_covered": 92.40506329113924,
+        "percent_covered_display": "92.41",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.98245614035088,
+        "percent_statements_covered_display": "92.98",
+        "num_branches": 22,
+        "num_partial_branches": 2,
+        "covered_branches": 20,
+        "missing_branches": 2,
+        "percent_branches_covered": 90.9090909090909,
+        "percent_branches_covered_display": "90.91"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/contributions.py",
+      "kind": "handwritten_source",
+      "sha256": "e63607015866fc590f5dccb92f2040ddb17e3c3b4fdcdfa271bd70423220b828",
+      "lines": 61,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 47,
+        "num_statements": 49,
+        "percent_covered": 92.72727272727273,
+        "percent_covered_display": "92.73",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 95.91836734693878,
+        "percent_statements_covered_display": "95.92",
+        "num_branches": 6,
+        "num_partial_branches": 2,
+        "covered_branches": 4,
+        "missing_branches": 2,
+        "percent_branches_covered": 66.66666666666667,
+        "percent_branches_covered_display": "66.67"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/events.py",
+      "kind": "handwritten_source",
+      "sha256": "74953c8098883a7513d99cbb6d86eec44009ffe7b1b6bc1a22d3eca202c1d5b8",
+      "lines": 28,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 22,
+        "num_statements": 22,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/evidence.py",
+      "kind": "handwritten_source",
+      "sha256": "e692ec830ac0d1e0ed670fa47c3937ef66bb9f190f95646cc4dcf7af5c8452b3",
+      "lines": 57,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 47,
+        "num_statements": 47,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 2,
+        "num_partial_branches": 0,
+        "covered_branches": 2,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/preflight.py",
+      "kind": "handwritten_source",
+      "sha256": "fb05e07b9235135ad50db53e33ab7a25fb08701a55f97d4c429081757dabca7c",
+      "lines": 78,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 62,
+        "num_statements": 64,
+        "percent_covered": 94.44444444444444,
+        "percent_covered_display": "94.44",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.875,
+        "percent_statements_covered_display": "96.88",
+        "num_branches": 8,
+        "num_partial_branches": 2,
+        "covered_branches": 6,
+        "missing_branches": 2,
+        "percent_branches_covered": 75.0,
+        "percent_branches_covered_display": "75.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/provider_configuration.py",
+      "kind": "handwritten_source",
+      "sha256": "251a469a8fd52bba71e8a09e4d6299bbb278a7a46118770ff610cedecc88de2f",
+      "lines": 81,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 61,
+        "num_statements": 66,
+        "percent_covered": 87.5,
+        "percent_covered_display": "87.50",
+        "missing_lines": 5,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.42424242424242,
+        "percent_statements_covered_display": "92.42",
+        "num_branches": 14,
+        "num_partial_branches": 5,
+        "covered_branches": 9,
+        "missing_branches": 5,
+        "percent_branches_covered": 64.28571428571429,
+        "percent_branches_covered_display": "64.29"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/reports.py",
+      "kind": "handwritten_source",
+      "sha256": "f7c45545b6f4a045e96004319eb064ad9f2c7db86c72a37acefd3471a1a452fe",
+      "lines": 138,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 108,
+        "num_statements": 117,
+        "percent_covered": 87.41258741258741,
+        "percent_covered_display": "87.41",
+        "missing_lines": 9,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.3076923076923,
+        "percent_statements_covered_display": "92.31",
+        "num_branches": 26,
+        "num_partial_branches": 9,
+        "covered_branches": 17,
+        "missing_branches": 9,
+        "percent_branches_covered": 65.38461538461539,
+        "percent_branches_covered_display": "65.38"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "kind": "handwritten_source",
+      "sha256": "019f448b28dcb7b951f0165fe7f65eb6fddabed34cb6e2736b8342fe36a84e9f",
+      "lines": 189,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 141,
+        "num_statements": 163,
+        "percent_covered": 81.74273858921161,
+        "percent_covered_display": "81.74",
+        "missing_lines": 22,
+        "excluded_lines": 0,
+        "percent_statements_covered": 86.50306748466258,
+        "percent_statements_covered_display": "86.50",
+        "num_branches": 78,
+        "num_partial_branches": 20,
+        "covered_branches": 56,
+        "missing_branches": 22,
+        "percent_branches_covered": 71.7948717948718,
+        "percent_branches_covered_display": "71.79"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/schemas/views.py",
+      "kind": "handwritten_source",
+      "sha256": "bb68c5efbc2a9384dfb82f9bb3b1f64f44778f051427b9bd09d23003179eb7dd",
+      "lines": 205,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 161,
+        "num_statements": 161,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 2,
+        "num_partial_branches": 0,
+        "covered_branches": 2,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/security/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "72a82de619a785a236cb594c7ccfa10993382e7529d0c95ecc7abb496f7c8872",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/security/hosted.py",
+      "kind": "handwritten_source",
+      "sha256": "ebd1e2ab6ed856758fcc69fa9ff66919870c11453502ecc150c41e16e8771ee0",
+      "lines": 129,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 95,
+        "num_statements": 101,
+        "percent_covered": 90.22556390977444,
+        "percent_covered_display": "90.23",
+        "missing_lines": 6,
+        "excluded_lines": 0,
+        "percent_statements_covered": 94.05940594059406,
+        "percent_statements_covered_display": "94.06",
+        "num_branches": 32,
+        "num_partial_branches": 5,
+        "covered_branches": 25,
+        "missing_branches": 7,
+        "percent_branches_covered": 78.125,
+        "percent_branches_covered_display": "78.12"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/security/logging.py",
+      "kind": "handwritten_source",
+      "sha256": "305c996403678d42f27eedcad12a47c60554d01d71db114e729b0d7c33193879",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 12,
+        "num_statements": 12,
+        "percent_covered": 94.44444444444444,
+        "percent_covered_display": "94.44",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 6,
+        "num_partial_branches": 1,
+        "covered_branches": 5,
+        "missing_branches": 1,
+        "percent_branches_covered": 83.33333333333333,
+        "percent_branches_covered_display": "83.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "dfe071b907c00bf524a9c394d4d9cae7915d869a9d916bc583560feb2936e00c",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/assets.py",
+      "kind": "handwritten_source",
+      "sha256": "7a4c432852e1bc645737ee720f918d68394679dfb675cf1c59db509cdd8c27c1",
+      "lines": 94,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 72,
+        "num_statements": 78,
+        "percent_covered": 90.625,
+        "percent_covered_display": "90.62",
+        "missing_lines": 6,
+        "excluded_lines": 0,
+        "percent_statements_covered": 92.3076923076923,
+        "percent_statements_covered_display": "92.31",
+        "num_branches": 18,
+        "num_partial_branches": 3,
+        "covered_branches": 15,
+        "missing_branches": 3,
+        "percent_branches_covered": 83.33333333333333,
+        "percent_branches_covered_display": "83.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/iterations.py",
+      "kind": "handwritten_source",
+      "sha256": "f8c75b7585beaab7f55926657978a4a711ed4982a8482a80c37eebbb78f6e504",
+      "lines": 140,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 104,
+        "num_statements": 118,
+        "percent_covered": 84.06593406593407,
+        "percent_covered_display": "84.07",
+        "missing_lines": 14,
+        "excluded_lines": 0,
+        "percent_statements_covered": 88.13559322033899,
+        "percent_statements_covered_display": "88.14",
+        "num_branches": 64,
+        "num_partial_branches": 13,
+        "covered_branches": 49,
+        "missing_branches": 15,
+        "percent_branches_covered": 76.5625,
+        "percent_branches_covered_display": "76.56"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/jobs.py",
+      "kind": "handwritten_source",
+      "sha256": "b354b6b7657f741c34e85d7300873bcf43e33e75f2873e99b00c51a50f6a8a22",
+      "lines": 90,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 66,
+        "num_statements": 73,
+        "percent_covered": 89.01098901098901,
+        "percent_covered_display": "89.01",
+        "missing_lines": 7,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.41095890410959,
+        "percent_statements_covered_display": "90.41",
+        "num_branches": 18,
+        "num_partial_branches": 3,
+        "covered_branches": 15,
+        "missing_branches": 3,
+        "percent_branches_covered": 83.33333333333333,
+        "percent_branches_covered_display": "83.33"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "632cae01ecd02821cb5951b046550451a401eb96134c6332b9873692b84112a1",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/diagram.py",
+      "kind": "handwritten_source",
+      "sha256": "0393fe540ddfdfaae5c3b3487a4ecc54cf38cb162048912a8b2ac124bd0bd010",
+      "lines": 104,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 78,
+        "num_statements": 81,
+        "percent_covered": 93.06930693069307,
+        "percent_covered_display": "93.07",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.29629629629629,
+        "percent_statements_covered_display": "96.30",
+        "num_branches": 20,
+        "num_partial_branches": 4,
+        "covered_branches": 16,
+        "missing_branches": 4,
+        "percent_branches_covered": 80.0,
+        "percent_branches_covered_display": "80.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/interface.py",
+      "kind": "handwritten_source",
+      "sha256": "666f466215765e15d5ffeb394993dba57a6f975953ca61d27a805470c01a6b47",
+      "lines": 280,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 204,
+        "num_statements": 234,
+        "percent_covered": 82.33333333333333,
+        "percent_covered_display": "82.33",
+        "missing_lines": 30,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.17948717948718,
+        "percent_statements_covered_display": "87.18",
+        "num_branches": 66,
+        "num_partial_branches": 21,
+        "covered_branches": 43,
+        "missing_branches": 23,
+        "percent_branches_covered": 65.15151515151516,
+        "percent_branches_covered_display": "65.15"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/reviews.py",
+      "kind": "handwritten_source",
+      "sha256": "f595018e7ddeaccc309bead1782e73a2c129741587e7e984d8316559bc14bbc9",
+      "lines": 84,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 56,
+        "num_statements": 67,
+        "percent_covered": 79.20792079207921,
+        "percent_covered_display": "79.21",
+        "missing_lines": 11,
+        "excluded_lines": 0,
+        "percent_statements_covered": 83.58208955223881,
+        "percent_statements_covered_display": "83.58",
+        "num_branches": 34,
+        "num_partial_branches": 4,
+        "covered_branches": 24,
+        "missing_branches": 10,
+        "percent_branches_covered": 70.58823529411765,
+        "percent_branches_covered_display": "70.59"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/schemas.py",
+      "kind": "handwritten_source",
+      "sha256": "376f5365c558797c24a3b2b11fa9f50f274ebfc255df75d1f7551b6c596bff2a",
+      "lines": 115,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 83,
+        "num_statements": 86,
+        "percent_covered": 93.61702127659575,
+        "percent_covered_display": "93.62",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.51162790697674,
+        "percent_statements_covered_display": "96.51",
+        "num_branches": 8,
+        "num_partial_branches": 3,
+        "covered_branches": 5,
+        "missing_branches": 3,
+        "percent_branches_covered": 62.5,
+        "percent_branches_covered_display": "62.50"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/service.py",
+      "kind": "handwritten_source",
+      "sha256": "aa36ed0ff2aee2eaeb01d008e54ba823ea3bda1f2922df288eb9e3697ad530cd",
+      "lines": 460,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 299,
+        "num_statements": 354,
+        "percent_covered": 77.27272727272727,
+        "percent_covered_display": "77.27",
+        "missing_lines": 55,
+        "excluded_lines": 0,
+        "percent_statements_covered": 84.46327683615819,
+        "percent_statements_covered_display": "84.46",
+        "num_branches": 174,
+        "num_partial_branches": 53,
+        "covered_branches": 109,
+        "missing_branches": 65,
+        "percent_branches_covered": 62.64367816091954,
+        "percent_branches_covered_display": "62.64"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/visual/views.py",
+      "kind": "handwritten_source",
+      "sha256": "c61691678abe924b568a00beee5289015d6cf5e80843cc48efbf8ff35fd83f76",
+      "lines": 194,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 153,
+        "num_statements": 155,
+        "percent_covered": 97.54601226993866,
+        "percent_covered_display": "97.55",
+        "missing_lines": 2,
+        "excluded_lines": 0,
+        "percent_statements_covered": 98.70967741935483,
+        "percent_statements_covered_display": "98.71",
+        "num_branches": 8,
+        "num_partial_branches": 2,
+        "covered_branches": 6,
+        "missing_branches": 2,
+        "percent_branches_covered": 75.0,
+        "percent_branches_covered_display": "75.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/worker/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "c519fc9c2cdc595a41995441f0b6c59fbfa6d8106480861bd37b4533915cd15a",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/worker/app.py",
+      "kind": "handwritten_source",
+      "sha256": "cd04f5d604e9430a396c150e2c0b36a0ef18a4fb8fbc2f036a6baccd1c1e892b",
+      "lines": 15,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 4,
+        "num_statements": 4,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "kind": "handwritten_source",
+      "sha256": "503d3fc89e1f638ad05d0180e835d13e8ab450eb56ef7d4c2f2dd9bb8a87fb6e",
+      "lines": 413,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": {
+        "covered_lines": 288,
+        "num_statements": 362,
+        "percent_covered": 75.90361445783132,
+        "percent_covered_display": "75.90",
+        "missing_lines": 74,
+        "excluded_lines": 0,
+        "percent_statements_covered": 79.55801104972376,
+        "percent_statements_covered_display": "79.56",
+        "num_branches": 136,
+        "num_partial_branches": 32,
+        "covered_branches": 90,
+        "missing_branches": 46,
+        "percent_branches_covered": 66.17647058823529,
+        "percent_branches_covered_display": "66.18"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/worker/research_tasks.py",
+      "kind": "handwritten_source",
+      "sha256": "457aadb011529126f8e843b5e836199682cc1510941c2c7025af0c66725acf17",
+      "lines": 13,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 5,
+        "num_statements": 9,
+        "percent_covered": 55.55555555555556,
+        "percent_covered_display": "55.56",
+        "missing_lines": 4,
+        "excluded_lines": 0,
+        "percent_statements_covered": 55.55555555555556,
+        "percent_statements_covered_display": "55.56",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "backend/src/round_robin/worker/tasks.py",
+      "kind": "handwritten_source",
+      "sha256": "0ce37c3176cb2fcd71e624f4d2dd16dd9339c6cd646da9fc3d8f540391acde7e",
+      "lines": 241,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 173,
+        "num_statements": 215,
+        "percent_covered": 77.0909090909091,
+        "percent_covered_display": "77.09",
+        "missing_lines": 42,
+        "excluded_lines": 0,
+        "percent_statements_covered": 80.46511627906976,
+        "percent_statements_covered_display": "80.47",
+        "num_branches": 60,
+        "num_partial_branches": 13,
+        "covered_branches": 39,
+        "missing_branches": 21,
+        "percent_branches_covered": 65.0,
+        "percent_branches_covered_display": "65.00"
+      }
+    },
+    {
+      "path": "backend/tests/conftest.py",
+      "kind": "test_code",
+      "sha256": "2222faa9c4eecb1e1132b6c34e834bdef9c8fe53b83d6d51ee825b2876eaf7ea",
+      "lines": 153,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/faults/test_worker_boundaries.py",
+      "kind": "test_code",
+      "sha256": "f05fe391d9eed9bf808f63d178a8948d5f266f60717b7dc239bbc1b64d9c064f",
+      "lines": 86,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/helpers/__init__.py",
+      "kind": "test_code",
+      "sha256": "fbaf44d2e173b1eb68d9af409dc4693dcaf3dc5d2dac9bd3a2718f1061784535",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/helpers/image_dispatcher.py",
+      "kind": "test_code",
+      "sha256": "a88f57eb7d30d8a208eec36366a4c5b739893d461bf8223d1467236f891da15d",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/helpers/image_worker.py",
+      "kind": "test_code",
+      "sha256": "ae02fab682dd3963f86ee8d5c6e44cdb342d729bac55ceb0f26ec2f31fe0c904",
+      "lines": 79,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_broker_recovery.py",
+      "kind": "test_code",
+      "sha256": "aa9825d54d6ba1973635c035365da15389658a90bd50ae3aeb6318f84483b710",
+      "lines": 101,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_deep_migrations.py",
+      "kind": "test_code",
+      "sha256": "52a6ca6c62633022408af111dc15a07ccd984063605e923ebefc7ca198505727",
+      "lines": 43,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_image_processes.py",
+      "kind": "test_code",
+      "sha256": "91b42e97d6275196758d38aa69054ab85a884a41371c52de823990c74160bda0",
+      "lines": 176,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_launcher_ports.py",
+      "kind": "test_code",
+      "sha256": "e51ecad5ef83441e655a5e40314b9301c8ae142d8fb78045401b24fd335ba84c",
+      "lines": 27,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_native_renderer.py",
+      "kind": "test_code",
+      "sha256": "bc38068c571c03ac2e62c21c5828ac59109942fa08b8c0b89a720eeb59f326f6",
+      "lines": 180,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_postgres_api.py",
+      "kind": "test_code",
+      "sha256": "97f27bb913f007c26195c49d3cef026a090c11de17d14fbc00c67a3c7f812dc4",
+      "lines": 152,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_postgres_restore.py",
+      "kind": "test_code",
+      "sha256": "00574f2f732ccadf725f7e22ef4e752ace7f34e2fa63e41f4508923552b56219",
+      "lines": 80,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_provider_transport.py",
+      "kind": "test_code",
+      "sha256": "f97cac1535546eba7d2fa6613dd8d30d3d371f55aa85832b5dde9e0329322710",
+      "lines": 58,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/integration/test_worker_processes.py",
+      "kind": "test_code",
+      "sha256": "fd32938b6fbe62fb4c140636ba086e0f1277f56025ffbf415a6ff03c11da787e",
+      "lines": 163,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/scenarios/manifest.json",
+      "kind": "test_metadata",
+      "sha256": "ba116e9dd5295f65a3bd50d7c4f1125968f57a681ef260a1e50faf82de525184",
+      "lines": 3390,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_adapters.py",
+      "kind": "test_code",
+      "sha256": "90e33526d38f41d31128d394d28e75b5ff8414614459a04d95cb9fa81a7e00bf",
+      "lines": 85,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_admission_audit.py",
+      "kind": "test_code",
+      "sha256": "7b91020dd35d8c351cb3770bc06836dcf71fb4f56422fbc1b2ee17f4296278b5",
+      "lines": 39,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_api.py",
+      "kind": "test_code",
+      "sha256": "63ebb740f34ebe428f4926c314ee1cc6d20428d5022977fcdf2419e0c6c9f6e5",
+      "lines": 279,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_api_adversarial.py",
+      "kind": "test_code",
+      "sha256": "35b19575dbc6a8388cc858d7b54adaecc34bc06b4764588ccb4b82a8b49ce101",
+      "lines": 222,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_application_contracts.py",
+      "kind": "test_code",
+      "sha256": "fa52fec80876d4a3e0191cb31e8183edca541ad78945046c5ff3db4db45d77cb",
+      "lines": 70,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_artifacts_api.py",
+      "kind": "test_code",
+      "sha256": "f249d4753fb789717d504ffea72aa9cbf80578c97dce6fdb043aea135a3709e2",
+      "lines": 141,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_artifacts_audit.py",
+      "kind": "test_code",
+      "sha256": "b1161b2aad0d626acfcda90a5a23efb07a1d2e3a31cc0a4a6b387295ddb0e631",
+      "lines": 39,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_audit_evaluation.py",
+      "kind": "test_code",
+      "sha256": "bcb3a5036e9894896be382196b24ddf55e606e8b5ada9abd4631beb55a7ed589",
+      "lines": 92,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_audit_evidence_security.py",
+      "kind": "test_code",
+      "sha256": "361abd574bcbc4b17056651709eee94418f96f9ec670043e39fad018a9e072a4",
+      "lines": 137,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_calculator.py",
+      "kind": "test_code",
+      "sha256": "dd33bb7818fb51d079a75650bd2cd747cf3f753dff88e840eabeb56e64a16f60",
+      "lines": 134,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_circuits.py",
+      "kind": "test_code",
+      "sha256": "d563ac3b6a6ee5c299eead608a03cca86fb08bb7d7bbc1699b26f4c2538119c2",
+      "lines": 104,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_contracts.py",
+      "kind": "test_code",
+      "sha256": "1ee1eb0e2baa4288bc7f7141a8a95fda68a79c2860d3788319d62989d7c67cf0",
+      "lines": 131,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_api.py",
+      "kind": "test_code",
+      "sha256": "5cbb35daa4063d4522782b7904446271a2c7fec4187a309012188dbdf0740a92",
+      "lines": 279,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_contracts.py",
+      "kind": "test_code",
+      "sha256": "20e41076ffdc7da8362735ddac56ef2ba4949bd3396c496b97161885f59ec5d2",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_boundaries.py",
+      "kind": "test_code",
+      "sha256": "54a838b548d5da83f4211f5e171a6b11500e9dc339041db60fc19c0f189036bd",
+      "lines": 226,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_dns_cli.py",
+      "kind": "test_code",
+      "sha256": "3b30cf316ff7048823ff3d5f2ef686d3808e00121e594d9e100f7649cc0ad4a0",
+      "lines": 179,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_evaluation.py",
+      "kind": "test_code",
+      "sha256": "3e1e72d43707db0309d8012972cd5403058bc7122eb5d1456c1d0efba48576ff",
+      "lines": 93,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_source_reads.py",
+      "kind": "test_code",
+      "sha256": "2460bedec4044addd2460542f0dc4a71138e94870495f36fcf7e531eb6d6cd9f",
+      "lines": 101,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_supervisors.py",
+      "kind": "test_code",
+      "sha256": "5f77bd81263325cbd926c031354b6a81e261fcee200043ca7382c60ea792ebd0",
+      "lines": 148,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_hosted_routes.py",
+      "kind": "test_code",
+      "sha256": "ab81c78def93a97f5caf55a14be224828f39700b41c347fc58619384419090a8",
+      "lines": 39,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_operator.py",
+      "kind": "test_code",
+      "sha256": "d1907e52ee3bb81d6429d42df09c2c66ac60a68a953272604fe385f5657b1d4f",
+      "lines": 94,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_read_routes.py",
+      "kind": "test_code",
+      "sha256": "533b96c89e698099a834583fbeb8134c12aa3738b0bb9272f5d677cfb722afda",
+      "lines": 163,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_runtime.py",
+      "kind": "test_code",
+      "sha256": "edb8da2fcc933b2f80690d85dad0e0c8aaa5ca2aa5f9b9b571510b0bd10f9d4d",
+      "lines": 285,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_runtime_clock.py",
+      "kind": "test_code",
+      "sha256": "42f8137487ba6177b5fa19856c749e731217c14a8f95ed7e6fe4c80af8bcd41a",
+      "lines": 74,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_runtime_experiments.py",
+      "kind": "test_code",
+      "sha256": "256657acbeea3d6ada2052ccfd618367bee6de47fafcc0097ffd8ff9ff954d21",
+      "lines": 69,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_runtime_money.py",
+      "kind": "test_code",
+      "sha256": "61f55bd16fe11cd412fc627db263416b4aa2916a3cc9c34b81d3f0c5ebfdbb27",
+      "lines": 107,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_runtime_study.py",
+      "kind": "test_code",
+      "sha256": "e023f311ece3136c959dc471fcec25e57921ed5b66e87933ceec9d5b72a8a98f",
+      "lines": 105,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_service_safety.py",
+      "kind": "test_code",
+      "sha256": "ae699bb0e6e962c335117aef5757b1bb87f5024212ae997feedfd14e7d6bc661",
+      "lines": 45,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_verifier_bootstrap.py",
+      "kind": "test_code",
+      "sha256": "3970afec3201bcf9a2776ccfae77cb411cd89d87c8b583d4a895b7d7d5dde580",
+      "lines": 14,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_visual_boundaries.py",
+      "kind": "test_code",
+      "sha256": "3219f6ca798361f67ffeec7187bb2a9080cd1c485292ddb6ae94cac17e477bcc",
+      "lines": 235,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_deep_visual_routes.py",
+      "kind": "test_code",
+      "sha256": "f038461aa00f375da979fd7d2bf7c930037b8fb1f20ae9e60a8542f67280ba4e",
+      "lines": 226,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_durability.py",
+      "kind": "test_code",
+      "sha256": "4b063c05eccbb47adc9e13a270ddaba05ac5132cf8f5fc0e75af093902cec4f3",
+      "lines": 193,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_evaluation.py",
+      "kind": "test_code",
+      "sha256": "9a38259d9ccaff6735f3af1a54ad390d44420e63ed4fb96488635392c83f8505",
+      "lines": 243,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_exports.py",
+      "kind": "test_code",
+      "sha256": "af45e404a899ed23c51e97b3df1858c3f22a8b484f30e8a27ccfe83884705726",
+      "lines": 83,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_fetcher_transport.py",
+      "kind": "test_code",
+      "sha256": "c990f36e6fb2442ea68fbc2dbdb5265e701685ccffeac83e36324636fc89d659",
+      "lines": 180,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_hosted.py",
+      "kind": "test_code",
+      "sha256": "72ea8542b14a9ad765fae4aa6e7884a951a12b700ee3de5ab72e0e029b092c2a",
+      "lines": 102,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_image_provider.py",
+      "kind": "test_code",
+      "sha256": "a0e21c54dfe44f0e18107e03508fedf59b7e26c98bab636c514ca47d088910d8",
+      "lines": 118,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_image_worker.py",
+      "kind": "test_code",
+      "sha256": "76a75007bccccd07e27e56abda4c194312be8ae93ab8105a11027f80f58768d3",
+      "lines": 159,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_maintenance.py",
+      "kind": "test_code",
+      "sha256": "d8e851b843891d54e7486fb330be37b2479d99f6cbfe5cacc7740a5adbe0e773",
+      "lines": 43,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_measurements.py",
+      "kind": "test_code",
+      "sha256": "bca95cc0fbc08405dcada1dcd0a621b853f99c65da394f26c66826de4b6850b9",
+      "lines": 43,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_offline_boundary.py",
+      "kind": "test_code",
+      "sha256": "eccb8b15f9c79237bd9c2ef5b2e3b1cbb3cf7845a545748a34c08915ff7a419b",
+      "lines": 79,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_operations.py",
+      "kind": "test_code",
+      "sha256": "025bc6079f52c33121cb31ce28b4d72c5411d2c6e6758f1e03addc3a9dfb819e",
+      "lines": 177,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_orchestration.py",
+      "kind": "test_code",
+      "sha256": "3112e39a3bafeea49570977869589d2b7d5f9878bc7b8498c5bf6c49cff1781b",
+      "lines": 344,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_provider_configuration.py",
+      "kind": "test_code",
+      "sha256": "0ba32d16a64c77f9f18b0a6cdc07f0ac9b40d4c4ba8eeafbe1632b94a5887901",
+      "lines": 76,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_providers.py",
+      "kind": "test_code",
+      "sha256": "ef76af4e909bc1836b2d8ac9573dc8967d42d52bf1239cad382e2accd690178f",
+      "lines": 124,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_readiness.py",
+      "kind": "test_code",
+      "sha256": "0f0c45a124ee03cdcf8ad45e887e865b8fbda8071cd5ceb40515c372ffbc2ce8",
+      "lines": 109,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_release_evaluation.py",
+      "kind": "test_code",
+      "sha256": "e6464aef83d13bec6676656d679456b06d70a2360253b8ebdf50b96d1a3be436",
+      "lines": 47,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_research.py",
+      "kind": "test_code",
+      "sha256": "8d5cb1202c6705eb25a38783eef5f0c3cabdf0b5c1146b93fe258200f4cf9aa5",
+      "lines": 149,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_research_service.py",
+      "kind": "test_code",
+      "sha256": "d1fe6955d453f15e2021c6efa7884be07805b7befc29b889a104978720fdcc77",
+      "lines": 129,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_runner.py",
+      "kind": "test_code",
+      "sha256": "77a370c457234daf2659b1566a7595a2cffb9b1ad9392b7ef7aeeb6de2560ad6",
+      "lines": 229,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_runtime_audit.py",
+      "kind": "test_code",
+      "sha256": "b828c064197a341b7168b125b83a2e8e7f9d1a28fec198e1c57c86868ea8558d",
+      "lines": 234,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_runtime_report.py",
+      "kind": "test_code",
+      "sha256": "3c59edd57a768a71bac16c16c3a0bc33c38b7bb5ba9bd4d445952096f95acd37",
+      "lines": 99,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_study_runner.py",
+      "kind": "test_code",
+      "sha256": "78a4eb922e5902cd52b1c159082d0b9797182d00318154278cdf5d2de3505c5b",
+      "lines": 221,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_visual.py",
+      "kind": "test_code",
+      "sha256": "f1eddacd528d3baf2e0089ff292e955b8a79a9a401999be7dc1a85e36b9d5937",
+      "lines": 432,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_visual_audit.py",
+      "kind": "test_code",
+      "sha256": "4e526a925917f31f8eb95f6abe0673897ee2be9a625510ce655d5f398d0e1441",
+      "lines": 151,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_visual_evaluation.py",
+      "kind": "test_code",
+      "sha256": "6e864c236c0d2eaa8f627bcabd325ff6c458604fd6c71b1309f93ac5b22de12f",
+      "lines": 116,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "backend/tests/test_visual_views.py",
+      "kind": "test_code",
+      "sha256": "57d026e9d55b542e157523c131ea5229fd780c709565699d5601fc6b284d5837",
+      "lines": 70,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "compose.yaml",
+      "kind": "configuration",
+      "sha256": "4da8f16098ef0af30ee968d63996da3707358f138b694b18543c3bd0e77db29b",
+      "lines": 32,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/application.openapi.json",
+      "kind": "generated_or_locked",
+      "sha256": "e84f5c693dbcfc9a5202c5025ffa4c0c07879b412f6eb12de2354d35592f85fa",
+      "lines": 10046,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/brief.schema.json",
+      "kind": "generated_or_locked",
+      "sha256": "ee79d60ac994f37a201f909b729e9334ef6b05422e47959df11cc06838e128fd",
+      "lines": 501,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/events.schema.json",
+      "kind": "generated_or_locked",
+      "sha256": "39b7f96194b2082453a002b94788f3f29bc1e0f3c1aec234a608052f4834b0e8",
+      "lines": 70,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/openapi.json",
+      "kind": "generated_or_locked",
+      "sha256": "bc8b49060a28fad7f6aeb652d566560adad8be745042090c7de49a7680aa71bb",
+      "lines": 2514,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/sample.json",
+      "kind": "generated_or_locked",
+      "sha256": "59241b5afd4b12e94aa29cf16c1667fae7bc0e70b017cf467aa9610aea014663",
+      "lines": 4976,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "contracts/sample.schema.json",
+      "kind": "generated_or_locked",
+      "sha256": "3a652f3338b7297057b6de5122c52fdb9248d60816e51b2e139b101b8ec5f541",
+      "lines": 2443,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/ACCEPTANCE_BLOCKERS.md",
+      "kind": "documentation",
+      "sha256": "817d2b183e2c444065ea5853cadc3df4a2fcdb57eaf53a5f070a9c57ecf5c70b",
+      "lines": 41,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/DELIVERY_BACKLOG.md",
+      "kind": "documentation",
+      "sha256": "f9d1228888cad0829ee4735b734602575d2d6623d9dc41a2d4bdb9e1eadc6882",
+      "lines": 137,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/FAILURE_HANDLING.md",
+      "kind": "documentation",
+      "sha256": "f35c5f22e15e1c091fa6789ebbd410dfc358114cbfc6ca88db0eb073e1dfbfba",
+      "lines": 467,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/IMPLEMENTATION_BLUEPRINT.md",
+      "kind": "documentation",
+      "sha256": "8fadd48b707d0d9a90c960b44020e4a1ddfb97a6f436f4b36363d4c2baa180c6",
+      "lines": 153,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PHASES.md",
+      "kind": "documentation",
+      "sha256": "b5f0d6333b50e996b25b95ec4148b7e477497283317f70eac54acfd0625970ca",
+      "lines": 384,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "kind": "documentation",
+      "sha256": "a4376c8971af9a92cd5c6fa6415421611fa2a2387119b0a0882ebf4213be9db7",
+      "lines": 294,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/PRODUCT_AUDIT.md",
+      "kind": "documentation",
+      "sha256": "e7d75118add0a55d6c7ca596ef85177f180cee0d9d88bf3e485370a74909fd57",
+      "lines": 89,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/PROJECT_PLAN.md",
+      "kind": "documentation",
+      "sha256": "a871b5f9ca1ab80869237e03b807f323441c4447de4240aac4f382b5e8f81368",
+      "lines": 747,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/RESEARCH_PROTOCOL.md",
+      "kind": "documentation",
+      "sha256": "2416d3dc4348144c2fd4ce7af511cea0085eaea7c967909963511e60c2ab990f",
+      "lines": 41,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/VISUAL_DESIGN_WORKFLOW.md",
+      "kind": "documentation",
+      "sha256": "333dc4b0b3d2a2cbff0c5abd09d8a95c50b822569cf9341c732dc7e9751365e2",
+      "lines": 193,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/adversarial-audit-checks.json",
+      "kind": "historical_evidence",
+      "sha256": "0230290c3646e886146937be32cf4011676fd33f788818c811df52e6f6496fba",
+      "lines": 208,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/adversarial-audit-restart-checks.json",
+      "kind": "historical_evidence",
+      "sha256": "fbc1f2fd2d645b5f33bb0614200c706c9ccc19e8c81b4e44cd52cc797c3511d9",
+      "lines": 39,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/adversarial-audit.md",
+      "kind": "historical_evidence",
+      "sha256": "8f679df75a69948969887aa226a5ebdd0f7a4935ac23b44ebc6349ae8b799a37",
+      "lines": 155,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/implementation-checks.json",
+      "kind": "historical_evidence",
+      "sha256": "1846eb092f951222a544de8264504fabcdfb528298faa384c76294f2f9b8c9f9",
+      "lines": 208,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/implementation-phases.md",
+      "kind": "historical_evidence",
+      "sha256": "b03ee09a3d95bbee0d158fa2e29335144c5b6f346ba075fe4c87aed314ca41ee",
+      "lines": 83,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/offline-checks.json",
+      "kind": "historical_evidence",
+      "sha256": "8a33adef3f7120f9f6fedf72aee50ca601e92eb219ea526782fd010b84ab7c2f",
+      "lines": 133,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "docs/evidence/phase0-preparation.md",
+      "kind": "historical_evidence",
+      "sha256": "178172e2c66b31512877b9e1785f33f0bd8f95c39e6a44cf0a12fc8faffb509f",
+      "lines": 53,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "experiments/README.md",
+      "kind": "documentation",
+      "sha256": "1727a53fe509aa355db59f8fb10fbea5396498598eee4798ed091f64f187b4bd",
+      "lines": 140,
+      "review_status": "metadata_or_prose_reference",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "experiments/__init__.py",
+      "kind": "handwritten_source",
+      "sha256": "e4e628c05ba5d27ecd19f0de87aa1a38e938788cb224fea964b8279af513b0a3",
+      "lines": 1,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 0,
+        "percent_covered": 100.0,
+        "percent_covered_display": "100.00",
+        "missing_lines": 0,
+        "excluded_lines": 0,
+        "percent_statements_covered": 100.0,
+        "percent_statements_covered_display": "100.00",
+        "num_branches": 0,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 0,
+        "percent_branches_covered": 100.0,
+        "percent_branches_covered_display": "100.00"
+      }
+    },
+    {
+      "path": "experiments/adapters.py",
+      "kind": "handwritten_source",
+      "sha256": "3997654c23dfce0d861ad31be9e2161b030f1ef2054f7a24cf05dd1ba7017311",
+      "lines": 125,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 88,
+        "num_statements": 91,
+        "percent_covered": 95.1219512195122,
+        "percent_covered_display": "95.12",
+        "missing_lines": 3,
+        "excluded_lines": 0,
+        "percent_statements_covered": 96.7032967032967,
+        "percent_statements_covered_display": "96.70",
+        "num_branches": 32,
+        "num_partial_branches": 3,
+        "covered_branches": 29,
+        "missing_branches": 3,
+        "percent_branches_covered": 90.625,
+        "percent_branches_covered_display": "90.62"
+      }
+    },
+    {
+      "path": "experiments/evaluation.py",
+      "kind": "handwritten_source",
+      "sha256": "16810cb07e917f8bc6c2edec604137683d94329b9fbf29c97d9f22ed9633c820",
+      "lines": 456,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 267,
+        "num_statements": 295,
+        "percent_covered": 87.29792147806005,
+        "percent_covered_display": "87.30",
+        "missing_lines": 28,
+        "excluded_lines": 0,
+        "percent_statements_covered": 90.50847457627118,
+        "percent_statements_covered_display": "90.51",
+        "num_branches": 138,
+        "num_partial_branches": 27,
+        "covered_branches": 111,
+        "missing_branches": 27,
+        "percent_branches_covered": 80.43478260869566,
+        "percent_branches_covered_display": "80.43"
+      }
+    },
+    {
+      "path": "experiments/fixtures/evaluation_tasks.json",
+      "kind": "configuration",
+      "sha256": "57512d1540ce1c049bf4b26615682a1541381d6f1856ae89a32d97d0f45171e7",
+      "lines": 174,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "experiments/journal.py",
+      "kind": "handwritten_source",
+      "sha256": "9f1594b2af518932db1aca33fb5d0308fa3d41506b829705b31307667e32d893",
+      "lines": 194,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 146,
+        "num_statements": 160,
+        "percent_covered": 88.9423076923077,
+        "percent_covered_display": "88.94",
+        "missing_lines": 14,
+        "excluded_lines": 0,
+        "percent_statements_covered": 91.25,
+        "percent_statements_covered_display": "91.25",
+        "num_branches": 48,
+        "num_partial_branches": 7,
+        "covered_branches": 39,
+        "missing_branches": 9,
+        "percent_branches_covered": 81.25,
+        "percent_branches_covered_display": "81.25"
+      }
+    },
+    {
+      "path": "experiments/release.py",
+      "kind": "handwritten_source",
+      "sha256": "59f3ed798f1be472c72b4ea1ed017fd6419d153276208db7a488d0f6bd9b9052",
+      "lines": 119,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 85,
+        "num_statements": 97,
+        "percent_covered": 84.90566037735849,
+        "percent_covered_display": "84.91",
+        "missing_lines": 12,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.62886597938144,
+        "percent_statements_covered_display": "87.63",
+        "num_branches": 62,
+        "num_partial_branches": 12,
+        "covered_branches": 50,
+        "missing_branches": 12,
+        "percent_branches_covered": 80.64516129032258,
+        "percent_branches_covered_display": "80.65"
+      }
+    },
+    {
+      "path": "experiments/runner.py",
+      "kind": "handwritten_source",
+      "sha256": "18851b849aef9156c77eb82b63a6528e44fb1e8784039c8d8e23e87075622b41",
+      "lines": 378,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 267,
+        "num_statements": 311,
+        "percent_covered": 82.4295010845987,
+        "percent_covered_display": "82.43",
+        "missing_lines": 44,
+        "excluded_lines": 0,
+        "percent_statements_covered": 85.85209003215434,
+        "percent_statements_covered_display": "85.85",
+        "num_branches": 150,
+        "num_partial_branches": 33,
+        "covered_branches": 113,
+        "missing_branches": 37,
+        "percent_branches_covered": 75.33333333333333,
+        "percent_branches_covered_display": "75.33"
+      }
+    },
+    {
+      "path": "experiments/study_runner.py",
+      "kind": "handwritten_source",
+      "sha256": "c444018cf066db416e467e81f5762ecf4ee548bcb4f442a10617d84c93600c7a",
+      "lines": 659,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_runtime"
+      ],
+      "python_coverage": {
+        "covered_lines": 501,
+        "num_statements": 584,
+        "percent_covered": 81.47208121827411,
+        "percent_covered_display": "81.47",
+        "missing_lines": 83,
+        "excluded_lines": 0,
+        "percent_statements_covered": 85.78767123287672,
+        "percent_statements_covered_display": "85.79",
+        "num_branches": 204,
+        "num_partial_branches": 49,
+        "covered_branches": 141,
+        "missing_branches": 63,
+        "percent_branches_covered": 69.11764705882354,
+        "percent_branches_covered_display": "69.12"
+      }
+    },
+    {
+      "path": "experiments/visual_evaluation.py",
+      "kind": "handwritten_source",
+      "sha256": "aab841798f0c3ac03caf9cb48e5b5357a6805fc0c4043d0fd92e13890d4eb782",
+      "lines": 252,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence"
+      ],
+      "python_coverage": {
+        "covered_lines": 192,
+        "num_statements": 214,
+        "percent_covered": 87.5,
+        "percent_covered_display": "87.50",
+        "missing_lines": 22,
+        "excluded_lines": 0,
+        "percent_statements_covered": 89.7196261682243,
+        "percent_statements_covered_display": "89.72",
+        "num_branches": 122,
+        "num_partial_branches": 20,
+        "covered_branches": 102,
+        "missing_branches": 20,
+        "percent_branches_covered": 83.60655737704919,
+        "percent_branches_covered_display": "83.61"
+      }
+    },
+    {
+      "path": "frontend/AGENTS.md",
+      "kind": "documentation",
+      "sha256": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0",
+      "lines": 9,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/api-client.ts",
+      "kind": "handwritten_source",
+      "sha256": "3e103ce710a542d7b1c094d861d6cd02ff4ff97e81c0d9d66e4df4f45eba3733",
+      "lines": 302,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/contracts.ts",
+      "kind": "handwritten_source",
+      "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+      "lines": 24,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/design/page.tsx",
+      "kind": "handwritten_source",
+      "sha256": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+      "lines": 8,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/design/visual.css",
+      "kind": "handwritten_source",
+      "sha256": "4ddad76de98196ffa6f594f7b11083c8c790e6f830938dbfe9664574871ed7e8",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/design/workspace.tsx",
+      "kind": "handwritten_source",
+      "sha256": "6e898fa2857492f49b77374f875ae3f6870ac5bd562f228380c3afa953797249",
+      "lines": 188,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/globals.css",
+      "kind": "handwritten_source",
+      "sha256": "30f8b460f1dd41525956444ec06811b763e59201406da55a9dace2d6eb278c6f",
+      "lines": 1108,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/layout.tsx",
+      "kind": "handwritten_source",
+      "sha256": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+      "lines": 18,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/live-workspace.tsx",
+      "kind": "handwritten_source",
+      "sha256": "6307e589b4f33c9f9c780e3abbc7c19a542e11543dcd5c921964c47d572752a6",
+      "lines": 457,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/live.css",
+      "kind": "handwritten_source",
+      "sha256": "a23ec5c08e9a806a735d00e9fe3a69617d32fbe57ab8769443334b6b0e263be1",
+      "lines": 123,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/live/page.tsx",
+      "kind": "handwritten_source",
+      "sha256": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+      "lines": 12,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/page.tsx",
+      "kind": "handwritten_source",
+      "sha256": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+      "lines": 5,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/app/workspace.tsx",
+      "kind": "handwritten_source",
+      "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+      "lines": 1794,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/next-env.d.ts",
+      "kind": "generated_or_locked",
+      "sha256": "0f70629890b72a0a82e91972cc032c04b658b26c265373cb711cf576bfbf8fcc",
+      "lines": 7,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/next.config.ts",
+      "kind": "handwritten_source",
+      "sha256": "1171a1b14dc0617d3c0096865dc78d7a8c184a7465af1687b1cdf81f49abd9f0",
+      "lines": 8,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/package.json",
+      "kind": "configuration",
+      "sha256": "08cc93072e853dc3d84f4bc9c256710604b50777e7bba61746a89298fcbc3222",
+      "lines": 23,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "frontend/tsconfig.json",
+      "kind": "configuration",
+      "sha256": "fe301561c5f9f7556924d85c875b73846f4fc6891001acb4ce3ca299984d06c0",
+      "lines": 36,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "package.json",
+      "kind": "configuration",
+      "sha256": "fccaf679d65c3fd8b2a71edadfe70ede4bc200a579ed24bf6bdcc2d8285bbeb6",
+      "lines": 22,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "packages/api-client/src/application.ts",
+      "kind": "generated_or_locked",
+      "sha256": "2eb321e0936af9df2aa77da2593429bbdf5f0dd279fb300bcaa9d10a394be7f7",
+      "lines": 5071,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "packages/api-client/src/schema.ts",
+      "kind": "generated_or_locked",
+      "sha256": "56effbbc792665e4bbd5ade548c51ef5b8b7b285fbd2bf3213800e2b27ce8caa",
+      "lines": 962,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "playwright.config.ts",
+      "kind": "handwritten_source",
+      "sha256": "ce5117e99c4f7830b248fd81290c18055f2ca5d87f464cf1601a372b2ff16715",
+      "lines": 22,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "pnpm-lock.yaml",
+      "kind": "generated_or_locked",
+      "sha256": "178ca199477ee2ac992eeb6c21c2883e76bb2d97dac00a3d2ea006da57b9df70",
+      "lines": 961,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    },
+    {
+      "path": "pnpm-workspace.yaml",
+      "kind": "configuration",
+      "sha256": "40210a5f51eb22fdadaf2588020dbe7a05ea7877373abd04a27f0a79b3c1ca3e",
+      "lines": 3,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "pyproject.toml",
+      "kind": "configuration",
+      "sha256": "648861bc1b9a00f7e572dcb646eee0cb0feae184fdb48b66917e9f05fb03dcaf",
+      "lines": 44,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/check_client.mjs",
+      "kind": "handwritten_source",
+      "sha256": "22261d5d1fddf5d3a218846fa19552422f8cf6a40f74a8664b31d2a54f2ffc7e",
+      "lines": 28,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/dev.py",
+      "kind": "handwritten_source",
+      "sha256": "be449403e4a58d589eada54e53ebb21a3d1dfe73349e5a9892df9afc6cbb2276",
+      "lines": 106,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 56,
+        "num_statements": 86,
+        "percent_covered": 61.40350877192982,
+        "percent_covered_display": "61.40",
+        "missing_lines": 30,
+        "excluded_lines": 0,
+        "percent_statements_covered": 65.11627906976744,
+        "percent_statements_covered_display": "65.12",
+        "num_branches": 28,
+        "num_partial_branches": 6,
+        "covered_branches": 14,
+        "missing_branches": 14,
+        "percent_branches_covered": 50.0,
+        "percent_branches_covered_display": "50.00"
+      }
+    },
+    {
+      "path": "scripts/frontend_coverage.mjs",
+      "kind": "handwritten_source",
+      "sha256": "ee814a1a6d27c7de84c87e079470ad0a1ca47bd89e6f5bd59e5cf0b6c63663cc",
+      "lines": 170,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/frontend_coverage.test.mjs",
+      "kind": "test_code",
+      "sha256": "3d64dc9cdb190976bab1a4b7ed01527c88d3fa4c756dfd6f25c64d4c9b2ff043",
+      "lines": 25,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/native-renderer.Dockerfile",
+      "kind": "handwritten_source",
+      "sha256": "acbb46754227e84ae226889ae6421a4fadb6f276d82340b8f3677e8e76a23ffe",
+      "lines": 12,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/native-renderer.mjs",
+      "kind": "handwritten_source",
+      "sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+      "lines": 136,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/pdf-qa.Dockerfile",
+      "kind": "handwritten_source",
+      "sha256": "4518c6fbc87d528bd10f058f24315e71b57d3df7434532d43c62ef2c93b13e7e",
+      "lines": 3,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "scripts/scenario_summary.py",
+      "kind": "handwritten_source",
+      "sha256": "3b330bfda05b1cb0983b7c045ef33c7d5fc98fce2f80d53a089745924a635044",
+      "lines": 100,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 55,
+        "num_statements": 68,
+        "percent_covered": 76.41509433962264,
+        "percent_covered_display": "76.42",
+        "missing_lines": 13,
+        "excluded_lines": 0,
+        "percent_statements_covered": 80.88235294117646,
+        "percent_statements_covered_display": "80.88",
+        "num_branches": 38,
+        "num_partial_branches": 12,
+        "covered_branches": 26,
+        "missing_branches": 12,
+        "percent_branches_covered": 68.42105263157895,
+        "percent_branches_covered_display": "68.42"
+      }
+    },
+    {
+      "path": "scripts/serve_prototype.py",
+      "kind": "handwritten_source",
+      "sha256": "0cad86469e7cd9c3cbc72b0a09f33f5473635a209c1fe79933aa3cda4d8b4cee",
+      "lines": 35,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 0,
+        "num_statements": 23,
+        "percent_covered": 0.0,
+        "percent_covered_display": "0.00",
+        "missing_lines": 23,
+        "excluded_lines": 0,
+        "percent_statements_covered": 0.0,
+        "percent_statements_covered_display": "0.00",
+        "num_branches": 6,
+        "num_partial_branches": 0,
+        "covered_branches": 0,
+        "missing_branches": 6,
+        "percent_branches_covered": 0.0,
+        "percent_branches_covered_display": "0.00"
+      }
+    },
+    {
+      "path": "scripts/verify.py",
+      "kind": "handwritten_source",
+      "sha256": "cfc41540851eaa5bff0d2431679559ab1c15005c65f11ee761651ed112fa4de8",
+      "lines": 189,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "root"
+      ],
+      "python_coverage": {
+        "covered_lines": 131,
+        "num_statements": 149,
+        "percent_covered": 85.94594594594595,
+        "percent_covered_display": "85.95",
+        "missing_lines": 18,
+        "excluded_lines": 0,
+        "percent_statements_covered": 87.91946308724832,
+        "percent_statements_covered_display": "87.92",
+        "num_branches": 36,
+        "num_partial_branches": 8,
+        "covered_branches": 28,
+        "missing_branches": 8,
+        "percent_branches_covered": 77.77777777777777,
+        "percent_branches_covered_display": "77.78"
+      }
+    },
+    {
+      "path": "tests/e2e/deep_visual.spec.ts",
+      "kind": "test_code",
+      "sha256": "11113f6d825a213104ebc33a85289a72f6bf34a65eebe5477f058d2b9f89bc7a",
+      "lines": 153,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "tests/e2e/fixtures.ts",
+      "kind": "test_code",
+      "sha256": "9ae1f426743c99e236c4b311310a3bb496aca4e0b868fbf0c6cb13b7cc03559c",
+      "lines": 33,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "tests/e2e/live.spec.ts",
+      "kind": "test_code",
+      "sha256": "e5b6a9be8b21188143e9bc3226533ccf775e5683a528a749250b7f84fd1ad3d4",
+      "lines": 348,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "tests/e2e/prototype.spec.ts",
+      "kind": "test_code",
+      "sha256": "6989b46cb947cb50c1591ce1440ad42999021911b6db7b86cfcffcad2a6b4abd",
+      "lines": 230,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_evidence",
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "tests/e2e/visual.spec.ts",
+      "kind": "test_code",
+      "sha256": "5a506876e3139946dbd2b415f706ba724b4bc4f8149e566170cabba4072f04a7",
+      "lines": 117,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "tests/e2e/visual_api.py",
+      "kind": "test_code",
+      "sha256": "c27139462e35977f405a210d2a12fcd73b9af3cbbc4573f3b9cfd8ec55a0276c",
+      "lines": 25,
+      "review_status": "reviewed_current_hash",
+      "reviewers": [
+        "deep_visual_frontend"
+      ],
+      "python_coverage": null
+    },
+    {
+      "path": "uv.lock",
+      "kind": "generated_or_locked",
+      "sha256": "b7f0070f8705f7ff583c284aa280119d9213774c5a3814a374009dd9c7aa79d6",
+      "lines": 1568,
+      "review_status": "generator_or_lock_checks",
+      "reviewers": [],
+      "python_coverage": null
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+........................................................................ [ 34%]
+.......................................F................................ [ 69%]
+...............................................................          [100%]
+=================================== FAILURES ===================================
+_ test_worker_rejected_delivery_cannot_send_or_create_new_authorization[capacity-capacity_wait] _
+
+factory = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1006/test_worker_rejected_delivery_5/orchestration.sqlite), autoflush=True, expire_on_commit=False)
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x10cbbecc0>
+case = 'capacity', status = 'capacity_wait'
+
+    @pytest.mark.parametrize('case,status',[('missing','missing'),('claimed','already_claimed'),('admission','admission_wait'),('wrong_stage','wrong_stage'),('research','research_wait'),('capacity','capacity_wait'),('claims','policy_blocked'),('auditor','policy_blocked'),('dispatch','dispatch_paused'),('provider_gate','provider_blocked')])
+    def test_worker_rejected_delivery_cannot_send_or_create_new_authorization(factory,monkeypatch,case,status):
+        run_id,step_id=prepared(factory)
+        with factory.begin() as session:
+            run=session.get(Run,run_id);step=session.get(Step,step_id)
+            if case=='claimed':step.status='claimed'
+            if case=='admission':run.status='queued'
+            if case=='wrong_stage':step.stage='audit'
+            if case=='research':step.stage='proposal';run.stage='proposals';run.configuration={**run.configuration,'research_state':'running'}
+            if case=='claims':step.infrastructure_claims=3
+            if case=='auditor':
+                step.stage='audit';run.stage='audit'
+                session.add(Step(id='owned_synth',run_id=run_id,stage='synthesis',role_slot_id='synthesis',provider='openai',status='succeeded',result_json={'output':{'summary':'Earlier successful result'}}))
+            if case=='dispatch':
+                policy=session.scalar(select(PolicyBucket).where(PolicyBucket.key=='deployment'));policy.metadata_json={**policy.metadata_json,'dispatch_locked':True}
+        if case=='capacity':monkeypatch.setattr(tasks,'provider_capacity_available',lambda *a:False)
+        adapter=SimulatedProvider('openai')
+        if case=='provider_gate':
+            def gate(*a):raise ProviderFailure('provider_configuration_invalid',may_have_sent=False)
+            monkeypatch.setattr(adapter,'conservative_bound',gate)
+>       result=tasks.execute_step('missing' if case=='missing' else step_id,session_factory=factory,adapter_registry={'openai':adapter})
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_runtime_workers.py:50: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+step_id = 'step_093cd9bd29434a65b94f632732650ca4'
+session_factory = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1006/test_worker_rejected_delivery_5/orchestration.sqlite), autoflush=True, expire_on_commit=False)
+adapter_registry = {'openai': <round_robin.providers.simulated.SimulatedProvider object at 0x10e56d880>}
+dispatch_generation = None
+
+    def execute_step(step_id: str, *, session_factory=SessionLocal, adapter_registry=None, dispatch_generation=None):
+        token, attempt_id = new_id("lease"), new_id("attempt")
+        provider = request = None
+        try:
+            with session_factory() as session, session.begin():
+                snapshot = session.get(Step, step_id)
+                if snapshot is None:
+                    return {"status": "missing"}
+                run = lock_work_run(session, snapshot.run_id)
+                step = session.scalar(select(Step).where(Step.id == step_id).with_for_update().execution_options(populate_existing=True))
+                if not run or step.status in {"succeeded", "failed", "skipped"}:
+                    return {"status": "settled"}
+                if step.status in {"claimed", "authorized"}:
+                    return {"status": "already_claimed"}
+                control = run.configuration.get("step_dispatch", {}).get(step.id, {})
+                if dispatch_generation is not None and dispatch_generation != control.get("generation", 0):
+                    return {"status": "stale_dispatch_generation"}
+                if control.get("not_before") and aware(datetime.fromisoformat(control["not_before"])) > utcnow():
+                    return {"status": "retry_wait", "not_before": control["not_before"]}
+                try:
+                    check_eligible(session, run)
+                    if run.status != "running":
+                        return {"status": "admission_wait"}
+                    if step.generation != run.recovery_generation:
+                        return {"status": "stale_generation"}
+                    if step.stage_iteration != run.configuration.get("stage_iteration", 0):
+                        return {"status": "stale_iteration"}
+                    expected_stage = "proposal" if run.stage == "proposals" else run.stage
+                    if expected_stage != step.stage:
+                        return {"status": "wrong_stage"}
+                    if step.stage == "proposal" and run.configuration.get("research_state") in {"pending", "running"}:
+                        enqueue(session, run, "execute", step_id=step.id, due_at=utcnow() + timedelta(seconds=2))
+                        return {"status": "research_wait"}
+                    logical_role_steps = list(session.scalars(select(Step).where(Step.run_id == run.id, Step.stage == step.stage, Step.round == step.round, Step.role_slot_id == step.role_slot_id)))
+                    if sum(prior.infrastructure_claims for prior in logical_role_steps) >= 3:
+                        raise BudgetDenied("infrastructure_claim_limit")
+>                   if not provider_capacity_available(session, step.provider, mandatory=step.stage in {"synthesis", "audit"}):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E                   TypeError: test_worker_rejected_delivery_cannot_send_or_create_new_authorization.<locals>.<lambda>() got an unexpected keyword argument 'mandatory'
+
+backend/src/round_robin/worker/tasks.py:140: TypeError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+backend/tests/test_exhaustive_runtime_workers.py::test_dispatcher_module_entrypoint_handles_immediate_stop_without_connecting
+  <frozen runpy>:128: RuntimeWarning: 'round_robin.dispatcher.service' found in sys.modules after import of package 'round_robin.dispatcher', but prior to execution of 'round_robin.dispatcher.service'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED backend/tests/test_exhaustive_runtime_workers.py::test_worker_rejected_delivery_cannot_send_or_create_new_authorization[capacity-capacity_wait]
+1 failed, 206 passed, 3 warnings in 14.51s

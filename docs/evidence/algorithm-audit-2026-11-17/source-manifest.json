@@ -1,0 +1,582 @@
+[
+  {
+    "path": "backend/src/round_robin/__init__.py",
+    "sha256": "f0fe4f5ae2569dfae701fbc51127dea7fcad802614d46c386f6d8ee814473589",
+    "bytes": 102
+  },
+  {
+    "path": "backend/src/round_robin/api/__init__.py",
+    "sha256": "8f846a55f39ad5274695ad70d89fe28b4a383df5806fe30e405675a03e2f8ccb",
+    "bytes": 86
+  },
+  {
+    "path": "backend/src/round_robin/api/artifacts.py",
+    "sha256": "5bb53cb87a2e9eca838441239bcc8ad906fd8b071c06b6cb4bb2848e375f720a",
+    "bytes": 18951
+  },
+  {
+    "path": "backend/src/round_robin/api/auth.py",
+    "sha256": "8c29bd8ceb6e8c3848eeaca23dcbd6ad5b6c05f22a45ba9f782db19eb87ebc30",
+    "bytes": 3112
+  },
+  {
+    "path": "backend/src/round_robin/api/commands.py",
+    "sha256": "39ff212bc1e2fa6c572430bcc50a687718ac53881c9f34c8dd64e93d62bc22f1",
+    "bytes": 4677
+  },
+  {
+    "path": "backend/src/round_robin/api/drafts.py",
+    "sha256": "59a5de4ed69a254873c4246aaa0fcc968301e0beba53d11209c284d325f71ebc",
+    "bytes": 13493
+  },
+  {
+    "path": "backend/src/round_robin/api/events.py",
+    "sha256": "643014de08757273e4e5239c229701c01e296c8ca8055167877659ad8c50aadf",
+    "bytes": 17779
+  },
+  {
+    "path": "backend/src/round_robin/api/hosted.py",
+    "sha256": "259073f0546655ce0e412f2acc87b141bf175b992799840c7692a58236814864",
+    "bytes": 3335
+  },
+  {
+    "path": "backend/src/round_robin/api/lineage.py",
+    "sha256": "6ba0c02e21cd91f61ca4d2ec5915e13380e95b879411a21c94874dcd24baed2e",
+    "bytes": 2557
+  },
+  {
+    "path": "backend/src/round_robin/api/preflight.py",
+    "sha256": "f7ed671b4d13377023e2b0b2cca1817d6035a908530a5f95bbcb437e3ea12fa8",
+    "bytes": 15277
+  },
+  {
+    "path": "backend/src/round_robin/api/reuse.py",
+    "sha256": "34a71e58076a34db218b9fbf928d2a120c976e47849cadf97a6964524fcf85ef",
+    "bytes": 710
+  },
+  {
+    "path": "backend/src/round_robin/api/visual.py",
+    "sha256": "45931f9f952775c6ba2be7645c0dd27268e0f2ed797e1999620296ca932ac62a",
+    "bytes": 42181
+  },
+  {
+    "path": "backend/src/round_robin/app.py",
+    "sha256": "1d38cd5c10f1ae6215cf749e9c9498e78fd77774587a8f9f871ff3a64aa57883",
+    "bytes": 13235
+  },
+  {
+    "path": "backend/src/round_robin/configuration.py",
+    "sha256": "9a848aebbf299774a4ee904187f594315f577636ea04e6bbe4f8689cb65d6f09",
+    "bytes": 7027
+  },
+  {
+    "path": "backend/src/round_robin/database/__init__.py",
+    "sha256": "5ad531f47b9f73c18da3de4609729488db8adc79e969187f5630779cc26fb461",
+    "bytes": 63
+  },
+  {
+    "path": "backend/src/round_robin/database/claim_models.py",
+    "sha256": "e0159c50ae2d384dc06ec55612bea1cbffb5229e3d0f1527ee4eb8e45a31b0bd",
+    "bytes": 2028
+  },
+  {
+    "path": "backend/src/round_robin/database/models.py",
+    "sha256": "ba2cc158071fb3a3dafa9e7cfe8beb249b728f87b6578d35af07158f949aed3c",
+    "bytes": 14425
+  },
+  {
+    "path": "backend/src/round_robin/database/safety.py",
+    "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a",
+    "bytes": 1712
+  },
+  {
+    "path": "backend/src/round_robin/database/services.py",
+    "sha256": "09ac8cf83b5c0abdbb7ee574ba8dfefa5a5f680a6cc9bdcdb77cf6873279637e",
+    "bytes": 3998
+  },
+  {
+    "path": "backend/src/round_robin/database/session.py",
+    "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f",
+    "bytes": 893
+  },
+  {
+    "path": "backend/src/round_robin/database/visual_models.py",
+    "sha256": "766e323fc9579eb87fe6ae1590f3883583e7874720269c36c390a1377fd5bcee",
+    "bytes": 3695
+  },
+  {
+    "path": "backend/src/round_robin/dispatcher/__init__.py",
+    "sha256": "ca208ee75aba91f8b7cf3574d3c1ef6f1f113a4b164696e34d04d10327ea50cc",
+    "bytes": 66
+  },
+  {
+    "path": "backend/src/round_robin/dispatcher/service.py",
+    "sha256": "7f7d464c9c3a830fdc3c28a40a71e853d08f3e0a1ce895337316c5f387bcbb4d",
+    "bytes": 11184
+  },
+  {
+    "path": "backend/src/round_robin/export_contracts.py",
+    "sha256": "b8b22e6b87631043561f5c4398722c27a4d5f6a7247294b641fcba73a38d094b",
+    "bytes": 1942
+  },
+  {
+    "path": "backend/src/round_robin/fixture_api.py",
+    "sha256": "e107103ad2790794fe02183ec3b2158c4226e78a6f33afd4c8241f5a49be9533",
+    "bytes": 2351
+  },
+  {
+    "path": "backend/src/round_robin/fixtures.py",
+    "sha256": "8569d95a017f37418a05a4e91bf44e0effc30301d47c5973a208d999f3a2aaf0",
+    "bytes": 24800
+  },
+  {
+    "path": "backend/src/round_robin/operations/__init__.py",
+    "sha256": "981502c16e2504ea8cc006f0a9b7156419bc6611db8782d5e7eee80f6de2f7fa",
+    "bytes": 84
+  },
+  {
+    "path": "backend/src/round_robin/operations/artifact_lifecycle.py",
+    "sha256": "043ec2a86b9fb2aade53f8ca7a060271125d4a25e708d7d9d662275b17024574",
+    "bytes": 2120
+  },
+  {
+    "path": "backend/src/round_robin/operations/durability.py",
+    "sha256": "e77947c41c0699b959241b1658cc3fbe9e97bd45264d237736584eba6604c9a4",
+    "bytes": 9871
+  },
+  {
+    "path": "backend/src/round_robin/operations/maintenance.py",
+    "sha256": "20f1cc71a415cb6c7273cd2078dd8cc2237e7db51d05afc3f8eb6c5d23cec753",
+    "bytes": 3974
+  },
+  {
+    "path": "backend/src/round_robin/operations/processes.py",
+    "sha256": "023647f667f1054c18f27bdc60440a83934fd46b28920cdb53b93a41d01bd098",
+    "bytes": 2669
+  },
+  {
+    "path": "backend/src/round_robin/operations/recovery.py",
+    "sha256": "6655a7214b1ec72849e907383dd5d4f617d7babdaf408c51cd578a97cc7492d6",
+    "bytes": 23756
+  },
+  {
+    "path": "backend/src/round_robin/ops.py",
+    "sha256": "6459726dc46e850c8fbf65b11cbbbdd2a9bf292398f3c1266b8645d950da22ed",
+    "bytes": 9627
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/__init__.py",
+    "sha256": "2ed2e368c32626e0c5942bd57b14ad4b19d6f436fcbde3de0f9a90c76dc2d4d2",
+    "bytes": 77
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/admission.py",
+    "sha256": "e8d2cb5db5ce077fca2c95925ea555655dc215ee5e9cf73abc1a1949d5793e4f",
+    "bytes": 5233
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/budget.py",
+    "sha256": "790f78acdf0eb503362bcba901319aec8c4b92e58e8aa737f614e8cebaf8bd4b",
+    "bytes": 11899
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/circuits.py",
+    "sha256": "fb3dcd1665a46bcecc8b4b18a52b60353d4cdfb2e6a6fdb255da55a98fcd2918",
+    "bytes": 2777
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/configuration.py",
+    "sha256": "8aad247514786571b4088367236cd79b9da940ca77813024ffdb6d5a65bd3378",
+    "bytes": 2223
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/controller.py",
+    "sha256": "baea509e2b78f5c2894209a0ff8d89b238eea764a236de60b7e6cf8522312380",
+    "bytes": 22111
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/policies.py",
+    "sha256": "0510795300bb1483137f54d604dd7c95cd226e8f136727f17a0e1ab3f2b5dc46",
+    "bytes": 5110
+  },
+  {
+    "path": "backend/src/round_robin/orchestration/reporting.py",
+    "sha256": "6248ad9dfa25eb00924f34dc371512e0c87ee07528be0b8487ccb1931de2a909",
+    "bytes": 16874
+  },
+  {
+    "path": "backend/src/round_robin/providers/__init__.py",
+    "sha256": "f415cb787d28c12ca66037ab855745b4b0ec7aa7fe08ca20cb235db00de37a93",
+    "bytes": 89
+  },
+  {
+    "path": "backend/src/round_robin/providers/base.py",
+    "sha256": "c652f47aebad8365fca14e85ffdfff8cde0df6a7adc702d68129ad1e93cb07be",
+    "bytes": 6925
+  },
+  {
+    "path": "backend/src/round_robin/providers/http.py",
+    "sha256": "2710871df48bd36a4460742caf2c555f2569caa3a719c3f71775cdcddd102ce0",
+    "bytes": 17992
+  },
+  {
+    "path": "backend/src/round_robin/providers/images.py",
+    "sha256": "73f6af5b2238c3a59ffabf78b3bacffb6216a9165057af80956eb967b3814cd7",
+    "bytes": 22884
+  },
+  {
+    "path": "backend/src/round_robin/providers/simulated.py",
+    "sha256": "1d365bfc2996e4b895fb0800ab5877a9544282779ecf9f1f86e8eab22d7fdfdc",
+    "bytes": 3696
+  },
+  {
+    "path": "backend/src/round_robin/providers/structured.py",
+    "sha256": "54c3cb060562aa5d537bb98670c7e5b94d4145ead516521f9bc370c15a425f89",
+    "bytes": 1316
+  },
+  {
+    "path": "backend/src/round_robin/providers/transport.py",
+    "sha256": "94be482853bbc2908e289812dc11b16acdf9e14ee95c5c0264458e443166d202",
+    "bytes": 5568
+  },
+  {
+    "path": "backend/src/round_robin/reports/exports.py",
+    "sha256": "8e3ae63b217fb823e7e78c86989a5f38c1925a88ebc2424d93d126debe48dca3",
+    "bytes": 14606
+  },
+  {
+    "path": "backend/src/round_robin/reports/measurements.py",
+    "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805",
+    "bytes": 3519
+  },
+  {
+    "path": "backend/src/round_robin/reports/read_adapters.py",
+    "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c",
+    "bytes": 4693
+  },
+  {
+    "path": "backend/src/round_robin/reports/readiness.py",
+    "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02",
+    "bytes": 2822
+  },
+  {
+    "path": "backend/src/round_robin/reports/storage.py",
+    "sha256": "e31c58476bd000d73241f936f4a140ff3a2ff782886049e130c307fe0e0f5b9c",
+    "bytes": 2626
+  },
+  {
+    "path": "backend/src/round_robin/research/calculator.py",
+    "sha256": "e1f825c8e0c35b1fdd9ac4560251146c1449cf27cf15b49ee3a77ac625ae2f91",
+    "bytes": 11213
+  },
+  {
+    "path": "backend/src/round_robin/research/claims.py",
+    "sha256": "523b277fa424935e116deaf233e990d748dc975816dd834b93ce94b58c43f111",
+    "bytes": 5681
+  },
+  {
+    "path": "backend/src/round_robin/research/currencies.py",
+    "sha256": "0f39f65bb9499138e5beeff38061852b3f0c54927be1c800de64cf1bd005d3fb",
+    "bytes": 1494
+  },
+  {
+    "path": "backend/src/round_robin/research/fetcher.py",
+    "sha256": "3ea3ae37e88aeae2769fef2dd9e8f9271efde7d8e05281525974f86b4e07789d",
+    "bytes": 14378
+  },
+  {
+    "path": "backend/src/round_robin/research/queries.py",
+    "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239",
+    "bytes": 1991
+  },
+  {
+    "path": "backend/src/round_robin/research/reuse.py",
+    "sha256": "7e9c948dbc5b8f141aaa23ddde0f9acd18c9b3a83551fd16891b805fb86711cd",
+    "bytes": 10481
+  },
+  {
+    "path": "backend/src/round_robin/research/search.py",
+    "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99",
+    "bytes": 2386
+  },
+  {
+    "path": "backend/src/round_robin/research/service.py",
+    "sha256": "4a6f3c34020765313d41ff79064f1f29d2a624fcd3fd98f5a9ca4391afdea02f",
+    "bytes": 14580
+  },
+  {
+    "path": "backend/src/round_robin/schemas/__init__.py",
+    "sha256": "fbde93a3523d9905c4814b1edaa8c670a1d966fff9ae2f72ede7590516247354",
+    "bytes": 881
+  },
+  {
+    "path": "backend/src/round_robin/schemas/application.py",
+    "sha256": "287a20d65cbc9a084eea9a233765982720030d8c74a28aef6986d10c9d238308",
+    "bytes": 1855
+  },
+  {
+    "path": "backend/src/round_robin/schemas/briefs.py",
+    "sha256": "149b80352afb5a9cad730a8b2ac8117b03e0849b73e99e4a3c242ec3a98768d2",
+    "bytes": 5187
+  },
+  {
+    "path": "backend/src/round_robin/schemas/common.py",
+    "sha256": "cd709f23e3fe199ea735f4be16c6a9688d470e93f62f00bab5c932343914adc6",
+    "bytes": 3673
+  },
+  {
+    "path": "backend/src/round_robin/schemas/contributions.py",
+    "sha256": "f6833e97a6a197fa172953e10e71f14a0a5e7960b6c769b7ad828e2fe8dd0db7",
+    "bytes": 2635
+  },
+  {
+    "path": "backend/src/round_robin/schemas/events.py",
+    "sha256": "74953c8098883a7513d99cbb6d86eec44009ffe7b1b6bc1a22d3eca202c1d5b8",
+    "bytes": 1005
+  },
+  {
+    "path": "backend/src/round_robin/schemas/evidence.py",
+    "sha256": "e692ec830ac0d1e0ed670fa47c3937ef66bb9f190f95646cc4dcf7af5c8452b3",
+    "bytes": 2156
+  },
+  {
+    "path": "backend/src/round_robin/schemas/preflight.py",
+    "sha256": "fb05e07b9235135ad50db53e33ab7a25fb08701a55f97d4c429081757dabca7c",
+    "bytes": 3141
+  },
+  {
+    "path": "backend/src/round_robin/schemas/provider_configuration.py",
+    "sha256": "251a469a8fd52bba71e8a09e4d6299bbb278a7a46118770ff610cedecc88de2f",
+    "bytes": 3627
+  },
+  {
+    "path": "backend/src/round_robin/schemas/reports.py",
+    "sha256": "f7c45545b6f4a045e96004319eb064ad9f2c7db86c72a37acefd3471a1a452fe",
+    "bytes": 6618
+  },
+  {
+    "path": "backend/src/round_robin/schemas/runtime.py",
+    "sha256": "baa92905f1022812d9a7767de3b2a8ce4114c2db7909e6bb6ba0a76152929915",
+    "bytes": 11978
+  },
+  {
+    "path": "backend/src/round_robin/schemas/views.py",
+    "sha256": "4b3674121381245c864e0ea4ba8bdee542ee88655e2942d9814b9871551425a9",
+    "bytes": 6644
+  },
+  {
+    "path": "backend/src/round_robin/security/__init__.py",
+    "sha256": "72a82de619a785a236cb594c7ccfa10993382e7529d0c95ecc7abb496f7c8872",
+    "bytes": 79
+  },
+  {
+    "path": "backend/src/round_robin/security/hosted.py",
+    "sha256": "0e5f28cc7fdc6c8c220cc605ad7f7a62604295778ee7e961bfce3e27873c7ef0",
+    "bytes": 10778
+  },
+  {
+    "path": "backend/src/round_robin/security/logging.py",
+    "sha256": "305c996403678d42f27eedcad12a47c60554d01d71db114e729b0d7c33193879",
+    "bytes": 702
+  },
+  {
+    "path": "backend/src/round_robin/visual/__init__.py",
+    "sha256": "dfe071b907c00bf524a9c394d4d9cae7915d869a9d916bc583560feb2936e00c",
+    "bytes": 80
+  },
+  {
+    "path": "backend/src/round_robin/visual/assets.py",
+    "sha256": "aa9da335261b8b6dd34b265f9d2788ccc97f1939267aeff6b16b5dec45fb9b3c",
+    "bytes": 5823
+  },
+  {
+    "path": "backend/src/round_robin/visual/iterations.py",
+    "sha256": "16d88746d4f57b02055f7e09d77bff44be106941313376de69ab440541a79cde",
+    "bytes": 8537
+  },
+  {
+    "path": "backend/src/round_robin/visual/jobs.py",
+    "sha256": "b354b6b7657f741c34e85d7300873bcf43e33e75f2873e99b00c51a50f6a8a22",
+    "bytes": 4298
+  },
+  {
+    "path": "backend/src/round_robin/visual/renderers/__init__.py",
+    "sha256": "632cae01ecd02821cb5951b046550451a401eb96134c6332b9873692b84112a1",
+    "bytes": 77
+  },
+  {
+    "path": "backend/src/round_robin/visual/renderers/diagram.py",
+    "sha256": "0b15492363edd551b1f34c47b36d45fe88a28836d570e75f64807030bd169618",
+    "bytes": 8076
+  },
+  {
+    "path": "backend/src/round_robin/visual/renderers/interface.py",
+    "sha256": "65582304e1b9c8d301e0d8402674e0831ef748b32db9b1109cfa95a7e4e2a50a",
+    "bytes": 14451
+  },
+  {
+    "path": "backend/src/round_robin/visual/reviews.py",
+    "sha256": "310113ae5d964bde246cfffa4a49cb96c3d34ef3a008d3dc9b96afd201cf0a0b",
+    "bytes": 5135
+  },
+  {
+    "path": "backend/src/round_robin/visual/schemas.py",
+    "sha256": "376f5365c558797c24a3b2b11fa9f50f274ebfc255df75d1f7551b6c596bff2a",
+    "bytes": 4084
+  },
+  {
+    "path": "backend/src/round_robin/visual/service.py",
+    "sha256": "9d858c0c8e94dab3bf6e61e347bc13793a852558a16f85afe61df67a6c595b23",
+    "bytes": 32031
+  },
+  {
+    "path": "backend/src/round_robin/visual/views.py",
+    "sha256": "37244f47a79c3280c61586fa78f2ba8e47343cceb340e3f9832ff2d7ee2a9da3",
+    "bytes": 7766
+  },
+  {
+    "path": "backend/src/round_robin/worker/__init__.py",
+    "sha256": "c519fc9c2cdc595a41995441f0b6c59fbfa6d8106480861bd37b4533915cd15a",
+    "bytes": 78
+  },
+  {
+    "path": "backend/src/round_robin/worker/app.py",
+    "sha256": "cd04f5d604e9430a396c150e2c0b36a0ef18a4fb8fbc2f036a6baccd1c1e892b",
+    "bytes": 850
+  },
+  {
+    "path": "backend/src/round_robin/worker/image_tasks.py",
+    "sha256": "996adbaf17095ca52cf11e997d282d0c521d1723660c5754640937afe201d481",
+    "bytes": 32673
+  },
+  {
+    "path": "backend/src/round_robin/worker/research_tasks.py",
+    "sha256": "457aadb011529126f8e843b5e836199682cc1510941c2c7025af0c66725acf17",
+    "bytes": 612
+  },
+  {
+    "path": "backend/src/round_robin/worker/tasks.py",
+    "sha256": "79ce013d222502b16353098e15e31d66b07e8bcd0e37f695bee6ba427e231637",
+    "bytes": 18659
+  },
+  {
+    "path": "experiments/__init__.py",
+    "sha256": "e4e628c05ba5d27ecd19f0de87aa1a38e938788cb224fea964b8279af513b0a3",
+    "bytes": 65
+  },
+  {
+    "path": "experiments/adapters.py",
+    "sha256": "3997654c23dfce0d861ad31be9e2161b030f1ef2054f7a24cf05dd1ba7017311",
+    "bytes": 5901
+  },
+  {
+    "path": "experiments/evaluation.py",
+    "sha256": "f4b820c978b1fb81923d69475e46fa05060747f93c1375f7c33ca4a6b74a7067",
+    "bytes": 25009
+  },
+  {
+    "path": "experiments/journal.py",
+    "sha256": "547351dccc0f16a068f0e91beeef71c266f6b8f1fc25fe8d675a40bce6a5037b",
+    "bytes": 9603
+  },
+  {
+    "path": "experiments/release.py",
+    "sha256": "59f3ed798f1be472c72b4ea1ed017fd6419d153276208db7a488d0f6bd9b9052",
+    "bytes": 8197
+  },
+  {
+    "path": "experiments/runner.py",
+    "sha256": "18851b849aef9156c77eb82b63a6528e44fb1e8784039c8d8e23e87075622b41",
+    "bytes": 19938
+  },
+  {
+    "path": "experiments/study_runner.py",
+    "sha256": "71cc8d0670bd50c598be24cbf52b1368ec0f657568464f74173ae95f03fe7db4",
+    "bytes": 47869
+  },
+  {
+    "path": "experiments/visual_evaluation.py",
+    "sha256": "aab841798f0c3ac03caf9cb48e5b5357a6805fc0c4043d0fd92e13890d4eb782",
+    "bytes": 17323
+  },
+  {
+    "path": "frontend/app/api-client.ts",
+    "sha256": "d5098b2b514eee9f7a8c12499f177fa027adfa0bb3a67cf46f19e1b1fc3f64a6",
+    "bytes": 24560
+  },
+  {
+    "path": "frontend/app/contracts.ts",
+    "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+    "bytes": 1124
+  },
+  {
+    "path": "frontend/app/design/page.tsx",
+    "sha256": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+    "bytes": 368
+  },
+  {
+    "path": "frontend/app/design/workspace.tsx",
+    "sha256": "543219b4126096089298aed818b135be76a1dd14b22777c9e1153f907c080db3",
+    "bytes": 30400
+  },
+  {
+    "path": "frontend/app/layout.tsx",
+    "sha256": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+    "bytes": 422
+  },
+  {
+    "path": "frontend/app/live/page.tsx",
+    "sha256": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+    "bytes": 382
+  },
+  {
+    "path": "frontend/app/live-workspace.tsx",
+    "sha256": "a916e0e45aa16f706c5534da844af997e6e6f0c0a3543d9e36836ff047c99a37",
+    "bytes": 67699
+  },
+  {
+    "path": "frontend/app/page.tsx",
+    "sha256": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+    "bytes": 97
+  },
+  {
+    "path": "frontend/app/workspace.tsx",
+    "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+    "bytes": 72588
+  },
+  {
+    "path": "frontend/package.json",
+    "sha256": "d800da5356ff43af614cb42f9eb57ffd7f0a80b36049b50c58dbef60b2d701dd",
+    "bytes": 858
+  },
+  {
+    "path": "package.json",
+    "sha256": "43f283b04df0f8193a3ce70d8a225a60f79d5e0f20f18265260b1a3e852b6074",
+    "bytes": 1165
+  },
+  {
+    "path": "packages/api-client/src/application.ts",
+    "sha256": "ecb841f769c124d73c85148912bc7bb73cc8a78895cebeaf48f314d3ad7d35c3",
+    "bytes": 154729
+  },
+  {
+    "path": "packages/api-client/src/schema.ts",
+    "sha256": "2dc69fc27d116d3f8ec8222716228ab35e982d87c3c159a1fa9e12f2a3d753ba",
+    "bytes": 28607
+  },
+  {
+    "path": "pnpm-lock.yaml",
+    "sha256": "ec1991e6f877dcb893c6788c1b9d381624ffde94b563f6eff30c94fdde8c74ec",
+    "bytes": 85349
+  },
+  {
+    "path": "pyproject.toml",
+    "sha256": "30cc82729d195464493b682530ef4c11680d27d6b8342240bbfe4c37af091909",
+    "bytes": 932
+  },
+  {
+    "path": "uv.lock",
+    "sha256": "5d828d01c81e2e0d054841e2f36b608ae2e193fbd72f242d41f6193078cb47ea",
+    "bytes": 319371
+  }
+]

@@ -1,0 +1,25 @@
+{
+  "recorded_at_utc": "2026-11-16T17:44:30.634631+00:00",
+  "failed_attempt": ".local/exhaustive-audit/verified-20261116",
+  "failure": "Docker VM volume exhausted during PostgreSQL integration; server exited. Audit remained failed.",
+  "removed_only_audit_created_images": [
+    "sha256:edfb67d958e0d3c8cc914f7e0162295b0e4b79dd9c8f887a3364ed0bc2c644ce",
+    "sha256:948434c7cfced1211ffe2551d8544435a79249da42a0c8d0c376bfd0d3848c63",
+    "sha256:76d41895473508582775357220feb0180b224b8680041b9d93e903c3c2d5ca88"
+  ],
+  "retained_final_image": "sha256:c6f3ab5af89edfb2459e75ad47a89972466747e780151fff4b280570aac4df1b",
+  "scan_build_and_test_evidence_retained": true,
+  "docker_vm_available_after": "1.5 GiB",
+  "restart_command": [
+    "docker",
+    "compose",
+    "up",
+    "-d",
+    "--wait",
+    "postgres"
+  ],
+  "postgres_health": "healthy; pg_isready accepting connections",
+  "database_volumes_deleted_or_reset": false,
+  "unrelated_containers_or_images_removed": false,
+  "no_global_prune": true
+}

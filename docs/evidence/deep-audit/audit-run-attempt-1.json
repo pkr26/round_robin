@@ -1,0 +1,24 @@
+{
+  "recorded_at_utc": "2026-11-16T14:23:54.253667+00:00",
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "run",
+        "scripts/verify.py",
+        "--services",
+        "--native",
+        "--output",
+        "docs/evidence/deep-audit/checks.json"
+      ],
+      "exit_code": 1,
+      "elapsed_seconds": 108.72,
+      "output": "PASS uv run pytest -q\nPASS uv run python -m round_robin.export_contracts --check\nPASS node scripts/check_client.mjs\nPASS uv run python -m experiments.evaluation validate\nPASS uv run python scripts/scenario_summary.py --check\nPASS pnpm typecheck\nPASS pnpm build\nPASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate\nPASS uv run python -m experiments.runner --journal-dir <disposable-verification-directory>/journal --batch-id verification-001 --simulate\nEvidence saved to docs/evidence/deep-audit/checks.json\nLocal verification setup failed; protected diagnostics required\n"
+    }
+  ],
+  "restart_passed": true,
+  "all_checks_passed": false,
+  "paid_provider_calls": 0
+}

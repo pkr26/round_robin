@@ -1,0 +1,87 @@
+ROUND ROBIN — ALGORITHM REPAIRS IMPLEMENTED
+November 17, 2026 (America/Phoenix)
+
+All 17 items from the discussion-algorithm audit have implementation changes and automated regression checks. The implementation adds scoped claim premises/refutation, a durable objection ledger, explicit owner attestation, bounded retrieval/context admission, retry scheduling and queue invariants, shared versioned protocol decisions, complete visual feedback/regression records and stronger evaluation identity/measurement. No paid provider calls or deployment occurred. These engineering repairs do not establish a real-world accuracy percentage or a best-performing protocol.
+
+Verification
+
+Complete offline backend suite: 2014 passed, 43 skipped, 16 warnings (138.62 seconds), root/pytest-release.log.
+Frontend unit/component suite: 250 passed, root/frontend-complete.log.
+Real PostgreSQL transaction/concurrency checks: 12 passed, root/postgres.log. Existing loopback test database, random disposable schemas, automatic cleanup; no production data or service restart.
+Chromium sample journeys: 8 passed, root/browser-sample.log.
+Generated contracts/client drift check, TypeScript check and production build passed. Evaluation-fixture validation and 100-scenario register check also passed.
+
+Focused lane results overlap the full suite and must not be added to its count. Earlier root logs retain interrupted or failed intermediate runs for transparency. The accepted result is pytest-release.log after the relevant repairs and fixture upgrades, including the final claim-kind support guard. Existing tests were updated where they previously assumed immediate retries, globally verified sources, output claims during unconfirmed intake, unconditional debate revisions or oversized admitted packets; their assertions were replaced with explicit checks of the strengthened contract. New regressions exercise adversarial behaviors, rather than copying implementation branches.
+
+Repairs and regressions
+
+E-F01: Disputed constraints retain both assessors and citation sets; unsupported opposition stays unknown.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+E-F02: Objective page/passages are fairly allocated; unusable searches and context overflow are prevented and disclosed.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+E-F03: AND required premises, OR alternatives, signed refutation and ancestor-status checks prevent support laundering.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+E-F04: Full immutable objection events survive summary limits and require an explicit reviewed disposition.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+E-G01: Exact owner attestations bind target/evidence hashes and publish a new report without inference; source-wide verification is never inferred.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+E-G02: Requirement/exception passage selection covers document tails, retains exact spans/hashes and records uninspected coverage.
+Regression: backend/tests/test_algorithm_evidence_fixes.py
+
+RUNTIME-01: Mandatory finishing envelopes, capacity priority and optional cutoffs apply before waiting or retrying.
+Regression: backend/tests/test_runtime_algorithm_fixes.py
+
+RUNTIME-02: Persistent not_before and immutable dispatch-generation capture fence premature/stale duplicate messages.
+Regression: backend/tests/test_runtime_algorithm_fixes.py
+
+RUNTIME-03: Start, clarification and retry use one transactional queue-capacity guard.
+Regression: backend/tests/test_runtime_algorithm_fixes.py
+
+ROOT-01: Canonical UTF-8 admission, conservative contribution footprints and post-research initial caps reserve final-review context.
+Regression: backend/tests/test_algorithm_context_and_repair.py
+
+ROOT-02: Browser consumes event pages through the original snapshot cutoff, deduplicates and fences stale reads.
+Regression: frontend/tests/live-workspace.test.tsx
+
+ROOT-G01: Intake sees selected passages without prematurely freezing them; typed proposed changes require explicit confirmation.
+Regression: backend/tests/test_runtime_algorithm_fixes.py
+
+ROOT-G02: Schema repair receives bounded validation codes/paths and stage-specific repair instructions.
+Regression: backend/tests/test_algorithm_context_and_repair.py
+
+EVAL-01: Hashed exact finding/decision bundles reach actual image edit and critic requests.
+Regression: backend/tests/test_algorithm_evaluation_visual_fixes.py
+
+EVAL-02: Production/study share versioned stage, issue, reserve and correction policies; fixed-input study adapters and optional revisions are explicitly identified.
+Regression: backend/tests/test_algorithm_evaluation_visual_fixes.py
+
+EVAL-03: Server-owned regression matrices preserve missing/contradictory dispositions and ancestry; old reviews have append-only recovery.
+Regression: backend/tests/test_algorithm_evaluation_visual_fixes.py
+
+EVAL-04: Substantive fingerprints reject title/ID aliases; paired measurement retains failures, repeats and uncertainty.
+Regression: backend/tests/test_algorithm_evaluation_visual_fixes.py
+
+Behavior and compatibility
+
+Initial proposal packets stay independent. Intake receives selected evidence read-only and can propose typed changes; the user confirms the brief before claims are committed. Invalid-output retries receive sanitized field paths and permitted-reference instructions. Every stage remains within the original run, logical-call, budget and deadline limits.
+
+Objections are recorded once with immutable provenance/events. A synthesis answer remains pending until an eligible distinct auditor explicitly resolves it against scoped references. Old material concerns cannot disappear merely because a later model omits them or says audit_passed. Complete issue records, scoped assessments, comparison margins and readiness dimensions appear in saved reports, exports and the interface.
+
+Scoped human attestation is available through GET/POST /api/runs/{id}/assessments and the Evidence view. It checks the exact owner/run/target/evidence hashes, requires the current run version, rejects active runs and expired cost quotes, and appends a new report version with zero inference. It remains labeled as owner attestation. Supplied source records are never globally promoted to independently verified. A model/source support graph cannot prove semantic truth.
+
+Context controls now measure canonical encoded bytes, deduplicate delivered claim content and retain the last objection answer needed by the auditor. The standard finite path reserves downstream room by admitting at most 48,000 initial bytes and an 8,000-byte conservative per-contribution footprint (3 x canonical response bytes plus 640 bytes per claim/opening/response). Optional research observes the same initial bound before search and before adding passages. Oversized inputs/responses fail explicitly; no required concern or premise is silently dropped. These conservative constants are operating limits, not measured optimal settings or guarantees of provider availability.
+
+The application and studies share stage/quorum, correction, resource and objection reduction rules. Declared study profiles use preconfirmed fixed inputs and their journal executor; they intentionally remain distinct from live intake/retrieval/durability. Minor dissent is retained but does not alone schedule a debate revision; a concrete unresolved material issue may admit bounded revision/correction. Model/prompt/schema/policy identities are frozen. Old reports remain readable; existing paid authorizations with incompatible frozen request hashes fail closed and require a fresh linked preflight instead of silently receiving the new prompt or extra allowance.
+
+Visual editors receive the exact approved finding/decision bundle and parent pixels. Critics receive its hash, prior pixels and mandatory checks. Reviewer quorum, regression completeness and unresolved blockers are separate. Missing child responses remain pending; unresolved ancestry survives later versions. Historical reviews can receive append-only supplements within their original two-call/allowance caps; original reviews and candidate versions remain unchanged. Exhausted or expired scopes remain exhausted rather than gaining implicit authorization.
+
+Evaluation records reject cosmetic aliases, retain all primary failures and repeated-task clusters, and expose paired usefulness/critical-error/cost/latency outcomes with uncertainty. The tooling remains prospective: no actual provider superiority, human usefulness or release gate was established. Those claims need the documented frozen, funded, independently graded evaluation.
+
+Remaining verification scope
+
+The default suite skips 43 optional service/native/fault tests. Twelve focused real PostgreSQL checks additionally passed; full actual Redis/worker-process, Docker-native, hosted staging and funded provider profiles were not run here. Existing dependency deprecation/runtime warnings remain in the logs. The previous exhaustive coverage evidence is historical after these changes. source-manifest.json binds the current source/tests/contracts and locks; evidence-index.json binds these repair records. This workspace has no Git metadata, so these are file hashes rather than a commit or pull-request identity.

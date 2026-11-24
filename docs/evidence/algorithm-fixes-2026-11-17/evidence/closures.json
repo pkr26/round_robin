@@ -1,0 +1,159 @@
+{
+  "date": "2026-11-17",
+  "scope": "Evidence, calculations, disagreement, scoped readiness and retrieval",
+  "status": "implemented; integrated validation is tracked by root",
+  "findings": [
+    {
+      "id": "E-F01",
+      "status": "implemented",
+      "change": "Synthesis/audit disagreements become disputed unknown verdicts with separate positive/adverse citations and both assessors. Explicit human attestation cannot erase an existing unresolved conflict.",
+      "source": "backend/src/round_robin/orchestration/reporting.py:101",
+      "regression": "test_unsupported_audit_disagreement_does_not_manufacture_infeasibility"
+    },
+    {
+      "id": "E-F02",
+      "status": "implemented",
+      "change": "Each planned objective receives a fair remaining page allowance; fetched sources reserve passage slots. Full evidence slots or an exhausted48K canonical initial context budget prevent unusable searches. Context projection is checked before each optional passage persists; shortfalls are explicit.",
+      "source": "backend/src/round_robin/research/service.py:144",
+      "regression": "test_query_page_and_packet_budgets_preserve_later_objectives"
+    },
+    {
+      "id": "E-F03",
+      "status": "implemented",
+      "change": "Claim support bases require all premises within a basis and accept alternative bases. Contradicted/mixed/not_checked ancestors cannot transmit supported status, including same-response aliases. Explicit counter-bases preserve uncertainty; reuse drops incomplete bases and downgrades lost support.",
+      "source": "backend/src/round_robin/research/claims.py:12",
+      "regression": "test_same_response_and_prior_claims_cannot_launder_negative_status"
+    },
+    {
+      "id": "E-F04",
+      "status": "implemented",
+      "change": "Full bounded objection ledger records opening and response provenance. Missing dispositions remain open; resolution requires an explicit distinct audit of a prior answer with scoped references. Critical findings precede optional dissent; overflow is counted and full issues remain in reports.",
+      "source": "backend/src/round_robin/research/discussion.py:64",
+      "regression": "test_critical_obligations_survive_dissent_bounds_and_later_omission"
+    },
+    {
+      "id": "E-G01",
+      "status": "implemented",
+      "change": "Owner-scoped idempotent assessment endpoint binds target hashes, exact evidence hashes, result, validity and an explicit attestation. All compared costs and selected noncost hard requirements need scoped acceptance. Reassessment creates a new immutable report without inference and never changes a source-wide verification label.",
+      "source": "backend/src/round_robin/api/assessments.py:54",
+      "regression": "test_attestation_is_scoped_replay_safe_and_republishes_without_inference"
+    },
+    {
+      "id": "E-G02",
+      "status": "implemented",
+      "change": "Locally ranked exact-offset windows include requirement terms and exception anchors, retain source/content hashes and omitted coverage, and preserve contiguous exact chunks when the full source fits.",
+      "source": "backend/src/round_robin/research/fetcher.py:307",
+      "regression": "test_late_exclusion_is_selected_and_exact_offsets_and_omitted_coverage_are_preserved"
+    }
+  ],
+  "additional_implementation": {
+    "decision_insights": "Deterministic cost frontier only among matching assessed constraints, signed budget margins and ordinal preference order. No cardinal preference weights or probability scores are invented.",
+    "readiness_dimensions": "Separately exposes complete inputs, arithmetic, scoped cost support, requirement acceptance, review separation and unresolved obligations.",
+    "compatibility": "Saved historical report bytes are not rewritten. Additive schemas retain defaults; old claim hashes are checked over the stored field set using exclude_unset. New reports declare scoped_evidence_obligations_v1."
+  },
+  "validation": {
+    "new_regression_cases": 13,
+    "initial_expanded_suite": {
+      "passed": 393,
+      "failed": 1,
+      "log": "pytest-evidence.log",
+      "failure": "Existing capacity/dedup fixture stored only origin_group and was rejected by the new exact-context evidence reader."
+    },
+    "capacity_fixture_final": {
+      "passed": 3,
+      "failed": 0,
+      "log": "pytest-capacity-final.log"
+    },
+    "final_report_scope": {
+      "passed": 62,
+      "failed": 0,
+      "log": "pytest-final-report.log"
+    },
+    "additional_observed_runs": [
+      "110 focused evidence/report tests passed before the final48K context projection change.",
+      "20 retrieval/evidence/reserve tests passed after initial and per-passage48K context projection."
+    ]
+  },
+  "fixture_upgrades_not_weakened_assertions": [
+    "Claim ancestry test explicitly marks its supplied source user_supplied rather than omitting status.",
+    "Expired-cost worker mock emits claims only after confirmed intake, and expects five claim-producing stages rather than six; all expired-cost and unchecked-status assertions remain.",
+    "Synthetic ready-report fixture supplies scoped attestation receipts and dimensions instead of treating review quorum alone as ready.",
+    "Capacity/dedup fixture supplies complete valid evidence identities, hash, exact text, dates and scope; original capacity and dedup assertions remain.",
+    "Research fixture explicitly registers ClaimVersion before create_all so isolated tests create the newly read imported-claim context table."
+  ],
+  "limits": [
+    "These algorithms preserve declared evidence scope and procedural uncertainty; semantic entailment and factual accuracy still require independently annotated real-provider/human evaluation.",
+    "Readiness under owner attestation is explicitly not independent supplier certification.",
+    "Lexical relevance and exception coverage are deterministic heuristics, not a measured probability of relevance or complete-document verification."
+  ],
+  "source_manifest": [
+    {
+      "path": "backend/src/round_robin/schemas/contributions.py",
+      "sha256": "1c55738cc73d221e48c4d3b25ee62af18c20cd506b05061dfc9723ac646bc3b2"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/discussion.py",
+      "sha256": "6ff83236c0620fb56e5c9270970b8beab67fa30f896d332ecd8a08fd596435f4"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "bb79baef93fd516bc77a0b2b7095fbaaf7ac61d3fc74a2dfcb16fc2372137bc1"
+    },
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "sha256": "c6966cc936d1f985ea55131da768815dc1ccbab59905a35caf103b2a9d436cd0"
+    },
+    {
+      "path": "backend/src/round_robin/research/reuse.py",
+      "sha256": "d715a05a3cc8843a7fe935846fbbe7e09bc56dd292a07b75cb576a62208adc8e"
+    },
+    {
+      "path": "backend/src/round_robin/research/discussion.py",
+      "sha256": "d3ffaaab5239c6bda1675f822aabd087e43b18c3f7d60b784892765ae60b38ad"
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "9b896ab20f8c7963162690c497a54154a0dd7185c219050706d373d39440a21b"
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "a8b8e97680d632c4134842ba73cd76eb1ff6cc35ec6dbbd7eca83f61c1ef4272"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "129821b95823615291f9fe20c9aa7d0c52d8d5f5dfd6316fa7ed13649818c0a8"
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "00c05db1b159b6117f3af64533d2288b1db4430a77e8f1e9b53e4902003750e8"
+    },
+    {
+      "path": "backend/src/round_robin/reports/insights.py",
+      "sha256": "f21cec9a184639124efcf0b0209060db9efe85fc806b7f072edf41ba2d16047f"
+    },
+    {
+      "path": "backend/src/round_robin/api/assessments.py",
+      "sha256": "dc8b60b7f281a84266c18228f124729510148cd722a2bc322e90f7da207a78bf"
+    },
+    {
+      "path": "backend/tests/test_algorithm_evidence_fixes.py",
+      "sha256": "47997e3c3ef3d44b5df78cfb5f993c826c2c49503ac4e321c392c974708f4a3f"
+    },
+    {
+      "path": "backend/tests/test_evidence_regressions.py",
+      "sha256": "61709ae4568bc23acbe1b602c902d793528c0a590cbf82213b1dbbafd56f0c8f"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_report.py",
+      "sha256": "121ad1eb5e89f896ab118285ee903a4b453e1e9d20ddf100c260982369699dbb"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_evidence_research.py",
+      "sha256": "b21e2f406ea58d677b9457e6b65f6656c3acae78aca01172aa221ccf6a71d34f"
+    },
+    {
+      "path": "backend/tests/test_research_service.py",
+      "sha256": "92d79772a2bcf20c981946e26d4e13dcc93ec55267474c4575403208ef1998a4"
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+[
+  {
+    "id": "E-F01",
+    "status": "implemented_and_regression_verified",
+    "change": "Disputed constraints retain both assessors and citation sets; unsupported opposition stays unknown.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "E-F02",
+    "status": "implemented_and_regression_verified",
+    "change": "Objective page/passages are fairly allocated; unusable searches and context overflow are prevented and disclosed.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "E-F03",
+    "status": "implemented_and_regression_verified",
+    "change": "AND required premises, OR alternatives, signed refutation and ancestor-status checks prevent support laundering.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "E-F04",
+    "status": "implemented_and_regression_verified",
+    "change": "Full immutable objection events survive summary limits and require an explicit reviewed disposition.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "E-G01",
+    "status": "implemented_and_regression_verified",
+    "change": "Exact owner attestations bind target/evidence hashes and publish a new report without inference; source-wide verification is never inferred.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "E-G02",
+    "status": "implemented_and_regression_verified",
+    "change": "Requirement/exception passage selection covers document tails, retains exact spans/hashes and records uninspected coverage.",
+    "regression": "backend/tests/test_algorithm_evidence_fixes.py"
+  },
+  {
+    "id": "RUNTIME-01",
+    "status": "implemented_and_regression_verified",
+    "change": "Mandatory finishing envelopes, capacity priority and optional cutoffs apply before waiting or retrying.",
+    "regression": "backend/tests/test_runtime_algorithm_fixes.py"
+  },
+  {
+    "id": "RUNTIME-02",
+    "status": "implemented_and_regression_verified",
+    "change": "Persistent not_before and immutable dispatch-generation capture fence premature/stale duplicate messages.",
+    "regression": "backend/tests/test_runtime_algorithm_fixes.py"
+  },
+  {
+    "id": "RUNTIME-03",
+    "status": "implemented_and_regression_verified",
+    "change": "Start, clarification and retry use one transactional queue-capacity guard.",
+    "regression": "backend/tests/test_runtime_algorithm_fixes.py"
+  },
+  {
+    "id": "ROOT-01",
+    "status": "implemented_and_regression_verified",
+    "change": "Canonical UTF-8 admission, conservative contribution footprints and post-research initial caps reserve final-review context.",
+    "regression": "backend/tests/test_algorithm_context_and_repair.py"
+  },
+  {
+    "id": "ROOT-02",
+    "status": "implemented_and_regression_verified",
+    "change": "Browser consumes event pages through the original snapshot cutoff, deduplicates and fences stale reads.",
+    "regression": "frontend/tests/live-workspace.test.tsx"
+  },
+  {
+    "id": "ROOT-G01",
+    "status": "implemented_and_regression_verified",
+    "change": "Intake sees selected passages without prematurely freezing them; typed proposed changes require explicit confirmation.",
+    "regression": "backend/tests/test_runtime_algorithm_fixes.py"
+  },
+  {
+    "id": "ROOT-G02",
+    "status": "implemented_and_regression_verified",
+    "change": "Schema repair receives bounded validation codes/paths and stage-specific repair instructions.",
+    "regression": "backend/tests/test_algorithm_context_and_repair.py"
+  },
+  {
+    "id": "EVAL-01",
+    "status": "implemented_and_regression_verified",
+    "change": "Hashed exact finding/decision bundles reach actual image edit and critic requests.",
+    "regression": "backend/tests/test_algorithm_evaluation_visual_fixes.py"
+  },
+  {
+    "id": "EVAL-02",
+    "status": "implemented_and_regression_verified",
+    "change": "Production/study share versioned stage, issue, reserve and correction policies; fixed-input study adapters and optional revisions are explicitly identified.",
+    "regression": "backend/tests/test_algorithm_evaluation_visual_fixes.py"
+  },
+  {
+    "id": "EVAL-03",
+    "status": "implemented_and_regression_verified",
+    "change": "Server-owned regression matrices preserve missing/contradictory dispositions and ancestry; old reviews have append-only recovery.",
+    "regression": "backend/tests/test_algorithm_evaluation_visual_fixes.py"
+  },
+  {
+    "id": "EVAL-04",
+    "status": "implemented_and_regression_verified",
+    "change": "Substantive fingerprints reject title/ID aliases; paired measurement retains failures, repeats and uncertainty.",
+    "regression": "backend/tests/test_algorithm_evaluation_visual_fixes.py"
+  }
+]

@@ -1,0 +1,100 @@
+{
+  "typed_requirement_loss": {
+    "before": {
+      "id": "minimum_project_spend",
+      "description": "Spend at least 1200 on the selected approach",
+      "origin": "user_supplied",
+      "metric": "total_cost",
+      "operator": "gte",
+      "threshold": "1200"
+    },
+    "after": {
+      "id": "requirement_manual_1",
+      "description": "Spend at least 1200 on the selected approach",
+      "origin": "user_supplied",
+      "metric": "manual",
+      "operator": "manual",
+      "threshold": null
+    },
+    "all_saved_requirements": [
+      {
+        "id": "requirement_budget",
+        "description": "All-in cost must remain within USD 2,500 over the chosen horizon.",
+        "origin": "fictional",
+        "metric": "total_cost",
+        "operator": "lte",
+        "threshold": "2500"
+      },
+      {
+        "id": "requirement_manual_0",
+        "description": "Replace handwritten labels with a repeatable label system.",
+        "origin": "user_supplied",
+        "metric": "manual",
+        "operator": "manual",
+        "threshold": null
+      },
+      {
+        "id": "requirement_manual_1",
+        "description": "Spend at least 1200 on the selected approach",
+        "origin": "user_supplied",
+        "metric": "manual",
+        "operator": "manual",
+        "threshold": null
+      },
+      {
+        "id": "requirement_manual_2",
+        "description": "Keep the workshop open",
+        "origin": "user_supplied",
+        "metric": "manual",
+        "operator": "manual",
+        "threshold": null
+      }
+    ],
+    "valid_after": true
+  },
+  "autosave_overwrites_followup": {
+    "followup_title_before_late_response": "Frozen reviewed brief",
+    "followup_title_after_late_response": "Edited working draft",
+    "save_button": "Save linked follow-up draft",
+    "unsaved_changes_visible": false,
+    "late_response_title": "Edited working draft",
+    "submitted_followup": {
+      "parent_run_id": "run_e841230d629649bbb4119a6b88401d39",
+      "brief_title": "Edited working draft",
+      "expected_draft_revision": 2
+    }
+  },
+  "stale_outcome": {
+    "visible_choice": "",
+    "save_enabled": true,
+    "posted_payload": {
+      "run_id": "run_other_history",
+      "report_version": 1,
+      "choice": "modified",
+      "reason": "Decision deferred. The first report has the best quote",
+      "success_criterion": "Replace handwritten labels with a repeatable label system for workshop orders.",
+      "observed_outcome": "",
+      "revisit_date": null
+    }
+  },
+  "ignored_cost_edit": {
+    "input_label": "Upfront purchase (USD)",
+    "entered_amount": "9000",
+    "saved_component": {
+      "id": "cost_a_upfront",
+      "label": "Upfront purchase",
+      "kind": "upfront",
+      "amount": "9000",
+      "currency": "USD",
+      "quantity": "1",
+      "frequency": "once",
+      "status": "not_applicable",
+      "unknown_reason": null,
+      "source_ref": "passage_offer_a",
+      "unit": "item",
+      "quote_valid_until": null
+    },
+    "hidden_status_visible": false,
+    "valid_after": true
+  }
+}

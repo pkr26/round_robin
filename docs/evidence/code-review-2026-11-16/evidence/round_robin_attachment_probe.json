@@ -1,0 +1,16 @@
+{
+  "upload_bytes": 52800,
+  "upload_status": 201,
+  "upload_state": "ready",
+  "preflight_status": 200,
+  "preflight_blockers": [],
+  "preflight_warnings": [],
+  "start_status": 202,
+  "terminal_status": "failed",
+  "stop_reason": "context_limit_selected_passages",
+  "attempt_stages": [
+    "intake"
+  ],
+  "comparison": [],
+  "provider_requests_external": 0
+}

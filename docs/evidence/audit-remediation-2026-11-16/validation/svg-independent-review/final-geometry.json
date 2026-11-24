@@ -1,0 +1,1146 @@
+[
+  {
+    "character": " ",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "                                                            ",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "!",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "\"",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"\"",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "#",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "############################################################",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "$",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "%",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "&",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480.0000305175781,
+    "text": "&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "'",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "(",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240.00001525878906,
+    "text": "((((((((((((((((((((((((((((((((((((((((((((((((((((((((((((",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ")",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240.00001525878906,
+    "text": "))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "*",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420.0000305175781,
+    "text": "************************************************************",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "+",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ",",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "-",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "------------------------------------------------------------",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ".",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "............................................................",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "/",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365.05204010009766,
+    "length": 239.99998474121094,
+    "text": "////////////////////////////////////////////////////////////",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "0",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "000000000000000000000000000000000000000000000000000000000000",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "1",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "111111111111111111111111111111111111111111111111111111111111",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "2",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "222222222222222222222222222222222222222222222222222222222222",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "3",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "333333333333333333333333333333333333333333333333333333333333",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "4",
+    "pillow_right": 546,
+    "viewport_width": 548,
+    "right": 545,
+    "length": 420,
+    "text": "444444444444444444444444444444444444444444444444444444444444",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "5",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "555555555555555555555555555555555555555555555555555555555555",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "6",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "666666666666666666666666666666666666666666666666666666666666",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "7",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "777777777777777777777777777777777777777777777777777777777777",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "8",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "888888888888888888888888888888888888888888888888888888888888",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "9",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "999999999999999999999999999999999999999999999999999999999999",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ":",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ";",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "<",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "=",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "============================================================",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": ">",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "?",
+    "pillow_right": 485,
+    "viewport_width": 487,
+    "right": 485.0000305175781,
+    "length": 360.0000305175781,
+    "text": "????????????????????????????????????????????????????????????",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "@",
+    "pillow_right": 785,
+    "viewport_width": 787,
+    "right": 785,
+    "length": 660,
+    "text": "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "A",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 479.9999694824219,
+    "text": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "B",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "C",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "D",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480,
+    "text": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "E",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "F",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "G",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "H",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "I",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "J",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "K",
+    "pillow_right": 546,
+    "viewport_width": 548,
+    "right": 545.214111328125,
+    "length": 420,
+    "text": "KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "L",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "M",
+    "pillow_right": 725,
+    "viewport_width": 727,
+    "right": 725,
+    "length": 600,
+    "text": "MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "N",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480,
+    "text": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "O",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "P",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "Q",
+    "pillow_right": 665,
+    "viewport_width": 667,
+    "right": 665,
+    "length": 540,
+    "text": "QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "R",
+    "pillow_right": 546,
+    "viewport_width": 548,
+    "right": 545,
+    "length": 420,
+    "text": "RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "S",
+    "pillow_right": 485,
+    "viewport_width": 487,
+    "right": 485,
+    "length": 360,
+    "text": "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "T",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480,
+    "text": "TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "U",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480,
+    "text": "UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "V",
+    "pillow_right": 546,
+    "viewport_width": 548,
+    "right": 545.1309204101562,
+    "length": 420,
+    "text": "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "W",
+    "pillow_right": 786,
+    "viewport_width": 788,
+    "right": 785,
+    "length": 660,
+    "text": "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "X",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480.0000305175781,
+    "text": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "Y",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545.136474609375,
+    "length": 420.0000305175781,
+    "text": "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "Z",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 480.0000305175781,
+    "text": "ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "[",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "\\",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365.05204010009766,
+    "length": 239.99998474121094,
+    "text": "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "]",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "^",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "_",
+    "pillow_right": 485,
+    "viewport_width": 487,
+    "right": 485,
+    "length": 360,
+    "text": "____________________________________________________________",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "`",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240.00001525878906,
+    "text": "````````````````````````````````````````````````````````````",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "a",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 419.9999694824219,
+    "text": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "b",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "c",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "d",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 479.9999694824219,
+    "text": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "e",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "f",
+    "pillow_right": 306,
+    "viewport_width": 308,
+    "right": 305,
+    "length": 180,
+    "text": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "g",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 479.9999694824219,
+    "text": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "h",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "i",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "j",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180.00001525878906,
+    "text": "jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "k",
+    "pillow_right": 486,
+    "viewport_width": 488,
+    "right": 485,
+    "length": 360,
+    "text": "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "l",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "llllllllllllllllllllllllllllllllllllllllllllllllllllllllllll",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "m",
+    "pillow_right": 785,
+    "viewport_width": 787,
+    "right": 785,
+    "length": 660,
+    "text": "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "n",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "o",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "p",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "q",
+    "pillow_right": 605,
+    "viewport_width": 607,
+    "right": 605,
+    "length": 479.9999694824219,
+    "text": "qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "r",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "s",
+    "pillow_right": 485,
+    "viewport_width": 487,
+    "right": 485,
+    "length": 360,
+    "text": "ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "t",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "u",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "v",
+    "pillow_right": 486,
+    "viewport_width": 488,
+    "right": 485,
+    "length": 360,
+    "text": "vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "w",
+    "pillow_right": 666,
+    "viewport_width": 668,
+    "right": 665,
+    "length": 540,
+    "text": "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "x",
+    "pillow_right": 485,
+    "viewport_width": 487,
+    "right": 484.99999237060547,
+    "length": 360,
+    "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "y",
+    "pillow_right": 486,
+    "viewport_width": 488,
+    "right": 485,
+    "length": 360,
+    "text": "yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "z",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "{",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 239.99998474121094,
+    "text": "{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "|",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "}",
+    "pillow_right": 305,
+    "viewport_width": 307,
+    "right": 305,
+    "length": 180,
+    "text": "}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "~",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "©",
+    "pillow_right": 725,
+    "viewport_width": 727,
+    "right": 725,
+    "length": 600,
+    "text": "©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©©",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "«",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "««««««««««««««««««««««««««««««««««««««««««««««««««««««««««««",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "°",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240,
+    "text": "°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "±",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "´",
+    "pillow_right": 365,
+    "viewport_width": 367,
+    "right": 365,
+    "length": 240.00001525878906,
+    "text": "´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "·",
+    "pillow_right": 245,
+    "viewport_width": 247,
+    "right": 245,
+    "length": 120,
+    "text": "····························································",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "»",
+    "pillow_right": 545,
+    "viewport_width": 547,
+    "right": 545,
+    "length": 420,
+    "text": "»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»»",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "A   B",
+    "pillow_right": 701,
+    "viewport_width": 703,
+    "right": 701,
+    "length": 576,
+    "text": "A   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   BA   B",
+    "fonts": [
+      "loaded"
+    ]
+  },
+  {
+    "character": "  S S  ",
+    "pillow_right": 584,
+    "viewport_width": 586,
+    "right": 584,
+    "length": 459,
+    "text": "  S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S    S S  ",
+    "fonts": [
+      "loaded"
+    ]
+  }
+]

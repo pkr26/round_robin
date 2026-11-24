@@ -1,0 +1,448 @@
+{
+  "reviewer": "deep_runtime",
+  "purpose": "Independent cross-review of deep_evidence changes requested by root",
+  "files": [
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "39c43fb7802c74a7f5b2c3ccac73a927c3376cb946f04ef4edb323ae8cf568aa",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "scope_for_run",
+          "line": 27,
+          "reviewed": true
+        },
+        {
+          "name": "query_plan",
+          "line": 34,
+          "reviewed": true
+        },
+        {
+          "name": "schedule_research",
+          "line": 58,
+          "reviewed": true
+        },
+        {
+          "name": "reconcile_public_research",
+          "line": 86,
+          "reviewed": true
+        },
+        {
+          "name": "execute_research",
+          "line": 105,
+          "reviewed": true
+        },
+        {
+          "name": "execute_research.eligible",
+          "line": 121,
+          "reviewed": true
+        }
+      ],
+      "notes": "Typed StoredEvidence validation keeps correct source/run/hash metadata, rejects unpersistable titles without consuming passage capacity, preserves ambiguous search exposure, and fences late search content. Defaults omitted with exclude_unset remain safely reconstructed by typed readers."
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "f01df247f9f2ea093fa934bf58870b080d5d528c446f3371dfbf0b92301b3d9d",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "UnreadableReport",
+          "line": 11,
+          "reviewed": true
+        },
+        {
+          "name": "read_stored_evidence",
+          "line": 15,
+          "reviewed": true
+        },
+        {
+          "name": "read_runtime_report",
+          "line": 28,
+          "reviewed": true
+        }
+      ],
+      "notes": "Full adapter reread after E24/E25 follow-ups. Central typed passage validation binds text/hash/content identity to authoritative row and current owning scope. Historical report reads validate only explicit original-cutoff references; implicit legacy scope reconstructs under the sanitized guard. content.committed payload must be a dict; absent/None step identity keeps legacy ignored behavior, while wrong-type/blank IDs become UnreadableReport before set insertion. The containing guard now covers reconstruction/defaults/set checks and Pydantic validation. No import cycle with controller, and no storage mutation during reads. run_view can safely catch UnreadableReport and preserve Stop/run inspection with readiness=None."
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "019f448b28dcb7b951f0165fe7f65eb6fddabed34cb6e2736b8342fe36a84e9f",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "runtime_cost",
+          "line": 14,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeUsage",
+          "line": 23,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeUsage.uncertainty_is_preserved",
+          "line": 33,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeCoverage",
+          "line": 45,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeRecommendation",
+          "line": 52,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeNextEvidence",
+          "line": 58,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeResearchSummary",
+          "line": 68,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeOptionComparison",
+          "line": 77,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeDecisionReport",
+          "line": 81,
+          "reviewed": true
+        },
+        {
+          "name": "RuntimeDecisionReport.publication_and_reference_gate",
+          "line": 116,
+          "reviewed": true
+        }
+      ],
+      "notes": "Exact known subtotal and ordered cost-gap equality bind report display to its saved calculation. Nullable subtotal symmetry is preserved; valid generated historical records use identical originating calculation values. Existing reference/mode/readiness reducer checks remain intact."
+    },
+    {
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "sha256": "153e2e259f505f4444f7a945ab5125b1593b7d70d41bd8ecd292c6934eed4fcf",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "OperationError",
+          "line": 25,
+          "reviewed": true
+        },
+        {
+          "name": "alembic_config",
+          "line": 29,
+          "reviewed": true
+        },
+        {
+          "name": "schema_head",
+          "line": 39,
+          "reviewed": true
+        },
+        {
+          "name": "_manifest_snapshot",
+          "line": 43,
+          "reviewed": true
+        },
+        {
+          "name": "read_manifest",
+          "line": 70,
+          "reviewed": true
+        },
+        {
+          "name": "purge_record",
+          "line": 74,
+          "reviewed": true
+        },
+        {
+          "name": "purge_pending",
+          "line": 117,
+          "reviewed": true
+        },
+        {
+          "name": "_private_write",
+          "line": 126,
+          "reviewed": true
+        },
+        {
+          "name": "backup",
+          "line": 134,
+          "reviewed": true
+        },
+        {
+          "name": "restore_verify",
+          "line": 199,
+          "reviewed": true
+        },
+        {
+          "name": "reconcile",
+          "line": 287,
+          "reviewed": true
+        }
+      ],
+      "notes": "Loopback restore destination routing checks fail before connecting. Repeatable-read PostgreSQL and explicit SQLite snapshot avoid torn related rows. Found unconditional SQLite BEGIN regresses engines already using modern physical transactions; detailed finding below. Restore quarantine precedes all imported content/artifacts and reserved exposure becomes unknown. Coordinated guard now checks driver_connection.in_transaction; both legacy and modern PEP249 transaction modes pass."
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_boundaries.py",
+      "sha256": "54a838b548d5da83f4211f5e171a6b11500e9dc339041db60fc19c0f189036bd",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "test_successful_public_research_is_readable_through_the_typed_evidence_boundary",
+          "line": 30,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_search_metadata_cannot_commit_postgresql_invalid_evidence",
+          "line": 43,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_search_metadata_cannot_commit_postgresql_invalid_evidence.UnsafeTitle",
+          "line": 45,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_search_metadata_cannot_commit_postgresql_invalid_evidence.UnsafeTitle.search",
+          "line": 46,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_page_nul_is_rejected_before_it_can_reach_json_storage",
+          "line": 56,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_page_nul_is_rejected_before_it_can_reach_json_storage.Page",
+          "line": 57,
+          "reviewed": true
+        },
+        {
+          "name": "test_untrusted_page_nul_is_rejected_before_it_can_reach_json_storage.Page.get",
+          "line": 58,
+          "reviewed": true
+        },
+        {
+          "name": "test_saved_cost_summary_cannot_disagree_with_its_exact_calculation",
+          "line": 65,
+          "reviewed": true
+        },
+        {
+          "name": "test_saved_report_reader_binds_immutable_row_identity_and_cutoff",
+          "line": 76,
+          "reviewed": true
+        },
+        {
+          "name": "test_malformed_saved_scope_uses_safe_unreadable_report_error",
+          "line": 84,
+          "reviewed": true
+        },
+        {
+          "name": "test_ready_hard_requirement_assessments_need_a_supporting_reference",
+          "line": 92,
+          "reviewed": true
+        },
+        {
+          "name": "test_division_rounding_contract_is_independent_of_callers_decimal_traps",
+          "line": 99,
+          "reviewed": true
+        },
+        {
+          "name": "test_monthly_totals_match_exact_integer_cent_arithmetic",
+          "line": 112,
+          "reviewed": true
+        },
+        {
+          "name": "test_markdown_retains_conditions_and_action_ownership_from_saved_report",
+          "line": 119,
+          "reviewed": true
+        },
+        {
+          "name": "test_concurrent_first_logins_create_one_owner_and_two_usable_sessions",
+          "line": 129,
+          "reviewed": true
+        },
+        {
+          "name": "test_concurrent_first_logins_create_one_owner_and_two_usable_sessions.force_unserialized_first_reads",
+          "line": 136,
+          "reviewed": true
+        },
+        {
+          "name": "test_concurrent_first_logins_create_one_owner_and_two_usable_sessions.login",
+          "line": 140,
+          "reviewed": true
+        },
+        {
+          "name": "test_restore_destination_cannot_be_overridden_by_driver_query_parameters",
+          "line": 157,
+          "reviewed": true
+        },
+        {
+          "name": "test_restore_destination_cannot_be_overridden_by_driver_query_parameters.forbidden_connection",
+          "line": 164,
+          "reviewed": true
+        },
+        {
+          "name": "test_finish_reservation_rejects_call_counts_the_runtime_cannot_preserve",
+          "line": 174,
+          "reviewed": true
+        },
+        {
+          "name": "test_sqlite_backup_reads_related_tables_from_one_physical_snapshot",
+          "line": 183,
+          "reviewed": true
+        },
+        {
+          "name": "test_sqlite_backup_reads_related_tables_from_one_physical_snapshot.concurrent_revision",
+          "line": 192,
+          "reviewed": true
+        },
+        {
+          "name": "test_sqlite_backup_respects_an_already_open_pep249_transaction",
+          "line": 213,
+          "reviewed": true
+        }
+      ],
+      "notes": "Independent full test/helper/contract read; no source mutation by cross-reviewer."
+    },
+    {
+      "path": "backend/tests/test_deep_evidence_evaluation.py",
+      "sha256": "3e1e72d43707db0309d8012972cd5403058bc7122eb5d1456c1d0efba48576ff",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "test_release_cannot_invent_missing_output_time_or_grade_binding",
+          "line": 16,
+          "reviewed": true
+        },
+        {
+          "name": "test_manual_grade_requires_typed_attributable_nonblank_findings",
+          "line": 30,
+          "reviewed": true
+        },
+        {
+          "name": "test_fixed_evidence_adjudication_cannot_predate_the_original_reviews",
+          "line": 36,
+          "reviewed": true
+        },
+        {
+          "name": "test_failed_repeat_cannot_claim_complete_successful_review_coverage",
+          "line": 45,
+          "reviewed": true
+        },
+        {
+          "name": "test_visual_summary_rejects_nonfinite_accumulation_of_finite_active_observations",
+          "line": 55,
+          "reviewed": true
+        },
+        {
+          "name": "test_study_task_identities_require_nonblank_strings",
+          "line": 66,
+          "reviewed": true
+        },
+        {
+          "name": "test_original_grade_copies_mutable_findings_before_retaining_them",
+          "line": 88,
+          "reviewed": true
+        }
+      ],
+      "notes": "Independent full test/helper/contract read; no source mutation by cross-reviewer."
+    },
+    {
+      "path": "backend/src/round_robin/database/session.py",
+      "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "configure_database",
+          "line": 10,
+          "reviewed": true
+        },
+        {
+          "name": "configure_database.enable_foreign_keys",
+          "line": 15,
+          "reviewed": true
+        },
+        {
+          "name": "get_session",
+          "line": 21,
+          "reviewed": true
+        }
+      ],
+      "notes": "Independent full test/helper/contract read; no source mutation by cross-reviewer."
+    },
+    {
+      "path": "backend/src/round_robin/database/safety.py",
+      "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a",
+      "reviewed": true,
+      "read_extent": "Full file, every line including all nested functions/classes",
+      "functions": [
+        {
+          "name": "require_disposable_postgres",
+          "line": 10,
+          "reviewed": true
+        },
+        {
+          "name": "require_disposable_redis",
+          "line": 25,
+          "reviewed": true
+        }
+      ],
+      "notes": "Independent full test/helper/contract read; no source mutation by cross-reviewer."
+    }
+  ],
+  "findings": [
+    {
+      "id": "CROSS-RUNTIME-01",
+      "status": "fixed_by_deep_evidence_and_cross_verified",
+      "source": "backend/src/round_robin/operations/recovery.py",
+      "description": "Unconditional SQLite BEGIN fails for a Python3.12 sqlite connection configured autocommit=False (already physical transaction), producing OperationalError and falsely marking durability compromised.",
+      "reproduction": "Temporary SQLite engine with connect_args={\"autocommit\":False}; Base.metadata.create_all(engine); backup(engine, temporary artifacts/archive/deletion manifest).",
+      "observed": "OperationalError (sqlite3.OperationalError) cannot start a transaction within a transaction; durability compromised warning.",
+      "recommended_fix": "Issue BEGIN only when connection.connection.driver_connection.in_transaction is false. Retain one-snapshot test for legacy mode and add modern transaction-mode regression.",
+      "coordination": "Reported to root and deep_evidence; no source changes by this reviewer.",
+      "regression": "backend/tests/test_deep_evidence_boundaries.py::test_sqlite_backup_respects_an_already_open_pep249_transaction"
+    },
+    {
+      "id": "CROSS-RUNTIME-02",
+      "source": "backend/src/round_robin/reports/read_adapters.py",
+      "status": "fixed_by_deep_evidence_and_cross_reviewed",
+      "description": "New run_view report validation exposed malformed content.committed payload parsing outside the sanitizing try; list payload raised AttributeError and list step_id raised unhashable TypeError, making run/Stop reads fail.",
+      "reproduction": "Independent temporary API fixture added content.committed seq2 within report cutoff9 with payload=[]; GET /api/runs/{id} raised AttributeError before fix.",
+      "fix": "Move event/default reconstruction inside guarded parsing; reject nondict payload and nonstring/blank step ID as UnreadableReport; preserve absent/None legacy behavior.",
+      "regressions": [
+        "backend/tests/test_deep_evidence_source_reads.py::test_malformed_committed_event_keeps_run_readable_and_saved_assessment_unavailable",
+        "backend/tests/test_deep_evidence_source_reads.py::test_historical_committed_event_without_step_identity_retains_prior_ignored_semantics"
+      ],
+      "coordination": "Reported root and evidence agent; no source/test edits by this cross-reviewer."
+    }
+  ],
+  "additional_results": [
+    "No material regression found in independently read research/service.py, reports/read_adapters.py or schemas/runtime.py.",
+    "Two assigned test files fully read; tests meaningfully attack metadata, immutable publication boundaries, prospective evaluation identity/times and related-row backup consistency.",
+    "Final full-function read of read_runtime_report guard found no remaining concrete cycle, cutoff, finalization or malformed-event control blocker. Root API readiness derives from validated report and degrades safely to None when saved support is unreadable."
+  ],
+  "limitations": [
+    "Cross-review is bounded to assigned files plus database session/safety contract helpers.",
+    "No live provider calls, production data, or paid services; reproduction created and deleted only temporary SQLite files."
+  ],
+  "verification": [
+    {
+      "command": ".venv/bin/python -m pytest backend/tests/test_deep_evidence_boundaries.py backend/tests/test_deep_evidence_evaluation.py -q --tb=short",
+      "result": "38 passed,2 dependency deprecation warnings,in3.36s; includes coordinated modern SQLite transaction-mode fix."
+    },
+    {
+      "command": ".venv/bin/python -m pytest backend/tests/test_deep_evidence_source_reads.py::test_malformed_committed_event_keeps_run_readable_and_saved_assessment_unavailable backend/tests/test_deep_evidence_source_reads.py::test_historical_committed_event_without_step_identity_retains_prior_ignored_semantics -q --tb=short",
+      "result": "Independent cross-verification:8 passed,2 dependency deprecation warnings,in2.18s."
+    }
+  ]
+}

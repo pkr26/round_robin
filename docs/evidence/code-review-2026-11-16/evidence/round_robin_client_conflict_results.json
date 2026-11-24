@@ -1,0 +1,8 @@
+{
+  "retryError": "preflight_expired",
+  "reconcile": {
+    "confirmed": false
+  },
+  "receiptStillPresent": true,
+  "mutationAttempts": 2
+}

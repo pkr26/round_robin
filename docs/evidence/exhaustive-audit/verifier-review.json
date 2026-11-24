@@ -1,0 +1,88 @@
+{
+  "captured_at_utc": "2026-11-16T17:54:13.426550+00:00",
+  "review": "Independent current-source adversarial evidence-integrity review",
+  "files": [
+    {
+      "path": "scripts/coverage_gate.py",
+      "sha256": "0a521fdf474db9651d34ceb5c4956789f78a5c9b7dfad05bf8e267c63fe40e47"
+    },
+    {
+      "path": "scripts/audit.py",
+      "sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f"
+    },
+    {
+      "path": ".coveragerc",
+      "sha256": "a8ca9d77bf4c2595d1191fbee142e1329ab5313cf9f07e81013472b8a65f476b"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_coverage_gate.py",
+      "sha256": "37ff7b874b7cdb1e6d8ffa8913a68548bbd66a9f2c3b2f291c303cd2dc861fd8"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_audit_runner.py",
+      "sha256": "3a1ce4dff411a5430b58dce6eb0118f01bd46f71aa48cab6a31e50fafd20cf31"
+    }
+  ],
+  "lifecycle_cross_review": {
+    "reviewer": "evidence agent, independent of runtime implementation",
+    "finding": "Interrupted or prematurely exiting audit launchers could leave descendant verification processes running after the capture lock was released.",
+    "fix": "Each command owns a new process group; interrupt deferral covers only launch assignment; SIGINT/TERM/KILL escalation completes before the failed record is published and the lock closes. Original signal handlers are restored.",
+    "validation": "Runtime owner reports 49 focused tests passing with 100% line/branch coverage, including real SIGINT/SIGTERM launcher-grandchild cleanup and unrelated-process preservation. Evidence reviewer independently read the final runner end-to-end and found no additional concrete defect.",
+    "limit": "Final all-service acceptance is recorded by the root fresh verifier, not inferred from focused test counts."
+  },
+  "darwin_permission_cross_review": {
+    "finding": "Darwin can return EPERM for a zombie-only process group between poll/reap and group probing/signaling. Prior handling raised immediately, failing a completed verification cleanup.",
+    "fix_review": "Probe PermissionError conservatively means the group still exists. Signal PermissionError triggers bounded polling/reaping, and succeeds only after ProcessLookupError proves disappearance. Persistent permission denial re-raises after the bounded wait; it never silently declares cleanup complete.",
+    "reviewer": "Evidence reviewer independently read both new exception handlers, their surrounding process-group lifecycle and all three new regressions; no additional concrete defect established.",
+    "focused_tests": {
+      "passed": 52,
+      "warning": "One existing runpy module-import RuntimeWarning; no test failure.",
+      "seconds": 3.45,
+      "covered_statements": 144,
+      "statements": 144,
+      "covered_branches": 42,
+      "branches": 42,
+      "line_percent": 100.0,
+      "branch_percent": 100.0
+    },
+    "fail_before": "All three new tests failed against prior SHA-256 9282d63d33b3a8cadc352d8abed63aeab7e85508a4a3d9344f1790335e4c2b20 in isolated replay: transient disappearance, bounded persistent denial and actual Darwin zombie group.",
+    "actual_os_probe": "Runtime preserved a probe of 1,500 owned child exits with transient PermissionError observations; reviewer inspected the recorded result. Actual deterministic zombie regression proves subsequent reaping and confirmed disappearance.",
+    "primary_source": {
+      "url": "https://github.com/apple-oss-distributions/xnu/blob/main/bsd/kern/kern_sig.c",
+      "interpretation": "killpg1 group iteration filters SZOMB; a group with no eligible found processes returns EPERM for POSIX behavior. This explains the observed macOS zombie-only result.",
+      "evidence": {
+        "path": ".local/exhaustive-audit/runtime/runner-permission/apple-kern_sig.c",
+        "sha256": "343742eb42c5b584c529d348f9772ce03ffedd3be9d986badd60692459b6acdf",
+        "bytes": 94169
+      }
+    },
+    "evidence": [
+      {
+        "path": ".local/exhaustive-audit/runtime/runner-permission-final/tests.log",
+        "sha256": "e39988958b6791670144135ba7d6800181ed54de3cfdc0d381e03ccb8bc68ea9",
+        "bytes": 570
+      },
+      {
+        "path": ".local/exhaustive-audit/runtime/runner-permission-final/coverage.json",
+        "sha256": "439ca42480e66610a419a97d6693ec19e30e029c0c3811a14d503cefa9cc989c",
+        "bytes": 805846
+      },
+      {
+        "path": ".local/exhaustive-audit/runtime/runner-permission-before/tests.log",
+        "sha256": "fed84f0c608e8d31ee269497ec68adbb677b948c2c3ea7b7d5ea2709a04b4cb5",
+        "bytes": 4703
+      },
+      {
+        "path": ".local/exhaustive-audit/runtime/runner-permission-before/returncode.txt",
+        "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+        "bytes": 2
+      },
+      {
+        "path": ".local/exhaustive-audit/runtime/runner-permission/os-probe-after.log",
+        "sha256": "407c53d22273dc40c42f7fe7eed8c2620beeb1e9c886789206dcc7065cb27381",
+        "bytes": 58
+      }
+    ],
+    "limit": "Focused evidence is not substituted for the root new frozen full audit."
+  }
+}

@@ -1,0 +1,71 @@
+........................................................................ [  3%]
+........................................................................ [  7%]
+........................................................................ [ 10%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 35%]
+........................................................................ [ 39%]
+........................................................................ [ 42%]
+........................................................................ [ 46%]
+........................................................................ [ 50%]
+........................................................................ [ 53%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 67%]
+........................................................................ [ 71%]
+........................................................................ [ 75%]
+........................................................................ [ 78%]
+........................................................................ [ 82%]
+........................................................................ [ 85%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+........................................................................ [ 96%]
+......................................................................   [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+backend/tests/test_exhaustive_audit_runner.py::test_audit_cli_refuses_preexisting_output_without_subprocesses
+  <frozen runpy>:128: RuntimeWarning: 'scripts.audit' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.audit'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_coverage_gate.py::test_manifest_cli_entrypoint_binds_actual_source_and_verification_inputs
+  <frozen runpy>:128: RuntimeWarning: 'scripts.coverage_gate' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.coverage_gate'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_journal_budget.py::test_runner_cli_safe_failure_and_module_entry_do_not_touch_providers
+  <frozen runpy>:128: RuntimeWarning: 'experiments.runner' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.runner'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_workers.py::test_dispatcher_module_entrypoint_handles_immediate_stop_without_connecting
+  <frozen runpy>:128: RuntimeWarning: 'round_robin.dispatcher.service' found in sys.modules after import of package 'round_robin.dispatcher', but prior to execution of 'round_robin.dispatcher.service'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags0]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags1]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags2]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags3]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags4]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.release' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.release'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags5]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags6]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags7]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.visual_evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.visual_evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_scenario_cli_preserves_pending_obligations_in_saved_and_console_summary
+  <frozen runpy>:128: RuntimeWarning: 'scripts.scenario_summary' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.scenario_summary'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_development_cli_sanitizes_failed_setup_without_restarting_or_resetting
+  <frozen runpy>:128: RuntimeWarning: 'scripts.dev' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.dev'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2014 passed, 16 warnings in 262.58s (0:04:22)

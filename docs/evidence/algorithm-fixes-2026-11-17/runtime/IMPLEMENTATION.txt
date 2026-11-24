@@ -1,0 +1,69 @@
+RUNTIME ALGORITHM REMEDIATION — November 17, 2026
+
+Implemented source changes, with no database schema migration:
+
+RUNTIME-01: Recovery admission now reserves the bounded mandatory tail, the
+proposed retry attempt, its wait, persistence margin and occupied-capacity delay.
+The stage controller retires remaining optional proposals at a finishing cutoff.
+Ready final stages take priority over newly admitted optional physical calls;
+existing leases and uncertain monetary exposure are retained. V2 has a
+conservative 190-second minimum final tail; legacy configurations without the
+new policy descriptor retain their frozen monetary-ledger time reservation.
+This protects an opportunity for finishing, not provider availability or truth.
+
+RUNTIME-02: Retry state is persisted under Run.configuration.step_dispatch, with
+not_before and dispatch generation. Authorization checks both under the run/step
+lock. Outbox intentions capture the generation and clamp publication time to
+not_before; obsolete intentions are retired. Direct internal execution also
+checks not_before. No schema migration or Step.result_json overloading is needed.
+
+RUNTIME-03: Start, clarification and manual retry all call the same serialized
+owner/global queue-capacity guard. A failed resumption leaves its original state
+and expiry unchanged. Successful resumption retains version, UUID, FIFO ticket
+and original run-resource semantics.
+
+Shared protocol: orchestration/protocol.py declares profile-specific frozen
+identities, finite stage transitions, distinct-provider proposal quorum,
+targeted single-correction eligibility and resource admission functions. The
+production controller calls these functions; the experiment runner integrates
+the same review transitions through its journal executor. The single-provider
+and fuller-debate profiles are explicit different graphs. This is shared core
+policy, not a claim that a fixed-evidence study executes live intake/search,
+database admission or every application user interaction.
+
+ROOT-G01 integration: Intake receives validated selected evidence without
+prematurely persisting a resolved brief. Typed proposed changes are retained and
+shown in snapshots; any changes force explicit user confirmation. They are not
+automatically applied. Provider-stage validation is owned by the root lane.
+
+ROOT-G02 integration: Saved sanitized repair diagnostics are delivered on the
+bounded retry request. A complete regeneration still uses the same two-call
+ceiling. Root implements provider validation diagnostics and role instructions.
+
+Evidence integration: Requests carry scoped assessments and pending obligations;
+initial proposals remain blind to current-run peer objections. Claims and
+obligations persist inside one savepoint, so a rejected obligation cannot leave
+orphan claim rows from an uncommitted contribution. An unresolved material issue
+prevents a fully completed protocol result; a correction requires an explicit
+target and original resources, and cannot repeat beyond iteration one.
+
+Validation:
+- verification.log: 211 passed, 3 warnings (14.85 seconds), covering the new
+  runtime regressions and eleven existing runtime/admission/ledger modules.
+- final-focused.log: 84 passed, 3 warnings after atomic contribution persistence.
+- final-boundaries.log: final small boundary run after outbox due-time clamping
+  and legacy reserve compatibility; see the exact saved result.
+- Earlier targeted logs retain the initial fixture failures and their resolution.
+  Tests that formerly assumed an immediate retry now explicitly advance the
+  synthetic harness's persisted timer. Product execution has no bypass.
+
+New regressions cover early/stale duplicate deliveries, accepted versus declined
+Retry-After, mandatory cutoff, stale outbox intentions, owner/global queue limits,
+clarification rejection without ticket renewal, unconfirmed intake evidence,
+finite correction, distinct policy graphs, saved repair diagnostics, explicit
+intake-change confirmation and atomic claim/objection rejection.
+
+No paid providers, external services or deployment were used. Tests use temporary
+SQLite databases and simulated adapters; real PostgreSQL races and measured model
+quality remain separate validation. Historical audit/design artifacts were not
+modified. API contracts/frontend integrations are assembled by the root lane.

@@ -1,0 +1,247 @@
+{
+  "review": "fresh source and adversarial runtime review",
+  "reviewed_source": [
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "sha256": "f8b39c56bf207f0564a50ae6ad3cac59be56f58b7754ba7059c2b6fde0661a81"
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/__init__.py",
+      "sha256": "ca208ee75aba91f8b7cf3574d3c1ef6f1f113a4b164696e34d04d10327ea50cc"
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/service.py",
+      "sha256": "cfa2940c50ce45e99ea4fa6c424779cb1ae04890c68ddafea08cc1a726fa1d21"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/__init__.py",
+      "sha256": "2ed2e368c32626e0c5942bd57b14ad4b19d6f436fcbde3de0f9a90c76dc2d4d2"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/admission.py",
+      "sha256": "e8d2cb5db5ce077fca2c95925ea555655dc215ee5e9cf73abc1a1949d5793e4f"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/budget.py",
+      "sha256": "0b874f816096b618fc6894cad1b5a6a08fd97850c302f5566c7633e8fae2db68"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/circuits.py",
+      "sha256": "fb3dcd1665a46bcecc8b4b18a52b60353d4cdfb2e6a6fdb255da55a98fcd2918"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/configuration.py",
+      "sha256": "8aad247514786571b4088367236cd79b9da940ca77813024ffdb6d5a65bd3378"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "sha256": "ffd55ca8092467b14007c13b6ebe717e46a75c6eff1476e9780e26fff2649bc1"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/policies.py",
+      "sha256": "63629a655c1d9afd2c470d2e2767f37cce0609cecf980a1d28c39e1c2cda9785"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "986642873dc0d365a4d0e21312a5898075cbc2ef049e8e5f92a7c0372aae6ae4"
+    },
+    {
+      "path": "backend/src/round_robin/providers/base.py",
+      "sha256": "6fc83c21382931b4ae29c7d70bc8c7428a5df36391860fcbebb94051a2979014"
+    },
+    {
+      "path": "backend/src/round_robin/providers/http.py",
+      "sha256": "ebe05632c8a6ac22c24890e077be427dc56a0d66520e63b215a728c74d6eec63"
+    },
+    {
+      "path": "backend/src/round_robin/providers/simulated.py",
+      "sha256": "151f8bdfcc36c7018b1b60e1eec0436132c8989ce4a34f2296debadff050b09d"
+    },
+    {
+      "path": "backend/src/round_robin/providers/transport.py",
+      "sha256": "94be482853bbc2908e289812dc11b16acdf9e14ee95c5c0264458e443166d202"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/contributions.py",
+      "sha256": "f6833e97a6a197fa172953e10e71f14a0a5e7960b6c769b7ad828e2fe8dd0db7"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "baa92905f1022812d9a7767de3b2a8ce4114c2db7909e6bb6ba0a76152929915"
+    },
+    {
+      "path": "backend/src/round_robin/worker/app.py",
+      "sha256": "cd04f5d604e9430a396c150e2c0b36a0ef18a4fb8fbc2f036a6baccd1c1e892b"
+    },
+    {
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "sha256": "d255e8cdeba1c61ee8f9f3e6f1e937daeac2b4a9775001febdaf3b17db8ad559"
+    },
+    {
+      "path": "backend/src/round_robin/worker/research_tasks.py",
+      "sha256": "457aadb011529126f8e843b5e836199682cc1510941c2c7025af0c66725acf17"
+    },
+    {
+      "path": "backend/src/round_robin/worker/tasks.py",
+      "sha256": "a33dd04df13af3c78dd722c2b4a8f08bb3ee58fa7ecc6b5d0758be8e5042334b"
+    },
+    {
+      "path": "experiments/adapters.py",
+      "sha256": "3997654c23dfce0d861ad31be9e2161b030f1ef2054f7a24cf05dd1ba7017311"
+    },
+    {
+      "path": "experiments/runner.py",
+      "sha256": "18851b849aef9156c77eb82b63a6528e44fb1e8784039c8d8e23e87075622b41"
+    },
+    {
+      "path": "experiments/study_runner.py",
+      "sha256": "d662486a8c8f9eb214ce91f6d214e5b6041be3f366b41a64609adb44afb03b95"
+    },
+    {
+      "path": "scripts/audit.py",
+      "sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f"
+    }
+  ],
+  "independent_cross_review": [
+    {
+      "path": "backend/src/round_robin/app.py",
+      "sha256": "802e50204cd2604707be3f99e8f0f91e32750339326ef876347f18e1508884bb"
+    },
+    {
+      "path": "backend/src/round_robin/api/artifacts.py",
+      "sha256": "3c91405de0880b8f8580de0c9065776038da498b89313ce14d765c0d889cfecb"
+    },
+    {
+      "path": "backend/src/round_robin/api/commands.py",
+      "sha256": "a521149e1e337e1bc258606d3c58a7c525229c56b8e7cf218ef15921666839ec"
+    },
+    {
+      "path": "backend/src/round_robin/api/lineage.py",
+      "sha256": "6ba0c02e21cd91f61ca4d2ec5915e13380e95b879411a21c94874dcd24baed2e"
+    },
+    {
+      "path": "backend/src/round_robin/api/reuse.py",
+      "sha256": "366b57037b3128f88b18c69972fe08aafc1e6ad15a5fd2d56a72d3b8b79f47e9"
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "sha256": "322bfb2386197d01e61024579c4cf8b4f5523770663d20812150f56d51c06796"
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c"
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "sha256": "0e8ac3040e53c3293d7560286a76fb6c04dd03b1a1a6b34321cc8f4d2f83a7d0"
+    },
+    {
+      "path": "scripts/audit.py",
+      "sha256": "7de3d08e08326d2aaa691342e34bad1d47f5935673b908870c2509b270ab5ee1"
+    },
+    {
+      "path": "scripts/coverage_gate.py",
+      "sha256": "be36071149c0f57349bb71ca17403701e29a30b8aa02dc15512f07ae8f81d291"
+    }
+  ],
+  "regression_sources": [
+    {
+      "path": "backend/tests/test_exhaustive_runtime_controller.py",
+      "sha256": "dab6a4edfe701fc0441181166295b37bd6d648b63d45c3c0c47c9ab97bd3cf78"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_correction.py",
+      "sha256": "4aa6a1d7aea23ee91695d16f6d629b93dfe69959246f5896744488f8ff46052e"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_journal_budget.py",
+      "sha256": "31c0705bfab47831fa521f60886fb11a1575c1018ec48368f8bdddae28806a8b"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_ledger.py",
+      "sha256": "712dd86b5529c88069a7fa14910f2389e469c85d707533b0bb09224da26da5b5"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_provider_boundaries.py",
+      "sha256": "3f76d47fb7dbb2add9e516e1e8ff018906546eba14cc5081900832eec6d8c7f5"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_report.py",
+      "sha256": "1c094e8420d67b598345e6d9015fb36c057a50b5b2486a29fc40a0f97b0491c4"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_study.py",
+      "sha256": "fcda499cf2f0b0ef4ce4b2abef1bcf928f76d920a6a967cd9077f52c28547b7d"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_runtime_workers.py",
+      "sha256": "5eac6e6c0591c2cb39e1984bcb1c86a93770605d08d71f696e06d18c7e3440c6"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_image_worker.py",
+      "sha256": "e1a94d9f67e3d895962d3347e199cce671cd5fb3c595e310c3eb9b7b268e9fca"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_api_final.py",
+      "sha256": "b2ef4cd64d2f69dccce66aa8492bb728a9a62db1fbf81a664260fd3acd076f42"
+    },
+    {
+      "path": "backend/tests/integration/test_exhaustive_postgres.py",
+      "sha256": "00e0a5e25c5ab450fb110e3becf181a7e89753d10334d7e09f6166a87a658275"
+    },
+    {
+      "path": "backend/tests/test_exhaustive_audit_runner.py",
+      "sha256": "3a1ce4dff411a5430b58dce6eb0118f01bd46f71aa48cab6a31e50fafd20cf31"
+    }
+  ],
+  "diagnostic_only": true,
+  "coverage_diagnostics": [
+    ".local/exhaustive-audit/runtime/current2/coverage.json",
+    ".local/exhaustive-audit/runtime/images-current/coverage.json",
+    ".local/exhaustive-audit/runtime/api-final-clean/coverage.json",
+    ".local/exhaustive-audit/runtime/runner-lifecycle-final/coverage.json"
+  ],
+  "before_replay": ".local/exhaustive-audit/runtime/before-replay/results.json",
+  "final_acceptance": "Pending root clean-source full verifier and strict per-service coverage gate",
+  "excluded_code_added": false,
+  "runner_lifecycle_followup": {
+    "finding": "Interrupted direct launcher could leave verifier descendants alive after capture lock release",
+    "fresh_tests_passed": 49,
+    "statement_coverage": {
+      "covered": 138,
+      "total": 138
+    },
+    "branch_coverage": {
+      "covered": 40,
+      "total": 40
+    },
+    "independent_reviewers": [
+      "evidence",
+      "visual_frontend"
+    ],
+    "behavior_replay": ".local/exhaustive-audit/runtime/runner-lifecycle-before-replay/tests.log",
+    "replay_scope": "Only command execution restored to former subprocess.run behavior in an isolated copy; three real interrupt regressions failed",
+    "limits": "Bounded SIGINT/TERM/KILL cleanup cannot guarantee application finally blocks after KILL or recovery from unresponsive kernel/infrastructure"
+  },
+  "final_process_cleanup_followup": {
+    "finding": "Darwin zombie-only owned groups can return EPERM while exiting; never equate permission denial with disappearance.",
+    "script_sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f",
+    "tests_sha256": "3a1ce4dff411a5430b58dce6eb0118f01bd46f71aa48cab6a31e50fafd20cf31",
+    "reviewers": [
+      "runtime implementation and deterministic/real-process verification",
+      "root final source read"
+    ],
+    "tests_passed": 52,
+    "focused_lines": {
+      "covered": 144,
+      "total": 144
+    },
+    "focused_branches": {
+      "covered": 42,
+      "total": 42
+    },
+    "actual_owned_child_exit_probe_count": 1500,
+    "evidence": ".local/exhaustive-audit/runtime/runner-permission-final",
+    "primary_source": "https://github.com/apple-oss-distributions/xnu/blob/main/bsd/kern/kern_sig.c"
+  }
+}

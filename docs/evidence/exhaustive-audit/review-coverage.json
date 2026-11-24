@@ -1,0 +1,850 @@
+{
+  "recorded_at_utc": "2026-11-16T17:59:12.907653+00:00",
+  "review_scope": "Current first-party executable inventory; matching source-read ledgers, not a proof of vulnerability absence.",
+  "production_files": 118,
+  "matching_review_count": 118,
+  "unreviewed_current_executable_files": [],
+  "files": [
+    {
+      "path": "backend/migrations/env.py",
+      "sha256": "9e843aaf7e65ad14c4b90191c3ee85418981c52da158eb0d957aa0f46c5b16a6",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py",
+      "sha256": "cd7a41192a99a33de3ab15613c9a926958ae8ed81f5d6c256ff6a0be8f0cbeb0",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/migrations/versions/c6917df240ab_optional_visual_contracts.py",
+      "sha256": "ad9c5a3a6d89f35772e5445bcde17f9cab98ec892402ba3baf14d9edfaa724d2",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py",
+      "sha256": "1aa8f2ed62b8f61a2726c2126a13c4ad00f10aadf2e39ae4a4c219dd5646b334",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/migrations/versions/e7209a4f361c_claim_versions_and_reuse.py",
+      "sha256": "7fa5cabf4c7cb80cdbbb5227fac5fbc0d78fc2ebb49b7270123755ecd4a488dc",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/migrations/versions/f973196b6714_initial_application.py",
+      "sha256": "fcb134b4ca01400681c17a67318fe55e61c59bf07cb5aa22d9581a36ad4fb534",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/__init__.py",
+      "sha256": "f0fe4f5ae2569dfae701fbc51127dea7fcad802614d46c386f6d8ee814473589",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/__init__.py",
+      "sha256": "8f846a55f39ad5274695ad70d89fe28b4a383df5806fe30e405675a03e2f8ccb",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/artifacts.py",
+      "sha256": "3c91405de0880b8f8580de0c9065776038da498b89313ce14d765c0d889cfecb",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/auth.py",
+      "sha256": "8c29bd8ceb6e8c3848eeaca23dcbd6ad5b6c05f22a45ba9f782db19eb87ebc30",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/commands.py",
+      "sha256": "a521149e1e337e1bc258606d3c58a7c525229c56b8e7cf218ef15921666839ec",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/drafts.py",
+      "sha256": "30173f9dbf9cca9df45a286bdb0fe5cae881f601f31356789cea796293a409a4",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/events.py",
+      "sha256": "0e8ac3040e53c3293d7560286a76fb6c04dd03b1a1a6b34321cc8f4d2f83a7d0",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/hosted.py",
+      "sha256": "a99e9fa456eb277a0f4350777b7f16cdf7e5d3818b9878999641387d89c1b1ad",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/lineage.py",
+      "sha256": "6ba0c02e21cd91f61ca4d2ec5915e13380e95b879411a21c94874dcd24baed2e",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "sha256": "f8b39c56bf207f0564a50ae6ad3cac59be56f58b7754ba7059c2b6fde0661a81",
+      "matching_review_ledgers": [
+        "root",
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/reuse.py",
+      "sha256": "366b57037b3128f88b18c69972fe08aafc1e6ad15a5fd2d56a72d3b8b79f47e9",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/api/visual.py",
+      "sha256": "b5aa227c30efed2a54d305602331476bb20353915ed095ab6b838228a4bf2550",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/app.py",
+      "sha256": "802e50204cd2604707be3f99e8f0f91e32750339326ef876347f18e1508884bb",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/configuration.py",
+      "sha256": "9a848aebbf299774a4ee904187f594315f577636ea04e6bbe4f8689cb65d6f09",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/__init__.py",
+      "sha256": "5ad531f47b9f73c18da3de4609729488db8adc79e969187f5630779cc26fb461",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/claim_models.py",
+      "sha256": "e0159c50ae2d384dc06ec55612bea1cbffb5229e3d0f1527ee4eb8e45a31b0bd",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/models.py",
+      "sha256": "ba2cc158071fb3a3dafa9e7cfe8beb249b728f87b6578d35af07158f949aed3c",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/safety.py",
+      "sha256": "c6598cca127faf5ac9fce2742d2c1d9209acd81f10ef37f5113d9f2a5506be8a",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/services.py",
+      "sha256": "322bfb2386197d01e61024579c4cf8b4f5523770663d20812150f56d51c06796",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/session.py",
+      "sha256": "908c8b6877e8eea4b24d9f21d96fc2afcf57e6131857ba3871014cdb6051c56f",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/database/visual_models.py",
+      "sha256": "766e323fc9579eb87fe6ae1590f3883583e7874720269c36c390a1377fd5bcee",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/__init__.py",
+      "sha256": "ca208ee75aba91f8b7cf3574d3c1ef6f1f113a4b164696e34d04d10327ea50cc",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/dispatcher/service.py",
+      "sha256": "cfa2940c50ce45e99ea4fa6c424779cb1ae04890c68ddafea08cc1a726fa1d21",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/export_contracts.py",
+      "sha256": "b8b22e6b87631043561f5c4398722c27a4d5f6a7247294b641fcba73a38d094b",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/fixture_api.py",
+      "sha256": "e107103ad2790794fe02183ec3b2158c4226e78a6f33afd4c8241f5a49be9533",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/fixtures.py",
+      "sha256": "8569d95a017f37418a05a4e91bf44e0effc30301d47c5973a208d999f3a2aaf0",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/operations/__init__.py",
+      "sha256": "981502c16e2504ea8cc006f0a9b7156419bc6611db8782d5e7eee80f6de2f7fa",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/operations/durability.py",
+      "sha256": "e77947c41c0699b959241b1658cc3fbe9e97bd45264d237736584eba6604c9a4",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/operations/maintenance.py",
+      "sha256": "eebed00a0b07800f54992b8e780fba906dc235bea78be702de4b7f04a632aeab",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "sha256": "4749df0b7d285754f37bb44549289571d24ea25b2842df529f922a62c28ae240",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/ops.py",
+      "sha256": "6459726dc46e850c8fbf65b11cbbbdd2a9bf292398f3c1266b8645d950da22ed",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/__init__.py",
+      "sha256": "2ed2e368c32626e0c5942bd57b14ad4b19d6f436fcbde3de0f9a90c76dc2d4d2",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/admission.py",
+      "sha256": "e8d2cb5db5ce077fca2c95925ea555655dc215ee5e9cf73abc1a1949d5793e4f",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/budget.py",
+      "sha256": "0b874f816096b618fc6894cad1b5a6a08fd97850c302f5566c7633e8fae2db68",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/circuits.py",
+      "sha256": "fb3dcd1665a46bcecc8b4b18a52b60353d4cdfb2e6a6fdb255da55a98fcd2918",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/configuration.py",
+      "sha256": "8aad247514786571b4088367236cd79b9da940ca77813024ffdb6d5a65bd3378",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "sha256": "ffd55ca8092467b14007c13b6ebe717e46a75c6eff1476e9780e26fff2649bc1",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/policies.py",
+      "sha256": "63629a655c1d9afd2c470d2e2767f37cce0609cecf980a1d28c39e1c2cda9785",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "986642873dc0d365a4d0e21312a5898075cbc2ef049e8e5f92a7c0372aae6ae4",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/__init__.py",
+      "sha256": "f415cb787d28c12ca66037ab855745b4b0ec7aa7fe08ca20cb235db00de37a93",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/base.py",
+      "sha256": "6fc83c21382931b4ae29c7d70bc8c7428a5df36391860fcbebb94051a2979014",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/http.py",
+      "sha256": "ebe05632c8a6ac22c24890e077be427dc56a0d66520e63b215a728c74d6eec63",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/images.py",
+      "sha256": "3c2a05b320028ac966f439f6890bdf279a2d28ccac1d57dfa71158b35b046d2c",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/simulated.py",
+      "sha256": "151f8bdfcc36c7018b1b60e1eec0436132c8989ce4a34f2296debadff050b09d",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/providers/transport.py",
+      "sha256": "94be482853bbc2908e289812dc11b16acdf9e14ee95c5c0264458e443166d202",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/reports/exports.py",
+      "sha256": "bd02a5799010a2e9db9f6584dba5c98ca453983125e89995f9d1e55b52aec629",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/reports/measurements.py",
+      "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/reports/storage.py",
+      "sha256": "1935f27e5ca65350a9eef8eb79ab23abdd7a26dba487f226e4347dfcfdc1ce66",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/calculator.py",
+      "sha256": "31bd03f77d7a6122536ef9ef36883a2e795418ff1e122457341b42ce2372985b",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "sha256": "bbd659351cfa653228a3e431900082b04bf96178fbb8d946b5177ef3ccedc2ab",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "3ea3ae37e88aeae2769fef2dd9e8f9271efde7d8e05281525974f86b4e07789d",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/queries.py",
+      "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/reuse.py",
+      "sha256": "59b3257b4600204ce6086bc5f3ffb58c7a5d4f4953d1f14f2f50bef7fa845679",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/search.py",
+      "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "39c43fb7802c74a7f5b2c3ccac73a927c3376cb946f04ef4edb323ae8cf568aa",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/__init__.py",
+      "sha256": "fbde93a3523d9905c4814b1edaa8c670a1d966fff9ae2f72ede7590516247354",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/application.py",
+      "sha256": "287a20d65cbc9a084eea9a233765982720030d8c74a28aef6986d10c9d238308",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/briefs.py",
+      "sha256": "149b80352afb5a9cad730a8b2ac8117b03e0849b73e99e4a3c242ec3a98768d2",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/common.py",
+      "sha256": "cd709f23e3fe199ea735f4be16c6a9688d470e93f62f00bab5c932343914adc6",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/contributions.py",
+      "sha256": "f6833e97a6a197fa172953e10e71f14a0a5e7960b6c769b7ad828e2fe8dd0db7",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/events.py",
+      "sha256": "74953c8098883a7513d99cbb6d86eec44009ffe7b1b6bc1a22d3eca202c1d5b8",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/evidence.py",
+      "sha256": "e692ec830ac0d1e0ed670fa47c3937ef66bb9f190f95646cc4dcf7af5c8452b3",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/preflight.py",
+      "sha256": "fb05e07b9235135ad50db53e33ab7a25fb08701a55f97d4c429081757dabca7c",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/provider_configuration.py",
+      "sha256": "251a469a8fd52bba71e8a09e4d6299bbb278a7a46118770ff610cedecc88de2f",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/reports.py",
+      "sha256": "f7c45545b6f4a045e96004319eb064ad9f2c7db86c72a37acefd3471a1a452fe",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/runtime.py",
+      "sha256": "baa92905f1022812d9a7767de3b2a8ce4114c2db7909e6bb6ba0a76152929915",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/schemas/views.py",
+      "sha256": "d65360322b6763604b8b8c6bcc97fada030ad7da34ec0dca35938f21ec086499",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/security/__init__.py",
+      "sha256": "72a82de619a785a236cb594c7ccfa10993382e7529d0c95ecc7abb496f7c8872",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/security/hosted.py",
+      "sha256": "5c30f1a788b92e5d1d92a47b1772a067e74502ab29e56717db8466d252ae5f77",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/security/logging.py",
+      "sha256": "305c996403678d42f27eedcad12a47c60554d01d71db114e729b0d7c33193879",
+      "matching_review_ledgers": [
+        "evidence"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/__init__.py",
+      "sha256": "dfe071b907c00bf524a9c394d4d9cae7915d869a9d916bc583560feb2936e00c",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/assets.py",
+      "sha256": "f9c0c2bbd4c3122c53e1b3a5060afa052357fe082855ff0eafd1ff759463fd81",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/iterations.py",
+      "sha256": "61b6a99f5a983c8e96db282b617823ae65d4c2ec616bcaad08aa21404a529b7a",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/jobs.py",
+      "sha256": "b354b6b7657f741c34e85d7300873bcf43e33e75f2873e99b00c51a50f6a8a22",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/__init__.py",
+      "sha256": "632cae01ecd02821cb5951b046550451a401eb96134c6332b9873692b84112a1",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/diagram.py",
+      "sha256": "0393fe540ddfdfaae5c3b3487a4ecc54cf38cb162048912a8b2ac124bd0bd010",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/renderers/interface.py",
+      "sha256": "65582304e1b9c8d301e0d8402674e0831ef748b32db9b1109cfa95a7e4e2a50a",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/reviews.py",
+      "sha256": "f595018e7ddeaccc309bead1782e73a2c129741587e7e984d8316559bc14bbc9",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/schemas.py",
+      "sha256": "376f5365c558797c24a3b2b11fa9f50f274ebfc255df75d1f7551b6c596bff2a",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/service.py",
+      "sha256": "9c661a5e3c77996e41ebc3657a605246a793b4dfd7a8d7e63119fd83697ab167",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/visual/views.py",
+      "sha256": "c61691678abe924b568a00beee5289015d6cf5e80843cc48efbf8ff35fd83f76",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/worker/__init__.py",
+      "sha256": "c519fc9c2cdc595a41995441f0b6c59fbfa6d8106480861bd37b4533915cd15a",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/worker/app.py",
+      "sha256": "cd04f5d604e9430a396c150e2c0b36a0ef18a4fb8fbc2f036a6baccd1c1e892b",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "sha256": "d255e8cdeba1c61ee8f9f3e6f1e937daeac2b4a9775001febdaf3b17db8ad559",
+      "matching_review_ledgers": [
+        "runtime",
+        "visual"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/worker/research_tasks.py",
+      "sha256": "457aadb011529126f8e843b5e836199682cc1510941c2c7025af0c66725acf17",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "backend/src/round_robin/worker/tasks.py",
+      "sha256": "a33dd04df13af3c78dd722c2b4a8f08bb3ee58fa7ecc6b5d0758be8e5042334b",
+      "matching_review_ledgers": [
+        "runtime",
+        "evidence"
+      ]
+    },
+    {
+      "path": "experiments/__init__.py",
+      "sha256": "e4e628c05ba5d27ecd19f0de87aa1a38e938788cb224fea964b8279af513b0a3",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "experiments/adapters.py",
+      "sha256": "3997654c23dfce0d861ad31be9e2161b030f1ef2054f7a24cf05dd1ba7017311",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "experiments/evaluation.py",
+      "sha256": "f4b820c978b1fb81923d69475e46fa05060747f93c1375f7c33ca4a6b74a7067",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "experiments/journal.py",
+      "sha256": "547351dccc0f16a068f0e91beeef71c266f6b8f1fc25fe8d675a40bce6a5037b",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "experiments/release.py",
+      "sha256": "59f3ed798f1be472c72b4ea1ed017fd6419d153276208db7a488d0f6bd9b9052",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "experiments/runner.py",
+      "sha256": "18851b849aef9156c77eb82b63a6528e44fb1e8784039c8d8e23e87075622b41",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "experiments/study_runner.py",
+      "sha256": "d662486a8c8f9eb214ce91f6d214e5b6041be3f366b41a64609adb44afb03b95",
+      "matching_review_ledgers": [
+        "runtime"
+      ]
+    },
+    {
+      "path": "experiments/visual_evaluation.py",
+      "sha256": "aab841798f0c3ac03caf9cb48e5b5357a6805fc0c4043d0fd92e13890d4eb782",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "frontend/app/api-client.ts",
+      "sha256": "5fd4a808ab40f1128be250467cbd34550cce533165b4f6bf746174dc37181c06",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/contracts.ts",
+      "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+      "matching_review_ledgers": [
+        "evidence",
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/design/page.tsx",
+      "sha256": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/design/workspace.tsx",
+      "sha256": "7677f4c2918f2bada9467f78b502b9bd143b195a670fbde2b0ba5c7f0431220e",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/layout.tsx",
+      "sha256": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/live/page.tsx",
+      "sha256": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/live-workspace.tsx",
+      "sha256": "b70b6fd4e57806f779c84a6f71573b3e95430eb84d64567b77fba134b6a2c55f",
+      "matching_review_ledgers": [
+        "root",
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/page.tsx",
+      "sha256": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+      "matching_review_ledgers": [
+        "visual"
+      ]
+    },
+    {
+      "path": "frontend/app/workspace.tsx",
+      "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+      "matching_review_ledgers": [
+        "evidence",
+        "visual"
+      ]
+    },
+    {
+      "path": "scripts/audit.py",
+      "sha256": "c4f5e848826f99f9eb2517613026695bd36badc502f078771496f0595001922f",
+      "matching_review_ledgers": [
+        "root",
+        "runtime",
+        "verifier"
+      ]
+    },
+    {
+      "path": "scripts/coverage_gate.py",
+      "sha256": "0a521fdf474db9651d34ceb5c4956789f78a5c9b7dfad05bf8e267c63fe40e47",
+      "matching_review_ledgers": [
+        "verifier"
+      ]
+    },
+    {
+      "path": "scripts/dev.py",
+      "sha256": "cd227c4e548aaf634ea463343e2a91ea5f83b32720804c8c8a61991955844f8d",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "scripts/native-renderer.mjs",
+      "sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+      "matching_review_ledgers": [
+        "evidence",
+        "visual"
+      ]
+    },
+    {
+      "path": "scripts/scenario_summary.py",
+      "sha256": "3b330bfda05b1cb0983b7c045ef33c7d5fc98fce2f80d53a089745924a635044",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "scripts/serve_prototype.py",
+      "sha256": "0cad86469e7cd9c3cbc72b0a09f33f5473635a209c1fe79933aa3cda4d8b4cee",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    },
+    {
+      "path": "scripts/verify.py",
+      "sha256": "cfc41540851eaa5bff0d2431679559ab1c15005c65f11ee761651ed112fa4de8",
+      "matching_review_ledgers": [
+        "root"
+      ]
+    }
+  ]
+}

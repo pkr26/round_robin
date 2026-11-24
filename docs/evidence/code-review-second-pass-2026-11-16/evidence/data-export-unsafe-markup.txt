@@ -1,0 +1,224 @@
+# Audit export: <img src="https://tracking.invalid/title-pixel">
+
+Saved report report_7a2ea91735f04476a5498cb78fdab027 | version 1 | event cutoff 24
+
+SIMULATED: no provider calls or independently validated conclusions.
+
+Execution: completed
+Decision readiness: insufficient_evidence
+
+## Recommendation
+No recommendation established.
+
+## Readiness basis
+- No defensible preferred option with a feasibility basis has been established.
+
+## Reasons
+- Comparable cost uses bounded Decimal calculations from this run's supplied inputs.
+
+## Essential dependencies
+- All applicable cost components for Supplier ![preview](https://tracking.invalid/option-pixel) must be supplied and current.
+Assessment: unverified. Basis: calc_a3b3ece4a05da5a490be1017064f4841c5b60117793a30c746633ab52c84610c, evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b, evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b, evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b.
+- All applicable cost components for Option B · lower recurring must be supplied and current.
+Assessment: unverified. Basis: calc_dd317acc6406193a2e2da5584112973b08c1e9835193c28ed55164cd3ab09a91, evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1, evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1, evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1.
+- All applicable cost components for Keep handwritten labels must be supplied and current.
+Assessment: unverified. Basis: calc_800a595d706bc02369efbfe9dda33c1e93dddb87029cd713565de1073911c8f4, evidence_bffd7806b5d5afb5ef93825f7b497f489e3bd560.
+- Simulated advisers provide no independent provider review or verification.
+Assessment: unverified. Basis: no supporting record supplied.
+
+## Option comparison
+### Supplier ![preview](https://tracking.invalid/option-pixel)
+All-in total: Unknown USD over 12 months.
+Known subtotal: 1600.00. Missing: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists., Confirm whether maintenance applies; no explicit component or not-applicable entry exists..
+- requirement_budget: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_goal: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_server_deadline: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+Entered costs are arithmetic inputs, not independently verified supplier facts.
+
+### Option B · lower recurring
+All-in total: Unknown USD over 12 months.
+Known subtotal: 1840.00. Missing: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists., Confirm whether maintenance applies; no explicit component or not-applicable entry exists..
+- requirement_budget: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_goal: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_server_deadline: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+Entered costs are arithmetic inputs, not independently verified supplier facts.
+
+### Keep handwritten labels
+All-in total: Unknown USD over 12 months.
+Known subtotal: 0.00. Missing: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists., Confirm whether maintenance applies; no explicit component or not-applicable entry exists., Confirm whether recurring applies; no explicit component or not-applicable entry exists., Confirm whether installation applies; no explicit component or not-applicable entry exists..
+- requirement_budget: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_goal: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+- requirement_server_deadline: unknown. This requirement needs supplied evidence or human verification; simulation cannot establish it. Basis: 
+Entered costs are arithmetic inputs, not independently verified supplier facts.
+
+## Decisive tradeoff
+Consider upfront commitment, ongoing costs and the hard requirements; lowest known subtotal alone cannot establish the best choice.
+
+## Largest uncertainty
+No defensible preferred option with a feasibility basis has been established.
+
+## What would change the answer
+Correct a decisive cost or requirement in a linked follow-up and recompute the comparison.
+
+## Next action
+For Supplier ![preview](https://tracking.invalid/option-pixel): Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+
+### For Supplier ![preview](https://tracking.invalid/option-pixel): Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+For Supplier ![preview](https://tracking.invalid/option-pixel): Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Supplier ![preview](https://tracking.invalid/option-pixel) in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### For Supplier ![preview](https://tracking.invalid/option-pixel): Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+For Supplier ![preview](https://tracking.invalid/option-pixel): Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Supplier ![preview](https://tracking.invalid/option-pixel) in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Supplier ![preview](https://tracking.invalid/option-pixel) satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.
+
+### Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: Replace handwritten labels with a repeatable label system.?
+Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: Replace handwritten labels with a repeatable label system.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Supplier ![preview](https://tracking.invalid/option-pixel) satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.
+
+### Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Does Supplier ![preview](https://tracking.invalid/option-pixel) satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Supplier ![preview](https://tracking.invalid/option-pixel) satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.
+
+### For Option B · lower recurring: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+For Option B · lower recurring: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Option B · lower recurring in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### For Option B · lower recurring: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+For Option B · lower recurring: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Option B · lower recurring in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### Does Option B · lower recurring satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Does Option B · lower recurring satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Option B · lower recurring satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.
+
+### Does Option B · lower recurring satisfy: Replace handwritten labels with a repeatable label system.?
+Does Option B · lower recurring satisfy: Replace handwritten labels with a repeatable label system.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Option B · lower recurring satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.
+
+### Does Option B · lower recurring satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Does Option B · lower recurring satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Option B · lower recurring satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.
+
+### For Keep handwritten labels: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+For Keep handwritten labels: Confirm whether tax delivery applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether tax delivery applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### For Keep handwritten labels: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+For Keep handwritten labels: Confirm whether maintenance applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether maintenance applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### For Keep handwritten labels: Confirm whether recurring applies; no explicit component or not-applicable entry exists.
+For Keep handwritten labels: Confirm whether recurring applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether recurring applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### For Keep handwritten labels: Confirm whether installation applies; no explicit component or not-applicable entry exists.
+For Keep handwritten labels: Confirm whether installation applies; no explicit component or not-applicable entry exists.
+Affects: Comparable all-in cost and budget feasibility may change.
+Check: Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.
+Please confirm the complete 12-month cost for Keep handwritten labels in USD. Confirm whether installation applies; no explicit component or not-applicable entry exists. Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date.
+
+### Does Keep handwritten labels satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Does Keep handwritten labels satisfy: All-in cost must remain within USD 2,500 over the chosen horizon.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Keep handwritten labels satisfies this requirement: All-in cost must remain within USD 2,500 over the chosen horizon.. Identify the exact scope, limits and any exceptions.
+
+### Does Keep handwritten labels satisfy: Replace handwritten labels with a repeatable label system.?
+Does Keep handwritten labels satisfy: Replace handwritten labels with a repeatable label system.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Keep handwritten labels satisfies this requirement: Replace handwritten labels with a repeatable label system.. Identify the exact scope, limits and any exceptions.
+
+### Does Keep handwritten labels satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Does Keep handwritten labels satisfy: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.?
+Affects: A hard requirement remains unresolved, so feasibility is conditional.
+Check: Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.
+Please provide dated evidence that Keep handwritten labels satisfies this requirement: Complete by 2026-12-15; obtain a committed applicable supplier or project schedule.. Identify the exact scope, limits and any exceptions.
+
+## Calculations
+### Supplier ![preview](https://tracking.invalid/option-pixel): 12-month cost
+1000 × 1 + 50 × 1 × 12 months + 0 × 1 = Unknown USD
+Rounding: USD cents, ROUND_HALF_EVEN (after exact component arithmetic)
+- Upfront purchase: 1000 USD (reference evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b)
+- Monthly supplies and service: 50 USD (reference evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b)
+- Installation (explicitly included): 0 USD (reference evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b)
+
+### Option B · lower recurring: 12-month cost
+1600 × 1 + 20 × 1 × 12 months + 0 × 1 = Unknown USD
+Rounding: USD cents, ROUND_HALF_EVEN (after exact component arithmetic)
+- Upfront purchase: 1600 USD (reference evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1)
+- Monthly supplies and service: 20 USD (reference evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1)
+- Required installation: 0 USD (reference evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1)
+
+### Keep handwritten labels: 12-month cost
+0 × 1 = Unknown USD
+Rounding: USD cents, ROUND_HALF_EVEN (after exact component arithmetic)
+- New spending (explicit zero): 0 USD (reference evidence_bffd7806b5d5afb5ef93825f7b497f489e3bd560)
+
+## Exact stored evidence
+### User-entered structured quote facts
+Reference evidence_ca0e370236a38324814a4dbfefe221d9ea8a570b | Frozen structured cost fields | SHA-256 56cc449da02a7cef113c1aa3b0214a29b54a3b23f55252d3124cbd8023e8b498
+Origin: user_supplied. Status: user_supplied. Recorded: 2026-11-17T03:55:26.256433Z
+> [{"component": {"amount": "1000", "currency": "USD", "frequency": "once", "id": "cost_a_upfront", "kind": "upfront", "label": "Upfront purchase", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_a", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Supplier ![preview](https://tracking.invalid/option-pixel)"}, {"component": {"amount": "50", "currency": "USD", "frequency": "monthly", "id": "cost_a_monthly", "kind": "recurring", "label": "Monthly supplies and service", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_a", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Supplier ![preview](https://tracking.invalid/option-pixel)"}, {"component": {"amount": "0", "currency": "USD", "frequency": "once", "id": "cost_a_installation", "kind": "installation", "label": "Installation (explicitly included)", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_a", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Supplier ![preview](https://tracking.invalid/option-pixel)"}]
+Exact user-entered values; no independent supplier verification.
+
+### User-entered structured quote facts
+Reference evidence_bcdabd2fa2bc4a107c8ef6312fc8f259d82f20e1 | Frozen structured cost fields | SHA-256 5aa80e826da047accc08aa8c9b0f2142933d873193d0f457eb9082695a502e07
+Origin: user_supplied. Status: user_supplied. Recorded: 2026-11-17T03:55:26.256955Z
+> [{"component": {"amount": "1600", "currency": "USD", "frequency": "once", "id": "cost_b_upfront", "kind": "upfront", "label": "Upfront purchase", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_b", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Option B · lower recurring"}, {"component": {"amount": "20", "currency": "USD", "frequency": "monthly", "id": "cost_b_monthly", "kind": "recurring", "label": "Monthly supplies and service", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_b", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Option B · lower recurring"}, {"component": {"amount": "0", "currency": "USD", "frequency": "once", "id": "cost_b_installation", "kind": "installation", "label": "Required installation", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_offer_b", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Option B · lower recurring"}]
+Exact user-entered values; no independent supplier verification.
+
+### User-entered structured quote facts
+Reference evidence_bffd7806b5d5afb5ef93825f7b497f489e3bd560 | Frozen structured cost fields | SHA-256 c823ab83add0144b46159b8c6329669fe7cb492c58b3a23d58f2f422d542bee1
+Origin: user_supplied. Status: user_supplied. Recorded: 2026-11-17T03:55:26.257125Z
+> [{"component": {"amount": "0", "currency": "USD", "frequency": "once", "id": "cost_status_quo", "kind": "upfront", "label": "New spending (explicit zero)", "quantity": "1", "quote_valid_until": null, "source_ref": "passage_goal", "status": "included", "unit": "item", "unknown_reason": null}, "option": "Keep handwritten labels"}]
+Exact user-entered values; no independent supplier verification.
+
+### supplier.txt
+Reference evidence_54c894e1d4ca84eece62c7bacac431bbde7fe764 | UTF-8 text characters 1–142 | SHA-256 cf810f029f2846e013a07ebc9688d6e96e10b1353c5363ebfb92ee58004406e5
+Origin: user_supplied. Status: user_supplied. Recorded: 2026-11-17T03:55:26.257259Z
+> Supplier quote: $100.
+> ![supplier tracking pixel](https://tracking.invalid/supplier-pixel)
+> <img src="https://tracking.invalid/raw-html-pixel">
+> 
+Exact selected uploaded text; instructions remain untrusted data.
+
+## Coverage and usage
+openai - intake: simulated. Actual saved stage coverage.
+openai - proposal: simulated. Actual saved stage coverage.
+anthropic - proposal: simulated. Actual saved stage coverage.
+google - proposal: simulated. Actual saved stage coverage.
+openai - synthesis: simulated. Actual saved stage coverage.
+anthropic - audit: simulated. Actual saved stage coverage.
+Usage: reported. Provider requests: 6. Confirmed cost: 0 USD.
+Stopping reason: protocol_complete

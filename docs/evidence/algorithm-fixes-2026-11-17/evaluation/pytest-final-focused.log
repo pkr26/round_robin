@@ -1,0 +1,42 @@
+............F........................................................... [ 41%]
+........................................................................ [ 83%]
+.............................                                            [100%]
+=================================== FAILURES ===================================
+_ test_all_three_funded_workflows_execute_with_mock_http_and_keep_raw_outputs __
+
+funded_study = (PosixPath('/private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1027/test_all_three...research=ResearchConfiguration(enabled=False, pricing_version=None, per_request_usd=None, approved_public_region=''))))
+
+    def test_all_three_funded_workflows_execute_with_mock_http_and_keep_raw_outputs(funded_study):
+        _, (approval, manifest, configuration) = funded_study
+        registry, requests = mock_registry(configuration)
+        with Journal(approval.journal_directory, mode="explicit_live_study") as journal:
+            runner = FundedStudyRunner(journal, approval, manifest, configuration, provider_registry=registry, sleeper=lambda _: None)
+            trials = [next(trial for trial in runner.plan if trial.workflow == workflow and trial.primary) for workflow in ("single_provider", "independent_review", "bounded_debate")]
+            outputs = [runner.execute_trial(trial) for trial in trials]
+            # The fixture's unclassified dissent is minor; only material open
+            # obligations justify the bounded revision round.
+            assert [output["request_count"] for output in outputs] == [3, 5, 9]
+            assert all(output["status"] == "completed" and output["phase_passed"] is False for output in outputs)
+            count = len(requests)
+            assert runner.execute_trial(trials[0]) == outputs[0]
+            assert len(requests) == count
+            assert all(not request["packet"]["peer_outputs"] for request in requests if request["packet"]["stage"] == "proposal")
+            assert any(request["packet"]["stage"] == "critique" for request in requests)
+>           assert any(request["packet"]["stage"] == "revision" for request in requests)
+E           assert False
+E            +  where False = any(<generator object test_all_three_funded_workflows_execute_with_mock_http_and_keep_raw_outputs.<locals>.<genexpr> at 0x10def7ac0>)
+
+backend/tests/test_study_runner.py:114: AssertionError
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED backend/tests/test_study_runner.py::test_all_three_funded_workflows_execute_with_mock_http_and_keep_raw_outputs
+1 failed, 172 passed, 2 warnings in 21.30s

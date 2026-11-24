@@ -1,0 +1,13 @@
+{
+  "finding": "Visual prompt admission versus actual send contract",
+  "source_refs": [
+    "backend/src/round_robin/providers/images.py:172",
+    "backend/src/round_robin/providers/images.py:261",
+    "backend/src/round_robin/providers/images.py:33",
+    "backend/src/round_robin/worker/image_tasks.py:315",
+    "backend/src/round_robin/worker/image_tasks.py:347",
+    "backend/src/round_robin/worker/image_tasks.py:383"
+  ],
+  "assessment": "Confirmed by independent source review. Pure preflight checks dimensions/capabilities/parent pixels but not serialized generator prompt. The16,000-character prompt rejection happens after authorization and before _http. ImageFundingLocked is RuntimeError, caught as generic error and wrapped ProviderFailure(image_operation_unknown) with may_have_sent=True. Settlement therefore retains unknown conservative exposure despite no send.",
+  "qualification": "No actual external charge is demonstrated. Impact is false unknown exposure, consumed attempts and failed permitted work; provider remains uncalled. The complete large-bundle reproduction is owned by the visual audit lane/root."
+}

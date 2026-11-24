@@ -1,0 +1,312 @@
+[
+  {
+    "id": "E-F01",
+    "priority": "P1",
+    "severity": "high",
+    "kind": "correctness defect",
+    "title": "Auditor disagreement manufactures demonstrated failures using the synthesis citations",
+    "source_refs": [
+      "backend/src/round_robin/orchestration/reporting.py:97-103",
+      "backend/src/round_robin/reports/readiness.py:9-10",
+      "backend/src/round_robin/providers/base.py:121-124"
+    ],
+    "trigger": "Synthesis passes each option with positive evidence; the auditor says fail with an empty basis_refs list (valid provider output).",
+    "impact": "Both options become fail, retain the synthesis positive citation and synthesizer attribution, and the report publishes no_feasible_option as though each failure had been demonstrated.",
+    "validation": "probes.py:audit_disagreement; probe-results.json:audit_disagreement; actual validate_output and build_report passed.",
+    "fix": "Represent disputed as unknown until a scoped adverse assessment has a valid supporting basis. Preserve both verdicts, respective citations and assessor identities; use the actual supported failing assessment when deriving infeasibility.",
+    "caveat": "Report reason does mention disagreement, but the authoritative failure/readiness labels still assert demonstrated failure. No live model behavior is needed for reproduction.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "E-F03",
+    "priority": "P1",
+    "severity": "high",
+    "kind": "polarity-validation defect",
+    "title": "A contradicted claim chain can be promoted to supported without new evidence",
+    "source_refs": [
+      "backend/src/round_robin/research/claims.py:19-35",
+      "backend/src/round_robin/providers/base.py:131-140",
+      "backend/src/round_robin/research/reuse.py:57-63",
+      "backend/src/round_robin/research/reuse.py:80-97"
+    ],
+    "trigger": "New fact repeats the exact proposition of a prior contradicted fact and cites only that fact; prior fact references a contradicted source saying the opposite.",
+    "impact": "Graph reachability marks the new claim grounded and validate_output leaves evidence_status=supported. Persisted-claim checks use the same status-insensitive source roots and graph, so circulation among agents can erase known contradiction.",
+    "validation": "probes.py:support_laundering calls validate_output with identical prior/current proposition and explicit contradictory source; returns supported. Persistence path verified by source review.",
+    "fix": "Preserve signed support/contradiction edges and evidence qualifications. Block status upgrades based solely on contradicted/mixed/stale ancestors; require a new explicit scoped support assessment and resolution record.",
+    "caveat": "This is a reproducible polarity/status loss, not a claim that a graph algorithm can prove semantic entailment. Opposite propositions can legitimately cite a refutation, so relation identity and polarity must be explicit.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "EVAL-01",
+    "priority": "P1",
+    "kind": "implementation_bug",
+    "category": "correctness",
+    "source_refs": "backend/src/round_robin/api/visual.py:356-374;\nbackend/src/round_robin/worker/image_tasks.py:218-248;\nbackend/src/round_robin/providers/images.py:255.",
+    "description_trigger_impact_validation_fix": "Selected visual findings never reach the editor.\nSource: backend/src/round_robin/api/visual.py:356-374;\nbackend/src/round_robin/worker/image_tasks.py:218-248;\nbackend/src/round_robin/providers/images.py:255.\nTrigger: approve an edit with intent \"Address the selected finding\" and a mapping\nof findings to address/decline. The API saves the mapping, but _packet emits only\nthe free-text intent, brief and parent pixels. It omits finding IDs, observations,\nregions, severities and dispositions. HTTPImageProvider.submit likewise only\nserializes the brief and intent. Critic-selected feedback has no causal path to\ngeneration unless the user manually repeats it in the intent. Declines have no\neffect on the generated edit either. A paid edit can therefore ignore the exact\nreview findings it appears to act on.\nValidation: probe.py::edit_packet_loses_dispositions; result saved in JSON.\nFix direction: construct and hash an immutable edit bundle resolving approved\nparent finding IDs to observations, regions, requested changes, preserve rules\nand explicit declines; transmit that exact bundle to the editor and re-reviewers.",
+    "evidence": "probe-results.json:edit_packet_loses_dispositions",
+    "title": "Selected visual findings never reach the editor",
+    "domain": "evaluation",
+    "review_artifact": "evaluation/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "RUNTIME-01",
+    "severity": "P1",
+    "title": "Optional retry waiting can consume the protected synthesis and audit time",
+    "source": "backend/src/round_robin/orchestration/policies.py:88-93",
+    "related_sources": [
+      "backend/src/round_robin/worker/tasks.py:47-68",
+      "backend/src/round_robin/worker/tasks.py:41-45",
+      "backend/src/round_robin/orchestration/controller.py:296-298"
+    ],
+    "trigger": "A proposal fails with a valid long Retry-After while the other two independent proposals succeed.",
+    "actual": "plan_recovery checks only wait + 30 seconds. A 500-second wait is accepted within the default 600-second allowance although 190 seconds are reserved for synthesis/audit. The proposal barrier remains open. At the accepted retry time the failed proposal is skipped and synthesis immediately fails finish_time_reserve before making any model call.",
+    "impact": "A run with sufficient useful proposals loses both mandatory final stages because optional backoff was allowed to spend protected finishing time. No recommendation is published.",
+    "proof": "probe-results.json:retry_wait_consumes_mandatory_finish_time",
+    "recommendation": "Compute retry eligibility from the same mandatory-stage time reserve used by authorization and request construction. If wait plus the proposed request envelope plus persistence and still-required final work cannot fit, settle the optional proposal immediately and advance with the other two. Add a deadline-triggered barrier cutoff so previously scheduled backoff cannot consume the reserve.",
+    "domain": "runtime",
+    "review_artifact": "runtime/review.json",
+    "priority": "P1",
+    "classification": "defect"
+  },
+  {
+    "id": "E-G01",
+    "priority": "P2",
+    "severity": "medium",
+    "kind": "capability gap",
+    "title": "Ordinary live inputs have no path to accepted evidence support and ready_to_choose",
+    "source_refs": [
+      "backend/src/round_robin/orchestration/controller.py:95-107",
+      "backend/src/round_robin/orchestration/reporting.py:115-117",
+      "backend/src/round_robin/research/service.py:219",
+      "backend/src/round_robin/research/reuse.py:153-154"
+    ],
+    "trigger": "A live run has complete correct user-entered costs, all requirements passed and distinct successful audit.",
+    "impact": "Every cost source is rewritten to a synthetic user_supplied evidence record; ready dependency requires verification_status=supported. No application service promotes evidence into supported, so ordinary runs remain conditional regardless of review quality.",
+    "validation": "probes.py:missing_verification_transition yields conditional with user_supplied; direct synthetic supported status yields ready. Static scan of all source writes found no supported transition.",
+    "fix": "Implement explicit source-to-cost verification and immutable scoped assessment records (possibly human-attested); preserve unverified distinction. Do not fix by automatically trusting model consensus or all entered costs.",
+    "caveat": "Conservative state is safer than overclaiming and may be intentional pending a verification feature; report as missing acceptance capability, not false positive readiness.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "capability_gap"
+  },
+  {
+    "id": "E-G02",
+    "priority": "P2",
+    "severity": "medium",
+    "kind": "capability gap",
+    "title": "Evidence extraction always chooses page prefix rather than relevant or contradictory passages",
+    "source_refs": [
+      "backend/src/round_robin/research/fetcher.py:307-310",
+      "backend/src/round_robin/research/service.py:212-214"
+    ],
+    "trigger": "A relevant cost exclusion appears after extracted character4000 of a fetched page.",
+    "impact": "The only two selected passages end at4000, so no agent sees the later exclusion even though the entire page was downloaded. Long navigation and introductions consume capacity.",
+    "validation": "probes.py:prefix_passages source is4249 characters with critical exclusion after4200; selected4000 omits it.",
+    "fix": "Use bounded query/requirement-aware passage retrieval and diversity, preserve exact locators/hashes, explicitly search for exception/exclusion passages, and expose uninspected coverage. Evaluate recall with adversarial long-document fixtures before trusting ranking.",
+    "caveat": "Current scope labels correctly state that semantic support is unchecked and design docs admit excerpt limits. This is an accuracy capability gap, not misrepresented full-document verification.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "capability_gap"
+  },
+  {
+    "id": "EVAL-03",
+    "priority": "P2",
+    "kind": "process_capability_gap",
+    "category": "process completeness",
+    "source_refs": "backend/src/round_robin/visual/reviews.py:62-84;\nvisual/service.py:293-317; visual/schemas.py:71-94.",
+    "description_trigger_impact_validation_fix": "Prior visual blockers need not receive a\nregression disposition in a later complete review.\nSource: backend/src/round_robin/visual/reviews.py:62-84;\nvisual/service.py:293-317; visual/schemas.py:71-94.\nTrigger: a parent has a critical finding; two child critics return empty findings.\nvalidate_critique checks only that supplied previous_finding_id values are valid;\nit does not require coverage of known prior findings. Both reviews are accepted,\nand review coverage is complete with no pending-recheck limitation. No server\nmatrix carries unresolved blockers forward if a model omits them. Parent history\nis retained, and coverage.complete does not itself claim quality; the defect is\nthe absent separate regression-completeness contract, not deletion of history.\nValidation: probe.py::missing_regression_dispositions reproduces acceptance with\na known prior critical ID and two empty child critiques.\nFix direction: derive pending rechecks from material/critical parent findings and\nlocked requirements on the server. Require explicit resolved/persistent/regressed/\nuncertain/declined dispositions or retain an unresolved marker. Keep pixel-review\nquorum, regression completeness and quality decision separate.",
+    "evidence": "probe-results.json:missing_regression_dispositions",
+    "title": "Visual blockers have no mandatory child-version regression disposition",
+    "domain": "evaluation",
+    "review_artifact": "evaluation/review.json",
+    "classification": "capability_gap"
+  },
+  {
+    "id": "ROOT-G01",
+    "priority": "P2",
+    "kind": "process_capability_gap",
+    "title": "Intake cannot inspect newly selected attachment content or propose a normalized brief",
+    "source_refs": [
+      "backend/src/round_robin/worker/tasks.py:23-50",
+      "backend/src/round_robin/orchestration/controller.py:119-124",
+      "backend/src/round_robin/orchestration/controller.py:309-310",
+      "backend/src/round_robin/providers/base.py:28-39"
+    ],
+    "trigger": "Selected attachment text contains details relevant to resolving intake questions.",
+    "impact": "The first intake packet contains attachment IDs but no selected attachment passages; evidence is prepared only for proposals. ProviderOutput has no normalized-brief proposal field and proposed_brief is copied unchanged from the input. Intake is a bounded question generator, not full document-aware normalization.",
+    "proof": "root/probe-results.json:attachment_visibility",
+    "recommendation": "Expose a validated read-only intake evidence view and a typed proposed change set with provenance. Require explicit user confirmation for changed assumptions, options or requirements before freezing the proposal brief.",
+    "caveat": "The blueprint orders intake before evidence preparation. This is a capability gap, not evidence that proposal agents lose the attachment; the proposal packet includes it. No live intake quality was measured.",
+    "domain": "root",
+    "review_artifact": "root/review.json",
+    "classification": "capability_gap"
+  },
+  {
+    "id": "ROOT-G02",
+    "priority": "P2",
+    "kind": "process_capability_gap",
+    "title": "Schema repair retries receive no actionable validation feedback",
+    "source_refs": [
+      "backend/src/round_robin/worker/tasks.py:50",
+      "backend/src/round_robin/worker/tasks.py:237-238",
+      "backend/src/round_robin/providers/http.py:26",
+      "backend/src/round_robin/providers/base.py:62-69"
+    ],
+    "trigger": "A provider returns an invalid reference or malformed/schema-invalid output and has one retry remaining.",
+    "impact": "The second packet differs only by repair=true. The rejected reference, failed JSON path and validation reason are absent, and the common prompt does not define repair. This implements bounded regeneration, with no demonstrated targeted correction capability.",
+    "proof": "root/probe-results.json:repair_feedback",
+    "recommendation": "Include sanitized bounded diagnostics with offending field paths and permitted identities, optionally the bounded rejected structured output as untrusted data; distinguish execution retry from output repair and substantive correction.",
+    "caveat": "A fresh generation can succeed. The reproduction proves missing feedback, not that every retry fails or that real-provider quality decreases by a measured amount.",
+    "domain": "root",
+    "review_artifact": "root/review.json",
+    "classification": "capability_gap"
+  },
+  {
+    "id": "E-F02",
+    "priority": "P2",
+    "severity": "medium",
+    "kind": "acquisition-policy defect",
+    "title": "First query exhausts page allowance and starves cost/counterevidence retrieval",
+    "source_refs": [
+      "backend/src/round_robin/research/service.py:149-175",
+      "backend/src/round_robin/research/service.py:212-227"
+    ],
+    "trigger": "Ordinary first comparison query returns eight valid unique hits.",
+    "impact": "All eight fetch slots go to first-query results. Later cost and counterevidence searches still consume authorizations but none of their pages can be fetched; summary lists all three queries and no limitations.",
+    "validation": "probes.py:counterevidence_starvation runs real execute_research with synthetic SQLite ledger and stub search/page transports; all saved URLs are query1, later_query_sources_fetched=0, limitations=[].",
+    "fix": "Reserve page slots per objective or interleave candidate collection and acquisition; stop searches that cannot yield inspectable evidence or record discovery-only results explicitly; disclose unsatisfied research objectives.",
+    "caveat": "Plan rotation is locally correct; execution allocation is the failure. Duplicate hits or early failed fetches can change outcomes, but eight fresh hits are sufficient.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "E-F04",
+    "priority": "P2",
+    "severity": "medium",
+    "kind": "aggregation/traceability defect",
+    "title": "Bounded dissent aggregation can discard the final auditor and ignores proposal critical defects",
+    "source_refs": [
+      "backend/src/round_robin/orchestration/reporting.py:127-131",
+      "backend/src/round_robin/orchestration/reporting.py:164",
+      "backend/src/round_robin/orchestration/reporting.py:83"
+    ],
+    "trigger": "Two earlier proposals provide twelve distinct dissent strings each; final auditor contributes material dissent/critical text. Separately, a proposal puts a concern in critical_defects and later stages omit it.",
+    "impact": "Only first20 dissent strings publish, omitting all final auditor specifics. Proposal critical_defects never enter aggregate and do not set unresolved_critical_defect unless the last audit repeats them.",
+    "validation": "probes.py:dissent_loss returns dissent_count=20 and no AUDITOR marker; separate proposal-critical probe produces empty dissent and false unresolved flag.",
+    "fix": "Maintain objection IDs, targets, materiality, dispositions and response links across stages; reserve display capacity for unresolved audit defects and attach overflow links/counts rather than silently dropping records.",
+    "caveat": "Saved contributions preserve the original text and the final-audit generic unresolved flag survives. Claim is loss from report aggregation/required resolution, not deletion from storage.",
+    "domain": "evidence",
+    "review_artifact": "evidence/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "EVAL-04",
+    "priority": "P2",
+    "kind": "evaluation_integrity_bug",
+    "category": "evaluation integrity",
+    "source_refs": "experiments/release.py:32-38; analogous exact-hash-only duplicate checking\nin experiments/visual_evaluation.py:54-55.",
+    "description_trigger_impact_validation_fix": "Renamed copies inflate the 48-task release\ndenominator.\nSource: experiments/release.py:32-38; analogous exact-hash-only duplicate checking\nin experiments/visual_evaluation.py:54-55.\nTrigger: submit 48 briefs with identical question, options and evidence, changing\nonly the title of a valid DraftBrief and assigning required stratum labels. validate_manifest accepts\nthem because complete JSON hashes differ. summarize reports 48 independent primary\ntasks and can meet the numerical target from one substantive case. The separate\nphase_5_passed flag correctly stays false. FrozenStudyManifest has stronger alias\nnormalization at study_runner.py:110-123, but release manifests do not reuse it.\nValidation: probe.py::aliased_release_cases reports one substantive case as 48\nindependent useful primaries with numerical_usefulness_target=true.\nFix direction: bind normalized substantive-case fingerprints, development-case\nfingerprints and explicit provenance/stratum review; reject known aliases. Human\nreview is still required for semantic independence beyond exact normalization.",
+    "evidence": "probe-results.json:aliased_release_cases",
+    "title": "Alias-only variations inflate release independent-case denominator",
+    "domain": "evaluation",
+    "review_artifact": "evaluation/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "ROOT-01",
+    "priority": "P2",
+    "kind": "implementation_bug",
+    "title": "Preflight accepts selected evidence that cannot fit any proposal request",
+    "source_refs": [
+      "backend/src/round_robin/api/preflight.py:54-75",
+      "backend/src/round_robin/orchestration/controller.py:87-90",
+      "backend/src/round_robin/providers/base.py:71-76"
+    ],
+    "trigger": "A selected UTF-8 attachment has 40,000 CJK characters (120,000 bytes), fits the upload limit and 20 evidence passages, with the ordinary sample brief.",
+    "impact": "The real preflight input check returns no error. Intake succeeds; all three proposals fail context_limit before authorization, and the run fails without a recommendation. Character/passage limits do not imply the 128,000-byte complete JSON packet fits.",
+    "proof": "root/probe-results.json:unicode_packet_preflight",
+    "recommendation": "Build and size the exact canonical initial packet during preflight, including UTF-8 encoding and all overhead. Reserve a bounded peer/claim context envelope for mandatory downstream stages, with explicit coverage when selecting context. Reject or ask for narrower excerpts before starting.",
+    "acceptance_check": "Boundary/property cases across ASCII, multi-byte UTF-8, quotes/escapes, maximum selected passages and peer/claim growth must either fit the declared envelopes or produce a preflight blocker.",
+    "domain": "root",
+    "review_artifact": "root/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "ROOT-02",
+    "priority": "P2",
+    "kind": "implementation_bug",
+    "title": "The discussion activity view silently stops at the first 100 events",
+    "source_refs": [
+      "backend/src/round_robin/api/events.py:63-80",
+      "frontend/app/live-workspace.tsx:274-294",
+      "frontend/app/live-workspace.tsx:532"
+    ],
+    "trigger": "A run accumulates more than 100 committed events, such as through retries, research or reconciliation.",
+    "impact": "Snapshot intentionally returns the first 100 events plus next_event_cursor, but the frontend never consumes the cursor or events endpoint. A 134-event reproduction shows only sequences 1-100 and omits the late concern. Polling repeats the same prefix and stops on terminal status; raw server history remains available.",
+    "proof": "root/probe-results.json:event_snapshot_pagination; API reproduction plus static client call-path inspection",
+    "recommendation": "Fetch bounded event pages through the snapshot cutoff and merge by (run_id, sequence); expose loading/remaining history and retain generation fences when changing runs.",
+    "acceptance_check": "A component/API test with 250 events, late critical concerns, duplicate pages, reconnection and a run switch must show the complete correctly ordered history exactly once.",
+    "domain": "root",
+    "review_artifact": "root/review.json",
+    "classification": "defect"
+  },
+  {
+    "id": "RUNTIME-02",
+    "severity": "P2",
+    "title": "At-least-once duplicate execution bypasses Retry-After",
+    "source": "backend/src/round_robin/worker/tasks.py:94-139",
+    "related_sources": [
+      "backend/src/round_robin/worker/tasks.py:59-68",
+      "backend/src/round_robin/database/models.py:98-116",
+      "backend/src/round_robin/dispatcher/service.py:35-47"
+    ],
+    "trigger": "A worker saves a retryable failure and its future outbox intention; an older duplicate message for the same Step is delivered before that intention is due.",
+    "actual": "Retry eligibility is represented only by Outbox.due_at. execute_step sees status=pending and immediately authorizes another call. The probe's requested wait was 120 seconds; the second provider invocation occurred about 0.012 seconds later and consumed the last allowed call.",
+    "impact": "Provider Retry-After is not an execution invariant. Expected duplicate delivery can exhaust retries during a rate-limit period, reduce discussion completeness, and amplify provider pressure.",
+    "proof": "probe-results.json:retry_after_bypassed_by_duplicate",
+    "recommendation": "Persist a step/attempt not-before timestamp or retry generation, enforce it under the step lock before authorization, and carry the generation in delivery identifiers. Keep at-least-once delivery harmless across retry state transitions.",
+    "domain": "runtime",
+    "review_artifact": "runtime/review.json",
+    "priority": "P2",
+    "classification": "defect"
+  },
+  {
+    "id": "RUNTIME-03",
+    "severity": "P2",
+    "title": "Clarification and manual retry bypass queue quotas",
+    "source": "backend/src/round_robin/api/events.py:242-253",
+    "related_sources": [
+      "backend/src/round_robin/api/events.py:269-279",
+      "backend/src/round_robin/api/preflight.py:162-168",
+      "docs/IMPLEMENTATION_BLUEPRINT.md:126"
+    ],
+    "trigger": "An owner already has the allowed three queued runs and confirms an awaiting-input run (or requests an eligible retry).",
+    "actual": "Only initial Start counts queued work. The resumption endpoints set queued and issue a ticket without checking owner/global queue counts. The direct clarification probe increased the owner's queue from three to four with a configured limit of three.",
+    "impact": "The documented owner/global admission backlog bounds are not maintained across all enqueue transitions, weakening fairness and overload protection. This does not bypass single-executing-run or monetary limits.",
+    "proof": "probe-queue-results.json",
+    "recommendation": "Apply one owner/global queue-capacity guard under the existing policy lock to every transition into queued, including clarification and retry; leave the resumable state intact when capacity is unavailable.",
+    "domain": "runtime",
+    "review_artifact": "runtime/review.json",
+    "priority": "P2",
+    "classification": "defect"
+  },
+  {
+    "id": "EVAL-02",
+    "priority": "P2",
+    "kind": "protocol_mismatch",
+    "category": "evaluation validity",
+    "source_refs": "experiments/study_runner.py:545-578 versus production\nbackend/src/round_robin/orchestration/controller.py:335.",
+    "description_trigger_impact_validation_fix": "The study does not execute the production\ncorrection/re-audit protocol it could be used to justify.\nSource: experiments/study_runner.py:545-578 versus production\nbackend/src/round_robin/orchestration/controller.py:335.\nTrigger: a valid final audit rejects synthesis while allowance remains. Production\ncan reserve and run a corrected synthesis and second audit. FundedStudyRunner\nends immediately as limited, even with only 12 calls and less than one second of\nsynthetic elapsed time. Its ProviderRequest construction at study_runner.py:463\nalso does not populate the production claim-version context. The study is a\nlegitimate separate fixed-evidence experiment, but its result cannot establish\naccuracy, cost or latency of the current production protocol without a parity\ncontract and explicit qualification.\nValidation: probe.py::study_failed_audit uses existing synthetic approval fixtures\nand injected HTTP mocks. Trace: 3 proposal, 3 critique, 1 evidence_review, 3\nrevision, 1 synthesis, 1 audit; final status limited; no correction/re-audit.\nFix direction: share a versioned transition policy with the production runner,\nfreeze that policy hash in study configuration, and test protocol traces across\nboth runners. If deliberately evaluating an ablation, label the omitted stages.",
+    "evidence": "probe-results.json:study_failed_audit",
+    "title": "Funded study ends at first audit while production can correct and re-audit",
+    "domain": "evaluation",
+    "review_artifact": "evaluation/review.json",
+    "classification": "protocol_mismatch"
+  }
+]

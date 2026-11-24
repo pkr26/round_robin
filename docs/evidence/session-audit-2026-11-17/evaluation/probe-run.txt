@@ -1,0 +1,66 @@
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+  from starlette.testclient import TestClient as TestClient  # noqa
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+  from ._compat import httpx2
+{
+  "claim_reference_closure": {
+    "status": "completed",
+    "request_count": 5,
+    "cited_prior_claim_id": "claim_cf36a6caf1604fa353de96180a4d9bda85a1bf2c",
+    "private_claim_proposition": "UNIQUE_PRIOR_ASSUMPTION_MEANING",
+    "public_keys": [
+      "audit_findings",
+      "calculations",
+      "comparison",
+      "limitations",
+      "next_action",
+      "recommendation",
+      "unresolved_material_obligations"
+    ],
+    "claim_meaning_in_public_output": false,
+    "anonymous_sources_present": false,
+    "public_synthesis_reference_ids": [
+      "claim_cf36a6caf1604fa353de96180a4d9bda85a1bf2c"
+    ],
+    "qualification": "Saved private stage records retain the claim. The missing closure affects the blinded reviewer artifact, not raw study storage."
+  },
+  "oversized_feedback": {
+    "valid_prior_findings": 40,
+    "metadata_utf8_bytes": 24471,
+    "worker_metadata_limit": 131072,
+    "adapter_preflight_accepted": true,
+    "submit_rejected_locally": "Visual prompt exceeds the bounded endpoint contract",
+    "http_requests": 0,
+    "qualification": "Worker calls this preflight before authorization, but submit performs the later16,000-character prompt check after authorization."
+  },
+  "visual_ancestry_overflow": {
+    "parent_targets": 40,
+    "new_findings": 40,
+    "coverage_complete": true,
+    "regression_complete": true,
+    "existing_session_view_readable": true,
+    "unresolved_blocker_count": 80,
+    "next_edit_feedback_error": {
+      "type": "VisualLimit",
+      "message": "Prior findings exceed the faithfully bounded regression context"
+    },
+    "qualification": "No prior concern is silently discarded. Valid per-stage data instead makes the next edit path unavailable; API improve_design calls the raising helper without a VisualLimit handler."
+  },
+  "worker_local_rejection": {
+    "worker_result": {
+      "status": "persisted"
+    },
+    "http_requests": 0,
+    "operation_status": "failed",
+    "error_code": "image_operation_unknown",
+    "ledger_status": "unknown",
+    "ledger_reserved_usd": "0.40",
+    "ledger_settled_usd": null,
+    "request_count": 1,
+    "submission_count": 1,
+    "step_calls": {
+      "edit:version_2": 1
+    },
+    "qualification": "No request was sent. Unknown is conservative exposure, not an actual charge."
+  }
+}

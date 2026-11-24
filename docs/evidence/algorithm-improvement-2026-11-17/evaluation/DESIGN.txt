@@ -1,0 +1,218 @@
+EVALUATION AND VISUAL DISCUSSION IMPROVEMENT DESIGN
+Date: 2026-11-17. Proposal only; product source and historical audit evidence unchanged.
+
+Definition of best
+Choose the least costly, fastest protocol among those that satisfy independently
+graded correctness and usefulness requirements. Treat critical factual errors,
+unsupported hard-constraint conclusions, lost objections and budget violations as
+separate constraints. A large usefulness average must never compensate for these
+failures. More agents, rounds or algorithmic branches are justified only when a
+paired evaluation shows useful improvement under the same operating envelope.
+
+Use a vector of outcomes rather than one opaque aggregate score:
+1. Critical-defect rate across every admitted primary case, including an explicit
+   failure for a dangerous unsupported recommendation.
+2. Decision usefulness, graded against preregistered acceptable decisions,
+   decisive caveats, evidence support and next action. An appropriate abstention
+   can be useful; abstaining on every task is not automatically successful.
+3. Unsupported factual/constraint assertions, unresolved required evidence and
+   hard-requirement violations, reported separately from general helpfulness.
+4. Conservative total exposure, admitted-run completion/timeout rates and latency.
+   Never report only successful runs as though they represent all admissions.
+5. Repeat instability and newly introduced regressions, with task clusters kept
+   intact. Repeated outputs do not become new independent cases.
+
+Before any funded study, choose task population, minimum useful gain, acceptable
+critical-defect bound/noninferiority margin, cost ceiling and latency requirement.
+These are decision-owner choices; no numerical target is implied by this design.
+
+IMPLEMENTATION ORDER
+
+1. Share one versioned protocol between application and evaluator (EVAL-02).
+Extract a pure transition policy used by both the production controller and study
+runner. Its inputs are the current stage, typed evidence/claim state, unresolved
+issues, prior attempts, remaining allowance and immutable configuration. It returns
+the exact next role set, request scope and stop reason. Keep I/O and durable commits
+in adapters, so the research harness can exercise the same decisions offline.
+
+Version and hash the transition policy, role instructions, schemas, evidence
+selection policy, model/configuration and report derivation. Bind this manifest to
+each trial. Fixed-evidence mode may disable retrieval, but should retain the same
+claim-version context, supported/refuted distinctions, correction/re-audit and
+report-readiness rules. Deliberate differences are named, preregistered ablations.
+
+Acceptance: with identical response tape, clock observations and budget state,
+application and evaluator produce the same stage/issue/stop trace. Cover failed
+audit with and without correction allowance, missing critic, delayed provider,
+changed claim and unknown usage. A final failing audit must not be omitted from
+the record or transformed into a successful conclusion.
+
+2. Make visual edits follow the approved critique (EVAL-01).
+Introduce a server-created EditBundle containing parent version/hash, locked brief
+hash, exact selected finding IDs, each finding's observation/region/requirement,
+address-or-decline decision, proposed change, preserve rules and user intent.
+Resolve IDs from the immutable saved parent review; do not ask the generator to
+guess what "selected findings" means. Require reasons for explicit no-change
+decisions on blocking issues. Canonically hash the bundle and save it before send.
+
+Transmit that same bundle to the editor and child reviewers. The generator sees
+parent pixels and concrete requested changes; declines become explicit constraints
+on the edit. Current-round reviewer output remains hidden from the other reviewer
+until independent reports finish. Preserve the distinction between shared parent
+history and hidden current-round opinions.
+
+Acceptance: an edit with only intent "address selected finding" still sends that
+finding's complete meaning and disposition; changing an ID, observation, selected
+scope or parent hash invalidates the saved bundle. Every generated version links
+to the exact sent bundle. A finding never silently disappears during serialization.
+
+3. Add a server-owned regression matrix (EVAL-03).
+When making V2/V3, initialize rows for every unresolved material/critical parent
+finding and locked requirement. Each eligible critic must return exactly one
+typed disposition per assigned row: resolved, persistent, regressed, uncertain,
+or explicitly declined. New observations belong in a separate list. Empty model
+findings cannot empty the server matrix. Missing rows stay pending.
+
+Expose three separate fields: pixel_review_coverage, regression_review_completeness
+and unresolved_blockers. Two critics receiving pixels completes only the first.
+Conservative reducer: confirmed failure/regression remains blocking; disagreement
+or insufficient support remains unresolved; a deliberate decline is recorded as
+accepted scope/risk, not as a successful fix. Save original judgments and append
+resolution records rather than overwriting them.
+
+Use deterministic checks where they are valid: image dimensions, artifact lineage,
+required native element existence and declared behavior tests. Pixel-based spelling,
+legibility and aesthetic judgments retain uncertainty; OCR is an aid, not a proof.
+Stop edits on exhausted allowance, no concrete change, unresolved user preference,
+or no demonstrated gain. The latest version is never automatically the best.
+
+Acceptance: known parent blocker plus two empty child responses leaves a pending
+blocker; conflicting resolved/persistent judgments remain visible; a new regression
+cannot be canceled by improved appearance elsewhere; V1 remains selectable.
+
+4. Strengthen independent task and holdout identity (EVAL-04).
+Define canonical substantive-case fingerprints excluding harmless IDs, titles and
+ordering while retaining all decision-relevant facts, amounts, time, requirements,
+preferences and evidence. Use the same implementation for text study, release
+study and visual study. Hash evidence snapshots as part of case identity. Freeze
+development-case fingerprints and reject exact/alias overlap in held-out cases.
+
+This only detects known aliases. Add human provenance/stratum checks and a case
+cluster ID for shared templates, suppliers, projects or common source packets.
+Clustered variants may be useful robustness tests but cannot be advertised as
+independent cases. The existing title-only-copy reproduction is a required
+regression. Reordering options should be a metamorphic stability test, not a new
+independent decision in the primary denominator.
+
+EVALUATION DESIGN
+
+Use two evaluation layers:
+A. Engineering: all four audit regressions, shared-policy trace parity, invariant
+   and fault tests, source/claim mutation tests, reference-preserving serialization,
+   deadline/spending bounds. These are inexpensive and establish executable rules.
+B. Empirical quality: frozen realistic tasks, actual provider responses, independent
+   human adjudication and exact cost/latency records. This requires separately
+   funded execution and actual competent reviewers; no simulation substitutes.
+
+First tune and select on development cases. Then freeze prompts, policy, models,
+limits, task/evidence manifests, randomization and analysis plan. Keep the release
+set untouched until selection is complete; investigating its failures converts
+those cases into development material and requires fresh held-out confirmation.
+
+Primary paired comparison:
+- Strong single-provider baseline with the same evidence, deterministic checks,
+  abstention rules, output contract and self-check opportunity.
+- Independent multi-provider proposals plus synthesis/audit.
+- Candidate targeted-discussion policy with the same per-run operating ceiling.
+
+Randomize arm execution order within each task/repeat block to reduce order and
+provider-time confounding. Record actual endpoint/model/version returned. Freeze
+retrieved evidence for protocol comparisons; separately evaluate retrieval when
+testing the end-to-end product. Pair primary results by the same task, not by
+unrelated aggregate averages.
+
+On development cases, use explicit ablations to learn where extra work helps:
+- Same-provider independent resampling/aggregation at matched compute allowance.
+- Multiple independent providers without peer debate.
+- Targeted objections versus broad critique of every proposal.
+- Correction/re-audit enabled versus disabled with equal maximum allowance.
+- Typed evidence/issue resolution enabled versus otherwise identical protocol.
+Do not run every exploratory arm on the final holdout and select the luckiest one.
+If several confirmatory comparisons remain, preregister multiplicity handling.
+
+Visual comparisons must start with identical actual initial pixels and locked brief
+within a matched group. Compare generation-only, one-critic revision and multi-
+critic revision, plus matched image-operation allowance where the causal question
+is critic count. Track full edit/review cost, including declined/failed versions.
+Grade final pixels against the rubric and initial pixels; include direct blinded
+final-candidate comparisons if claiming one revision policy is better than another.
+Preference, hard-regression absence and user selection are separate observations.
+
+HUMAN GRADING AND ANALYSIS
+
+Use domain-competent humans, trained on separate calibration cases, blinded to
+provider/arm and prior grades. Balance reviewer assignment across arms and task
+strata. Independently double-review all confirmatory primary cases when feasible;
+at minimum preregister a random double-review allocation and require independent
+second review for suspected critical defects. Preserve first judgments before
+adjudication. A model judge may triage, but cannot be the sole release authority.
+
+Record rater identities/competence/conflicts, evidence actually examined, rubric
+scores, critical-defect reasons and timestamped adjudications. Inspect packets
+for indirect arm clues, not just literal provider names. Avoid exposing a reviewer
+to another arm's answer before the first independent judgment is committed.
+
+Report paired per-task wins/ties/losses, absolute useful-rate difference, critical-
+defect difference and per-stratum counts. Use preregistered uncertainty intervals
+appropriate to the task design; task-level paired resampling must resample complete
+arm/repeat clusters together. For small binary paired outcomes, report discordant
+case counts and an exact paired test as a sensitivity analysis. The official
+statsmodels McNemar documentation describes the exact binomial calculation using
+discordant pairs: https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.mcnemar.html
+Report reviewer
+agreement before adjudication, including raw agreement and a chance-adjusted
+measure where appropriate. Do not interpret agreement as correctness.
+
+Retain every preregistered primary outcome. Missing, failed, expired and unusable
+outputs are accounted for explicitly; unknown costs remain conservative exposure.
+Analyze repeat variability separately, and retain adverse repeat defects. Do not
+give a repeated task more weight merely because it has more executions. Show cost
+and latency distributions and attainment against all admitted trials; censoring
+and timeout handling must be declared before results are inspected.
+
+SAMPLE-SIZE LIMITS
+
+The present 16-case exploratory design and 48-case release bookkeeping are useful
+starting points, not proofs of rare-defect safety or superiority. Size the study
+from the smallest useful paired gain, expected discordant-case rate, desired
+precision and clustering. Estimate nuisance rates on separate development/pilot
+cases; do not quietly keep collecting until a result becomes significant.
+
+Simple mathematical illustration, not a proposed release target: under independent
+representative Bernoulli cases, observing zero critical failures in n cases gives
+the exact one-sided 95% upper defect-rate bound
+  upper = 1 - 0.05^(1/n).
+With n=16 the bound is 17.07%; with n=48 it is 6.05%. At least 299 independent cases
+with zero failures are needed to bring that bound below 1%. Repeated executions
+of the same few cases cannot be substituted as 299 independent decisions. These
+bounds do not protect against unrepresented domains or systematic shared errors.
+Method reference: NIST's exact binomial confidence-limit documentation,
+https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm .
+The zero-event formula and numerical examples above were derived and calculated
+locally from the binomial model; they are not empirical application results.
+
+SELECTION AND STOP RULE
+
+Preregister a decision rule before funded execution: candidate must meet the
+critical-defect constraint, show the chosen minimum useful benefit (or an explicitly
+chosen noninferiority criterion), and fit latency and conservative cost constraints.
+Inspect uncertainty, strata and adverse repeats, not only a point estimate. If
+evidence is inconclusive, keep the simpler established policy and report the gap.
+If policies are statistically indistinguishable at the chosen precision, prefer
+lower cost and shorter waits. Do not add debate rounds merely to increase apparent
+sophistication. Re-evaluate after material model, prompt, policy or source changes.
+
+Validation performed for this proposal: source-based design grounded in the prior
+audit; exact zero-failure bound calculation using the local Python math library;
+official NIST and statsmodels statistical documentation checked on 2026-11-17.
+No full-suite rerun, source edits, live calls or new quality claims were made.

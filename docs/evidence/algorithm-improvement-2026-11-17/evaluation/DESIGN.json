@@ -1,0 +1,64 @@
+{
+  "status": "design_only",
+  "date": "2026-11-17",
+  "product_source_modified": false,
+  "objective": "Minimize cost and latency among protocols meeting preregistered human-graded accuracy, critical-defect and usefulness constraints. Do not let a weighted average compensate for blocking defects.",
+  "ordered_changes": [
+    {
+      "finding": "EVAL-02",
+      "change": "Shared versioned transition policy for production and study with hash-bound prompts/schema/claims/report rules",
+      "acceptance": "Identical response tape, clock and budget observations produce matching stage/issue/stop trace."
+    },
+    {
+      "finding": "EVAL-01",
+      "change": "Immutable complete edit bundle resolves approved finding IDs to observations, regions, requirements, address/decline and preserve rules",
+      "acceptance": "Exact approved bundle is sent to editor and reviewers and linked to generated version; serialization cannot omit selected finding meaning."
+    },
+    {
+      "finding": "EVAL-03",
+      "change": "Server-owned prior-issue and locked-requirement regression matrix",
+      "acceptance": "Missing child disposition stays pending; two empty critics cannot clear parent blocker; quorum, regression completeness and quality remain separate."
+    },
+    {
+      "finding": "EVAL-04",
+      "change": "Shared normalized substantive-case/evidence fingerprints and development holdout overlap checks plus human cluster/provenance review",
+      "acceptance": "Title-only copies fail independent-case admission; semantic template variants retain cluster identities."
+    }
+  ],
+  "evaluation": [
+    "Separate inexpensive invariant/trace/fault tests from actual provider plus independent human quality evaluation.",
+    "Freeze held-out cases, evidence, policy/prompts/model versions, randomization and analysis after development tuning.",
+    "Pair candidate vs strong single-provider baseline and independent proposals on same tasks/evidence; randomize execution within task-repeat blocks.",
+    "Ablate matched-compute single-provider resampling, independent providers, targeted versus broad critique, correction/re-audit and typed evidence resolution.",
+    "Keep all failed/missing/timeout primary outcomes; preserve unresolved exposure, adverse repeat defects and pre-adjudication grades.",
+    "Report paired absolute usefulness/defect differences with uncertainty, discordant cases, per-stratum outcomes, repeat stability and cost/latency attainment.",
+    "Use task/cluster-level resampling that keeps arms/repeats together; exact paired binary sensitivity analysis when small; preregister multiple comparisons and stopping.",
+    "Domain-competent humans grade blind before adjudication; double-review confirmatory primary cases when feasible and all suspected critical defects.",
+    "Visual policies use identical initial pixels within matched group; grade regressions, actual preference, cost and latency separately; user selection is not a quality label."
+  ],
+  "sample_size_illustration": {
+    "assumptions": "Independent representative Bernoulli cases, zero observed critical failures, fixed sample design",
+    "one_sided_confidence": 0.95,
+    "formula": "1 - 0.05**(1/n)",
+    "upper_defect_rate_if_zero": {
+      "16": 0.17074972298248092,
+      "48": 0.06050340934889431,
+      "299": 0.009969146792899286
+    },
+    "n_for_upper_rate_at_most_one_percent": 299,
+    "caveat": "Not a proposed release target or empirical result; same-case repeats cannot replace independent cases; domain gaps and clustered errors remain."
+  },
+  "selection_rule": "Preregister minimum useful benefit or noninferiority, critical-defect constraint, cost and latency bounds. Select a policy only when evidence meets them; otherwise retain simpler established policy and report inconclusive result.",
+  "sources": [
+    {
+      "title": "NIST exact binomial confidence limits",
+      "url": "https://itl.nist.gov/div898/software/dataplot/refman2/auxillar/exacbino.htm"
+    },
+    {
+      "title": "statsmodels exact McNemar documentation",
+      "url": "https://www.statsmodels.org/stable/generated/statsmodels.stats.contingency_tables.mcnemar.html"
+    }
+  ],
+  "tests_run": "No existing suites rerun; only local exact mathematical calculation.",
+  "detailed_design": "docs/evidence/algorithm-improvement-2026-11-17/evaluation/DESIGN.txt"
+}

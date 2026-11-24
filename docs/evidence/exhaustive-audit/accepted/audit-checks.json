@@ -1,0 +1,109 @@
+{
+  "recorded_at_utc": "2026-11-16T17:52:26.032600+00:00",
+  "passed": true,
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/coverage_gate.py",
+        "--manifest",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/source-manifest.json",
+        "--capture"
+      ],
+      "exit_code": 0,
+      "log": "step-01.log"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "run",
+        "scripts/verify.py",
+        "--services",
+        "--native",
+        "--output",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/checks.json"
+      ],
+      "exit_code": 0,
+      "log": "step-02.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "--filter",
+        "@round-robin/web",
+        "test"
+      ],
+      "exit_code": 0,
+      "log": "step-03.log"
+    },
+    {
+      "command": [
+        "node",
+        "--experimental-vm-modules",
+        "--test",
+        "scripts/native_renderer_coverage.test.mjs"
+      ],
+      "exit_code": 0,
+      "log": "step-04.log"
+    },
+    {
+      "command": [
+        "node",
+        "scripts/frontend_source_coverage.mjs",
+        "--check"
+      ],
+      "exit_code": 0,
+      "log": "step-05.log"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "combine",
+        "--keep"
+      ],
+      "exit_code": 0,
+      "log": "step-06.log"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "coverage",
+        "json",
+        "--keep-combined",
+        "-o",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/python-coverage.json"
+      ],
+      "exit_code": 0,
+      "log": "step-07.log"
+    },
+    {
+      "command": [
+        "uv",
+        "run",
+        "python",
+        "scripts/coverage_gate.py",
+        "--manifest",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/source-manifest.json",
+        "--python",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/python-coverage.json",
+        "--frontend",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/frontend-source/summary.json",
+        "--native",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/native-source/summary.json",
+        "--output",
+        "/Users/pradeepreddy/Desktop/round_robin/.local/exhaustive-audit/verified-final/service-coverage.json"
+      ],
+      "exit_code": 0,
+      "log": "step-08.log"
+    }
+  ],
+  "coverage_floor": "strictly greater than 95% lines and branches in every service",
+  "live_provider_calls": 0
+}

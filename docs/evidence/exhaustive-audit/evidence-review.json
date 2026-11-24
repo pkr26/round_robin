@@ -1,0 +1,321 @@
+{
+  "review_basis": "Current source read independently; no prior audit reports used. Hashes capture reviewed files after fixes; final unified verification is recorded by root.",
+  "captured_at": "2026-11-16T16:48:11.808574+00:00",
+  "files": [
+    {
+      "path": "backend/migrations/versions/e7209a4f361c_claim_versions_and_reuse.py",
+      "sha256": "7fa5cabf4c7cb80cdbbb5227fac5fbc0d78fc2ebb49b7270123755ecd4a488dc",
+      "lines": 47,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/api/preflight.py",
+      "sha256": "f8b39c56bf207f0564a50ae6ad3cac59be56f58b7754ba7059c2b6fde0661a81",
+      "lines": 152,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/api/reuse.py",
+      "sha256": "366b57037b3128f88b18c69972fe08aafc1e6ad15a5fd2d56a72d3b8b79f47e9",
+      "lines": 22,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/database/claim_models.py",
+      "sha256": "e0159c50ae2d384dc06ec55612bea1cbffb5229e3d0f1527ee4eb8e45a31b0bd",
+      "lines": 38,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/operations/__init__.py",
+      "sha256": "981502c16e2504ea8cc006f0a9b7156419bc6611db8782d5e7eee80f6de2f7fa",
+      "lines": 1,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/operations/durability.py",
+      "sha256": "e77947c41c0699b959241b1658cc3fbe9e97bd45264d237736584eba6604c9a4",
+      "lines": 193,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/operations/maintenance.py",
+      "sha256": "eebed00a0b07800f54992b8e780fba906dc235bea78be702de4b7f04a632aeab",
+      "lines": 58,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/operations/recovery.py",
+      "sha256": "4749df0b7d285754f37bb44549289571d24ea25b2842df529f922a62c28ae240",
+      "lines": 322,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/ops.py",
+      "sha256": "6459726dc46e850c8fbf65b11cbbbdd2a9bf292398f3c1266b8645d950da22ed",
+      "lines": 157,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/reports/exports.py",
+      "sha256": "bd02a5799010a2e9db9f6584dba5c98ca453983125e89995f9d1e55b52aec629",
+      "lines": 164,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/reports/measurements.py",
+      "sha256": "39dca76b8909e82658edfd46d13b60912ef9ec321713941795bad7471f9d6805",
+      "lines": 53,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/reports/read_adapters.py",
+      "sha256": "5a07f5f6bae2dd6ac41c83c54bfc2fa1dc91fbcacdd7c8bf88a18028d4684e5c",
+      "lines": 68,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/reports/readiness.py",
+      "sha256": "a0031f7851140ed77f9f6357e41dc16aea82b952c280d057882f440375bbfa02",
+      "lines": 34,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/reports/storage.py",
+      "sha256": "1935f27e5ca65350a9eef8eb79ab23abdd7a26dba487f226e4347dfcfdc1ce66",
+      "lines": 63,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/calculator.py",
+      "sha256": "31bd03f77d7a6122536ef9ef36883a2e795418ff1e122457341b42ce2372985b",
+      "lines": 176,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/claims.py",
+      "sha256": "bbd659351cfa653228a3e431900082b04bf96178fbb8d946b5177ef3ccedc2ab",
+      "lines": 67,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/fetcher.py",
+      "sha256": "3ea3ae37e88aeae2769fef2dd9e8f9271efde7d8e05281525974f86b4e07789d",
+      "lines": 310,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/queries.py",
+      "sha256": "1450ef1b01d23cd077030160a74ac42b83ff5e33b785ad3c9587891b615e3239",
+      "lines": 44,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/reuse.py",
+      "sha256": "59b3257b4600204ce6086bc5f3ffb58c7a5d4f4953d1f14f2f50bef7fa845679",
+      "lines": 149,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/search.py",
+      "sha256": "cc87327b35cd457719c89e341b1061f64c123abdb8a124895590dae7da16da99",
+      "lines": 47,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/research/service.py",
+      "sha256": "39c43fb7802c74a7f5b2c3ccac73a927c3376cb946f04ef4edb323ae8cf568aa",
+      "lines": 210,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/application.py",
+      "sha256": "287a20d65cbc9a084eea9a233765982720030d8c74a28aef6986d10c9d238308",
+      "lines": 75,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/views.py",
+      "sha256": "d65360322b6763604b8b8c6bcc97fada030ad7da34ec0dca35938f21ec086499",
+      "lines": 208,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/security/__init__.py",
+      "sha256": "72a82de619a785a236cb594c7ccfa10993382e7529d0c95ecc7abb496f7c8872",
+      "lines": 1,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/security/hosted.py",
+      "sha256": "5c30f1a788b92e5d1d92a47b1772a067e74502ab29e56717db8466d252ae5f77",
+      "lines": 180,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/security/logging.py",
+      "sha256": "305c996403678d42f27eedcad12a47c60554d01d71db114e729b0d7c33193879",
+      "lines": 18,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "frontend/app/contracts.ts",
+      "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+      "lines": 24,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "frontend/app/workspace.tsx",
+      "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+      "lines": 1794,
+      "review": "Fresh source read; boundary and failure-path review; owned regression suite"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/budget.py",
+      "sha256": "0b874f816096b618fc6894cad1b5a6a08fd97850c302f5566c7633e8fae2db68",
+      "lines": 229,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/admission.py",
+      "sha256": "e8d2cb5db5ce077fca2c95925ea555655dc215ee5e9cf73abc1a1949d5793e4f",
+      "lines": 103,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/controller.py",
+      "sha256": "ffd55ca8092467b14007c13b6ebe717e46a75c6eff1476e9780e26fff2649bc1",
+      "lines": 342,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/src/round_robin/orchestration/reporting.py",
+      "sha256": "986642873dc0d365a4d0e21312a5898075cbc2ef049e8e5f92a7c0372aae6ae4",
+      "lines": 155,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/src/round_robin/worker/tasks.py",
+      "sha256": "a33dd04df13af3c78dd722c2b4a8f08bb3ee58fa7ecc6b5d0758be8e5042334b",
+      "lines": 266,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/src/round_robin/providers/http.py",
+      "sha256": "ebe05632c8a6ac22c24890e077be427dc56a0d66520e63b215a728c74d6eec63",
+      "lines": 279,
+      "review": "Independent cross-review of current runtime source; findings and changes coordinated with runtime owner"
+    },
+    {
+      "path": "backend/migrations/env.py",
+      "sha256": "9e843aaf7e65ad14c4b90191c3ee85418981c52da158eb0d957aa0f46c5b16a6",
+      "lines": 34,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/migrations/versions/f973196b6714_initial_application.py",
+      "sha256": "fcb134b4ca01400681c17a67318fe55e61c59bf07cb5aa22d9581a36ad4fb534",
+      "lines": 321,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/migrations/versions/a41e349d12ac_append_only_brief_revisions.py",
+      "sha256": "cd7a41192a99a33de3ab15613c9a926958ae8ed81f5d6c256ff6a0be8f0cbeb0",
+      "lines": 18,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/migrations/versions/c6917df240ab_optional_visual_contracts.py",
+      "sha256": "ad9c5a3a6d89f35772e5445bcde17f9cab98ec892402ba3baf14d9edfaa724d2",
+      "lines": 32,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/migrations/versions/d1260b7f94de_frozen_visual_configuration.py",
+      "sha256": "1aa8f2ed62b8f61a2726c2126a13c4ad00f10aadf2e39ae4a4c219dd5646b334",
+      "lines": 20,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/database/models.py",
+      "sha256": "ba2cc158071fb3a3dafa9e7cfe8beb249b728f87b6578d35af07158f949aed3c",
+      "lines": 269,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/database/visual_models.py",
+      "sha256": "766e323fc9579eb87fe6ae1590f3883583e7874720269c36c390a1377fd5bcee",
+      "lines": 68,
+      "review": "Final read-only end-to-end review by evidence agent: ORM/migration alignment, constraint and owner boundaries, money precision, uniqueness and dependency order; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/briefs.py",
+      "sha256": "149b80352afb5a9cad730a8b2ac8117b03e0849b73e99e4a3c242ec3a98768d2",
+      "lines": 121,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/common.py",
+      "sha256": "cd709f23e3fe199ea735f4be16c6a9688d470e93f62f00bab5c932343914adc6",
+      "lines": 80,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/events.py",
+      "sha256": "74953c8098883a7513d99cbb6d86eec44009ffe7b1b6bc1a22d3eca202c1d5b8",
+      "lines": 28,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/evidence.py",
+      "sha256": "e692ec830ac0d1e0ed670fa47c3937ef66bb9f190f95646cc4dcf7af5c8452b3",
+      "lines": 57,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/preflight.py",
+      "sha256": "fb05e07b9235135ad50db53e33ab7a25fb08701a55f97d4c429081757dabca7c",
+      "lines": 78,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/provider_configuration.py",
+      "sha256": "251a469a8fd52bba71e8a09e4d6299bbb278a7a46118770ff610cedecc88de2f",
+      "lines": 81,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/reports.py",
+      "sha256": "f7c45545b6f4a045e96004319eb064ad9f2c7db86c72a37acefd3471a1a452fe",
+      "lines": 138,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "backend/src/round_robin/schemas/__init__.py",
+      "sha256": "fbde93a3523d9905c4814b1edaa8c670a1d966fff9ae2f72ede7590516247354",
+      "lines": 8,
+      "review": "Final read-only end-to-end review delegated to runtime agent: strict fields, numeric precision, structural scope, immutable hashes, readiness and live-vs-fixture boundaries; no new concrete defect"
+    },
+    {
+      "path": "scripts/native-renderer.Dockerfile",
+      "sha256": "efe76427b6989579d043a4f4359b294b164a1fb1f5a54b2ab98f72079cfa9453",
+      "lines": 40,
+      "review": "Fresh container/runtime provenance, dependency inventory and actual native-test review; see container-security.md and .json. Image metadata retained; all 40 vendor-unfixed matches remain OPEN."
+    },
+    {
+      "path": "scripts/native-renderer.mjs",
+      "sha256": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08",
+      "lines": 136,
+      "review": "Fresh container/runtime provenance, dependency inventory and actual native-test review; see container-security.md and .json. Image metadata retained; all 40 vendor-unfixed matches remain OPEN."
+    },
+    {
+      "path": "backend/tests/integration/test_native_renderer.py",
+      "sha256": "3b09f2d70cc92de9b8272a955f26cb4cfeeea1d09d135be741e8a33922658e58",
+      "lines": 204,
+      "review": "Fresh container/runtime provenance, dependency inventory and actual native-test review; see container-security.md and .json. Image metadata retained; all 40 vendor-unfixed matches remain OPEN."
+    }
+  ],
+  "completion_review_at_utc": "2026-11-16T17:06:58.097226+00:00",
+  "container_review_at_utc": "2026-11-16T17:41:56.203480+00:00",
+  "container_security_record": "container-security.json"
+}

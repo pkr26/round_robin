@@ -1,0 +1,251 @@
+ROUND ROBIN — DISCUSSION ALGORITHM AUDIT
+November 17, 2026 (America/Phoenix)
+
+The coordination infrastructure is substantial, but the current implementation cannot yet be described as accuracy-validated. The audit found 11 implementation/evaluation defects, five capability gaps and one experiment/application protocol mismatch across 80 algorithm/process entries. Four findings are P1 (high priority); 13 are P2. All findings remain open. This was an audit: product code was not changed.
+
+The full existing offline backend suite passed 1,971 tests, with 43 skipped and 16 warnings. All 247 frontend unit/component tests passed. Newly written adversarial probes still reproduced the reported gaps. Passing regression tests demonstrates the tested controls, not the factual correctness or superiority of multi-agent answers.
+
+The application currently executes this bounded graph:
+
+  frozen brief / explicit preflight / admission
+    -> intake -> optional user confirmation
+    -> selected evidence preparation / optional bounded public research
+    -> three independent proposals (no current-run peer outputs/claims)
+    -> synthesis -> different-provider audit
+    -> at most one corrected synthesis + re-audit if the first audit is negative
+    -> deterministic publication of a completed or limited result.
+
+The active protocol is independent_review_provisional. There is no live turn-by-turn round-robin debate, voting/consensus algorithm, learned judge calibration, explicit multi-criteria optimizer, or adaptive convergence rule. The experiment runner contains critique, evidence-review and revision stages. The provider wire output uses free-text dissent/defects, not the richer structured Objection/revision-response records found in the sample Contribution schema. These distinctions are capability boundaries, not defects merely because a more elaborate algorithm could be built.
+
+The strongest existing controls are independent proposal contexts, distinct synthesis/auditor provider identity, finite stages and call counts, durable attempt authorizations and immutable report versions, source hashes and scoped references, exact Decimal calculations, spending reservations, cancellation/generation fences, bounded network operations, explicit uncertainty and conservative simulation labels. Provider diversity establishes identity separation; it does not prove independent errors or factual truth. No funded or human evaluation was performed in this audit.
+
+The complete algorithm inventory is ALGORITHM_INVENTORY.txt (80 entries) and algorithm-inventory.json. The following findings include code locations and reproduction artifacts; the domain review JSON files contain fuller details and caveats. P1 means fix before relying on the affected capability; P2 means a material correctness/process weakness. A capability gap is kept separate from a reproducible implementation defect.
+
+E-F01 — P1 — defect
+Auditor disagreement manufactures demonstrated failures using the synthesis citations
+Source: backend/src/round_robin/orchestration/reporting.py:97-103; backend/src/round_robin/reports/readiness.py:9-10; backend/src/round_robin/providers/base.py:121-124
+Trigger: Synthesis passes each option with positive evidence; the auditor says fail with an empty basis_refs list (valid provider output).
+Impact: Both options become fail, retain the synthesis positive citation and synthesizer attribution, and the report publishes no_feasible_option as though each failure had been demonstrated.
+Fix: Represent disputed as unknown until a scoped adverse assessment has a valid supporting basis. Preserve both verdicts, respective citations and assessor identities; use the actual supported failing assessment when deriving infeasibility.
+Limit: Report reason does mention disagreement, but the authoritative failure/readiness labels still assert demonstrated failure. No live model behavior is needed for reproduction.
+Evidence: evidence/review.json; probes.py:audit_disagreement; probe-results.json:audit_disagreement; actual validate_output and build_report passed.
+
+E-F03 — P1 — defect
+A contradicted claim chain can be promoted to supported without new evidence
+Source: backend/src/round_robin/research/claims.py:19-35; backend/src/round_robin/providers/base.py:131-140; backend/src/round_robin/research/reuse.py:57-63; backend/src/round_robin/research/reuse.py:80-97
+Trigger: New fact repeats the exact proposition of a prior contradicted fact and cites only that fact; prior fact references a contradicted source saying the opposite.
+Impact: Graph reachability marks the new claim grounded and validate_output leaves evidence_status=supported. Persisted-claim checks use the same status-insensitive source roots and graph, so circulation among agents can erase known contradiction.
+Fix: Preserve signed support/contradiction edges and evidence qualifications. Block status upgrades based solely on contradicted/mixed/stale ancestors; require a new explicit scoped support assessment and resolution record.
+Limit: This is a reproducible polarity/status loss, not a claim that a graph algorithm can prove semantic entailment. Opposite propositions can legitimately cite a refutation, so relation identity and polarity must be explicit.
+Evidence: evidence/review.json; probes.py:support_laundering calls validate_output with identical prior/current proposition and explicit contradictory source; returns supported. Persistence path verified by source review.
+
+EVAL-01 — P1 — defect
+Selected visual findings never reach the editor
+Source: backend/src/round_robin/api/visual.py:356-374;
+backend/src/round_robin/worker/image_tasks.py:218-248;
+backend/src/round_robin/providers/images.py:255.
+Trigger: approve an edit with intent "Address the selected finding" and a mapping
+of findings to address/decline. The API saves the mapping, but _packet emits only
+the free-text intent, brief and parent pixels. It omits finding IDs, observations,
+regions, severities and dispositions. HTTPImageProvider.submit likewise only
+serializes the brief and intent. Critic-selected feedback has no causal path to
+generation unless the user manually repeats it in the intent. Declines have no
+effect on the generated edit either. A paid edit can therefore ignore the exact
+review findings it appears to act on.
+Validation: probe.py::edit_packet_loses_dispositions; result saved in JSON.
+Fix direction: construct and hash an immutable edit bundle resolving approved
+parent finding IDs to observations, regions, requested changes, preserve rules
+and explicit declines; transmit that exact bundle to the editor and re-reviewers.
+Evidence: evaluation/review.json; probe-results.json:edit_packet_loses_dispositions
+
+RUNTIME-01 — P1 — defect
+Optional retry waiting can consume the protected synthesis and audit time
+Source: backend/src/round_robin/orchestration/policies.py:88-93
+Trigger: A proposal fails with a valid long Retry-After while the other two independent proposals succeed.
+Observed: plan_recovery checks only wait + 30 seconds. A 500-second wait is accepted within the default 600-second allowance although 190 seconds are reserved for synthesis/audit. The proposal barrier remains open. At the accepted retry time the failed proposal is skipped and synthesis immediately fails finish_time_reserve before making any model call.
+Impact: A run with sufficient useful proposals loses both mandatory final stages because optional backoff was allowed to spend protected finishing time. No recommendation is published.
+Fix: Compute retry eligibility from the same mandatory-stage time reserve used by authorization and request construction. If wait plus the proposed request envelope plus persistence and still-required final work cannot fit, settle the optional proposal immediately and advance with the other two. Add a deadline-triggered barrier cutoff so previously scheduled backoff cannot consume the reserve.
+Evidence: runtime/review.json; probe-results.json:retry_wait_consumes_mandatory_finish_time
+
+E-G01 — P2 — capability_gap
+Ordinary live inputs have no path to accepted evidence support and ready_to_choose
+Source: backend/src/round_robin/orchestration/controller.py:95-107; backend/src/round_robin/orchestration/reporting.py:115-117; backend/src/round_robin/research/service.py:219; backend/src/round_robin/research/reuse.py:153-154
+Trigger: A live run has complete correct user-entered costs, all requirements passed and distinct successful audit.
+Impact: Every cost source is rewritten to a synthetic user_supplied evidence record; ready dependency requires verification_status=supported. No application service promotes evidence into supported, so ordinary runs remain conditional regardless of review quality.
+Fix: Implement explicit source-to-cost verification and immutable scoped assessment records (possibly human-attested); preserve unverified distinction. Do not fix by automatically trusting model consensus or all entered costs.
+Limit: Conservative state is safer than overclaiming and may be intentional pending a verification feature; report as missing acceptance capability, not false positive readiness.
+Evidence: evidence/review.json; probes.py:missing_verification_transition yields conditional with user_supplied; direct synthetic supported status yields ready. Static scan of all source writes found no supported transition.
+
+E-G02 — P2 — capability_gap
+Evidence extraction always chooses page prefix rather than relevant or contradictory passages
+Source: backend/src/round_robin/research/fetcher.py:307-310; backend/src/round_robin/research/service.py:212-214
+Trigger: A relevant cost exclusion appears after extracted character 4000 of a fetched page.
+Impact: The only two selected passages end at 4000, so no agent sees the later exclusion even though the entire page was downloaded. Long navigation and introductions consume capacity.
+Fix: Use bounded query/requirement-aware passage retrieval and diversity, preserve exact locators/hashes, explicitly search for exception/exclusion passages, and expose uninspected coverage. Evaluate recall with adversarial long-document fixtures before trusting ranking.
+Limit: Current scope labels correctly state that semantic support is unchecked and design docs admit excerpt limits. This is an accuracy capability gap, not misrepresented full-document verification.
+Evidence: evidence/review.json; probes.py:prefix_passages source is 4249 characters with critical exclusion after 4200; selected 4000 omits it.
+
+EVAL-03 — P2 — capability_gap
+Visual blockers have no mandatory child-version regression disposition
+Source: backend/src/round_robin/visual/reviews.py:62-84;
+visual/service.py:293-317; visual/schemas.py:71-94.
+Trigger: a parent has a critical finding; two child critics return empty findings.
+validate_critique checks only that supplied previous_finding_id values are valid;
+it does not require coverage of known prior findings. Both reviews are accepted,
+and review coverage is complete with no pending-recheck limitation. No server
+matrix carries unresolved blockers forward if a model omits them. Parent history
+is retained, and coverage.complete does not itself claim quality; the defect is
+the absent separate regression-completeness contract, not deletion of history.
+Validation: probe.py::missing_regression_dispositions reproduces acceptance with
+a known prior critical ID and two empty child critiques.
+Fix direction: derive pending rechecks from material/critical parent findings and
+locked requirements on the server. Require explicit resolved/persistent/regressed/
+uncertain/declined dispositions or retain an unresolved marker. Keep pixel-review
+quorum, regression completeness and quality decision separate.
+Evidence: evaluation/review.json; probe-results.json:missing_regression_dispositions
+
+ROOT-G01 — P2 — capability_gap
+Intake cannot inspect newly selected attachment content or propose a normalized brief
+Source: backend/src/round_robin/worker/tasks.py:23-50; backend/src/round_robin/orchestration/controller.py:119-124; backend/src/round_robin/orchestration/controller.py:309-310; backend/src/round_robin/providers/base.py:28-39
+Trigger: Selected attachment text contains details relevant to resolving intake questions.
+Impact: The first intake packet contains attachment IDs but no selected attachment passages; evidence is prepared only for proposals. ProviderOutput has no normalized-brief proposal field and proposed_brief is copied unchanged from the input. Intake is a bounded question generator, not full document-aware normalization.
+Fix: Expose a validated read-only intake evidence view and a typed proposed change set with provenance. Require explicit user confirmation for changed assumptions, options or requirements before freezing the proposal brief.
+Limit: The blueprint orders intake before evidence preparation. This is a capability gap, not evidence that proposal agents lose the attachment; the proposal packet includes it. No live intake quality was measured.
+Evidence: root/review.json; root/probe-results.json:attachment_visibility
+
+ROOT-G02 — P2 — capability_gap
+Schema repair retries receive no actionable validation feedback
+Source: backend/src/round_robin/worker/tasks.py:50; backend/src/round_robin/worker/tasks.py:237-238; backend/src/round_robin/providers/http.py:26; backend/src/round_robin/providers/base.py:62-69
+Trigger: A provider returns an invalid reference or malformed/schema-invalid output and has one retry remaining.
+Impact: The second packet differs only by repair=true. The rejected reference, failed JSON path and validation reason are absent, and the common prompt does not define repair. This implements bounded regeneration, with no demonstrated targeted correction capability.
+Fix: Include sanitized bounded diagnostics with offending field paths and permitted identities, optionally the bounded rejected structured output as untrusted data; distinguish execution retry from output repair and substantive correction.
+Limit: A fresh generation can succeed. The reproduction proves missing feedback, not that every retry fails or that real-provider quality decreases by a measured amount.
+Evidence: root/review.json; root/probe-results.json:repair_feedback
+
+E-F02 — P2 — defect
+First query exhausts page allowance and starves cost/counterevidence retrieval
+Source: backend/src/round_robin/research/service.py:149-175; backend/src/round_robin/research/service.py:212-227
+Trigger: Ordinary first comparison query returns eight valid unique hits.
+Impact: All eight fetch slots go to first-query results. Later cost and counterevidence searches still consume authorizations but none of their pages can be fetched; summary lists all three queries and no limitations.
+Fix: Reserve page slots per objective or interleave candidate collection and acquisition; stop searches that cannot yield inspectable evidence or record discovery-only results explicitly; disclose unsatisfied research objectives.
+Limit: Plan rotation is locally correct; execution allocation is the failure. Duplicate hits or early failed fetches can change outcomes, but eight fresh hits are sufficient.
+Evidence: evidence/review.json; probes.py:counterevidence_starvation runs real execute_research with synthetic SQLite ledger and stub search/page transports; all saved URLs are query1, later_query_sources_fetched=0, limitations=[].
+
+E-F04 — P2 — defect
+Bounded dissent aggregation can discard the final auditor and ignores proposal critical defects
+Source: backend/src/round_robin/orchestration/reporting.py:127-131; backend/src/round_robin/orchestration/reporting.py:164; backend/src/round_robin/orchestration/reporting.py:83
+Trigger: Two earlier proposals provide twelve distinct dissent strings each; final auditor contributes material dissent/critical text. Separately, a proposal puts a concern in critical_defects and later stages omit it.
+Impact: Only first20 dissent strings publish, omitting all final auditor specifics. Proposal critical_defects never enter aggregate and do not set unresolved_critical_defect unless the last audit repeats them.
+Fix: Maintain objection IDs, targets, materiality, dispositions and response links across stages; reserve display capacity for unresolved audit defects and attach overflow links/counts rather than silently dropping records.
+Limit: Saved contributions preserve the original text and the final-audit generic unresolved flag survives. Claim is loss from report aggregation/required resolution, not deletion from storage.
+Evidence: evidence/review.json; probes.py:dissent_loss returns dissent_count=20 and no AUDITOR marker; separate proposal-critical probe produces empty dissent and false unresolved flag.
+
+EVAL-04 — P2 — defect
+Alias-only variations inflate release independent-case denominator
+Source: experiments/release.py:32-38; analogous exact-hash-only duplicate checking
+in experiments/visual_evaluation.py:54-55.
+Trigger: submit 48 briefs with identical question, options and evidence, changing
+only the title of a valid DraftBrief and assigning required stratum labels. validate_manifest accepts
+them because complete JSON hashes differ. summarize reports 48 independent primary
+tasks and can meet the numerical target from one substantive case. The separate
+phase_5_passed flag correctly stays false. FrozenStudyManifest has stronger alias
+normalization at study_runner.py:110-123, but release manifests do not reuse it.
+Validation: probe.py::aliased_release_cases reports one substantive case as 48
+independent useful primaries with numerical_usefulness_target=true.
+Fix direction: bind normalized substantive-case fingerprints, development-case
+fingerprints and explicit provenance/stratum review; reject known aliases. Human
+review is still required for semantic independence beyond exact normalization.
+Evidence: evaluation/review.json; probe-results.json:aliased_release_cases
+
+ROOT-01 — P2 — defect
+Preflight accepts selected evidence that cannot fit any proposal request
+Source: backend/src/round_robin/api/preflight.py:54-75; backend/src/round_robin/orchestration/controller.py:87-90; backend/src/round_robin/providers/base.py:71-76
+Trigger: A selected UTF-8 attachment has 40,000 CJK characters (120,000 bytes), fits the upload limit and 20 evidence passages, with the ordinary sample brief.
+Impact: The real preflight input check returns no error. Intake succeeds; all three proposals fail context_limit before authorization, and the run fails without a recommendation. Character/passage limits do not imply the 128,000-byte complete JSON packet fits.
+Fix: Build and size the exact canonical initial packet during preflight, including UTF-8 encoding and all overhead. Reserve a bounded peer/claim context envelope for mandatory downstream stages, with explicit coverage when selecting context. Reject or ask for narrower excerpts before starting.
+Acceptance check: Boundary/property cases across ASCII, multi-byte UTF-8, quotes/escapes, maximum selected passages and peer/claim growth must either fit the declared envelopes or produce a preflight blocker.
+Evidence: root/review.json; root/probe-results.json:unicode_packet_preflight
+
+ROOT-02 — P2 — defect
+The discussion activity view silently stops at the first 100 events
+Source: backend/src/round_robin/api/events.py:63-80; frontend/app/live-workspace.tsx:274-294; frontend/app/live-workspace.tsx:532
+Trigger: A run accumulates more than 100 committed events, such as through retries, research or reconciliation.
+Impact: Snapshot intentionally returns the first 100 events plus next_event_cursor, but the frontend never consumes the cursor or events endpoint. A 134-event reproduction shows only sequences 1-100 and omits the late concern. Polling repeats the same prefix and stops on terminal status; raw server history remains available.
+Fix: Fetch bounded event pages through the snapshot cutoff and merge by (run_id, sequence); expose loading/remaining history and retain generation fences when changing runs.
+Acceptance check: A component/API test with 250 events, late critical concerns, duplicate pages, reconnection and a run switch must show the complete correctly ordered history exactly once.
+Evidence: root/review.json; root/probe-results.json:event_snapshot_pagination; API reproduction plus static client call-path inspection
+
+RUNTIME-02 — P2 — defect
+At-least-once duplicate execution bypasses Retry-After
+Source: backend/src/round_robin/worker/tasks.py:94-139
+Trigger: A worker saves a retryable failure and its future outbox intention; an older duplicate message for the same Step is delivered before that intention is due.
+Observed: Retry eligibility is represented only by Outbox.due_at. execute_step sees status=pending and immediately authorizes another call. The probe's requested wait was 120 seconds; the second provider invocation occurred about 0.012 seconds later and consumed the last allowed call.
+Impact: Provider Retry-After is not an execution invariant. Expected duplicate delivery can exhaust retries during a rate-limit period, reduce discussion completeness, and amplify provider pressure.
+Fix: Persist a step/attempt not-before timestamp or retry generation, enforce it under the step lock before authorization, and carry the generation in delivery identifiers. Keep at-least-once delivery harmless across retry state transitions.
+Evidence: runtime/review.json; probe-results.json:retry_after_bypassed_by_duplicate
+
+RUNTIME-03 — P2 — defect
+Clarification and manual retry bypass queue quotas
+Source: backend/src/round_robin/api/events.py:242-253
+Trigger: An owner already has the allowed three queued runs and confirms an awaiting-input run (or requests an eligible retry).
+Observed: Only initial Start counts queued work. The resumption endpoints set queued and issue a ticket without checking owner/global queue counts. The direct clarification probe increased the owner's queue from three to four with a configured limit of three.
+Impact: The documented owner/global admission backlog bounds are not maintained across all enqueue transitions, weakening fairness and overload protection. This does not bypass single-executing-run or monetary limits.
+Fix: Apply one owner/global queue-capacity guard under the existing policy lock to every transition into queued, including clarification and retry; leave the resumable state intact when capacity is unavailable.
+Evidence: runtime/review.json; probe-queue-results.json
+
+EVAL-02 — P2 — protocol_mismatch
+Funded study ends at first audit while production can correct and re-audit
+Source: experiments/study_runner.py:545-578 versus production
+backend/src/round_robin/orchestration/controller.py:335.
+Trigger: a valid final audit rejects synthesis while allowance remains. Production
+can reserve and run a corrected synthesis and second audit. FundedStudyRunner
+ends immediately as limited, even with only 12 calls and less than one second of
+synthetic elapsed time. Its ProviderRequest construction at study_runner.py:463
+also does not populate the production claim-version context. The study is a
+legitimate separate fixed-evidence experiment, but its result cannot establish
+accuracy, cost or latency of the current production protocol without a parity
+contract and explicit qualification.
+Validation: probe.py::study_failed_audit uses existing synthetic approval fixtures
+and injected HTTP mocks. Trace: 3 proposal, 3 critique, 1 evidence_review, 3
+revision, 1 synthesis, 1 audit; final status limited; no correction/re-audit.
+Fix direction: share a versioned transition policy with the production runner,
+freeze that policy hash in study configuration, and test protocol traces across
+both runners. If deliberately evaluating an ablation, label the omitted stages.
+Evidence: evaluation/review.json; probe-results.json:study_failed_audit
+
+Accuracy-focused algorithm upgrades
+
+1. Make support proposition-specific. Keep immutable claim nodes and add typed supports/refutes/qualifies edges with exact source span, verification state, source family, freshness and assessor. Separate source reachability from accepted support. A counterexample source can support an opposite proposition; do not globally ban every contradicted source. Recompute affected descendants on correction, preserve conflicting evidence and downgrade unresolved claims. A DAG traversal remains O(V+E); the sophistication belongs in explicit semantics and verification, not an arbitrary numeric confidence score. Acceptance: the contradicted-chain probe cannot become supported without a justified new support/resolution record; an explicitly refuted predecessor remains visible.
+
+2. Make disagreement a durable work item. Give material objections IDs, target claim/requirement, severity, evidence and a status. Every synthesis/correction must respond to each material objection with accepted/qualified/rejected/unresolved plus a basis. The auditor checks this ledger. Unresolved critical items survive all summaries and exports. Store the full list with pagination; a presentation limit must never erase a critical item. Acceptance: more than 20 early low-priority concerns cannot suppress a later audit blocker, and an earlier critical concern requires an explicit disposition.
+
+3. Unify the protocol as one versioned transition policy. Share its stage dependencies, required context, retry eligibility, correction rules and stopping predicates between production and evaluation. Keep separate counters for transient retries, schema repairs and substantive corrections while retaining original aggregate caps. Persist a per-step not_before timestamp checked under the execution lock. Before waiting or scheduling optional work, prove wait + attempt + mandatory remaining critical path + persistence margin fits the remaining active time. Acceptance: duplicate delivery never bypasses not_before; a long optional backoff is declined early enough for useful synthesis/audit; original proposal independence and cancellation fences remain intact.
+
+4. Allocate evidence by unresolved decision need. Reserve retrieval opportunities for cost, feasibility and counterevidence before the first query can consume all pages. Dedupe by recorded source family, select relevant exact passages with surrounding exceptions and dates, and disclose omitted coverage. Preserve the existing approved-term privacy boundary. Token/byte allocation must reserve room for mandatory synthesis/audit context, including objections and claim references. Acceptance: each admitted query class gets its declared coverage or an explicit limitation; a decisive exclusion after character 4,000 is selected when relevant; UTF-8 boundary cases fail preflight instead of all proposals.
+
+5. Make recommendation logic inspectable. Keep deterministic cost and hard-constraint calculations authoritative where inputs support them. Treat disputed feasibility as unknown until justified. Add explicit Pareto/dominance comparisons and sensitivity ranges for uncertain costs or deadlines, then use the user's stated preference ordering. The current preferences are ordinal ranks, so do not silently invent cardinal weights. Ask for the decisive missing fact when ranking is unstable. Keep 'execution complete', 'review coverage complete', 'evidence sufficient' and 'ready to choose' as separate states. Provide an authorized evidence-verification transition if true readiness is a product requirement; do not relabel user-supplied data as verified to make the status reachable.
+
+6. Close the visual feedback loop. Freeze an edit bundle containing selected finding IDs, exact observations/regions, requested changes, declines and locked requirements. Hash and deliver it to the editor, then send it with parent/new pixels to independent reviewers. Derive required regression checks server-side, preserving unaddressed old blockers as pending. Reviewer quorum and improvement are distinct. Acceptance: exact address/decline decisions occur in the actual editor wire prompt; each prior material finding has a child disposition or an explicit pending state.
+
+7. Establish accuracy with paired external evaluation. Compare the single-model, independent-review and fuller-debate paths using the same frozen substantive cases and declared resource ceilings. Run the actual versioned production policy or label omissions as ablations. Normalize superficial case titles/IDs before counting independent cases, review semantic duplicates and development overlap, and retain refusals, failures and unknowns in denominators. Use blind human grades, critical-defect checks, task-level paired outcomes and repeat variability; report uncertainty as well as usefulness, source support, latency and spend. Do not count repeated executions as independent tasks. The 16-case feasibility and 48-case held-out protocols already documented in the repository are plans, not evidence of passed accuracy gates. Additional rounds become justified only when their incremental benefit is measured.
+
+Implementation order
+
+First repair report attribution/disagreement, claim polarity handling, mandatory-time reservation and visual finding transmission (the four P1 findings). Next fix source allocation, dissent carry-forward, retry not_before, queue quotas, UTF-8 preflight, release duplicate detection and activity pagination. Then add the support/objection/regression contracts and shared protocol engine. Run the relevant probes as regressions after fixes, then the existing suites. Only after that should a funded evaluation be used to decide whether the full debate path improves outcomes enough to become standard.
+
+Verification and reproducibility
+
+- root/pytest-all.log: uv run pytest -q — 1,971 passed, 43 skipped, 16 warnings, exit 0; 154.42 seconds.
+- root/frontend-tests.log: pnpm --filter @round-robin/web test — 247 passed across five files, exit 0.
+- root/probe_protocol.py: four assertions on intake visibility, repair feedback, Unicode packet admission and activity pagination.
+- runtime/probe_runtime.py and runtime/probe_queue.py: three reproduced retry/reserve/queue defects.
+- evidence/probes.py: six checks covering disagreement attribution, claim polarity, dissent, source allocation, readiness reachability and passage selection.
+- evaluation/probe.py: four checks covering visual edit feedback, regression completeness, protocol parity and release-case aliasing.
+- evidence/visual_cross_review.py: independent mocked-HTTP cross-check of actual image edit and two-critic request/response paths. Parent pixels and findings DO reach child critics; the missing parts are generator feedback and mandatory regression dispositions.
+- evaluation/cross-review.json: independent source review of the strongest evidence/report findings and their limits.
+
+Focused domain test runs (154 runtime, 328 evidence, 133 evaluation/visual) overlap the full backend suite and must not be added to 1,971 as independent coverage. The new probes intentionally assert current faulty behavior so the defects are reproducible; they are not repaired-product regression tests yet. Each Python probe has a command in its domain review or script. PYTHONPATH=backend/src:. works for root/runtime/evaluation; the evidence lane records PYTHONPATH=backend/src:backend/tests.
+
+No production source was edited, paid provider called, person contacted or deployment performed. Tests/probes used temporary databases, simulated adapters or mock HTTP transports. The 43 skipped backend tests require explicit service/fault/native profiles; fresh PostgreSQL/Redis concurrency, real provider transport compatibility and empirical model quality remain unverified by this audit. Existing dependency deprecation warnings remain in the test logs. The workspace has no Git metadata; source-manifest.json binds the observed files and dependency locks, not a commit or a before/after proof. The manifest also includes adjacent source files for reproducibility; inclusion alone is not a claim of full line-by-line review. Backup/security/rendering behavior outside the discussion correctness boundaries is outside this audit's scope.
+
+Specific limits on the conclusions: incorrect infeasibility is a readiness-reducer finding, not proof that a negative audit is marked execution-completed. Dissent remains in original saved contributions even where the report omits it. Claim graph reachability cannot itself decide semantic truth. Visual coverage.complete means two eligible critics reviewed pixels, not that a design passed a quality test. Renamed release cases inflate the numerical usefulness count, but phase_5_passed correctly remains false. No numerical real-world accuracy rate can be inferred from these offline results.

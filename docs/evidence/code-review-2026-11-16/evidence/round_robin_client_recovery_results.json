@@ -1,0 +1,10 @@
+{
+  "receipt_has_body": false,
+  "after_reload_reconciliation": {
+    "confirmed": false
+  },
+  "retryError": "Private inputs were kept only in memory and are unavailable after reload. Reconcile the original UUID; do not submit changed inputs or a new action as a replacement.",
+  "newActionError": "Another action is not yet confirmed. Reconcile it before making a new change.",
+  "receipt_still_blocks": true,
+  "network_mutation_attempts": 1
+}

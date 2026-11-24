@@ -1,0 +1,44 @@
+{
+  "retry_after_bypassed_by_duplicate": {
+    "requested_retry_after_seconds": 120,
+    "step_before_duplicate": "pending",
+    "first_result": {
+      "status": "persisted",
+      "attempt_id": "attempt_ee86671cc8224315851e992de8318a15"
+    },
+    "duplicate_result": {
+      "status": "persisted",
+      "attempt_id": "attempt_7045347bcbee481ba99d68e638c4cf97"
+    },
+    "actual_seconds_between_calls": 0.011226292001083493,
+    "scheduled_retry_still_future": true,
+    "attempt_count": 2,
+    "step_after_duplicate": "failed"
+  },
+  "retry_wait_consumes_mandatory_finish_time": {
+    "accepted_wait_seconds": 500,
+    "before_wait": {
+      "stage": "proposals",
+      "status": "running",
+      "reserved_finish_seconds": 190,
+      "proposal_statuses": {
+        "openai": "pending",
+        "anthropic": "succeeded",
+        "google": "succeeded"
+      }
+    },
+    "proposal_after_wait": {
+      "status": "policy_skipped",
+      "code": "finish_time_reserve"
+    },
+    "synthesis_result": {
+      "status": "policy_blocked",
+      "code": "finish_time_reserve"
+    },
+    "final_status": "completed_with_limitations",
+    "stop_reason": "finish_time_reserve",
+    "synthesis_model_calls": 0,
+    "report_readiness": null,
+    "report_recommendation": null
+  }
+}

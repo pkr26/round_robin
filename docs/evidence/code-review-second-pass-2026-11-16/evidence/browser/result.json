@@ -1,0 +1,52 @@
+{
+  "schema": "rr_audit2_531240d0f90c45c9905da4225a0e9e58",
+  "queue": "rr_audit2_73f24bdd0b974c6f89f2810b21abc651",
+  "api_port": 18000,
+  "browser_port": 13000,
+  "paid_provider_calls": 0,
+  "checks": [
+    {
+      "command": [
+        "pnpm",
+        "build"
+      ],
+      "exit_code": 0,
+      "seconds": 7.73,
+      "log": "check-01.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "upgrade",
+        "head"
+      ],
+      "exit_code": 0,
+      "seconds": 0.66,
+      "log": "check-02.log"
+    },
+    {
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+        "check"
+      ],
+      "exit_code": 0,
+      "seconds": 0.55,
+      "log": "check-03.log"
+    },
+    {
+      "command": [
+        "pnpm",
+        "exec",
+        "playwright",
+        "test",
+        "--config",
+        "/tmp/rr-audit2-root/browser/playwright.config.cjs"
+      ],
+      "exit_code": 0,
+      "seconds": 59.71,
+      "log": "check-04.log"
+    }
+  ],
+  "status": "passed",
+  "owned_resources_cleaned": true
+}

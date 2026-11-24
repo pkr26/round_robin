@@ -1,0 +1,57 @@
+{
+  "audit": "Second exhaustive audit: evidence, calculations, reporting, experiments",
+  "confirmed_findings": [
+    {
+      "id": "AUDIT2-DATA-01",
+      "severity": "P2",
+      "title": "Markdown export turns untrusted evidence into active image/HTML markup",
+      "file": "backend/src/round_robin/reports/exports.py",
+      "line_start": 74,
+      "line_end": 75,
+      "related_locations": [
+        "backend/src/round_robin/reports/exports.py:56",
+        "backend/src/round_robin/reports/exports.py:65",
+        "backend/src/round_robin/api/artifacts.py:231",
+        "backend/src/round_robin/api/artifacts.py:235"
+      ],
+      "description": "report_markdown places exact uploaded/retrieved source text directly in a Markdown blockquote without escaping Markdown syntax or HTML. Prefixing a line with '> ' does not disable images or HTML. A supplier attachment containing ![supplier tracking pixel](https://tracking.invalid/supplier-pixel) and <img src=\"https://tracking.invalid/raw-html-pixel\"> passes upload, preflight, the full simulated worker pipeline, saved-report validation, and export; the downloaded ready Markdown retains both as active markup. Titles, option labels and model summaries have the same interpolation problem. An image-capable Markdown preview can therefore fetch an attacker-selected remote image merely when the exported report is viewed; HTML-capable viewers additionally receive raw HTML. This is an export rendering-policy defect, not a claim that the application itself executed the image or script.",
+      "expected_behavior": "Escape untrusted text into inert Markdown literals (or render it with a consistent allowlisted policy), preserve exact bytes separately if needed, and prohibit remote images/raw HTML in report rendering.",
+      "repository_contract": {
+        "file": "docs/FAILURE_HANDLING.md",
+        "line": 371,
+        "requirement": "RPT-04 requires no arbitrary HTML or remote image/tracking loads, and explicitly says browser and export paths enforce the same renderer policy."
+      },
+      "proof": {
+        "command": "PYTHONPATH=backend/src:backend/tests:. .venv/bin/python /tmp/rr-audit2-data/probe_exports_and_readiness.py",
+        "probe": "/tmp/rr-audit2-data/probe_exports_and_readiness.py",
+        "results": "/tmp/rr-audit2-data/probe-results.json",
+        "artifact": "/tmp/rr-audit2-data/export-unsafe-markup.md",
+        "observed": "HTTP meeting create 201; text upload ready; preflight blockers []; start 202; real simulated worker drain completed; Markdown export ready; download 200; four raw external image expressions retained, including two from uploaded supplier evidence.",
+        "network_scope": "No external request or paid call was made. tracking.invalid is a synthetic inert destination."
+      }
+    }
+  ],
+  "limitations_not_counted_as_confirmed_bugs": [
+    {
+      "title": "No production path currently makes cost evidence supported, so real ready_to_choose is unreachable",
+      "locations": [
+        "backend/src/round_robin/orchestration/controller.py:94-100",
+        "backend/src/round_robin/orchestration/reporting.py:115-117",
+        "backend/src/round_robin/reports/readiness.py:30-32"
+      ],
+      "evidence": "Every original cost component source_ref is rewritten to newly created structured evidence with verification_status=user_supplied. The cost dependency accepts only supported sources. The probe exercises real evidence preparation and real supported-claim persistence, then ideal positive distinct-provider review records: positive included costs and explicit included zero costs both pass all hard requirements yet remain conditional solely due to the unverified cost dependency. Excluded and not-applicable-only cases also remain conditional with their expected additional cost gaps. All four probes accept a supported fact claim without promoting source verification. No runtime evidence-verification mutation route was found.",
+      "why_not_a_confirmed_defect": "Repository documentation consistently says entered costs are not independently verified and readiness requires accepted scoped support; it does not clearly promise that current functionality must let a user promote those sources. Treat this as a product capability limitation until an explicit supported-evidence acceptance workflow is required, rather than weakening the conservative readiness gate.",
+      "proof": "/tmp/rr-audit2-data/probe-results.json"
+    }
+  ],
+  "reviewed_scope": [
+    "research/claims.py, reuse.py: alias uniqueness, graph roots/cycles, immutable predecessor/version binding, selected parent scope and freshness downgrades",
+    "research/calculator.py: Decimal bounds, dimensions, intermediate limits, complete/incomplete lifecycle totals, break-even conditions; excluded prior currency-rounding issue",
+    "research/queries.py, search.py, service.py: frozen public terms, query limits, transport allowances, leases, publication; excluded prior pending-research issue",
+    "orchestration/controller.py prepare_evidence and finalization, worker/tasks.py request/claim persistence, reporting.py deterministic calculations and independent audit merge",
+    "reports/readiness.py, read_adapters.py, exports.py, measurements.py: scope/cutoff checks, readiness gating, source/claim integrity, exports and deadline denominator semantics",
+    "schemas/briefs.py, contributions.py, evidence.py, reports.py, runtime.py and providers/base.py: valid bounds and cross-stage reference contracts",
+    "experiments/evaluation.py, release.py, visual_evaluation.py, journal.py, study_runner.py: blinded identities, preserved originals/adjudications, repeats, timing, journal durability and retained artifacts"
+  ],
+  "changes": "No repository source edits and no existing application state changes. Probe state uses fresh temporary SQLite databases and private artifact directories. All retained audit artifacts are under /tmp/rr-audit2-data."
+}

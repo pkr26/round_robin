@@ -1,0 +1,87 @@
+{
+  "review": "Fresh read-only runtime/provider/experiments review",
+  "reviewed_source_files": [
+    "backend/src/round_robin/configuration.py",
+    "backend/src/round_robin/dispatcher/__init__.py",
+    "backend/src/round_robin/dispatcher/service.py",
+    "backend/src/round_robin/orchestration/__init__.py",
+    "backend/src/round_robin/orchestration/admission.py",
+    "backend/src/round_robin/orchestration/budget.py",
+    "backend/src/round_robin/orchestration/circuits.py",
+    "backend/src/round_robin/orchestration/configuration.py",
+    "backend/src/round_robin/orchestration/controller.py",
+    "backend/src/round_robin/orchestration/policies.py",
+    "backend/src/round_robin/orchestration/reporting.py",
+    "backend/src/round_robin/providers/__init__.py",
+    "backend/src/round_robin/providers/base.py",
+    "backend/src/round_robin/providers/http.py",
+    "backend/src/round_robin/providers/images.py",
+    "backend/src/round_robin/providers/simulated.py",
+    "backend/src/round_robin/providers/transport.py",
+    "backend/src/round_robin/worker/__init__.py",
+    "backend/src/round_robin/worker/app.py",
+    "backend/src/round_robin/worker/image_tasks.py",
+    "backend/src/round_robin/worker/research_tasks.py",
+    "backend/src/round_robin/worker/tasks.py",
+    "experiments/__init__.py",
+    "experiments/adapters.py",
+    "experiments/evaluation.py",
+    "experiments/journal.py",
+    "experiments/release.py",
+    "experiments/runner.py",
+    "experiments/study_runner.py",
+    "experiments/visual_evaluation.py"
+  ],
+  "source_lines": 5244,
+  "validation": "All assigned source files read. Isolated synthetic SQLite/provider fixtures and loopback socket probes only; no real provider requests, application database mutations or source fixes.",
+  "findings": [
+    {
+      "id": "RUNTIME-01",
+      "priority": "P1",
+      "title": "Mandatory Anthropic image critic sends a schema the provider rejects",
+      "path": "backend/src/round_robin/providers/images.py",
+      "start_line": 293,
+      "end_line": 298,
+      "detail": "The visual critic passes the raw serialization schema to Anthropic output_config. It still contains minLength/maxLength, minimum/maximum, and maxItems; Anthropic rejects those features with HTTP400. The text adapter already strips these constraints in _wire_output_schema but the visual adapter does not. ImageProviderConfiguration requires generator OpenAI plus two distinct outside critics, which necessarily includes Anthropic, so every configured real visual review fails to obtain required quorum.",
+      "evidence": "CriticContent.model_json_schema(mode=serialization) contains Finding.description={minLength:1,maxLength:500}; Finding.view_index={minimum:0,maximum:3}; findings.maxItems=20. Official API documentation states unsupported numeric/string/array constraints produce400.",
+      "source_url": "https://platform.claude.com/docs/en/build-with-claude/structured-outputs#json-schema-limitations",
+      "fix_direction": "Transform the image-critic schema to each provider supported subset, keeping full local validation, and test wire schema against documented constraints."
+    },
+    {
+      "id": "RUNTIME-02",
+      "priority": "P2",
+      "title": "Image and vision requests can run beyond their total deadlines",
+      "path": "backend/src/round_robin/providers/images.py",
+      "start_line": 201,
+      "end_line": 206,
+      "detail": "_http uses ordinary HTTPTransport with per-I/O timeouts. Its elapsed-time check occurs only after response body chunks, so a slow header stream, DNS resolution, or error body stream can exceed the request allowance. The400/422 error-body loop has no elapsed check at all. A90s critic can run until the image worker630s soft limit and heartbeat extends its lease, wasting required review time and occupying shared capacity.",
+      "evidence": "Loopback-only TCP server sent12 response-header lines20ms apart. Calling _http(timeout=.05) returned after.282 seconds, over5x the declared total timeout. No real provider traffic. Existing text DeadlineHTTPTransport already enforces a monotonic absolute deadline.",
+      "fix_direction": "Use the existing DeadlineHTTPTransport with one absolute deadline for image/vision requests and apply it to error-body parsing."
+    },
+    {
+      "id": "RUNTIME-03",
+      "priority": "P1",
+      "title": "Generation timeout spends the protected time for mandatory reviews",
+      "path": "backend/src/round_robin/worker/image_tasks.py",
+      "start_line": 169,
+      "end_line": 172,
+      "detail": "_packet gives generation/edit min(600,remaining_active-25), without subtracting the190s protected for two required critics. _reserve_operation only checks that190s+25 remains at authorization; it never includes the authorized request duration. A legitimate slow generation or edit near the30-minute deadline can consume the complete review allowance and leave its newly paid-for candidate impossible to review.",
+      "evidence": "Isolated SQLite worker probe: first generation failed; at300s remaining, authorized retry received timeout275.0. Fake provider consumed274s, generated valid pixels, and the generation persisted. Both automatically queued critics then returned blocked with zero provider calls because only26s remained. The unused$0.20 review hold remained reserved.",
+      "related_locations": [
+        "backend/src/round_robin/worker/image_tasks.py:151",
+        "backend/src/round_robin/visual/iterations.py:83"
+      ],
+      "fix_direction": "Subtract the outstanding critic critical-path reserve from generation/edit request allowance, and include request timeout plus reserved work in admission checks."
+    }
+  ],
+  "not_reported": [
+    {
+      "hypothesis": "Study runner compares original brief rather than resolved explicit budget/deadline requirements",
+      "reason": "Confirmed code difference but study arms are deliberately separate; no claimed release decision failure established."
+    },
+    {
+      "hypothesis": "Visual active session expiration and finish-hold cleanup",
+      "reason": "Potential stranded funds issue sent to root/visual reviewer for independent confirmation."
+    }
+  ]
+}

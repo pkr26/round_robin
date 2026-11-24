@@ -1,0 +1,74 @@
+
+Running 33 tests using 2 workers
+
+(node:27317) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:27318) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   2 tests/e2e/deep_visual.spec.ts:84:1 › late native source response cannot overwrite source typed after opening (406ms)
+  ✓   1 tests/e2e/deep_visual.spec.ts:68:1 › failed source reopening clears previous source and exposes an accessible recoverable error (542ms)
+  ✓   3 tests/e2e/deep_visual.spec.ts:104:1 › expired visual access removes private candidates, history and source before offering another action (423ms)
+  ✓   4 tests/e2e/deep_visual.spec.ts:117:1 › a changed account cannot send the previous account's captured visual action (444ms)
+  ✓   5 tests/e2e/deep_visual.spec.ts:128:1 › malformed visual history fails validation before hostile text reaches the screen (323ms)
+  ✓   6 tests/e2e/deep_visual.spec.ts:137:1 › expired live access removes the previous private draft and saved history (444ms)
+  ✓   8 tests/e2e/live.spec.ts:81:1 › server-saved comparison reopens, inspects exact evidence and exports its saved version (10.0s)
+  ✓   7 tests/e2e/fresh_reuse.spec.ts:49:1 › explicit parent evidence selection crosses the real browser, preflight and worker boundary without implicit imports (13.6s)
+  ✓  10 tests/e2e/prototype.spec.ts:23:1 › sample passages, exact calculations, keyboard dialog and immutable JSON export (385ms)
+  ✓  11 tests/e2e/prototype.spec.ts:70:1 › custom draft saves without presenting an unrelated report and opt-in storage restores (497ms)
+  ✓   9 tests/e2e/live.spec.ts:121:1 › lost Start response retains its UUID and reconciles without a second review (8.1s)
+  ✓  12 tests/e2e/prototype.spec.ts:96:1 › changed horizon creates a linked walkthrough and preserves the original report (4.2s)
+  ✓  14 tests/e2e/prototype.spec.ts:127:1 › unknown installation retains unknown total and conditional readiness (4.2s)
+  ✓  15 tests/e2e/prototype.spec.ts:153:1 › partial result does not invent a recommendation or readiness (414ms)
+  ✓  16 tests/e2e/prototype.spec.ts:172:1 › cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon (1.7s)
+  ✓  17 tests/e2e/prototype.spec.ts:198:1 › expired preflight cannot start a new simulated review (335ms)
+  ✓  18 tests/e2e/prototype.spec.ts:212:1 › narrow viewport reflows and tabs support arrow-key navigation (224ms)
+  ✓  19 tests/e2e/review_fixes.spec.ts:41:3 › lost private draft acknowledgement can fence a late original request after reload (1.1s)
+  ✓  13 tests/e2e/live.spec.ts:144:1 › changed-input follow-up preserves the original report (9.1s)
+  ✓  20 tests/e2e/review_fixes.spec.ts:41:3 › lost private draft acknowledgement can recover committed input after reload (1.0s)
+  ✓  21 tests/e2e/live.spec.ts:166:1 › unknown cost stays unknown and narrow layout remains keyboard operable (5.7s)
+  ✓  23 tests/e2e/live.spec.ts:181:1 › Stop remains unconfirmed until acknowledgement and preserves saved partial work (4.3s)
+  ✓  24 tests/e2e/live.spec.ts:205:1 › actual CORS text upload freezes only selected ready bytes in preflight (950ms)
+  ✓  25 tests/e2e/live.spec.ts:226:1 › debounced draft save preserves edits made while an older acknowledgement is delayed (3.7s)
+  ✓  26 tests/e2e/live.spec.ts:252:1 › requirement and preference limits preserve entered lines and reserve budget and deadline slots (854ms)
+  ✓  27 tests/e2e/live.spec.ts:281:1 › retry controls use authoritative eligible stages instead of historical failure events (6.1s)
+  ✓  28 tests/e2e/live.spec.ts:302:1 › unconfirmed private autosave retains a noncontent receipt and reconciles after reload (1.7s)
+  ✓  29 tests/e2e/live.spec.ts:326:1 › configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it (603ms)
+  ✓  30 tests/e2e/live.spec.ts:341:1 › expired hosted access offers sign-in without replaying any saved action (266ms)
+  ✓  31 tests/e2e/review_regressions.spec.ts:6:1 › unsaved invalid draft survives cancelled browser navigation and is discarded only after approval (521ms)
+  ✓  32 tests/e2e/visual.spec.ts:80:1 › canonical original remains honestly unreviewed, selectable and bounded behind preflight (910ms)
+  ✓  33 tests/e2e/visual.spec.ts:105:1 › structured native source produces immutable editable pixels without an image provider (586ms)
+  ✘  22 tests/e2e/review_fixes.spec.ts:108:1 › edited currency, cost inclusion and numeric requirements reach the real calculator unchanged (1.5m)
+
+
+  1) tests/e2e/review_fixes.spec.ts:108:1 › edited currency, cost inclusion and numeric requirements reach the real calculator unchanged 
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.waitForResponse: Test timeout of 90000ms exceeded.
+
+      152 |   await expect(page.getByRole('heading', { name: 'Check the recipients, input and allowance.', exact: true })).toBeVisible();
+      153 |   await page.getByRole('checkbox', { name: /I understand the input scope/ }).check();
+    > 154 |   const accepted = page.waitForResponse(response => response.request().method() === 'POST' && new URL(response.url()).pathname === `/api/meetings/${meeting.id}/runs`);
+          |                         ^
+      155 |   await page.getByRole('button', { name: 'Start simulated review', exact: true }).click();
+      156 |   const run = await (await accepted).json();
+      157 |   await expect(page.getByRole('button', { name: 'Export JSON', exact: true })).toBeVisible({ timeout: 60_000 });
+        at /Users/pradeepreddy/Desktop/round_robin/tests/e2e/review_fixes.spec.ts:154:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/rr-fix-validation/browser/test-results/review_fixes-edited-curren-54984-e-real-calculator-unchanged/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/rr-fix-validation/browser/test-results/review_fixes-edited-curren-54984-e-real-calculator-unchanged/error-context.md
+
+    attachment #3: trace (application/zip) ─────────────────────────────────────────────────────────
+    ../../../../tmp/rr-fix-validation/browser/test-results/review_fixes-edited-curren-54984-e-real-calculator-unchanged/trace.zip
+    Usage:
+
+        pnpm exec playwright show-trace ../../../../tmp/rr-fix-validation/browser/test-results/review_fixes-edited-curren-54984-e-real-calculator-unchanged/trace.zip
+
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+  1 failed
+    tests/e2e/review_fixes.spec.ts:108:1 › edited currency, cost inclusion and numeric requirements reach the real calculator unchanged 
+  32 passed (2.0m)

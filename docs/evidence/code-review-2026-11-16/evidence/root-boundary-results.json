@@ -1,0 +1,17 @@
+{
+  "currency": {
+    "amount": "1.005",
+    "budget": "1.001",
+    "currency": "KWD",
+    "observed_total": "1.00",
+    "observed_feasibility": "pass"
+  },
+  "edge_label": {
+    "viewport_width": 1000,
+    "label_start_x": 830,
+    "label_pixel_width": 219.0,
+    "right_edge": 1049.0,
+    "source_accepted": true,
+    "rendered_width": 1000
+  }
+}

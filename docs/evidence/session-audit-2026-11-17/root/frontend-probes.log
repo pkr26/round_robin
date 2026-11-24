@@ -1,0 +1,36 @@
+
+ RUN  v5.1.0 /Users/pradeepreddy/Desktop/round_robin/frontend
+
+ ❯ ../docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx (0 test)
+
+⎯⎯⎯⎯⎯⎯ Failed Suites 1 ⎯⎯⎯⎯⎯⎯⎯
+
+ FAIL  ../docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx [ ../docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx ]
+Error: Failed to resolve import "react/jsx-dev-runtime" from "../docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx". Does the file exist?
+  Plugin: vite:import-analysis
+  File: /Users/pradeepreddy/Desktop/round_robin/docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx:19:37
+  17 |  const __vi_import_2__ = await import("/Users/pradeepreddy/Desktop/round_robin/frontend/app/api-client");
+  18 |  const __vi_import_3__ = await import("/Users/pradeepreddy/Desktop/round_robin/frontend/tests/fixtures/runtime-snapsho...
+  19 |  const __vi_import_4__ = await import("react/jsx-dev-runtime");
+     |                                       ^
+  20 |  import { beforeEach, expect, test, vi } from "vitest";
+  21 |  
+ ❯ TransformPluginContext._formatLog ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:8865:39
+ ❯ TransformPluginContext.error ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:8862:14
+ ❯ resolveId ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:26552:18
+ ❯ ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:26651:23
+ ❯ TransformPluginContext.transform ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:26624:4
+ ❯ EnvironmentPluginContainer.transform ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:8636:14
+ ❯ loadAndTransform ../node_modules/.pnpm/vite@8.3.8_@types+node@24.19.2/node_modules/vite/dist/node/chunks/node.js:20112:26
+
+⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+
+
+ Test Files  1 failed (1)
+      Tests  no tests
+   Start at  06:57:19
+   Duration  828ms (environment 77%, setup 20%, transform 3%)
+
+undefined
+/Users/pradeepreddy/Desktop/round_robin/frontend:
+ ERR_PNPM_RECURSIVE_EXEC_FIRST_FAIL  Command failed with exit code 1: vitest run --config ../docs/evidence/session-audit-2026-11-17/root/frontend-audit.config.mts

@@ -1,0 +1,180 @@
+{
+  "audit_date": "2026-11-17",
+  "scope": "Evaluation algorithms and optional visual discussion/edit-review communication",
+  "product_source_modified": false,
+  "paid_provider_calls": 0,
+  "findings": [
+    {
+      "id": "EVAL-01",
+      "priority": "P1",
+      "kind": "implementation_bug",
+      "category": "correctness",
+      "source_refs": "backend/src/round_robin/api/visual.py:356-374;\nbackend/src/round_robin/worker/image_tasks.py:218-248;\nbackend/src/round_robin/providers/images.py:255.",
+      "description_trigger_impact_validation_fix": "Selected visual findings never reach the editor.\nSource: backend/src/round_robin/api/visual.py:356-374;\nbackend/src/round_robin/worker/image_tasks.py:218-248;\nbackend/src/round_robin/providers/images.py:255.\nTrigger: approve an edit with intent \"Address the selected finding\" and a mapping\nof findings to address/decline. The API saves the mapping, but _packet emits only\nthe free-text intent, brief and parent pixels. It omits finding IDs, observations,\nregions, severities and dispositions. HTTPImageProvider.submit likewise only\nserializes the brief and intent. Critic-selected feedback has no causal path to\ngeneration unless the user manually repeats it in the intent. Declines have no\neffect on the generated edit either. A paid edit can therefore ignore the exact\nreview findings it appears to act on.\nValidation: probe.py::edit_packet_loses_dispositions; result saved in JSON.\nFix direction: construct and hash an immutable edit bundle resolving approved\nparent finding IDs to observations, regions, requested changes, preserve rules\nand explicit declines; transmit that exact bundle to the editor and re-reviewers.",
+      "evidence": "probe-results.json:edit_packet_loses_dispositions",
+      "title": "Selected visual findings never reach the editor"
+    },
+    {
+      "id": "EVAL-02",
+      "priority": "P2",
+      "kind": "protocol_mismatch",
+      "category": "evaluation validity",
+      "source_refs": "experiments/study_runner.py:545-578 versus production\nbackend/src/round_robin/orchestration/controller.py:335.",
+      "description_trigger_impact_validation_fix": "The study does not execute the production\ncorrection/re-audit protocol it could be used to justify.\nSource: experiments/study_runner.py:545-578 versus production\nbackend/src/round_robin/orchestration/controller.py:335.\nTrigger: a valid final audit rejects synthesis while allowance remains. Production\ncan reserve and run a corrected synthesis and second audit. FundedStudyRunner\nends immediately as limited, even with only 12 calls and less than one second of\nsynthetic elapsed time. Its ProviderRequest construction at study_runner.py:463\nalso does not populate the production claim-version context. The study is a\nlegitimate separate fixed-evidence experiment, but its result cannot establish\naccuracy, cost or latency of the current production protocol without a parity\ncontract and explicit qualification.\nValidation: probe.py::study_failed_audit uses existing synthetic approval fixtures\nand injected HTTP mocks. Trace: 3 proposal, 3 critique, 1 evidence_review, 3\nrevision, 1 synthesis, 1 audit; final status limited; no correction/re-audit.\nFix direction: share a versioned transition policy with the production runner,\nfreeze that policy hash in study configuration, and test protocol traces across\nboth runners. If deliberately evaluating an ablation, label the omitted stages.",
+      "evidence": "probe-results.json:study_failed_audit",
+      "title": "Funded study ends at first audit while production can correct and re-audit"
+    },
+    {
+      "id": "EVAL-03",
+      "priority": "P2",
+      "kind": "process_capability_gap",
+      "category": "process completeness",
+      "source_refs": "backend/src/round_robin/visual/reviews.py:62-84;\nvisual/service.py:293-317; visual/schemas.py:71-94.",
+      "description_trigger_impact_validation_fix": "Prior visual blockers need not receive a\nregression disposition in a later complete review.\nSource: backend/src/round_robin/visual/reviews.py:62-84;\nvisual/service.py:293-317; visual/schemas.py:71-94.\nTrigger: a parent has a critical finding; two child critics return empty findings.\nvalidate_critique checks only that supplied previous_finding_id values are valid;\nit does not require coverage of known prior findings. Both reviews are accepted,\nand review coverage is complete with no pending-recheck limitation. No server\nmatrix carries unresolved blockers forward if a model omits them. Parent history\nis retained, and coverage.complete does not itself claim quality; the defect is\nthe absent separate regression-completeness contract, not deletion of history.\nValidation: probe.py::missing_regression_dispositions reproduces acceptance with\na known prior critical ID and two empty child critiques.\nFix direction: derive pending rechecks from material/critical parent findings and\nlocked requirements on the server. Require explicit resolved/persistent/regressed/\nuncertain/declined dispositions or retain an unresolved marker. Keep pixel-review\nquorum, regression completeness and quality decision separate.",
+      "evidence": "probe-results.json:missing_regression_dispositions",
+      "title": "Visual blockers have no mandatory child-version regression disposition"
+    },
+    {
+      "id": "EVAL-04",
+      "priority": "P2",
+      "kind": "evaluation_integrity_bug",
+      "category": "evaluation integrity",
+      "source_refs": "experiments/release.py:32-38; analogous exact-hash-only duplicate checking\nin experiments/visual_evaluation.py:54-55.",
+      "description_trigger_impact_validation_fix": "Renamed copies inflate the 48-task release\ndenominator.\nSource: experiments/release.py:32-38; analogous exact-hash-only duplicate checking\nin experiments/visual_evaluation.py:54-55.\nTrigger: submit 48 briefs with identical question, options and evidence, changing\nonly the title of a valid DraftBrief and assigning required stratum labels. validate_manifest accepts\nthem because complete JSON hashes differ. summarize reports 48 independent primary\ntasks and can meet the numerical target from one substantive case. The separate\nphase_5_passed flag correctly stays false. FrozenStudyManifest has stronger alias\nnormalization at study_runner.py:110-123, but release manifests do not reuse it.\nValidation: probe.py::aliased_release_cases reports one substantive case as 48\nindependent useful primaries with numerical_usefulness_target=true.\nFix direction: bind normalized substantive-case fingerprints, development-case\nfingerprints and explicit provenance/stratum review; reject known aliases. Human\nreview is still required for semantic independence beyond exact normalization.",
+      "evidence": "probe-results.json:aliased_release_cases",
+      "title": "Alias-only variations inflate release independent-case denominator"
+    }
+  ],
+  "algorithm_inventory": [
+    {
+      "id": "EV-ALG-01",
+      "name": "Synthetic adapter contracts",
+      "source_refs_and_invariants": "Synthetic adapter contracts (experiments/adapters.py:17-125): reject provider\ncredentials in offline mode; failure classification; two-call retry eligibility;\nbounded canonical packets; no peer proposals in proposal packets; reference and\nnumeric shape validation. Appropriate deterministic controls, no truth validation.\nPacket work O(bytes); reference checks O(references).",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-02",
+      "name": "Journal append/recovery",
+      "source_refs_and_invariants": "Journal append/recovery (experiments/journal.py:27-206): exclusive operator\nflock; canonical hash chain; immutable manifest; durable file/head and directory\nfsync; partial writes or mismatching head fail closed. Hashes detect corruption,\nnot a hostile operator rewriting history. Startup O(events + bytes); append O(new\nevent bytes), plus filesystem durability costs. Covered by runner tests.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-03",
+      "name": "Journal budget reducer",
+      "source_refs_and_invariants": "Journal budget reducer (experiments/runner.py:30-334): Decimal arithmetic;\nevent replay; immutable run/attempt IDs; unresolved exposure carryover; owner and\ndeployment limits; two finishing holds; call/time reserves; settlement and explicit\nreconciliation. Unknown attempts do not become free retries. Full replay O(events)\nper state reconstruction; exposure scans O(runs * attempts), repeated for six\nlimit scopes. Bound batch sizes make this workable, but long-lived aggregate\njournals should gain verified checkpoints/indexes before scale grows.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-04",
+      "name": "Dataset and trial planning",
+      "source_refs_and_invariants": "Dataset and trial planning (experiments/evaluation.py:39-114;\nstudy_runner.py:56-129,364-375): stable canonical fingerprints; exact 16-task\nstrata; fixed 5-task repeats; double-review allocation; prospective snapshot\nchecking; normalized substantive duplicate check for frozen text study; randomized\nprimary executions precede repeats. Plan O(tasks * arms * repeats). No repeat\ninflation of primary denominator. Keep the semantic-independence human gate.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-05",
+      "name": "Blinding and identity binding",
+      "source_refs_and_invariants": "Blinding and identity binding (experiments/evaluation.py:117-219): unique\noriginal execution/output retention; common-provider redaction; opaque reproducible\npacket IDs; separate private mapping; hash-bound output/configuration; private\ndurable immutable files. O(output bytes + outputs log outputs). Direct metadata\nleakage is constrained; indirect blinding requires actual human inspection.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-06",
+      "name": "Manual grading/adjudication",
+      "source_refs_and_invariants": "Manual grading/adjudication (experiments/evaluation.py:222-393): typed useful\nscores; critical-defect disqualification; original grades retained; duplicate\nreviewer-slot rejection; exact task/output binding; adjudications reference all\noriginals and follow their timestamps; missing/failed outputs remain denominator;\nsuspected critical defects require a second original. Work O(trials + grades).\nNo automatic phase pass. Missing paired efficacy/uncertainty analysis is explicit.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-07",
+      "name": "Timing estimator",
+      "source_refs_and_invariants": "Timing estimator (experiments/evaluation.py:396-435): all admitted trials form\ndenominator; qualifying completed work required; missing/failed runs remain failures;\nfirst-useful time cannot follow completion; successful-only nearest-rank median\nand p90 labeled separately. O(n log n). This is conservative for incomplete runs;\nit is not an unrestricted measure of first partial content.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-08",
+      "name": "Funded admission/configuration freeze",
+      "source_refs_and_invariants": "Funded admission/configuration freeze (study_runner.py:132-362): expiration,\nexplicit funding and recipients; file hash binding; discovery/baseline/reviewer\nrecord prerequisites; one aggregate spending policy; shared/exclusive lock around\noperator policy; original run IDs survive new batches; durable attempt records.\nThese validate supplied records' structure and bindings, not actual observation.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-09",
+      "name": "Three-arm workflow",
+      "source_refs_and_invariants": "Three-arm workflow (study_runner.py:378-642): independent proposal barrier;\noptional parallel critiques; evidence review; dissent/critical-triggered revisions;\nsynthesis; different-provider audit except same-provider baseline; two bounded\nattempts; retry-after/deadline checks; no replay after interrupted execution;\nfailures and unknown usage retained. EVAL-02. Claims context differs from runtime.\nNo majority-vote truth rule. Maximum 24 calls/run in shared journal policy.",
+      "status": "issues_found"
+    },
+    {
+      "id": "EV-ALG-10",
+      "name": "Held-out release counting",
+      "source_refs_and_invariants": "Held-out release counting (experiments/release.py:19-103): exact 48-task\nstrata; immutable configuration/protocol ID; prospective timestamps; original\nreview identities; critical defect double-review; conservative minimum scores and\nreasoned adjudication; 39/48 numerical target; no automatic release. EVAL-04.\nO(tasks + grades + serialized brief bytes).",
+      "status": "issues_found"
+    },
+    {
+      "id": "EV-ALG-11",
+      "name": "Visual study",
+      "source_refs_and_invariants": "Visual study (experiments/visual_evaluation.py:22-237): >=12 matched briefs;\n4 fixed repeats; shared initial-image hashes across arms; baseline cannot replace\nits initial image; blinded pixel packet binding; two-review allocation; adverse\nrepeats retained; exact unknown-exposure cost accounting; paired cost/time deltas;\nlimits reported; no automatic release. Exact-hash brief independence is weaker\nthan normalized text study checks. No paired human efficacy estimator is supplied.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-12",
+      "name": "Visual pixel-review protocol",
+      "source_refs_and_invariants": "Visual pixel-review protocol (visual/reviews.py:11-84): canonical pixels and\nserver-created receipts; equal fixed candidate; actual view-byte hash verification;\nparent pixels bound for comparison; no current peer critiques in initial packets;\nversion/provider/receipt checks; two eligible non-generator providers for quorum;\nunknown provenance disclosed. Receipt work O(pixel bytes), critique checks\nO(findings). EVAL-03. Two-provider agreement is not a correctness proof.",
+      "status": "issues_found"
+    },
+    {
+      "id": "EV-ALG-13",
+      "name": "Visual state/resource reducer",
+      "source_refs_and_invariants": "Visual state/resource reducer (visual/iterations.py:19-146): exact finite\nmoney; defensive copy of persisted nested state; journal/counter consistency;\nmode/fence/epoch checks; 1800-second original lifetime; protected review time/money/\ncalls; 24 calls, 4 image submissions, 60 polls, 3 versions, 2 edits, 6 render\nattempts; conflicting settlements rejected; cancellation increments fence.\nO(operations), with explicit small bounds. No quality-based automatic edit stop.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-14",
+      "name": "Image job identity/recovery",
+      "source_refs_and_invariants": "Image job identity/recovery (visual/jobs.py:12-90): recursively hash request\nbytes; require immutable authorization identity; persist possibly-sent state before\nexternal call; no blind retry; capability-gated same-job lookup; counted polls and\nfence/epoch validation. Current implemented HTTP image endpoint is synchronous;\nhelpers do not fabricate asynchronous support. O(packet bytes).",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-15",
+      "name": "Visual schemas",
+      "source_refs_and_invariants": "Visual schemas (visual/schemas.py:11-115): bounded dimensions/pixel product;\ntyped mode and revisions; bounded findings; geometry within delivered view;\nresponse-local alias uniqueness; explicit capability flags and honest async\nconstraints. EVAL-03: missing relation between prior finding and required status.",
+      "status": "issues_found"
+    },
+    {
+      "id": "EV-ALG-16",
+      "name": "Visual scheduling/persistence/lineage",
+      "source_refs_and_invariants": "Visual scheduling/persistence/lineage (visual/service.py:150-344): immutable\nlatest-parent check; counted authorization before generated publication; independent\ncritic scheduling with per-step limits; scoped server finding IDs; one review per\nprovider/version; coverage distinct from user selection; retained history; current\nround review contents not merged into peers. EVAL-01/EVAL-03 at packet boundaries.",
+      "status": "issues_found"
+    },
+    {
+      "id": "EV-ALG-17",
+      "name": "Visual artifact resource/recovery",
+      "source_refs_and_invariants": "Visual artifact resource/recovery (visual/service.py:24-149,237-285,345-483):\nowner/deployment storage holds; private path/hash ownership; immutable native source\nmetadata; expired local holds reaped; cancellation/deletion/restoration fences;\nunknown spending retained; validated backup/restore rebase. Storage accounting\nscans all designs, versions and operations per reservation, O(D+V+O). These protect\ndiscussion artifacts; they do not establish visual correctness.",
+      "status": "reviewed_with_stated_limitations"
+    },
+    {
+      "id": "EV-ALG-18",
+      "name": "Edit and re-review communication",
+      "source_refs_and_invariants": "Edit and re-review communication (api/visual.py:340-385;\nworker/image_tasks.py:218-251; providers/images.py:243-327): edit from exact latest\nparent requires previous two-critic coverage; chosen IDs validated; user intent\nsent; edited pixels and shared prior findings sent to critics; structured response\nparsed and server-bound. EVAL-01: choices/actual findings omitted from generator.",
+      "status": "issues_found"
+    }
+  ],
+  "checks": [
+    {
+      "command": "uv run pytest -q backend/tests/test_evaluation.py backend/tests/test_study_runner.py backend/tests/test_release_evaluation.py backend/tests/test_visual_evaluation.py backend/tests/test_runner.py backend/tests/test_adapters.py backend/tests/test_visual.py backend/tests/test_visual_audit_fixes.py",
+      "exit_code": 0,
+      "passed": 133,
+      "warnings": 2,
+      "duration_seconds": 23.31,
+      "runs": 1
+    },
+    {
+      "command": "PYTHONPATH=backend/src:. uv run python docs/evidence/algorithm-audit-2026-11-17/evaluation/probe.py",
+      "exit_code": 0,
+      "reproduced_probes": 4,
+      "results_file": "docs/evidence/algorithm-audit-2026-11-17/evaluation/probe-results.json",
+      "runs": 2,
+      "second_run_reason": "Strengthened alias probe to use valid DraftBrief inputs differing only by title; all four assertions reproduced again."
+    }
+  ],
+  "design_limitations": "* summarize_workflow counts primary usefulness against 13/16 and separately\n  preserves repeat defects/completeness. It computes no paired benefit versus the\n  strong baseline, uncertainty interval, reviewer agreement or per-stratum effect.\n  A numerical threshold is descriptive; the code correctly keeps phase_passed\n  false and benefit/protocol decisions pending. Add preregistered paired task-level\n  comparisons, uncertainty and variability analyses before choosing the protocol.\n* All three text arms use the same provider request schema, evidence and budget\n  envelope. The single-provider arm includes synthesis and self-audit, which is a\n  stronger comparator than a one-shot answer. However, additional agents and\n  additional computation are changed together (healthy mock call counts 3/5/12).\n  That tests the product packages; it does not isolate the causal value of debate\n  from extra inference. A matched-compute ablation would address that question.\n* Provider/name redaction and tokenized reviewer packets preserve identity maps,\n  but text structure and number of linked assertions can reveal arms. The code\n  explicitly requires human indirect-identity inspection; it does not implement\n  or attest that inspection. Reviewer IDs establish distinct labels, not social\n  independence or domain competence.\n* Model/provider diversity is an operational independence measure, not a proof of\n  independent errors. Pixel receipts establish bytes sent, not understanding.\n* The supplied fictional fixtures and MockHTTP tests establish control behavior,\n  not real-world correctness or human preference. README and all evaluation\n  summaries retain their pending real-provider/human-release gates.",
+  "empirical_evidence_status": "No actual model quality or independent human preference evaluation performed in this audit. Fictional fixtures and MockHTTP tests establish controls only.",
+  "release_alias_caveat": "The alias duplication probe now uses valid sample DraftBrief inputs differing only in title. It inflates reported independent tasks and numerical usefulness only; phase_5_passed remains false. Human semantic-independence review remains necessary.",
+  "detailed_review": "docs/evidence/algorithm-audit-2026-11-17/evaluation/REVIEW.txt"
+}

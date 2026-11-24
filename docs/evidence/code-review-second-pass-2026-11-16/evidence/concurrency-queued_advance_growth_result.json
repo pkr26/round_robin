@@ -1,0 +1,77 @@
+{
+  "no_external_calls": true,
+  "schema": "audit2_queue_0f88f660f747422caba2da1766fc5c0b",
+  "observations": [
+    {
+      "seconds": 0,
+      "outbox": {
+        "published": 1,
+        "pending": 2
+      },
+      "rows": 3,
+      "delivered": 1,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 5,
+      "outbox": {
+        "published": 3,
+        "pending": 7
+      },
+      "rows": 10,
+      "delivered": 3,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 15,
+      "outbox": {
+        "published": 22,
+        "pending": 18
+      },
+      "rows": 40,
+      "delivered": 23,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 30,
+      "outbox": {
+        "published": 102,
+        "pending": 55
+      },
+      "rows": 157,
+      "delivered": 125,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 45,
+      "outbox": {
+        "published": 345,
+        "pending": 172
+      },
+      "rows": 517,
+      "delivered": 470,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 60,
+      "outbox": {
+        "published": 719,
+        "pending": 532
+      },
+      "rows": 1251,
+      "delivered": 1189,
+      "run_status": "queued"
+    },
+    {
+      "seconds": 90,
+      "outbox": {
+        "published": 750,
+        "pending": 2031
+      },
+      "rows": 2781,
+      "delivered": 2689,
+      "run_status": "queued"
+    }
+  ],
+  "schema_dropped": true
+}

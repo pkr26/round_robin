@@ -1,0 +1,9 @@
+{
+  "provider_calls": 0,
+  "lock_hold_seconds": 1.0,
+  "baseline_health": 200,
+  "twenty_ms_heartbeat_seconds": 1.027,
+  "concurrent_health": 200,
+  "login_status": 307,
+  "schema_cleaned": true
+}

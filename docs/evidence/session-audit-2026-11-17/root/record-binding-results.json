@@ -1,0 +1,13 @@
+{
+  "temporary_copies_only": true,
+  "inputs": "Actual previous successful logs; copied source changed afterward to invalid Python.",
+  "generator_returned_success": true,
+  "new_manifest_binds_invalid_source": true,
+  "reported_backend_passed": 2014,
+  "reported_contracts": "passed",
+  "reported_typecheck": "passed",
+  "reported_build": "passed",
+  "closures_marked_verified": 17,
+  "evaluation_and_scenario_logs_present": false,
+  "caveat": "This reproduces future stale-log rebinding; it does not invalidate the independently rerun current test totals."
+}

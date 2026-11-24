@@ -1,0 +1,161 @@
+ROUND ROBIN — AUDIT OF THIS SESSION'S BUILT WORK
+November 17, 2026 (America/Phoenix)
+
+The earlier blanket completion claim was too broad. This independent audit found 12 open issues: 3 high-priority defects and 9 medium-priority defects. Eleven concern session changes or incomplete integration; one is a pre-existing fallback defect in a touched module. No application source, existing tests or earlier audit records were changed during this audit.
+
+The highest-priority problems are new reassessments that remain ready after quote expiry; objection resolutions that can cite an obsolete synthesis answer; and activity pagination that can hide Stop while a run continues. Passing the standard suites does not cover these scenarios.
+
+Fresh verification
+
+Backend: 2014 passed, 43 skipped, 16 warnings, 176.81 seconds (root/pytest.log).
+Frontend: 250 passed (root/frontend.log).
+Contracts/client drift check, TypeScript check and production build passed (root/contracts.log, root/typecheck.log, root/build.log).
+The repair manifest's 287 current source/test/contract inputs still match their recorded hashes. Historical audit, design and repair evidence indexes were also checked unchanged. Focused domain checks overlap the full suite and are not added to its total.
+
+Review scope
+
+This audit covers 74 reviewed responsibilities across runtime/providers/context admission, claims/objections/attestations/retrieval, deterministic report/readiness/exports, visual feedback/regression/supplements, experimental identity/measurement/blinded artifacts, frontend flows/generated contracts, regression boundaries and the session's audit/design/repair tooling and completion claims. Responsibilities overlap; their count is not a count of unique mathematical algorithms or a claim that every unrelated existing source line was formally verified.
+
+Complete machine-readable findings and exact references: findings.json. Complete review inventory: review-inventory.json. Domain records include their source inventories, fresh test commands, probes and caveats. All findings below remain open; this task was an audit.
+
+SESSION-E01 — P1 — New reassessment reports can certify a choice using explicitly expired supplier quotes
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/research/discussion.py:160; backend/src/round_robin/orchestration/reporting.py:31; backend/src/round_robin/orchestration/reporting.py:77; backend/src/round_robin/api/assessments.py:76; backend/src/round_robin/api/assessments.py:103
+Trigger: Cost inputs were valid at the run start and received owner attestations with valid_until=null. After the quoted valid-through date passes, another requirement attestation republishes the report.
+Observed: current_assessments checks only attestation.valid_until and exact hashes, not the embedded quote_valid_until. comparison_as_of always uses run.created_at, including the new report version. The new publication retains both accepted cost receipts and known cost totals and returns ready_to_choose.
+Impact: A freshly published reassessment presents a ready choice after a known price validity boundary has passed. The option_costs POST expiry check does not protect requirement-only re-publication.
+Repair direction: Separate immutable original comparison-as-of from a new reassessment-as-of. Recheck every accepted cost receipt and each included quote validity at reassessment publication; drop stale support and keep costs/readiness conditional. Preserve the original historical report, and serialize the assessment date explicitly.
+Limit: The authenticated API path is exercised on a completed synthetic live-labeled fixture derived from the actual simulated pipeline. Initial fixture labels/usage are converted only to exercise live readiness; no paid provider quality is claimed. The subsequent owner attestation POST and saved-report GET are actual application routes.
+Evidence: evidence/review.json; probe.py:expired_reassessment plus actual owner API api_expiry.py/api-expiry-results.json: Oct28 cost receipts, Nov10 quote expiry, Nov17 requirement-only POST201 publishes ready_to_choose version7 after version6; cost totals1600/1840/0 and all old cost receipts retained; zero added model calls.
+
+SESSION-E02 — P1 — An audit can close an objection using an answer from an obsolete synthesis
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/research/discussion.py:17; backend/src/round_robin/research/discussion.py:45; backend/src/round_robin/research/discussion.py:91; backend/src/round_robin/research/discussion.py:100
+Trigger: Synthesis0 answers a critical issue. A later replacement synthesis omits that answer or its required condition. Audit1 returns resolved for the issue.
+Observed: The reducer accepts any prior answered event from a different provider if the frozen brief hash matches. It does not require the latest synthesis to answer, bind the answer/resolution to the current synthesis or claim versions, or reopen resolved issues on a replacement synthesis. The reproduced ledger closes the issue despite no response in synthesis1, and build_report returns ready_to_choose.
+Impact: The new objection mechanism can certify an obsolete correction and hide a regression in the actual final recommendation. The main invariant that each current material concern gets an inspectable current resolution is not enforced.
+Repair direction: Bind answers and reviewer resolutions to an explicit current synthesis ID, issue/claim versions and input packet hash. On replacement, carry or invalidate each resolution through an explicit recheck; require an answer in the current synthesis or an explicit verified carry-forward record before independent resolution.
+Limit: The auditor does receive the latest synthesis in the live packet, so a careful model could avoid this. The defect is deterministic acceptance of a stale disposition, not proof every real auditor would make the mistake or a demand that the application prove natural-language truth.
+Evidence: evidence/review.json; probe.py:stale_answer_resolution; probe-results.json:stale_answer_resolution. Events opened by proposal1, answered by synthesis0, resolved by audit1; no synthesis1 answer. New report ready_to_choose.
+
+SESSION-UI01 — P1 — Activity pagination failure hides Stop and an otherwise available report
+Origin: session_change_or_incomplete_integration
+Source: frontend/app/live-workspace.tsx:298-319; frontend/app/live-workspace.tsx:117-120; frontend/app/live-workspace.tsx:592
+Trigger: Open/reopen a run with more than100 events. GET snapshot succeeds, but a subsequent events-page request fails.
+Observed: setSnapshot is after the pagination loop. On first load currentRun remains null, so running is false and Stop is absent; a valid completed report likewise has no export controls. Every retry starts the same coupled read.
+Impact: An activity-only outage can remove cancellation controls while authorized work continues, or prevent access to an already available result.
+Repair direction: Publish validated run/report state immediately. Load activity pages in a separate generation-fenced state with its own loading/error/retry controls; retain Stop and saved-result access independently of history completeness.
+Limit: The Stop endpoint remains available; a previously displayed snapshot is retained. This specifically affects first/reopen loading and the new pagination dependency, not every network outage.
+Evidence: root/review.json; root/frontend-audit.test.tsx first two probes; root/frontend-probes-final.log (3 reproduced-behavior assertions passed). Independently source-reviewed by runtime reviewer.
+
+SESSION-E03 — P2 — Markdown/PDF omit the actual objection-resolution event ledger
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/reports/exports.py:44; backend/src/round_robin/reports/exports.py:68; backend/src/round_robin/reports/exports.py:154; backend/src/round_robin/schemas/discussion.py:35
+Trigger: A saved issue has opening, synthesis-answer and independent-resolution events and is exported to Markdown or PDF.
+Observed: describe() renders value.responses/value.resolutions, but DiscussionIssue stores events. Both export paths therefore print an empty list after the issue status instead of the actual response explanations/provenance/citations, under a heading claiming Complete objection and resolution ledger.
+Impact: Downloaded decision briefs cannot explain how an objection was resolved even though JSON and the UI retain that explanation. The completion claim that the full issue ledger survives all exports is false.
+Repair direction: Render each actual events entry including disposition, response, actor/stage, step/input identity and basis refs; preserve all entries rather than summary limits. Add extraction checks for unique resolution explanations and adverse/supporting citations across JSON/Markdown/PDF.
+Limit: Saved JSON and UI event history remain intact; the defect is export fidelity rather than deletion of original evidence. General PDF geometry was not audited in this lane.
+Evidence: evidence/review.json; probe.py:export_loss; probe-results.json:export_ledger_loss. Both resolution sentinels present in JSON and absent in Markdown and independently extracted PDF text.
+
+SESSION-EVAL-01 — P2 — Local edit-prompt rejection consumes a submission and becomes unknown cost exposure
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/providers/images.py:172; backend/src/round_robin/providers/images.py:261; backend/src/round_robin/worker/image_tasks.py:317; backend/src/round_robin/worker/image_tasks.py:323; backend/src/round_robin/worker/image_tasks.py:341; backend/src/round_robin/worker/image_tasks.py:350; backend/src/round_robin/worker/image_tasks.py:362
+Trigger: A valid parent has 40 bounded material/critical findings with descriptions of roughly 480 characters. The immutable edit bundle includes all mandatory regression targets, even when the user selects only one finding. Its worker metadata is below 128 KiB but its rendered provider prompt exceeds 16,000 characters.
+Observed: HTTPImageProvider.preflight validates dimensions, capabilities, funding and input pixels but does not build/check the full edit prompt. The worker commits authorization and increments the original call/submission counters before submit performs this pure local length check. The resulting ImageFundingLocked is converted to ProviderFailure(image_operation_unknown) with may_have_sent true.
+Impact: A provably unsent edit consumes one of four image submissions, one of two attempts for its logical edit step and request allowance. Its conservative reservation remains unknown, reducing available budget and presenting misleading unknown-provider usage. Retrying the same valid feedback deterministically repeats this failure.
+Repair direction: Use one pure bounded serializer/validator for both preflight and submit, including the exact approved bundle. Reject or provide a lossless supported context strategy before committing authorization. Preserve an explicit unsent classification for local adapter validation failures rather than mapping them to unknown sent exposure.
+Evidence: evaluation/review.json; Actual execute_image_operation with temporary SQLite, normal immutable reviews and HTTPImageProvider using injected MockTransport: worker persisted the failure, HTTP request count 0, operation status failed/error image_operation_unknown, ledger status unknown, reserved_usd 0.40, settled_usd null, request_count 1, submission_count 1 and edit:version_2 step_calls 1. Separate adapter probe confirms preflight accepts the same class of request and submit rejects locally.
+
+SESSION-EVAL-02 — P2 — Accepted ancestor and child findings exceed the next-edit feedback envelope
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/visual/schemas.py:89; backend/src/round_robin/visual/service.py:160; backend/src/round_robin/visual/service.py:181; backend/src/round_robin/visual/service.py:183; backend/src/round_robin/api/visual.py:355; backend/src/round_robin/api/visual.py:357; backend/src/round_robin/app.py:135
+Trigger: V1 receives two valid independent critiques of 20 critical findings each. V2 receives two valid critiques, each explicitly marks all 40 parent targets persistent and adds 20 new critical findings. Each critique respects the existing 20-finding/60-regression-check schema.
+Observed: The service faithfully appends the 40 unresolved ancestor findings to the 40 new V2 findings, then rejects the resulting 80-entry context against a separate global 40-finding cap. Accepted per-stage contracts are not closed under the new ancestry-retention operation. The improvement endpoint calls the raising helper outside any VisualLimit handler.
+Impact: Both independent pixel coverage and regression completeness are true for V2, and the existing session remains readable, but the user cannot request the V3 edit needed to address those defects. On the improvement route after a valid preflight, the uncaught VisualLimit produces a server error instead of a declared context limitation/recovery path.
+Repair direction: Make cumulative obligation bounds consistent with every accepted per-version review and append-only supplement, or support a deterministic bounded context that preserves all unresolved obligations. Validate future serviceability before accepting an edit/review combination, and return an explicit recoverable domain limitation for unavoidable limits. Do not silently truncate inherited blockers.
+Evidence: evaluation/review.json; Fresh temporary SQLite probe commits actual scoped reviews/receipts, a native child version, full persistent regression checks and 40 new critical findings. V2 reports coverage_complete true, regression_complete true and 80 unresolved blockers; design_view remains readable. version_feedback_findings(V2) raises VisualLimit. API line 357 and the application exception handlers were inspected to establish the uncaught route behavior.
+
+SESSION-EVAL-03 — P2 — Blinded study artifacts omit definitions of valid cited prior claims
+Origin: session_change_or_incomplete_integration
+Source: experiments/study_runner.py:511; experiments/study_runner.py:655; experiments/study_runner.py:656; experiments/study_runner.py:663; experiments/study_runner.py:671; experiments/study_runner.py:673
+Trigger: A proposal introduces a valid assumption claim. A later synthesis legitimately references its durable claim ID from the supplied claims/allowed-reference context without repeating the proposition.
+Observed: The public artifact citation-closure builder indexes only successful stage IDs (proposal/provider IDs, synthesis, audit). It does not index the durable claim IDs introduced by the newly shared claim protocol, so a prior-claim reference does not bring its definition or originating contribution into anonymous_contribution_sources.
+Impact: The retained blinded recommendation contains an unresolvable claim ID. Human reviewers cannot inspect what proposition was relied on or the supporting chain in the artifact they are asked to grade. This can alter usefulness/critical-defect grades and invalidates an assumption that citation closure is complete for the new claim protocol.
+Repair direction: Compute public transitive closure over the exact scoped claim definitions and their reference edges as well as peer stage references; include bounded, anonymous claim/source records with stable mappings. Preserve the source/evidence status and provider blinding, and test references to ancestor claims without copied proposition text.
+Evidence: evaluation/review.json; Actual FundedStudyRunner independent_review execution with existing approved synthetic fixtures and injected HTTP adapters; all edited responses pass validate_output. Three proposals introduce UNIQUE_PRIOR_ASSUMPTION_MEANING; synthesis and audit cite a real prior durable claim. The run completes in five requests. public_text contains the cited claim ID but not its proposition, and has no anonymous_contribution_sources.
+
+SESSION-RUNTIME-01 — P2 — New optional image work bypasses mandatory text finishing priority
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/orchestration/admission.py:129-136; backend/src/round_robin/worker/image_tasks.py:102-114; backend/src/round_robin/worker/image_tasks.py:298-300
+Trigger: A text run has reached synthesis/audit and a queued optional generation/edit is evaluated while shared slots are available or about to free.
+Observed: provider_capacity_available(... mandatory=False) returns False; image_tasks._capacity returns True for the same shared capacity state. Image execution never consults the new stage-priority guard.
+Impact: New optional image work can acquire shared provider/global capacity ahead of ready mandatory text work. Alongside existing visual critics it can occupy all slots and exhaust the text run's reserved finishing opportunity.
+Repair direction: Use one locked shared capacity/admission policy for both text and image authorization, preserving required visual reviews while denying new optional generation/edit ahead of admitted mandatory text work. Include cross-modal scheduling regressions.
+Limit: The direct probe verifies actual guard disagreement. It does not claim every scheduling order starves text, that a single image call fills all slots, or that monetary/call caps are bypassed.
+Evidence: runtime/review.json; probes.py:context_and_capacity; probe-results.json:cross_modal_priority
+
+SESSION-RUNTIME-02 — P2 — Preflight accepts input that configured provider context admission necessarily rejects
+Origin: session_change_or_incomplete_integration
+Source: backend/src/round_robin/api/preflight.py:56-102; backend/src/round_robin/providers/http.py:138-149; backend/src/round_robin/worker/tasks.py:150-160
+Trigger: A valid brief contains 12,000 background characters, 4,000 goal characters and 4,000 question characters, with verified configured context 32,768 and ordinary synthetic prices.
+Observed: input_packet_error returns None; the actual intake packet is 32,325 bytes (under 48K), while HTTPProvider.conservative_bound rejects context_limit after adding wire schema/system/protocol margin and billable output allowance.
+Impact: A successful-looking funded preflight can admit a run whose intake cannot start; one preflight is consumed and a failed/limited report results without substantive model work. Mandatory finishing contexts can encounter the same configuration mismatch later.
+Repair direction: Apply the adapter's no-send conservative payload/context calculation at preflight for configured mandatory roles and credible downstream envelopes, including schemas, instructions, output bound and provider context. Surface a precise blocker before Start.
+Limit: Pre-send provider checks correctly prevent an oversized external request; this is admission/liveness and misleading readiness-to-start, not a paid context-overflow send. The synthetic configuration uses valid public data and no key/network access.
+Evidence: runtime/review.json; probes.py:context_and_capacity; probe-results.json:preflight_context
+
+SESSION-RUNTIME-03 — P2 — Moderator pre-send recovery cycles the first two fallback providers
+Origin: pre_existing_adjacent
+Source: backend/src/round_robin/orchestration/policies.py:78-86; backend/src/round_robin/worker/tasks.py:59-79; backend/src/round_robin/worker/tasks.py:137-160
+Trigger: OpenAI and Anthropic fail conservative pre-send configuration validation while Google is healthy; declared fallback order is OpenAI, Anthropic, Google.
+Observed: Three infrastructure claims evaluate OpenAI, Anthropic, OpenAI; the run fails with zero authorized model calls and Google is never attempted.
+Impact: A declared healthy moderator fallback is skipped even when it fits the remaining infrastructure and paid-call limits. This can prevent a usable stage from executing after provider credential/configuration availability changes.
+Repair direction: Persist attempted/unavailable providers per logical role and advance through eligible predeclared fallbacks in order, retaining all original call/infrastructure/refusal guards.
+Limit: Ordinary sent failures still have only the original two-call ceiling; this reproduction uses pre-send failures that consume zero model calls. It does not authorize extra paid calls or fallback to evade refusal.
+Evidence: runtime/review.json; probes.py:fallback_order; probe-results.json:fallback_order
+
+SESSION-TOOL01 — P2 — Repair record generation can rebind old green logs to changed, invalid source
+Origin: session_change_or_incomplete_integration
+Source: docs/evidence/algorithm-fixes-2026-11-17/finalize.py:15-24; docs/evidence/algorithm-fixes-2026-11-17/finalize.py:47-69
+Trigger: Keep previous successful logs, change source afterward, then run finalize.py again.
+Observed: The generator parses successful-looking text, marks all 17 rows verified and then hashes current source. It does not require matching test-start input hashes or check process exit receipts. In a temporary copy, invalid Python is rebound to 2014 passing tests and all 17 verified closures. The generated report also claims evaluation/scenario checks passed although their logs were absent from that temporary copy.
+Impact: Future reports can certify code that the recorded commands never tested; a matching current source-manifest then appears to substantiate stale results.
+Repair direction: Capture command, exit status, profile and immutable input manifest at execution start. Check the same inputs at completion and consume those bound receipts in finalization; reject missing/stale checks before writing closures. Keep source hashes separate from a claim that those sources were executed.
+Limit: The current 2014/250 totals were independently rerun successfully in this audit. This demonstrates stale-log rebinding in the reporting tool, not that the original current totals were fabricated or that hashes can resist an operator rewriting every artifact.
+Evidence: root/review.json; root/probe_record_binding.py; root/record-binding-results.json. Actual existing logs and copied source were used; only the temporary copy was mutated.
+
+SESSION-UI02 — P2 — A transient assessment-read failure silently removes the attestation workflow
+Origin: session_change_or_incomplete_integration
+Source: frontend/app/live-workspace.tsx:159-168
+Trigger: A terminal live report loads successfully, but its one GET /assessments fails temporarily.
+Observed: The catch does nothing; targets remain empty and the attestation section is not rendered. Switching Evidence/Overview does not retry because only runId/report.id drive the effect.
+Impact: The advertised verification/readiness path disappears without telling the user why or offering recovery. Reload or a changed report identity is needed.
+Repair direction: Represent loading/error/unsupported/success states for assessment targets and expose an explicit read retry without clearing typed input or resubmitting inference.
+Limit: No false attestation or extra paid request occurs; this is a recoverability/availability defect.
+Evidence: root/review.json; root/frontend-audit.test.tsx third probe: assessment request observed once, form/error absent, tab switches do not retry.
+
+Consequences for the previous closure claims
+
+E-F04, E-G01, RUNTIME-01, ROOT-01/02 and EVAL-01/02/03 need qualification at the new integration boundaries recorded in summary.json. Their repairs and regression tests exist, but those tests do not establish that every intended scenario is closed. This audit does not claim that all work was ineffective: independent proposals, due-time guards, scoped identities, conditional decisions, immutable raw reports and many existing controls passed their reviewed checks. No new defect was observed in several inspected responsibilities; that is not an absence-of-fault proof.
+
+The obsolete-synthesis and quote-expiry issues are deterministic workflow acceptance gaps. They do not claim the application can prove semantic truth or that every live model would produce the bad sequence. The expiry case was additionally reproduced through a real authenticated owner API against a temporary completed fixture: a Nov17 requirement attestation returned 201 and produced ready report v7 while all cost receipts remained dated Oct28 and the quotes expired Nov10. Fixture labels/usage were synthetic and no paid model call occurred.
+
+Markdown and PDF lose actual resolution events even though raw JSON and the UI retain them. A visually plausible export therefore cannot substitute for reference/event fidelity. The exported counter-basis omission is also noted in the domain review; the principal reproduced finding is disappearance of the resolution explanations.
+
+The visual prompt failure was reproduced through the actual worker with an injected MockTransport: 0 HTTP requests, 1 consumed request/submission, 0.40 USD retained as unknown exposure. That is falsely unresolved conservative exposure, not a demonstrated external charge. The 80-blocker boundary preserves the findings and keeps the existing version readable; it fails to offer a usable next edit and has an uncaught route exception. The study-reference finding affects blinded reviewer output; private stage storage retains the claim definition.
+
+The reporting-tool defect was reproduced on temporary copies of real successful logs and source. Source was changed to invalid Python after those logs; finalize.py then created a new manifest binding that source and marked all 17 closures verified. Its declarations about some checks are unconditional. This audit independently reran the current suites, so the existing 2014/250 results are confirmed. One subordinate evidence-lane source hash for claims.py is stale after the final claim-kind guard; the later root repair manifest correctly covers that current file. Root-manifest consistency and execution provenance are different properties.
+
+Suggested repair order
+
+1. Bind reassessment freshness to the new assessment date and invalidate expired cost support while preserving historical reports.
+2. Bind objection answers/resolutions to the exact current synthesis, claim versions and packet; require explicit reviewed carry-forward after replacement.
+3. Publish valid run/report state before independently loading history, retaining Stop and result access during activity failures.
+4. Unify text/image capacity priority; run actual provider payload/context checks before accepting Start; move all pure visual prompt checks before authorization and classify provably unsent failures correctly.
+5. Preserve full ledger/counter-basis content in exports, support bounded visual overflow with an explicit recoverable outcome, and include durable claim definitions in the blinded study reference closure.
+6. Add assessment-read recovery, bind verification receipts to command exits and test-start source inputs, and repair fallback traversal without broadening any funding or retry ceiling.
+
+Verification limits
+
+No funded model/human evaluation or new hosted/native/worker-process profile ran. 43 optional default-suite tests remain skipped. The earlier 12 PostgreSQL and 8 sample-browser checks remain historical results for the unchanged source; this audit freshly reran backend/frontend/contracts/type/build and added adverse component/worker/API/export/report probes. No exhaustive coverage percentage is asserted. The ordinary suites passing does not supersede the 12 open findings. New probe assertions deliberately verify the defective current behavior so that repairs can later turn them into regression tests asserting the desired behavior.

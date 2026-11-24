@@ -1,0 +1,283 @@
+{
+  "kind": "istanbul_source",
+  "all_app_files_included": true,
+  "source_hashes_verified": true,
+  "accepted_captures": 5,
+  "metrics": {
+    "lines": {
+      "total": 992,
+      "covered": 992,
+      "skipped": 0,
+      "pct": 100
+    },
+    "statements": {
+      "total": 1650,
+      "covered": 1624,
+      "skipped": 0,
+      "pct": 98.42
+    },
+    "functions": {
+      "total": 521,
+      "covered": 520,
+      "skipped": 0,
+      "pct": 99.8
+    },
+    "branches": {
+      "total": 1444,
+      "covered": 1388,
+      "skipped": 0,
+      "pct": 96.12
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "files": {
+    "frontend/app/api-client.ts": {
+      "sha256": "d5098b2b514eee9f7a8c12499f177fa027adfa0bb3a67cf46f19e1b1fc3f64a6",
+      "lines": {
+        "total": 217,
+        "covered": 217,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 34,
+        "covered": 33,
+        "skipped": 0,
+        "pct": 97.05
+      },
+      "statements": {
+        "total": 310,
+        "covered": 304,
+        "skipped": 0,
+        "pct": 98.06
+      },
+      "branches": {
+        "total": 297,
+        "covered": 287,
+        "skipped": 0,
+        "pct": 96.63
+      }
+    },
+    "frontend/app/contracts.ts": {
+      "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+      "lines": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 7,
+        "covered": 7,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "frontend/app/design/page.tsx": {
+      "sha256": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "frontend/app/design/workspace.tsx": {
+      "sha256": "543219b4126096089298aed818b135be76a1dd14b22777c9e1153f907c080db3",
+      "lines": {
+        "total": 136,
+        "covered": 136,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 110,
+        "covered": 110,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 294,
+        "covered": 289,
+        "skipped": 0,
+        "pct": 98.29
+      },
+      "branches": {
+        "total": 281,
+        "covered": 271,
+        "skipped": 0,
+        "pct": 96.44
+      }
+    },
+    "frontend/app/layout.tsx": {
+      "sha256": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "frontend/app/live-workspace.tsx": {
+      "sha256": "a916e0e45aa16f706c5534da844af997e6e6f0c0a3543d9e36836ff047c99a37",
+      "lines": {
+        "total": 345,
+        "covered": 345,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 254,
+        "covered": 254,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 719,
+        "covered": 705,
+        "skipped": 0,
+        "pct": 98.05
+      },
+      "branches": {
+        "total": 608,
+        "covered": 583,
+        "skipped": 0,
+        "pct": 95.88
+      }
+    },
+    "frontend/app/live/page.tsx": {
+      "sha256": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+      "lines": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 2,
+        "covered": 2,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "frontend/app/page.tsx": {
+      "sha256": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+      "lines": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 1,
+        "covered": 1,
+        "skipped": 0,
+        "pct": 100
+      },
+      "branches": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "frontend/app/workspace.tsx": {
+      "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+      "lines": {
+        "total": 280,
+        "covered": 280,
+        "skipped": 0,
+        "pct": 100
+      },
+      "functions": {
+        "total": 119,
+        "covered": 119,
+        "skipped": 0,
+        "pct": 100
+      },
+      "statements": {
+        "total": 313,
+        "covered": 312,
+        "skipped": 0,
+        "pct": 99.68
+      },
+      "branches": {
+        "total": 256,
+        "covered": 245,
+        "skipped": 0,
+        "pct": 95.7
+      }
+    }
+  }
+}

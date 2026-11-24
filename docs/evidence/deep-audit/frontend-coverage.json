@@ -1,0 +1,6023 @@
+{
+  "kind": "source_mapped_browser_v8",
+  "current_source_maps_verified": true,
+  "metrics": {
+    "lines": {
+      "total": 2765,
+      "covered": 2432,
+      "skipped": 0,
+      "pct": 87.95
+    },
+    "statements": {
+      "total": 2765,
+      "covered": 2432,
+      "skipped": 0,
+      "pct": 87.95
+    },
+    "functions": {
+      "total": 186,
+      "covered": 126,
+      "skipped": 0,
+      "pct": 67.74
+    },
+    "branches": {
+      "total": 951,
+      "covered": 860,
+      "skipped": 0,
+      "pct": 90.43
+    },
+    "branchesTrue": {
+      "total": 0,
+      "covered": 0,
+      "skipped": 0,
+      "pct": "Unknown"
+    }
+  },
+  "files": [
+    {
+      "path": "frontend/app/api-client.ts",
+      "sha256": "3e103ce710a542d7b1c094d861d6cd02ff4ff97e81c0d9d66e4df4f45eba3733",
+      "metrics": {
+        "lines": {
+          "total": 302,
+          "covered": 248,
+          "skipped": 0,
+          "pct": 82.11
+        },
+        "functions": {
+          "total": 23,
+          "covered": 19,
+          "skipped": 0,
+          "pct": 82.6
+        },
+        "statements": {
+          "total": 302,
+          "covered": 248,
+          "skipped": 0,
+          "pct": 82.11
+        },
+        "branches": {
+          "total": 148,
+          "covered": 142,
+          "skipped": 0,
+          "pct": 95.94
+        }
+      },
+      "source_functions": [
+        {
+          "name": "anonymous@23:196",
+          "line": 23,
+          "column": 195,
+          "hits": null
+        },
+        {
+          "name": "onAccessChange",
+          "line": 39,
+          "column": 0,
+          "hits": 20
+        },
+        {
+          "name": "onAccessChange.anonymous@41:10",
+          "line": 41,
+          "column": 9,
+          "hits": null
+        },
+        {
+          "name": "clearAccess",
+          "line": 44,
+          "column": 0,
+          "hits": 4
+        },
+        {
+          "name": "refreshSession",
+          "line": 51,
+          "column": 0,
+          "hits": 85
+        },
+        {
+          "name": "refreshSession.anonymous@55:22",
+          "line": 55,
+          "column": 21,
+          "hits": null
+        },
+        {
+          "name": "signOut",
+          "line": 74,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "anonymous@83:3",
+          "line": 83,
+          "column": 2,
+          "hits": 5
+        },
+        {
+          "name": "errorDetail",
+          "line": 86,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "readApi",
+          "line": 96,
+          "column": 0,
+          "hits": 167
+        },
+        {
+          "name": "readApi.anonymous@109:46",
+          "line": 109,
+          "column": 45,
+          "hits": null
+        },
+        {
+          "name": "canonical",
+          "line": 132,
+          "column": 0,
+          "hits": 2979
+        },
+        {
+          "name": "canonical.anonymous@134:108",
+          "line": 134,
+          "column": 107,
+          "hits": null
+        },
+        {
+          "name": "canonical.anonymous@134:146",
+          "line": 134,
+          "column": 145,
+          "hits": null
+        },
+        {
+          "name": "bodyFingerprint",
+          "line": 138,
+          "column": 0,
+          "hits": 30
+        },
+        {
+          "name": "bodyFingerprint.anonymous@140:40",
+          "line": 140,
+          "column": 39,
+          "hits": null
+        },
+        {
+          "name": "safeReplayBody",
+          "line": 143,
+          "column": 0,
+          "hits": 30
+        },
+        {
+          "name": "safeReplayBody.anonymous@151:42",
+          "line": 151,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "pendingCommand",
+          "line": 155,
+          "column": 0,
+          "hits": 103
+        },
+        {
+          "name": "clearReceipt",
+          "line": 179,
+          "column": 0,
+          "hits": 32
+        },
+        {
+          "name": "sendCommand",
+          "line": 184,
+          "column": 0,
+          "hits": 33
+        },
+        {
+          "name": "reconcileCommand",
+          "line": 223,
+          "column": 0,
+          "hits": 2
+        },
+        {
+          "name": "retryPendingCommand",
+          "line": 240,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "uploadTextFile",
+          "line": 248,
+          "column": 0,
+          "hits": 1
+        },
+        {
+          "name": "uploadTextFile.anonymous@255:48",
+          "line": 255,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "uploadDesignImage",
+          "line": 262,
+          "column": 0,
+          "hits": 1
+        },
+        {
+          "name": "uploadDesignImage.anonymous@267:50",
+          "line": 267,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "downloadDesignSource",
+          "line": 271,
+          "column": 0,
+          "hits": 1
+        },
+        {
+          "name": "downloadDesignSource.anonymous@279:14",
+          "line": 279,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "downloadSavedExport",
+          "line": 282,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "downloadSavedExport.anonymous@293:48",
+          "line": 293,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "downloadSavedExport.anonymous@301:14",
+          "line": 301,
+          "column": 13,
+          "hits": null
+        }
+      ],
+      "uncovered_mapped_functions": [
+        {
+          "name": "signOut",
+          "line": 74,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "errorDetail",
+          "line": 86,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "retryPendingCommand",
+          "line": 240,
+          "column": 0,
+          "hits": 0
+        },
+        {
+          "name": "downloadSavedExport",
+          "line": 282,
+          "column": 0,
+          "hits": 0
+        }
+      ],
+      "unmapped_functions": [
+        {
+          "name": "anonymous@23:196",
+          "line": 23,
+          "column": 195,
+          "hits": null
+        },
+        {
+          "name": "onAccessChange.anonymous@41:10",
+          "line": 41,
+          "column": 9,
+          "hits": null
+        },
+        {
+          "name": "refreshSession.anonymous@55:22",
+          "line": 55,
+          "column": 21,
+          "hits": null
+        },
+        {
+          "name": "readApi.anonymous@109:46",
+          "line": 109,
+          "column": 45,
+          "hits": null
+        },
+        {
+          "name": "canonical.anonymous@134:108",
+          "line": 134,
+          "column": 107,
+          "hits": null
+        },
+        {
+          "name": "canonical.anonymous@134:146",
+          "line": 134,
+          "column": 145,
+          "hits": null
+        },
+        {
+          "name": "bodyFingerprint.anonymous@140:40",
+          "line": 140,
+          "column": 39,
+          "hits": null
+        },
+        {
+          "name": "safeReplayBody.anonymous@151:42",
+          "line": 151,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "uploadTextFile.anonymous@255:48",
+          "line": 255,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "uploadDesignImage.anonymous@267:50",
+          "line": 267,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "downloadDesignSource.anonymous@279:14",
+          "line": 279,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "downloadSavedExport.anonymous@293:48",
+          "line": 293,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "downloadSavedExport.anonymous@301:14",
+          "line": 301,
+          "column": 13,
+          "hits": null
+        }
+      ],
+      "uncovered_lines": [
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        107,
+        108,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        175,
+        176,
+        235,
+        236,
+        237,
+        241,
+        242,
+        243,
+        244,
+        245,
+        246,
+        283,
+        284,
+        285,
+        286,
+        287,
+        288,
+        289,
+        290,
+        291,
+        292,
+        293,
+        294,
+        295,
+        296,
+        297,
+        298,
+        299,
+        300,
+        301
+      ]
+    },
+    {
+      "path": "frontend/app/contracts.ts",
+      "sha256": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+      "metrics": {
+        "lines": {
+          "total": 24,
+          "covered": 24,
+          "skipped": 0,
+          "pct": 100
+        },
+        "functions": {
+          "total": 2,
+          "covered": 2,
+          "skipped": 0,
+          "pct": 100
+        },
+        "statements": {
+          "total": 24,
+          "covered": 24,
+          "skipped": 0,
+          "pct": 100
+        },
+        "branches": {
+          "total": 2,
+          "covered": 2,
+          "skipped": 0,
+          "pct": 100
+        }
+      },
+      "source_functions": [],
+      "uncovered_mapped_functions": [],
+      "unmapped_functions": [],
+      "uncovered_lines": []
+    },
+    {
+      "path": "frontend/app/design/workspace.tsx",
+      "sha256": "6e898fa2857492f49b77374f875ae3f6870ac5bd562f228380c3afa953797249",
+      "metrics": {
+        "lines": {
+          "total": 188,
+          "covered": 175,
+          "skipped": 0,
+          "pct": 93.08
+        },
+        "functions": {
+          "total": 45,
+          "covered": 29,
+          "skipped": 0,
+          "pct": 64.44
+        },
+        "statements": {
+          "total": 188,
+          "covered": 175,
+          "skipped": 0,
+          "pct": 93.08
+        },
+        "branches": {
+          "total": 164,
+          "covered": 144,
+          "skipped": 0,
+          "pct": 87.8
+        }
+      },
+      "source_functions": [
+        {
+          "name": "DesignWorkspace",
+          "line": 15,
+          "column": 0,
+          "hits": 105
+        },
+        {
+          "name": "DesignWorkspace.anonymous@45:41",
+          "line": 45,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.act",
+          "line": 48,
+          "column": 2,
+          "hits": 27
+        },
+        {
+          "name": "DesignWorkspace.loadDesigns",
+          "line": 55,
+          "column": 2,
+          "hits": 11
+        },
+        {
+          "name": "DesignWorkspace.anonymous@60:13",
+          "line": 60,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@60:13.anonymous@60:34",
+          "line": 60,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@68:13",
+          "line": 68,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@68:13.anonymous@69:45",
+          "line": 69,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13",
+          "line": 81,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@87:153",
+          "line": 87,
+          "column": 152,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@91:14",
+          "line": 91,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@92:12",
+          "line": 92,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13",
+          "line": 94,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13.anonymous@94:47",
+          "line": 94,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13.anonymous@94:87",
+          "line": 94,
+          "column": 86,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13",
+          "line": 95,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13.anonymous@96:28",
+          "line": 96,
+          "column": 27,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13.anonymous@96:28.anonymous@96:47",
+          "line": 96,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13",
+          "line": 98,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31",
+          "line": 102,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:95",
+          "line": 102,
+          "column": 94,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:95.anonymous@102:130",
+          "line": 102,
+          "column": 129,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:227",
+          "line": 102,
+          "column": 226,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@103:12",
+          "line": 103,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.open",
+          "line": 106,
+          "column": 2,
+          "hits": 10
+        },
+        {
+          "name": "DesignWorkspace.reopen",
+          "line": 108,
+          "column": 2,
+          "hits": 7
+        },
+        {
+          "name": "DesignWorkspace.reopen.anonymous@109:45",
+          "line": 109,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.create",
+          "line": 114,
+          "column": 2,
+          "hits": 2
+        },
+        {
+          "name": "DesignWorkspace.create.anonymous@116:49",
+          "line": 116,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.upload",
+          "line": 124,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "DesignWorkspace.upload.anonymous@126:56",
+          "line": 126,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.prepare",
+          "line": 133,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "DesignWorkspace.prepare.anonymous@135:45",
+          "line": 135,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.startReview",
+          "line": 141,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "DesignWorkspace.startReview.anonymous@143:53",
+          "line": 143,
+          "column": 52,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.select",
+          "line": 153,
+          "column": 2,
+          "hits": 3
+        },
+        {
+          "name": "DesignWorkspace.select.anonymous@155:50",
+          "line": 155,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.renderNative",
+          "line": 161,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "DesignWorkspace.renderNative.anonymous@163:52",
+          "line": 163,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate",
+          "line": 171,
+          "column": 2,
+          "hits": 37
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:995",
+          "line": 172,
+          "column": 994,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1136",
+          "line": 172,
+          "column": 1135,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1365",
+          "line": 172,
+          "column": 1364,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1365.anonymous@172:1415",
+          "line": 172,
+          "column": 1414,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:283",
+          "line": 177,
+          "column": 282,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:283.anonymous@177:327",
+          "line": 177,
+          "column": 326,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:779",
+          "line": 177,
+          "column": 778,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:779.anonymous@177:829",
+          "line": 177,
+          "column": 828,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:202",
+          "line": 179,
+          "column": 201,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:359",
+          "line": 179,
+          "column": 358,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:359.anonymous@179:471",
+          "line": 179,
+          "column": 470,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:512",
+          "line": 179,
+          "column": 511,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:721",
+          "line": 179,
+          "column": 720,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:721.anonymous@179:820",
+          "line": 179,
+          "column": 819,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:58",
+          "line": 180,
+          "column": 57,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:252",
+          "line": 180,
+          "column": 251,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:496",
+          "line": 180,
+          "column": 495,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1013",
+          "line": 180,
+          "column": 1012,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1157",
+          "line": 180,
+          "column": 1156,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1377",
+          "line": 180,
+          "column": 1376,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1574",
+          "line": 180,
+          "column": 1573,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1739",
+          "line": 180,
+          "column": 1738,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1941",
+          "line": 180,
+          "column": 1940,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2145",
+          "line": 180,
+          "column": 2144,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347",
+          "line": 180,
+          "column": 2346,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473",
+          "line": 180,
+          "column": 2472,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473.anonymous@180:2496",
+          "line": 180,
+          "column": 2495,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473.anonymous@180:2496.anonymous@180:2558",
+          "line": 180,
+          "column": 2557,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:254",
+          "line": 181,
+          "column": 253,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:411",
+          "line": 181,
+          "column": 410,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:776",
+          "line": 181,
+          "column": 775,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:941",
+          "line": 181,
+          "column": 940,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:1043",
+          "line": 181,
+          "column": 1042,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:1460",
+          "line": 181,
+          "column": 1459,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2047",
+          "line": 181,
+          "column": 2046,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2301",
+          "line": 181,
+          "column": 2300,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2467",
+          "line": 181,
+          "column": 2466,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2731",
+          "line": 181,
+          "column": 2730,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2956",
+          "line": 181,
+          "column": 2955,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3165",
+          "line": 181,
+          "column": 3164,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3323",
+          "line": 181,
+          "column": 3322,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3323.anonymous@181:3360",
+          "line": 181,
+          "column": 3359,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:271",
+          "line": 182,
+          "column": 270,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:448",
+          "line": 182,
+          "column": 447,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:577",
+          "line": 182,
+          "column": 576,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:761",
+          "line": 182,
+          "column": 760,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:914",
+          "line": 182,
+          "column": 913,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:1202",
+          "line": 182,
+          "column": 1201,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:130",
+          "line": 183,
+          "column": 129,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:130.anonymous@183:249",
+          "line": 183,
+          "column": 248,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:431",
+          "line": 183,
+          "column": 430,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878",
+          "line": 183,
+          "column": 877,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878.anonymous@183:1018",
+          "line": 183,
+          "column": 1017,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878.anonymous@183:1602",
+          "line": 183,
+          "column": 1601,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:2104",
+          "line": 183,
+          "column": 2103,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@185:38",
+          "line": 185,
+          "column": 37,
+          "hits": null
+        }
+      ],
+      "uncovered_mapped_functions": [
+        {
+          "name": "DesignWorkspace.startReview",
+          "line": 141,
+          "column": 2,
+          "hits": 0
+        }
+      ],
+      "unmapped_functions": [
+        {
+          "name": "DesignWorkspace.anonymous@45:41",
+          "line": 45,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@60:13",
+          "line": 60,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@60:13.anonymous@60:34",
+          "line": 60,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@68:13",
+          "line": 68,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@68:13.anonymous@69:45",
+          "line": 69,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13",
+          "line": 81,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@87:153",
+          "line": 87,
+          "column": 152,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@91:14",
+          "line": 91,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@81:13.anonymous@92:12",
+          "line": 92,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13",
+          "line": 94,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13.anonymous@94:47",
+          "line": 94,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@94:13.anonymous@94:87",
+          "line": 94,
+          "column": 86,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13",
+          "line": 95,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13.anonymous@96:28",
+          "line": 96,
+          "column": 27,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@95:13.anonymous@96:28.anonymous@96:47",
+          "line": 96,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13",
+          "line": 98,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31",
+          "line": 102,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:95",
+          "line": 102,
+          "column": 94,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:95.anonymous@102:130",
+          "line": 102,
+          "column": 129,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@102:31.anonymous@102:227",
+          "line": 102,
+          "column": 226,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@98:13.anonymous@103:12",
+          "line": 103,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.reopen.anonymous@109:45",
+          "line": 109,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.create.anonymous@116:49",
+          "line": 116,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.upload.anonymous@126:56",
+          "line": 126,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.prepare.anonymous@135:45",
+          "line": 135,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.startReview.anonymous@143:53",
+          "line": 143,
+          "column": 52,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.select.anonymous@155:50",
+          "line": 155,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.renderNative.anonymous@163:52",
+          "line": 163,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:995",
+          "line": 172,
+          "column": 994,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1136",
+          "line": 172,
+          "column": 1135,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1365",
+          "line": 172,
+          "column": 1364,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.candidate.anonymous@172:1365.anonymous@172:1415",
+          "line": 172,
+          "column": 1414,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:283",
+          "line": 177,
+          "column": 282,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:283.anonymous@177:327",
+          "line": 177,
+          "column": 326,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:779",
+          "line": 177,
+          "column": 778,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@177:779.anonymous@177:829",
+          "line": 177,
+          "column": 828,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:202",
+          "line": 179,
+          "column": 201,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:359",
+          "line": 179,
+          "column": 358,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:359.anonymous@179:471",
+          "line": 179,
+          "column": 470,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:512",
+          "line": 179,
+          "column": 511,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:721",
+          "line": 179,
+          "column": 720,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@179:721.anonymous@179:820",
+          "line": 179,
+          "column": 819,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:58",
+          "line": 180,
+          "column": 57,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:252",
+          "line": 180,
+          "column": 251,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:496",
+          "line": 180,
+          "column": 495,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1013",
+          "line": 180,
+          "column": 1012,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1157",
+          "line": 180,
+          "column": 1156,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1377",
+          "line": 180,
+          "column": 1376,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1574",
+          "line": 180,
+          "column": 1573,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1739",
+          "line": 180,
+          "column": 1738,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:1941",
+          "line": 180,
+          "column": 1940,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2145",
+          "line": 180,
+          "column": 2144,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347",
+          "line": 180,
+          "column": 2346,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473",
+          "line": 180,
+          "column": 2472,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473.anonymous@180:2496",
+          "line": 180,
+          "column": 2495,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@180:2347.anonymous@180:2473.anonymous@180:2496.anonymous@180:2558",
+          "line": 180,
+          "column": 2557,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:254",
+          "line": 181,
+          "column": 253,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:411",
+          "line": 181,
+          "column": 410,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:776",
+          "line": 181,
+          "column": 775,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:941",
+          "line": 181,
+          "column": 940,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:1043",
+          "line": 181,
+          "column": 1042,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:1460",
+          "line": 181,
+          "column": 1459,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2047",
+          "line": 181,
+          "column": 2046,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2301",
+          "line": 181,
+          "column": 2300,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2467",
+          "line": 181,
+          "column": 2466,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2731",
+          "line": 181,
+          "column": 2730,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:2956",
+          "line": 181,
+          "column": 2955,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3165",
+          "line": 181,
+          "column": 3164,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3323",
+          "line": 181,
+          "column": 3322,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@181:3323.anonymous@181:3360",
+          "line": 181,
+          "column": 3359,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:271",
+          "line": 182,
+          "column": 270,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:448",
+          "line": 182,
+          "column": 447,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:577",
+          "line": 182,
+          "column": 576,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:761",
+          "line": 182,
+          "column": 760,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:914",
+          "line": 182,
+          "column": 913,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@182:1202",
+          "line": 182,
+          "column": 1201,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:130",
+          "line": 183,
+          "column": 129,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:130.anonymous@183:249",
+          "line": 183,
+          "column": 248,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:431",
+          "line": 183,
+          "column": 430,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878",
+          "line": 183,
+          "column": 877,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878.anonymous@183:1018",
+          "line": 183,
+          "column": 1017,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:878.anonymous@183:1602",
+          "line": 183,
+          "column": 1601,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@183:2104",
+          "line": 183,
+          "column": 2103,
+          "hits": null
+        },
+        {
+          "name": "DesignWorkspace.anonymous@185:38",
+          "line": 185,
+          "column": 37,
+          "hits": null
+        }
+      ],
+      "uncovered_lines": [
+        101,
+        102,
+        103,
+        142,
+        143,
+        144,
+        145,
+        146,
+        147,
+        148,
+        149,
+        150,
+        151
+      ]
+    },
+    {
+      "path": "frontend/app/live-workspace.tsx",
+      "sha256": "6307e589b4f33c9f9c780e3abbc7c19a542e11543dcd5c921964c47d572752a6",
+      "metrics": {
+        "lines": {
+          "total": 457,
+          "covered": 418,
+          "skipped": 0,
+          "pct": 91.46
+        },
+        "functions": {
+          "total": 70,
+          "covered": 50,
+          "skipped": 0,
+          "pct": 71.42
+        },
+        "statements": {
+          "total": 457,
+          "covered": 418,
+          "skipped": 0,
+          "pct": 91.46
+        },
+        "branches": {
+          "total": 413,
+          "covered": 375,
+          "skipped": 0,
+          "pct": 90.79
+        }
+      },
+      "source_functions": [
+        {
+          "name": "clone",
+          "line": 18,
+          "column": 14,
+          "hits": null
+        },
+        {
+          "name": "words",
+          "line": 19,
+          "column": 14,
+          "hits": 1063
+        },
+        {
+          "name": "money",
+          "line": 20,
+          "column": 14,
+          "hits": 119
+        },
+        {
+          "name": "money.anonymous@25:148",
+          "line": 25,
+          "column": 147,
+          "hits": null
+        },
+        {
+          "name": "when",
+          "line": 27,
+          "column": 13,
+          "hits": 654
+        },
+        {
+          "name": "option",
+          "line": 29,
+          "column": 0,
+          "hits": 63
+        },
+        {
+          "name": "option.anonymous@31:95",
+          "line": 31,
+          "column": 94,
+          "hits": null
+        },
+        {
+          "name": "newBrief",
+          "line": 40,
+          "column": 0,
+          "hits": 21
+        },
+        {
+          "name": "LiveWorkspace",
+          "line": 48,
+          "column": 0,
+          "hits": 347
+        },
+        {
+          "name": "LiveWorkspace.anonymous@97:66",
+          "line": 97,
+          "column": 65,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@98:63",
+          "line": 98,
+          "column": 62,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@102:31",
+          "line": 102,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@103:62",
+          "line": 103,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@105:28",
+          "line": 105,
+          "column": 27,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@107:13",
+          "line": 107,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@107:13.anonymous@107:34",
+          "line": 107,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@118:13",
+          "line": 118,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.refreshMeetings",
+          "line": 123,
+          "column": 2,
+          "hits": 34
+        },
+        {
+          "name": "LiveWorkspace.refreshMeetings.anonymous@126:16",
+          "line": 126,
+          "column": 15,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.refreshMeetings.anonymous@126:16.anonymous@126:55",
+          "line": 126,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting",
+          "line": 130,
+          "column": 2,
+          "hits": 15
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@133:62",
+          "line": 133,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@133:146",
+          "line": 133,
+          "column": 145,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@134:52",
+          "line": 134,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@135:62",
+          "line": 135,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@137:41",
+          "line": 137,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.initialize",
+          "line": 143,
+          "column": 2,
+          "hits": 13
+        },
+        {
+          "name": "LiveWorkspace.initialize.anonymous@153:35",
+          "line": 153,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.initialize.anonymous@153:172",
+          "line": 153,
+          "column": 171,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@162:13",
+          "line": 162,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13",
+          "line": 163,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@166:91",
+          "line": 166,
+          "column": 90,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@166:153",
+          "line": 166,
+          "column": 152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@167:87",
+          "line": 167,
+          "column": 86,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@167:148",
+          "line": 167,
+          "column": 147,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@168:12",
+          "line": 168,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13",
+          "line": 170,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13.anonymous@170:50",
+          "line": 170,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13.anonymous@170:90",
+          "line": 170,
+          "column": 89,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13",
+          "line": 171,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30",
+          "line": 175,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@182:20",
+          "line": 182,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@183:21",
+          "line": 183,
+          "column": 20,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@183:21.anonymous@183:44",
+          "line": 183,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@186:25",
+          "line": 186,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@199:12",
+          "line": 199,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@201:13",
+          "line": 201,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@201:13.anonymous@205:12",
+          "line": 205,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13",
+          "line": 208,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.poll",
+          "line": 212,
+          "column": 4,
+          "hits": 32
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.poll.anonymous@216:21",
+          "line": 216,
+          "column": 20,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.poll.anonymous@219:43",
+          "line": 219,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.anonymous@228:12",
+          "line": 228,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.act",
+          "line": 231,
+          "column": 2,
+          "hits": 23
+        },
+        {
+          "name": "LiveWorkspace.edit",
+          "line": 241,
+          "column": 2,
+          "hits": 134
+        },
+        {
+          "name": "LiveWorkspace.edit.anonymous@241:86",
+          "line": 241,
+          "column": 85,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editOption",
+          "line": 242,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editOption.anonymous@242:89",
+          "line": 242,
+          "column": 88,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost",
+          "line": 243,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost.anonymous@244:39",
+          "line": 244,
+          "column": 38,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost.anonymous@244:39.anonymous@244:119",
+          "line": 244,
+          "column": 118,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setBudget",
+          "line": 246,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setBudget.anonymous@247:49",
+          "line": 247,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setDeadline",
+          "line": 251,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setDeadline.anonymous@252:49",
+          "line": 252,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements",
+          "line": 256,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@258:44",
+          "line": 258,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@258:69",
+          "line": 258,
+          "column": 68,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@259:66",
+          "line": 259,
+          "column": 65,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.save",
+          "line": 262,
+          "column": 2,
+          "hits": 10
+        },
+        {
+          "name": "LiveWorkspace.save.anonymous@264:31",
+          "line": 264,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.save.anonymous@264:31.anonymous@267:103",
+          "line": 267,
+          "column": 102,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reviewPreflight",
+          "line": 284,
+          "column": 2,
+          "hits": 4
+        },
+        {
+          "name": "LiveWorkspace.reviewPreflight.anonymous@286:38",
+          "line": 286,
+          "column": 37,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.start",
+          "line": 292,
+          "column": 2,
+          "hits": 3
+        },
+        {
+          "name": "LiveWorkspace.start.anonymous@294:35",
+          "line": 294,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.stop",
+          "line": 302,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.stop.anonymous@304:37",
+          "line": 304,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp",
+          "line": 311,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@314:65",
+          "line": 314,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@314:149",
+          "line": 314,
+          "column": 148,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@315:55",
+          "line": 315,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@316:65",
+          "line": 316,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify",
+          "line": 320,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@323:65",
+          "line": 323,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@323:149",
+          "line": 323,
+          "column": 148,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@324:55",
+          "line": 324,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@325:65",
+          "line": 325,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.retryStage",
+          "line": 329,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.retryStage.anonymous@331:47",
+          "line": 331,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.retryStage.anonymous@331:47.anonymous@333:20",
+          "line": 333,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.recover",
+          "line": 337,
+          "column": 2,
+          "hits": 2
+        },
+        {
+          "name": "LiveWorkspace.recover.anonymous@338:74",
+          "line": 338,
+          "column": 73,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.recover.anonymous@338:74.anonymous@345:31",
+          "line": 345,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.inspect",
+          "line": 351,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.inspect.anonymous@353:41",
+          "line": 353,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reset",
+          "line": 364,
+          "column": 2,
+          "hits": 6
+        },
+        {
+          "name": "LiveWorkspace.upload",
+          "line": 371,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42",
+          "line": 373,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42.anonymous@375:18",
+          "line": 375,
+          "column": 17,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42.anonymous@375:18.anonymous@375:48",
+          "line": 375,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel",
+          "line": 383,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@389:71",
+          "line": 389,
+          "column": 70,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418",
+          "line": 393,
+          "column": 417,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418.anonymous@393:755",
+          "line": 393,
+          "column": 754,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418.anonymous@393:966",
+          "line": 393,
+          "column": 965,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:140",
+          "line": 394,
+          "column": 139,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:140.anonymous@394:308",
+          "line": 394,
+          "column": 307,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:578",
+          "line": 394,
+          "column": 577,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@395:139",
+          "line": 395,
+          "column": 138,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:253",
+          "line": 396,
+          "column": 252,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:365",
+          "line": 396,
+          "column": 364,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:591",
+          "line": 396,
+          "column": 590,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:745",
+          "line": 396,
+          "column": 744,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:887",
+          "line": 396,
+          "column": 886,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1118",
+          "line": 396,
+          "column": 1117,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1187",
+          "line": 396,
+          "column": 1186,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1237",
+          "line": 396,
+          "column": 1236,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveChoice",
+          "line": 400,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.saveChoice.anonymous@402:37",
+          "line": 402,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveChoice.anonymous@402:37.anonymous@404:19",
+          "line": 404,
+          "column": 18,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome",
+          "line": 407,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome.anonymous@409:46",
+          "line": 409,
+          "column": 45,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome.anonymous@409:46.anonymous@411:19",
+          "line": 411,
+          "column": 18,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.outcomePayload",
+          "line": 416,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "LiveWorkspace.outcomePayload.anonymous@417:44",
+          "line": 417,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:473",
+          "line": 426,
+          "column": 472,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:473.anonymous@426:605",
+          "line": 426,
+          "column": 604,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864",
+          "line": 426,
+          "column": 863,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913",
+          "line": 426,
+          "column": 912,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086",
+          "line": 426,
+          "column": 1085,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086.anonymous@426:1131",
+          "line": 426,
+          "column": 1130,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086.anonymous@426:1131.anonymous@426:1153",
+          "line": 426,
+          "column": 1152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@427:719",
+          "line": 427,
+          "column": 718,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@427:719.anonymous@427:749",
+          "line": 427,
+          "column": 748,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@428:417",
+          "line": 428,
+          "column": 416,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@431:201",
+          "line": 431,
+          "column": 200,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@433:379",
+          "line": 433,
+          "column": 378,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@433:510",
+          "line": 433,
+          "column": 509,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:34",
+          "line": 436,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:348",
+          "line": 436,
+          "column": 347,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:611",
+          "line": 436,
+          "column": 610,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:899",
+          "line": 436,
+          "column": 898,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1101",
+          "line": 436,
+          "column": 1100,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1320",
+          "line": 436,
+          "column": 1319,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1513",
+          "line": 436,
+          "column": 1512,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1677",
+          "line": 436,
+          "column": 1676,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1980",
+          "line": 436,
+          "column": 1979,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537",
+          "line": 436,
+          "column": 2536,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537.anonymous@436:2646",
+          "line": 436,
+          "column": 2645,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537.anonymous@436:2671",
+          "line": 436,
+          "column": 2670,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343",
+          "line": 437,
+          "column": 342,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:515",
+          "line": 437,
+          "column": 514,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:643",
+          "line": 437,
+          "column": 642,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:746",
+          "line": 437,
+          "column": 745,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:746.anonymous@437:985",
+          "line": 437,
+          "column": 984,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1151",
+          "line": 437,
+          "column": 1150,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1266",
+          "line": 437,
+          "column": 1265,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1266.anonymous@437:1309",
+          "line": 437,
+          "column": 1308,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:1477",
+          "line": 437,
+          "column": 1476,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:1534",
+          "line": 437,
+          "column": 1533,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:188",
+          "line": 438,
+          "column": 187,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:697",
+          "line": 438,
+          "column": 696,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071",
+          "line": 438,
+          "column": 1070,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1153",
+          "line": 438,
+          "column": 1152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1237",
+          "line": 438,
+          "column": 1236,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1409",
+          "line": 438,
+          "column": 1408,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1998",
+          "line": 438,
+          "column": 1997,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245",
+          "line": 438,
+          "column": 2244,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245.anonymous@438:2450",
+          "line": 438,
+          "column": 2449,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245.anonymous@438:2450.anonymous@438:2597",
+          "line": 438,
+          "column": 2596,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:3333",
+          "line": 438,
+          "column": 3332,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:419",
+          "line": 440,
+          "column": 418,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:799",
+          "line": 440,
+          "column": 798,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1132",
+          "line": 440,
+          "column": 1131,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1550",
+          "line": 440,
+          "column": 1549,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1631",
+          "line": 440,
+          "column": 1630,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1892",
+          "line": 440,
+          "column": 1891,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:2263",
+          "line": 440,
+          "column": 2262,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:2437",
+          "line": 440,
+          "column": 2436,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:358",
+          "line": 443,
+          "column": 357,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452",
+          "line": 443,
+          "column": 451,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452.anonymous@443:552",
+          "line": 443,
+          "column": 551,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452.anonymous@443:552.anonymous@443:611",
+          "line": 443,
+          "column": 610,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:175",
+          "line": 444,
+          "column": 174,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:830",
+          "line": 444,
+          "column": 829,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:830.anonymous@444:928",
+          "line": 444,
+          "column": 927,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126",
+          "line": 444,
+          "column": 1125,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126.anonymous@444:1325",
+          "line": 444,
+          "column": 1324,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126.anonymous@444:1357",
+          "line": 444,
+          "column": 1356,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@446:453",
+          "line": 446,
+          "column": 452,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:294",
+          "line": 447,
+          "column": 293,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:294.anonymous@447:591",
+          "line": 447,
+          "column": 590,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:774",
+          "line": 447,
+          "column": 773,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@448:238",
+          "line": 448,
+          "column": 237,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@448:660",
+          "line": 448,
+          "column": 659,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@451:126",
+          "line": 451,
+          "column": 125,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@451:126.anonymous@451:225",
+          "line": 451,
+          "column": 224,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:101",
+          "line": 455,
+          "column": 100,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:137",
+          "line": 455,
+          "column": 136,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:375",
+          "line": 455,
+          "column": 374,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1317",
+          "line": 455,
+          "column": 1316,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1517",
+          "line": 455,
+          "column": 1516,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698",
+          "line": 455,
+          "column": 1697,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698.anonymous@455:1762",
+          "line": 455,
+          "column": 1761,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698.anonymous@455:1798",
+          "line": 455,
+          "column": 1797,
+          "hits": null
+        }
+      ],
+      "uncovered_mapped_functions": [
+        {
+          "name": "LiveWorkspace.clarify",
+          "line": 320,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.inspect",
+          "line": 351,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1118",
+          "line": 396,
+          "column": 1117,
+          "hits": 0
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome",
+          "line": 407,
+          "column": 2,
+          "hits": 0
+        }
+      ],
+      "unmapped_functions": [
+        {
+          "name": "clone",
+          "line": 18,
+          "column": 14,
+          "hits": null
+        },
+        {
+          "name": "money.anonymous@25:148",
+          "line": 25,
+          "column": 147,
+          "hits": null
+        },
+        {
+          "name": "option.anonymous@31:95",
+          "line": 31,
+          "column": 94,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@97:66",
+          "line": 97,
+          "column": 65,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@98:63",
+          "line": 98,
+          "column": 62,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@102:31",
+          "line": 102,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@103:62",
+          "line": 103,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@105:28",
+          "line": 105,
+          "column": 27,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@107:13",
+          "line": 107,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@107:13.anonymous@107:34",
+          "line": 107,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@118:13",
+          "line": 118,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.refreshMeetings.anonymous@126:16",
+          "line": 126,
+          "column": 15,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.refreshMeetings.anonymous@126:16.anonymous@126:55",
+          "line": 126,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@133:62",
+          "line": 133,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@133:146",
+          "line": 133,
+          "column": 145,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@134:52",
+          "line": 134,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@135:62",
+          "line": 135,
+          "column": 61,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.selectMeeting.anonymous@137:41",
+          "line": 137,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.initialize.anonymous@153:35",
+          "line": 153,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.initialize.anonymous@153:172",
+          "line": 153,
+          "column": 171,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@162:13",
+          "line": 162,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13",
+          "line": 163,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@166:91",
+          "line": 166,
+          "column": 90,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@166:153",
+          "line": 166,
+          "column": 152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@167:87",
+          "line": 167,
+          "column": 86,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@167:148",
+          "line": 167,
+          "column": 147,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@163:13.anonymous@168:12",
+          "line": 168,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13",
+          "line": 170,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13.anonymous@170:50",
+          "line": 170,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@170:13.anonymous@170:90",
+          "line": 170,
+          "column": 89,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13",
+          "line": 171,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30",
+          "line": 175,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@182:20",
+          "line": 182,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@183:21",
+          "line": 183,
+          "column": 20,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@183:21.anonymous@183:44",
+          "line": 183,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@175:30.anonymous@186:25",
+          "line": 186,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@171:13.anonymous@199:12",
+          "line": 199,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@201:13",
+          "line": 201,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@201:13.anonymous@205:12",
+          "line": 205,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13",
+          "line": 208,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.poll.anonymous@216:21",
+          "line": 216,
+          "column": 20,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.poll.anonymous@219:43",
+          "line": 219,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@208:13.anonymous@228:12",
+          "line": 228,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.edit.anonymous@241:86",
+          "line": 241,
+          "column": 85,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editOption",
+          "line": 242,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editOption.anonymous@242:89",
+          "line": 242,
+          "column": 88,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost",
+          "line": 243,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost.anonymous@244:39",
+          "line": 244,
+          "column": 38,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editCost.anonymous@244:39.anonymous@244:119",
+          "line": 244,
+          "column": 118,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setBudget",
+          "line": 246,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setBudget.anonymous@247:49",
+          "line": 247,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setDeadline",
+          "line": 251,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.setDeadline.anonymous@252:49",
+          "line": 252,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements",
+          "line": 256,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@258:44",
+          "line": 258,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@258:69",
+          "line": 258,
+          "column": 68,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.editRequirements.anonymous@259:66",
+          "line": 259,
+          "column": 65,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.save.anonymous@264:31",
+          "line": 264,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.save.anonymous@264:31.anonymous@267:103",
+          "line": 267,
+          "column": 102,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reviewPreflight.anonymous@286:38",
+          "line": 286,
+          "column": 37,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.start.anonymous@294:35",
+          "line": 294,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.stop.anonymous@304:37",
+          "line": 304,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@314:65",
+          "line": 314,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@314:149",
+          "line": 314,
+          "column": 148,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@315:55",
+          "line": 315,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.followUp.anonymous@316:65",
+          "line": 316,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@323:65",
+          "line": 323,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@323:149",
+          "line": 323,
+          "column": 148,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@324:55",
+          "line": 324,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.clarify.anonymous@325:65",
+          "line": 325,
+          "column": 64,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.retryStage.anonymous@331:47",
+          "line": 331,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.retryStage.anonymous@331:47.anonymous@333:20",
+          "line": 333,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.recover.anonymous@338:74",
+          "line": 338,
+          "column": 73,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.recover.anonymous@338:74.anonymous@345:31",
+          "line": 345,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.inspect.anonymous@353:41",
+          "line": 353,
+          "column": 40,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42",
+          "line": 373,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42.anonymous@375:18",
+          "line": 375,
+          "column": 17,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.upload.anonymous@373:42.anonymous@375:18.anonymous@375:48",
+          "line": 375,
+          "column": 47,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel",
+          "line": 383,
+          "column": 2,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@389:71",
+          "line": 389,
+          "column": 70,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418",
+          "line": 393,
+          "column": 417,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418.anonymous@393:755",
+          "line": 393,
+          "column": 754,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@393:418.anonymous@393:966",
+          "line": 393,
+          "column": 965,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:140",
+          "line": 394,
+          "column": 139,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:140.anonymous@394:308",
+          "line": 394,
+          "column": 307,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@394:578",
+          "line": 394,
+          "column": 577,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@395:139",
+          "line": 395,
+          "column": 138,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:253",
+          "line": 396,
+          "column": 252,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:365",
+          "line": 396,
+          "column": 364,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:591",
+          "line": 396,
+          "column": 590,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:887",
+          "line": 396,
+          "column": 886,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1187",
+          "line": 396,
+          "column": 1186,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.reportPanel.anonymous@396:1237",
+          "line": 396,
+          "column": 1236,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveChoice.anonymous@402:37",
+          "line": 402,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveChoice.anonymous@402:37.anonymous@404:19",
+          "line": 404,
+          "column": 18,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome.anonymous@409:46",
+          "line": 409,
+          "column": 45,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.saveOutcome.anonymous@409:46.anonymous@411:19",
+          "line": 411,
+          "column": 18,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.outcomePayload.anonymous@417:44",
+          "line": 417,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:473",
+          "line": 426,
+          "column": 472,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:473.anonymous@426:605",
+          "line": 426,
+          "column": 604,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864",
+          "line": 426,
+          "column": 863,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913",
+          "line": 426,
+          "column": 912,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086",
+          "line": 426,
+          "column": 1085,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086.anonymous@426:1131",
+          "line": 426,
+          "column": 1130,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@426:864.anonymous@426:913.anonymous@426:1086.anonymous@426:1131.anonymous@426:1153",
+          "line": 426,
+          "column": 1152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@427:719",
+          "line": 427,
+          "column": 718,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@427:719.anonymous@427:749",
+          "line": 427,
+          "column": 748,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@428:417",
+          "line": 428,
+          "column": 416,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@431:201",
+          "line": 431,
+          "column": 200,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@433:379",
+          "line": 433,
+          "column": 378,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@433:510",
+          "line": 433,
+          "column": 509,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:34",
+          "line": 436,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:348",
+          "line": 436,
+          "column": 347,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:611",
+          "line": 436,
+          "column": 610,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:899",
+          "line": 436,
+          "column": 898,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1101",
+          "line": 436,
+          "column": 1100,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1320",
+          "line": 436,
+          "column": 1319,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1513",
+          "line": 436,
+          "column": 1512,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1677",
+          "line": 436,
+          "column": 1676,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:1980",
+          "line": 436,
+          "column": 1979,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537",
+          "line": 436,
+          "column": 2536,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537.anonymous@436:2646",
+          "line": 436,
+          "column": 2645,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@436:2537.anonymous@436:2671",
+          "line": 436,
+          "column": 2670,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343",
+          "line": 437,
+          "column": 342,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:515",
+          "line": 437,
+          "column": 514,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:643",
+          "line": 437,
+          "column": 642,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:746",
+          "line": 437,
+          "column": 745,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:746.anonymous@437:985",
+          "line": 437,
+          "column": 984,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1151",
+          "line": 437,
+          "column": 1150,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1266",
+          "line": 437,
+          "column": 1265,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:343.anonymous@437:1266.anonymous@437:1309",
+          "line": 437,
+          "column": 1308,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:1477",
+          "line": 437,
+          "column": 1476,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@437:1534",
+          "line": 437,
+          "column": 1533,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:188",
+          "line": 438,
+          "column": 187,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:697",
+          "line": 438,
+          "column": 696,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071",
+          "line": 438,
+          "column": 1070,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1153",
+          "line": 438,
+          "column": 1152,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1237",
+          "line": 438,
+          "column": 1236,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1071.anonymous@438:1409",
+          "line": 438,
+          "column": 1408,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:1998",
+          "line": 438,
+          "column": 1997,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245",
+          "line": 438,
+          "column": 2244,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245.anonymous@438:2450",
+          "line": 438,
+          "column": 2449,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:2245.anonymous@438:2450.anonymous@438:2597",
+          "line": 438,
+          "column": 2596,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@438:3333",
+          "line": 438,
+          "column": 3332,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:419",
+          "line": 440,
+          "column": 418,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:799",
+          "line": 440,
+          "column": 798,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1132",
+          "line": 440,
+          "column": 1131,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1550",
+          "line": 440,
+          "column": 1549,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1631",
+          "line": 440,
+          "column": 1630,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:1892",
+          "line": 440,
+          "column": 1891,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:2263",
+          "line": 440,
+          "column": 2262,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@440:2437",
+          "line": 440,
+          "column": 2436,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:358",
+          "line": 443,
+          "column": 357,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452",
+          "line": 443,
+          "column": 451,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452.anonymous@443:552",
+          "line": 443,
+          "column": 551,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@443:452.anonymous@443:552.anonymous@443:611",
+          "line": 443,
+          "column": 610,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:175",
+          "line": 444,
+          "column": 174,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:830",
+          "line": 444,
+          "column": 829,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:830.anonymous@444:928",
+          "line": 444,
+          "column": 927,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126",
+          "line": 444,
+          "column": 1125,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126.anonymous@444:1325",
+          "line": 444,
+          "column": 1324,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@444:1126.anonymous@444:1357",
+          "line": 444,
+          "column": 1356,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@446:453",
+          "line": 446,
+          "column": 452,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:294",
+          "line": 447,
+          "column": 293,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:294.anonymous@447:591",
+          "line": 447,
+          "column": 590,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@447:774",
+          "line": 447,
+          "column": 773,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@448:238",
+          "line": 448,
+          "column": 237,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@448:660",
+          "line": 448,
+          "column": 659,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@451:126",
+          "line": 451,
+          "column": 125,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@451:126.anonymous@451:225",
+          "line": 451,
+          "column": 224,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:101",
+          "line": 455,
+          "column": 100,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:137",
+          "line": 455,
+          "column": 136,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:375",
+          "line": 455,
+          "column": 374,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1317",
+          "line": 455,
+          "column": 1316,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1517",
+          "line": 455,
+          "column": 1516,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698",
+          "line": 455,
+          "column": 1697,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698.anonymous@455:1762",
+          "line": 455,
+          "column": 1761,
+          "hits": null
+        },
+        {
+          "name": "LiveWorkspace.anonymous@455:1698.anonymous@455:1798",
+          "line": 455,
+          "column": 1797,
+          "hits": null
+        }
+      ],
+      "uncovered_lines": [
+        190,
+        191,
+        192,
+        193,
+        194,
+        204,
+        205,
+        221,
+        222,
+        223,
+        224,
+        225,
+        268,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        352,
+        353,
+        354,
+        355,
+        356,
+        357,
+        358,
+        359,
+        360,
+        361,
+        362,
+        379,
+        408,
+        409,
+        410,
+        411,
+        412,
+        413,
+        414
+      ]
+    },
+    {
+      "path": "frontend/app/workspace.tsx",
+      "sha256": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+      "metrics": {
+        "lines": {
+          "total": 1794,
+          "covered": 1567,
+          "skipped": 0,
+          "pct": 87.34
+        },
+        "functions": {
+          "total": 46,
+          "covered": 26,
+          "skipped": 0,
+          "pct": 56.52
+        },
+        "statements": {
+          "total": 1794,
+          "covered": 1567,
+          "skipped": 0,
+          "pct": 87.34
+        },
+        "branches": {
+          "total": 224,
+          "covered": 197,
+          "skipped": 0,
+          "pct": 87.94
+        }
+      },
+      "source_functions": [
+        {
+          "name": "clone",
+          "line": 41,
+          "column": 14,
+          "hits": null
+        },
+        {
+          "name": "equivalent",
+          "line": 42,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport",
+          "line": 46,
+          "column": 0,
+          "hits": 69
+        },
+        {
+          "name": "evidenceForReport.anonymous@48:30",
+          "line": 48,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@48:30.anonymous@49:34",
+          "line": 49,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@52:7",
+          "line": 52,
+          "column": 6,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@54:36",
+          "line": 54,
+          "column": 35,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@54:36.anonymous@55:30",
+          "line": 55,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@58:33",
+          "line": 58,
+          "column": 32,
+          "hits": null
+        },
+        {
+          "name": "Icon",
+          "line": 61,
+          "column": 0,
+          "hits": 594
+        },
+        {
+          "name": "money",
+          "line": 132,
+          "column": 0,
+          "hits": 163
+        },
+        {
+          "name": "downloadReport",
+          "line": 141,
+          "column": 0,
+          "hits": 1
+        },
+        {
+          "name": "downloadReport.anonymous@161:13",
+          "line": 161,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@164:43",
+          "line": 164,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@167:13",
+          "line": 167,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@167:13.anonymous@168:188",
+          "line": 168,
+          "column": 187,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@178:13",
+          "line": 178,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@182:13",
+          "line": 182,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@187:13",
+          "line": 187,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@195:13",
+          "line": 195,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@208:14",
+          "line": 208,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "Inspector",
+          "line": 211,
+          "column": 0,
+          "hits": 71
+        },
+        {
+          "name": "Inspector.anonymous@220:13",
+          "line": 220,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@287:44",
+          "line": 287,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@318:24",
+          "line": 318,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Inspector.anonymous@348:56",
+          "line": 348,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@353:59",
+          "line": 353,
+          "column": 58,
+          "hits": null
+        },
+        {
+          "name": "Workspace",
+          "line": 366,
+          "column": 0,
+          "hits": 69
+        },
+        {
+          "name": "Workspace.anonymous@371:50",
+          "line": 371,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@372:60",
+          "line": 372,
+          "column": 59,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@392:42",
+          "line": 392,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@400:43",
+          "line": 400,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@404:5",
+          "line": 404,
+          "column": 4,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@407:5",
+          "line": 407,
+          "column": 4,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@411:13",
+          "line": 411,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@411:13.anonymous@425:13",
+          "line": 425,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13",
+          "line": 445,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13.anonymous@448:31",
+          "line": 448,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13.anonymous@449:12",
+          "line": 449,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13",
+          "line": 452,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@458:24",
+          "line": 458,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@462:25",
+          "line": 462,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@470:30",
+          "line": 470,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@470:30.anonymous@470:44",
+          "line": 470,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@471:12",
+          "line": 471,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13",
+          "line": 474,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30",
+          "line": 476,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30.anonymous@478:24",
+          "line": 478,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30.anonymous@482:25",
+          "line": 482,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@493:12",
+          "line": 493,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@496:13",
+          "line": 496,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.go",
+          "line": 500,
+          "column": 2,
+          "hits": 16
+        },
+        {
+          "name": "Workspace.save",
+          "line": 506,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.chooseFixture",
+          "line": 539,
+          "column": 2,
+          "hits": 4
+        },
+        {
+          "name": "Workspace.reviewPreflight",
+          "line": 565,
+          "column": 2,
+          "hits": 5
+        },
+        {
+          "name": "Workspace.start",
+          "line": 588,
+          "column": 2,
+          "hits": 4
+        },
+        {
+          "name": "Workspace.followUp",
+          "line": 610,
+          "column": 2,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.followUp.anonymous@613:29",
+          "line": 613,
+          "column": 28,
+          "hits": null
+        },
+        {
+          "name": "Workspace.openSaved",
+          "line": 617,
+          "column": 2,
+          "hits": 2
+        },
+        {
+          "name": "Workspace.openSaved.anonymous@623:24",
+          "line": 623,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.inspectCalculation",
+          "line": 627,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.inspectCalculation.anonymous@628:44",
+          "line": 628,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@651:24",
+          "line": 651,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@662:24",
+          "line": 662,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@673:26",
+          "line": 673,
+          "column": 25,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@680:26",
+          "line": 680,
+          "column": 25,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@687:26",
+          "line": 687,
+          "column": 25,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@698:35",
+          "line": 698,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@698:35.anonymous@699:49",
+          "line": 699,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@698:35.anonymous@705:32",
+          "line": 705,
+          "column": 31,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@788:32",
+          "line": 788,
+          "column": 31,
+          "hits": 4
+        },
+        {
+          "name": "Workspace.anonymous@800:32",
+          "line": 800,
+          "column": 31,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@829:27",
+          "line": 829,
+          "column": 26,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@849:34",
+          "line": 849,
+          "column": 33,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@863:23",
+          "line": 863,
+          "column": 22,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@863:23.anonymous@872:36",
+          "line": 872,
+          "column": 35,
+          "hits": 2
+        },
+        {
+          "name": "Workspace.anonymous@863:23.anonymous@873:38",
+          "line": 873,
+          "column": 37,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@923:42",
+          "line": 923,
+          "column": 41,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@936:37",
+          "line": 936,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@947:56",
+          "line": 947,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@956:68",
+          "line": 956,
+          "column": 67,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@968:42",
+          "line": 968,
+          "column": 41,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1009:58",
+          "line": 1009,
+          "column": 57,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1036:52",
+          "line": 1036,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1060:72",
+          "line": 1060,
+          "column": 71,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1060:72.anonymous@1073:51",
+          "line": 1073,
+          "column": 50,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1139:53",
+          "line": 1139,
+          "column": 52,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1155:40",
+          "line": 1155,
+          "column": 39,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1204:50",
+          "line": 1204,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1241:45",
+          "line": 1241,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1241:45.anonymous@1250:40",
+          "line": 1250,
+          "column": 39,
+          "hits": 45
+        },
+        {
+          "name": "Workspace.anonymous@1261:50",
+          "line": 1261,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1261:50.anonymous@1271:40",
+          "line": 1271,
+          "column": 39,
+          "hits": 44
+        },
+        {
+          "name": "Workspace.anonymous@1302:51",
+          "line": 1302,
+          "column": 50,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1340:32",
+          "line": 1340,
+          "column": 31,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1367:34",
+          "line": 1367,
+          "column": 33,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1381:35",
+          "line": 1381,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1394:35",
+          "line": 1394,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1406:37",
+          "line": 1406,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1427:37",
+          "line": 1427,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1444:35",
+          "line": 1444,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1456:37",
+          "line": 1456,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1470:37",
+          "line": 1470,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1480:42",
+          "line": 1480,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1480:42.anonymous@1488:55",
+          "line": 1488,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1507:50",
+          "line": 1507,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1513:44",
+          "line": 1513,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1533:35",
+          "line": 1533,
+          "column": 34,
+          "hits": 3
+        },
+        {
+          "name": "Workspace.anonymous@1533:35.anonymous@1535:29",
+          "line": 1535,
+          "column": 28,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1543:47",
+          "line": 1543,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1559:35",
+          "line": 1559,
+          "column": 34,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@1682:35",
+          "line": 1682,
+          "column": 34,
+          "hits": 5
+        },
+        {
+          "name": "Workspace.anonymous@1693:34",
+          "line": 1693,
+          "column": 33,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1741:25",
+          "line": 1741,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1756:32",
+          "line": 1756,
+          "column": 31,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@1765:32",
+          "line": 1765,
+          "column": 31,
+          "hits": 1
+        },
+        {
+          "name": "Workspace.anonymous@1765:32.anonymous@1768:42",
+          "line": 1768,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1765:32.anonymous@1772:43",
+          "line": 1772,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1790:51",
+          "line": 1790,
+          "column": 50,
+          "hits": null
+        }
+      ],
+      "uncovered_mapped_functions": [
+        {
+          "name": "Inspector.anonymous@318:24",
+          "line": 318,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.save",
+          "line": 506,
+          "column": 2,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@651:24",
+          "line": 651,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@662:24",
+          "line": 662,
+          "column": 23,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@680:26",
+          "line": 680,
+          "column": 25,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@687:26",
+          "line": 687,
+          "column": 25,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@698:35.anonymous@705:32",
+          "line": 705,
+          "column": 31,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@923:42",
+          "line": 923,
+          "column": 41,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@968:42",
+          "line": 968,
+          "column": 41,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1155:40",
+          "line": 1155,
+          "column": 39,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1340:32",
+          "line": 1340,
+          "column": 31,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1367:34",
+          "line": 1367,
+          "column": 33,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1381:35",
+          "line": 1381,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1394:35",
+          "line": 1394,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1406:37",
+          "line": 1406,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1427:37",
+          "line": 1427,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1444:35",
+          "line": 1444,
+          "column": 34,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1456:37",
+          "line": 1456,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1470:37",
+          "line": 1470,
+          "column": 36,
+          "hits": 0
+        },
+        {
+          "name": "Workspace.anonymous@1693:34",
+          "line": 1693,
+          "column": 33,
+          "hits": 0
+        }
+      ],
+      "unmapped_functions": [
+        {
+          "name": "clone",
+          "line": 41,
+          "column": 14,
+          "hits": null
+        },
+        {
+          "name": "equivalent",
+          "line": 42,
+          "column": 19,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@48:30",
+          "line": 48,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@48:30.anonymous@49:34",
+          "line": 49,
+          "column": 33,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@52:7",
+          "line": 52,
+          "column": 6,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@54:36",
+          "line": 54,
+          "column": 35,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@54:36.anonymous@55:30",
+          "line": 55,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "evidenceForReport.anonymous@58:33",
+          "line": 58,
+          "column": 32,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@161:13",
+          "line": 161,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@164:43",
+          "line": 164,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@167:13",
+          "line": 167,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@167:13.anonymous@168:188",
+          "line": 168,
+          "column": 187,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@178:13",
+          "line": 178,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@182:13",
+          "line": 182,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@187:13",
+          "line": 187,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@195:13",
+          "line": 195,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "downloadReport.anonymous@208:14",
+          "line": 208,
+          "column": 13,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@220:13",
+          "line": 220,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@287:44",
+          "line": 287,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@348:56",
+          "line": 348,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "Inspector.anonymous@353:59",
+          "line": 353,
+          "column": 58,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@371:50",
+          "line": 371,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@372:60",
+          "line": 372,
+          "column": 59,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@392:42",
+          "line": 392,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@400:43",
+          "line": 400,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@404:5",
+          "line": 404,
+          "column": 4,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@407:5",
+          "line": 407,
+          "column": 4,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@411:13",
+          "line": 411,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@411:13.anonymous@425:13",
+          "line": 425,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13",
+          "line": 445,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13.anonymous@448:31",
+          "line": 448,
+          "column": 30,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@445:13.anonymous@449:12",
+          "line": 449,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13",
+          "line": 452,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@458:24",
+          "line": 458,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@462:25",
+          "line": 462,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@470:30",
+          "line": 470,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@470:30.anonymous@470:44",
+          "line": 470,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@452:13.anonymous@471:12",
+          "line": 471,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13",
+          "line": 474,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30",
+          "line": 476,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30.anonymous@478:24",
+          "line": 478,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@476:30.anonymous@482:25",
+          "line": 482,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@474:13.anonymous@493:12",
+          "line": 493,
+          "column": 11,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@496:13",
+          "line": 496,
+          "column": 12,
+          "hits": null
+        },
+        {
+          "name": "Workspace.followUp.anonymous@613:29",
+          "line": 613,
+          "column": 28,
+          "hits": null
+        },
+        {
+          "name": "Workspace.openSaved.anonymous@623:24",
+          "line": 623,
+          "column": 23,
+          "hits": null
+        },
+        {
+          "name": "Workspace.inspectCalculation",
+          "line": 627,
+          "column": 29,
+          "hits": null
+        },
+        {
+          "name": "Workspace.inspectCalculation.anonymous@628:44",
+          "line": 628,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@698:35",
+          "line": 698,
+          "column": 34,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@698:35.anonymous@699:49",
+          "line": 699,
+          "column": 48,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@829:27",
+          "line": 829,
+          "column": 26,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@863:23",
+          "line": 863,
+          "column": 22,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@936:37",
+          "line": 936,
+          "column": 36,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@947:56",
+          "line": 947,
+          "column": 55,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@956:68",
+          "line": 956,
+          "column": 67,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58",
+          "line": 1009,
+          "column": 57,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1036:52",
+          "line": 1036,
+          "column": 51,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1060:72",
+          "line": 1060,
+          "column": 71,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1009:58.anonymous@1060:72.anonymous@1073:51",
+          "line": 1073,
+          "column": 50,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1139:53",
+          "line": 1139,
+          "column": 52,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1204:50",
+          "line": 1204,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1241:45",
+          "line": 1241,
+          "column": 44,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1261:50",
+          "line": 1261,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1302:51",
+          "line": 1302,
+          "column": 50,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1480:42",
+          "line": 1480,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1480:42.anonymous@1488:55",
+          "line": 1488,
+          "column": 54,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1507:50",
+          "line": 1507,
+          "column": 49,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1513:44",
+          "line": 1513,
+          "column": 43,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1533:35.anonymous@1535:29",
+          "line": 1535,
+          "column": 28,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1543:47",
+          "line": 1543,
+          "column": 46,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1741:25",
+          "line": 1741,
+          "column": 24,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1765:32.anonymous@1768:42",
+          "line": 1768,
+          "column": 41,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1765:32.anonymous@1772:43",
+          "line": 1772,
+          "column": 42,
+          "hits": null
+        },
+        {
+          "name": "Workspace.anonymous@1790:51",
+          "line": 1790,
+          "column": 50,
+          "hits": null
+        }
+      ],
+      "uncovered_lines": [
+        149,
+        150,
+        151,
+        152,
+        153,
+        154,
+        155,
+        156,
+        157,
+        158,
+        159,
+        160,
+        161,
+        162,
+        163,
+        164,
+        165,
+        166,
+        167,
+        168,
+        169,
+        170,
+        171,
+        172,
+        173,
+        174,
+        175,
+        176,
+        177,
+        178,
+        179,
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        231,
+        295,
+        296,
+        297,
+        298,
+        299,
+        310,
+        311,
+        312,
+        313,
+        314,
+        315,
+        316,
+        317,
+        318,
+        319,
+        320,
+        321,
+        322,
+        323,
+        324,
+        325,
+        326,
+        327,
+        328,
+        329,
+        330,
+        331,
+        332,
+        336,
+        337,
+        338,
+        339,
+        340,
+        341,
+        342,
+        343,
+        344,
+        345,
+        346,
+        347,
+        348,
+        349,
+        350,
+        351,
+        352,
+        353,
+        354,
+        438,
+        439,
+        440,
+        441,
+        507,
+        508,
+        509,
+        510,
+        511,
+        512,
+        513,
+        514,
+        515,
+        516,
+        517,
+        518,
+        519,
+        520,
+        521,
+        522,
+        523,
+        524,
+        525,
+        526,
+        527,
+        528,
+        529,
+        530,
+        531,
+        532,
+        533,
+        534,
+        535,
+        536,
+        537,
+        538,
+        554,
+        555,
+        556,
+        557,
+        558,
+        559,
+        560,
+        561,
+        562,
+        597,
+        663,
+        664,
+        688,
+        689,
+        690,
+        817,
+        818,
+        845,
+        882,
+        883,
+        884,
+        885,
+        924,
+        969,
+        1156,
+        1157,
+        1158,
+        1159,
+        1285,
+        1286,
+        1287,
+        1288,
+        1289,
+        1290,
+        1291,
+        1292,
+        1293,
+        1294,
+        1295,
+        1296,
+        1297,
+        1298,
+        1299,
+        1300,
+        1301,
+        1302,
+        1303,
+        1304,
+        1305,
+        1306,
+        1307,
+        1308,
+        1309,
+        1310,
+        1311,
+        1312,
+        1313,
+        1314,
+        1315,
+        1316,
+        1317,
+        1318,
+        1319,
+        1320,
+        1321,
+        1322,
+        1323,
+        1324,
+        1341,
+        1382,
+        1395,
+        1407,
+        1408,
+        1409,
+        1410,
+        1428,
+        1429,
+        1430,
+        1431,
+        1432,
+        1433,
+        1445,
+        1457,
+        1458,
+        1459,
+        1460,
+        1471,
+        1565,
+        1566,
+        1567,
+        1568,
+        1584,
+        1605
+      ]
+    }
+  ],
+  "unavailable_files": [
+    {
+      "path": "frontend/app/design/page.tsx",
+      "sha256": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+      "reason": "No current browser source mapping/capture; server-only, unimported or removed by compiler. Excluded from measured denominator.",
+      "functions": [
+        {
+          "name": "DesignPage",
+          "line": 8,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "path": "frontend/app/layout.tsx",
+      "sha256": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+      "reason": "No current browser source mapping/capture; server-only, unimported or removed by compiler. Excluded from measured denominator.",
+      "functions": [
+        {
+          "name": "RootLayout",
+          "line": 10,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "path": "frontend/app/live/page.tsx",
+      "sha256": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+      "reason": "No current browser source mapping/capture; server-only, unimported or removed by compiler. Excluded from measured denominator.",
+      "functions": [
+        {
+          "name": "LivePage",
+          "line": 10,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "path": "frontend/app/page.tsx",
+      "sha256": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+      "reason": "No current browser source mapping/capture; server-only, unimported or removed by compiler. Excluded from measured denominator.",
+      "functions": [
+        {
+          "name": "Page",
+          "line": 3,
+          "column": 0
+        }
+      ]
+    }
+  ],
+  "source_function_totals": {
+    "inventoried": 453,
+    "mapped": 104,
+    "uncovered_mapped": 29,
+    "unmapped": 349
+  },
+  "accepted_captures": [
+    {
+      "capture": ".local/deep-audit/v8/0321a7245effeecfdeda43ce.json",
+      "test": "expired preflight cannot start a new simulated review",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/0321a7245effeecfdeda43ce.json",
+      "test": "expired preflight cannot start a new simulated review",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/0f14fcfa82fa170ac673383a.json",
+      "test": "retry controls use authoritative eligible stages instead of historical failure events",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/0f14fcfa82fa170ac673383a.json",
+      "test": "retry controls use authoritative eligible stages instead of historical failure events",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/0f14fcfa82fa170ac673383a.json",
+      "test": "retry controls use authoritative eligible stages instead of historical failure events",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/1af2481613467115fe1e8696.json",
+      "test": "partial result does not invent a recommendation or readiness",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/1af2481613467115fe1e8696.json",
+      "test": "partial result does not invent a recommendation or readiness",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/1c3924388913a2230f60c2d5.json",
+      "test": "debounced draft save preserves edits made while an older acknowledgement is delayed",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/1c3924388913a2230f60c2d5.json",
+      "test": "debounced draft save preserves edits made while an older acknowledgement is delayed",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/1c3924388913a2230f60c2d5.json",
+      "test": "debounced draft save preserves edits made while an older acknowledgement is delayed",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3bb7a08fd7214ce9e9cf163f.json",
+      "test": "lost Start response retains its UUID and reconciles without a second review",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3bb7a08fd7214ce9e9cf163f.json",
+      "test": "lost Start response retains its UUID and reconciles without a second review",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3bb7a08fd7214ce9e9cf163f.json",
+      "test": "lost Start response retains its UUID and reconciles without a second review",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3d4afdb277331fd8e62c6577.json",
+      "test": "expired live access removes the previous private draft and saved history",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3d4afdb277331fd8e62c6577.json",
+      "test": "expired live access removes the previous private draft and saved history",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3d4afdb277331fd8e62c6577.json",
+      "test": "expired live access removes the previous private draft and saved history",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3f47d4101af709c470f93327.json",
+      "test": "configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3f47d4101af709c470f93327.json",
+      "test": "configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/3f47d4101af709c470f93327.json",
+      "test": "configured hosted session supplies in-memory CSRF and only exposes live review after operator health permits it",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/42a356e235f376e7955662b9.json",
+      "test": "custom draft saves without presenting an unrelated report and opt-in storage restores",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/42a356e235f376e7955662b9.json",
+      "test": "custom draft saves without presenting an unrelated report and opt-in storage restores",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/45f87baa1911be90c31a6b23.json",
+      "test": "canonical original remains honestly unreviewed, selectable and bounded behind preflight",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/45f87baa1911be90c31a6b23.json",
+      "test": "canonical original remains honestly unreviewed, selectable and bounded behind preflight",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/499eb05406444ece23ecea70.json",
+      "test": "a changed account cannot send the previous account's captured visual action",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/499eb05406444ece23ecea70.json",
+      "test": "a changed account cannot send the previous account's captured visual action",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/59f91e4e7a17643724a24762.json",
+      "test": "actual CORS text upload freezes only selected ready bytes in preflight",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/59f91e4e7a17643724a24762.json",
+      "test": "actual CORS text upload freezes only selected ready bytes in preflight",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/59f91e4e7a17643724a24762.json",
+      "test": "actual CORS text upload freezes only selected ready bytes in preflight",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/5c51d091776d4ace3d31bbb4.json",
+      "test": "late native source response cannot overwrite source typed after opening",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/5c51d091776d4ace3d31bbb4.json",
+      "test": "late native source response cannot overwrite source typed after opening",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/6df9d4f876a04edf02377707.json",
+      "test": "failed source reopening clears previous source and exposes an accessible recoverable error",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/6df9d4f876a04edf02377707.json",
+      "test": "failed source reopening clears previous source and exposes an accessible recoverable error",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/7f6cf5598552045469091e31.json",
+      "test": "malformed visual history fails validation before hostile text reaches the screen",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/7f6cf5598552045469091e31.json",
+      "test": "malformed visual history fails validation before hostile text reaches the screen",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/8de50920e5a6cc828ee56303.json",
+      "test": "expired visual access removes private candidates, history and source before offering another action",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/8de50920e5a6cc828ee56303.json",
+      "test": "expired visual access removes private candidates, history and source before offering another action",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/9c00bd6755a1de5c1bbf54a0.json",
+      "test": "unknown installation retains unknown total and conditional readiness",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/9c00bd6755a1de5c1bbf54a0.json",
+      "test": "unknown installation retains unknown total and conditional readiness",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/9d693d887669f20e95d4ed53.json",
+      "test": "Stop remains unconfirmed until acknowledgement and preserves saved partial work",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/9d693d887669f20e95d4ed53.json",
+      "test": "Stop remains unconfirmed until acknowledgement and preserves saved partial work",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/9d693d887669f20e95d4ed53.json",
+      "test": "Stop remains unconfirmed until acknowledgement and preserves saved partial work",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/b9d8aefb28a57a5ddc141928.json",
+      "test": "requirement and preference limits preserve entered lines and reserve budget and deadline slots",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/b9d8aefb28a57a5ddc141928.json",
+      "test": "requirement and preference limits preserve entered lines and reserve budget and deadline slots",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/b9d8aefb28a57a5ddc141928.json",
+      "test": "requirement and preference limits preserve entered lines and reserve budget and deadline slots",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/be466fd89be9a7929b755862.json",
+      "test": "changed horizon creates a linked walkthrough and preserves the original report",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/be466fd89be9a7929b755862.json",
+      "test": "changed horizon creates a linked walkthrough and preserves the original report",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d0ae0fd1ea3449e70bb2a300.json",
+      "test": "sample passages, exact calculations, keyboard dialog and immutable JSON export",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d0ae0fd1ea3449e70bb2a300.json",
+      "test": "sample passages, exact calculations, keyboard dialog and immutable JSON export",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d5a54130b9c22e75a8ad0be8.json",
+      "test": "changed-input follow-up preserves the original report",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d5a54130b9c22e75a8ad0be8.json",
+      "test": "changed-input follow-up preserves the original report",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d5a54130b9c22e75a8ad0be8.json",
+      "test": "changed-input follow-up preserves the original report",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d9662eafa84c67b432dd6671.json",
+      "test": "structured native source produces immutable editable pixels without an image provider",
+      "bundle": "frontend/out/_next/static/chunks/app/design/page-26a3ca4c1059739c.js",
+      "sha256": "9338195f0929a208c26cd235ee743e07bfd7a954d5e861ae777da818f7aedf25"
+    },
+    {
+      "capture": ".local/deep-audit/v8/d9662eafa84c67b432dd6671.json",
+      "test": "structured native source produces immutable editable pixels without an image provider",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/e5cb21035a11f67c9d4fe9bb.json",
+      "test": "cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/e5cb21035a11f67c9d4fe9bb.json",
+      "test": "cancellation acknowledgement is distinct from Stop not confirmed and preserves the selected horizon",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/e8496e3a9dc805c1a6cb5b89.json",
+      "test": "unknown cost stays unknown and narrow layout remains keyboard operable",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/e8496e3a9dc805c1a6cb5b89.json",
+      "test": "unknown cost stays unknown and narrow layout remains keyboard operable",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/e8496e3a9dc805c1a6cb5b89.json",
+      "test": "unknown cost stays unknown and narrow layout remains keyboard operable",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/ef9b8a37bb406185d7ad0f72.json",
+      "test": "narrow viewport reflows and tabs support arrow-key navigation",
+      "bundle": "frontend/out/_next/static/chunks/app/page-e793bb9ef6c42ca1.js",
+      "sha256": "ba73d767e01cc28277adbd1d52c3f5eeec7d0a8ad1471826f726be949c8b4f72"
+    },
+    {
+      "capture": ".local/deep-audit/v8/ef9b8a37bb406185d7ad0f72.json",
+      "test": "narrow viewport reflows and tabs support arrow-key navigation",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/f1a3bda7bfb16a4d7b512792.json",
+      "test": "unconfirmed private autosave retains a noncontent receipt and reconciles after reload",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/f1a3bda7bfb16a4d7b512792.json",
+      "test": "unconfirmed private autosave retains a noncontent receipt and reconciles after reload",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/f1a3bda7bfb16a4d7b512792.json",
+      "test": "unconfirmed private autosave retains a noncontent receipt and reconciles after reload",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/fd20a3d18e0d25147c59752d.json",
+      "test": "server-saved comparison reopens, inspects exact evidence and exports its saved version",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/fd20a3d18e0d25147c59752d.json",
+      "test": "server-saved comparison reopens, inspects exact evidence and exports its saved version",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/fd20a3d18e0d25147c59752d.json",
+      "test": "server-saved comparison reopens, inspects exact evidence and exports its saved version",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    },
+    {
+      "capture": ".local/deep-audit/v8/ff0b0d9849026c13d91c1c18.json",
+      "test": "expired hosted access offers sign-in without replaying any saved action",
+      "bundle": "frontend/out/_next/static/chunks/573-325bdf43e0c9b7c5.js",
+      "sha256": "d4418e7932acc727906fcd7546b4b9e63aae9f1c895d36c35b842599e0e69c50"
+    },
+    {
+      "capture": ".local/deep-audit/v8/ff0b0d9849026c13d91c1c18.json",
+      "test": "expired hosted access offers sign-in without replaying any saved action",
+      "bundle": "frontend/out/_next/static/chunks/606-0c97053aef073a03.js",
+      "sha256": "cbd25f03cee813467b4eacb15ed371441f49a1bd278a670cec0217f6de15ada0"
+    },
+    {
+      "capture": ".local/deep-audit/v8/ff0b0d9849026c13d91c1c18.json",
+      "test": "expired hosted access offers sign-in without replaying any saved action",
+      "bundle": "frontend/out/_next/static/chunks/app/live/page-b7a23505c54e58d1.js",
+      "sha256": "0b0ab7d05a9fa35cf6811833e2ddebc6ae751267a95303516b52842cf2b32ea3"
+    }
+  ],
+  "skipped_captures": [],
+  "limitations": [
+    "V8 ranges are remapped through compiler source maps; this is not source-instrumented Istanbul statement or branch measurement.",
+    "Istanbul function metrics describe mapped V8 function ranges. The separate source-function inventory matches declaration/header and end locations conservatively; unmapped functions are not claimed executed or unexecuted.",
+    "Type-only, blank and compiler-eliminated lines may be represented differently by V8 line conversion. Server components without browser maps are listed separately and excluded from measured denominators.",
+    "Only successful test captures whose bundle and original source checksums match this build are merged; this run may be a subset of the full browser suite.",
+    "No 100 percent coverage or correctness claim is implied; inspect uncovered lines/functions and unavailable files."
+  ]
+}

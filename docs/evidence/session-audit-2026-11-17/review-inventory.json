@@ -1,0 +1,578 @@
+[
+  {
+    "name": "Snapshot/event pagination and sequence merge",
+    "source": "frontend/app/live-workspace.tsx:292-329",
+    "status": "SESSION-UI01; cutoff/dedup/generation protections reviewed",
+    "domain": "root",
+    "entry_id": "SA-01"
+  },
+  {
+    "name": "Cancellation and saved-report access during reads",
+    "source": "frontend/app/live-workspace.tsx:117-120,298-319",
+    "status": "SESSION-UI01",
+    "domain": "root",
+    "entry_id": "SA-02"
+  },
+  {
+    "name": "Assessment target loading and recovery",
+    "source": "frontend/app/live-workspace.tsx:159-168",
+    "status": "SESSION-UI02",
+    "domain": "root",
+    "entry_id": "SA-03"
+  },
+  {
+    "name": "Scoped attestation submission and command receipt",
+    "source": "frontend/app/live-workspace.tsx:537-549; frontend/app/api-client.ts:189-270",
+    "status": "Exact target hash/version/references submitted; no new mutation-scope defect observed",
+    "domain": "root",
+    "entry_id": "SA-04"
+  },
+  {
+    "name": "Intake suggestion display, editor copy and confirmation",
+    "source": "frontend/app/live-workspace.tsx:431-451; backend/src/round_robin/schemas/views.py",
+    "status": "Suggestions require explicit confirmation; no new local defect observed",
+    "domain": "root",
+    "entry_id": "SA-05"
+  },
+  {
+    "name": "Complete issue/event UI and readiness dimensions",
+    "source": "frontend/app/live-workspace.tsx:523-525",
+    "status": "UI renders saved events; underlying freshness/version defects in evidence review",
+    "domain": "root",
+    "entry_id": "SA-06"
+  },
+  {
+    "name": "Evidence coverage and inherited claim scope labels",
+    "source": "frontend/app/live-workspace.tsx:182-185,592",
+    "status": "Heuristic passage scope and attributed claim support remain qualified; no new local defect observed",
+    "domain": "root",
+    "entry_id": "SA-07"
+  },
+  {
+    "name": "Visual candidate, supplement and regression display",
+    "source": "frontend/app/design/workspace.tsx:201-214",
+    "status": "Separate reviewer/completeness/blocker display reviewed; backend envelope defects in evaluation review",
+    "domain": "root",
+    "entry_id": "SA-08"
+  },
+  {
+    "name": "Generated Python JSON and browser TypeScript contracts",
+    "source": "contracts/*.json; packages/api-client/src/{schema,application}.ts",
+    "status": "Fresh contracts:check and TypeScript check passed",
+    "domain": "root",
+    "entry_id": "SA-09"
+  },
+  {
+    "name": "New regression tests and modified fixture rationale",
+    "source": "backend/tests/test_algorithm_*.py; backend/tests/test_runtime_algorithm_fixes.py; frontend/tests/live-workspace.test.tsx; domain closure records",
+    "status": "Existing controls remain exercised; missing adversarial cases reproduced, no passing-test count treated as correctness proof",
+    "domain": "root",
+    "entry_id": "SA-10"
+  },
+  {
+    "name": "Initial audit inventory/report/reproducer artifacts",
+    "source": "docs/evidence/algorithm-audit-2026-11-17",
+    "status": "Historical evidence hashes preserved; inventories are responsibilities rather than unique formal algorithms",
+    "domain": "root",
+    "entry_id": "SA-11"
+  },
+  {
+    "name": "Improvement design, literature scope and closure plan",
+    "source": "docs/evidence/algorithm-improvement-2026-11-17",
+    "status": "Prospective claims retained; empirical superiority remains explicitly unestablished",
+    "domain": "root",
+    "entry_id": "SA-12"
+  },
+  {
+    "name": "Repair finalizer, hashes and completion claims",
+    "source": "docs/evidence/algorithm-fixes-2026-11-17/finalize.py; README.md",
+    "status": "SESSION-TOOL01; root input manifest matches current287 files; blanket completion claim superseded by this audit",
+    "domain": "root",
+    "entry_id": "SA-13"
+  },
+  {
+    "name": "Audit probes, disposable inputs and source preservation",
+    "source": "docs/evidence/session-audit-2026-11-17/root",
+    "status": "Counterexample assertions record existing faulty behavior; no product/history edits or provider calls",
+    "domain": "root",
+    "entry_id": "SA-14"
+  },
+  {
+    "algorithm": "Immutable command/start/retry boundaries",
+    "source": "api/preflight.py; api/events.py",
+    "assessment": "Reviewed snapshot/hash/owner lock, one-use preflight, original-command replay, queue guards and explicit parent replacement; no new concrete transaction defect observed.",
+    "domain": "runtime",
+    "entry_id": "SA-15",
+    "name": "Immutable command/start/retry boundaries"
+  },
+  {
+    "algorithm": "Canonical initial context admission",
+    "source": "api/preflight.py:56-115",
+    "assessment": "SESSION-RUNTIME-02; application packet bound is checked, adapter-specific context envelope omitted.",
+    "domain": "runtime",
+    "entry_id": "SA-16",
+    "name": "Canonical initial context admission"
+  },
+  {
+    "algorithm": "Intake selected evidence and proposed changes",
+    "source": "orchestration/controller.py:114-130; worker/tasks.py:23-56; providers/base.py:160-176",
+    "assessment": "Transient selected text, typed per-field proposals, explicit confirmation, scope-limited changes reviewed; no new concrete defect observed.",
+    "domain": "runtime",
+    "entry_id": "SA-17",
+    "name": "Intake selected evidence and proposed changes"
+  },
+  {
+    "algorithm": "Proposal independence and scoped peer selection",
+    "source": "worker/tasks.py:23-56; providers/base.py:86-128",
+    "assessment": "Proposals suppress peer outputs/current-run peer claims. Synthesis/audit receive scoped contributions and obligations; no new concrete independence violation observed.",
+    "domain": "runtime",
+    "entry_id": "SA-18",
+    "name": "Proposal independence and scoped peer selection"
+  },
+  {
+    "algorithm": "Contribution footprint and wire context",
+    "source": "providers/base.py:16-30,86-128,157-159",
+    "assessment": "Reviewed conservative response footprint, claim duplication removal, latest answer compaction and final packet caps; no formal proof of the full heuristic bound supplied; actual cap remains authoritative.",
+    "domain": "runtime",
+    "entry_id": "SA-19",
+    "name": "Contribution footprint and wire context"
+  },
+  {
+    "algorithm": "Output shape/reference validation and repair",
+    "source": "providers/base.py:157-232; providers/http.py:168-206",
+    "assessment": "Reviewed scoped references, claim bases/refutation, unique proposals/objections/responses, sanitized diagnostic paths and stage instruction handling; no new concrete runtime defect observed.",
+    "domain": "runtime",
+    "entry_id": "SA-20",
+    "name": "Output shape/reference validation and repair"
+  },
+  {
+    "algorithm": "Frozen request/configuration identity",
+    "source": "providers/http.py:79-95; orchestration/configuration.py",
+    "assessment": "Reviewed declared prompt/schema/policy hashing and fail-closed incompatible live runs; generated payload-suffix source is not independently hash-bound beyond declared policy metadata (maintainer must bump identity when changing it).",
+    "domain": "runtime",
+    "entry_id": "SA-21",
+    "name": "Frozen request/configuration identity"
+  },
+  {
+    "algorithm": "Finite shared protocol and termination",
+    "source": "orchestration/protocol.py; orchestration/controller.py:299-390",
+    "assessment": "Reviewed distinct profiles, quorum, material-target correction, one correction maximum and limited publication; no unbounded loop observed.",
+    "domain": "runtime",
+    "entry_id": "SA-22",
+    "name": "Finite shared protocol and termination"
+  },
+  {
+    "algorithm": "Mandatory money/call/time ledger",
+    "source": "orchestration/budget.py; orchestration/controller.py:182-219",
+    "assessment": "Reviewed original aggregate caps, finish-hold transfer, unknown exposure preservation, correction reservation and no authorization renewal; no new concrete monetary bypass observed.",
+    "domain": "runtime",
+    "entry_id": "SA-23",
+    "name": "Mandatory money/call/time ledger"
+  },
+  {
+    "algorithm": "Capacity and mandatory finishing priority",
+    "source": "orchestration/admission.py:58-70,129-136; worker/image_tasks.py:102-114",
+    "assessment": "SESSION-RUNTIME-01; newly added priority only applies to text capacity entry point.",
+    "domain": "runtime",
+    "entry_id": "SA-24",
+    "name": "Capacity and mandatory finishing priority"
+  },
+  {
+    "algorithm": "Retry due/generation fences",
+    "source": "worker/tasks.py:59-83,104-174; database/services.py:64-87; dispatcher/service.py:25-58,172-188",
+    "assessment": "Reviewed durable not_before, immutable publication generation, stale-message rejection and recovery requeue. Direct legacy calls still enforce due time. No premature second-call repro remains.",
+    "domain": "runtime",
+    "entry_id": "SA-25",
+    "name": "Retry due/generation fences"
+  },
+  {
+    "algorithm": "Moderator fallback ordering",
+    "source": "orchestration/policies.py:72-96",
+    "assessment": "SESSION-RUNTIME-03; unchanged loop cycles providers on pre-send failures.",
+    "domain": "runtime",
+    "entry_id": "SA-26",
+    "name": "Moderator fallback ordering"
+  },
+  {
+    "algorithm": "Worker authorization/persistence/cancellation",
+    "source": "worker/tasks.py:104-267",
+    "assessment": "Reviewed commit-before-send, lease/generation/fence checks, savepoint atomic claim+issue persistence, accounting settlement and late-result discard; no new concrete mutation leak observed.",
+    "domain": "runtime",
+    "entry_id": "SA-27",
+    "name": "Worker authorization/persistence/cancellation"
+  },
+  {
+    "algorithm": "Dispatcher/reconciler",
+    "source": "dispatcher/service.py",
+    "assessment": "Reviewed at-least-once intent publication, lost authorization unknown settlement, retained finish release, expired claims and pending generation recovery; no new concrete liveness defect beyond listed priority gap observed.",
+    "domain": "runtime",
+    "entry_id": "SA-28",
+    "name": "Dispatcher/reconciler"
+  },
+  {
+    "algorithm": "Queue/admission quotas and FIFO",
+    "source": "orchestration/admission.py:47-112; api/events.py:243-298; api/preflight.py:201-221",
+    "assessment": "Reviewed shared queued-count guard on all transitions, retained tickets and original expiry; no quota bypass reproduced.",
+    "domain": "runtime",
+    "entry_id": "SA-29",
+    "name": "Queue/admission quotas and FIFO"
+  },
+  {
+    "algorithm": "Saved report terminal status integration",
+    "source": "orchestration/controller.py:222-390",
+    "assessment": "Reviewed material obligations prevent completed/ready claims, final status preserves missing participation and reports use committed work. Evidence semantics reviewed independently by evidence lane.",
+    "domain": "runtime",
+    "entry_id": "SA-30",
+    "name": "Saved report terminal status integration"
+  },
+  {
+    "algorithm": "API event cutoff/replay",
+    "source": "api/events.py:63-149",
+    "assessment": "Reviewed server cutoff and bounded event paging. Parent UI audit found first-load pagination outage hides Stop/report; independently cross-checked and confirmed.",
+    "domain": "runtime",
+    "entry_id": "SA-31",
+    "name": "API event cutoff/replay"
+  },
+  {
+    "algorithm": "Regression quality",
+    "source": "backend/tests/test_runtime_algorithm_fixes.py; test_algorithm_context_and_repair.py; test_orchestration.py; test_providers.py; test_provider_configuration.py",
+    "assessment": "55 existing focused tests pass; current three new probes intentionally assert observed faulty behavior. Passing existing tests did not cover these failures.",
+    "domain": "runtime",
+    "entry_id": "SA-32",
+    "name": "Regression quality"
+  },
+  {
+    "name": "Claim graph cycles, AND premises/OR alternatives and status/kind propagation",
+    "source": "backend/src/round_robin/research/claims.py:12",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-33"
+  },
+  {
+    "name": "Alias scoping, identity assignment and recursive reference rewrite",
+    "source": "backend/src/round_robin/research/claims.py:55",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-34"
+  },
+  {
+    "name": "Immutable claim content hash and old-shape read compatibility",
+    "source": "backend/src/round_robin/research/reuse.py:32",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-35"
+  },
+  {
+    "name": "Claim persistence and source status qualification",
+    "source": "backend/src/round_robin/research/reuse.py:76",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-36"
+  },
+  {
+    "name": "Explicit parent selection, reference closure and freshness downgrade",
+    "source": "backend/src/round_robin/research/reuse.py:122",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-37"
+  },
+  {
+    "name": "Issue opening identity, complete bounded storage and material filtering",
+    "source": "backend/src/round_robin/research/discussion.py:21",
+    "status": "reviewed_with_version_binding_finding",
+    "domain": "evidence",
+    "entry_id": "SA-38"
+  },
+  {
+    "name": "Independent issue response/resolution and stale input handling",
+    "source": "backend/src/round_robin/research/discussion.py:64",
+    "status": "SESSION-E02",
+    "domain": "evidence",
+    "entry_id": "SA-39"
+  },
+  {
+    "name": "Assessment target hash, ownership and exact evidence binding",
+    "source": "backend/src/round_robin/research/discussion.py:117",
+    "status": "reviewed_no_new_identity_scope_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-40"
+  },
+  {
+    "name": "Assessment latest-record reduction and expiry handling",
+    "source": "backend/src/round_robin/research/discussion.py:141",
+    "status": "SESSION-E01",
+    "domain": "evidence",
+    "entry_id": "SA-41"
+  },
+  {
+    "name": "Attestation command replay, concurrency/version guard and zero-inference publication",
+    "source": "backend/src/round_robin/api/assessments.py:53",
+    "status": "SESSION-E01",
+    "domain": "evidence",
+    "entry_id": "SA-42"
+  },
+  {
+    "name": "Conservative synthesis/audit constraint disagreement reducer",
+    "source": "backend/src/round_robin/orchestration/reporting.py:93",
+    "status": "reviewed_no_new_disagreement_attribution_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-43"
+  },
+  {
+    "name": "Scoped owner requirement and comparative cost support",
+    "source": "backend/src/round_robin/orchestration/reporting.py:120",
+    "status": "SESSION-E01",
+    "domain": "evidence",
+    "entry_id": "SA-44"
+  },
+  {
+    "name": "Full issue/readiness/report construction and display overflow",
+    "source": "backend/src/round_robin/orchestration/reporting.py:165",
+    "status": "SESSION-E02",
+    "domain": "evidence",
+    "entry_id": "SA-45"
+  },
+  {
+    "name": "Readiness reducer and scoped qualification text",
+    "source": "backend/src/round_robin/reports/readiness.py:6",
+    "status": "reviewed_with_upstream_expiry_and_resolution_findings",
+    "domain": "evidence",
+    "entry_id": "SA-46"
+  },
+  {
+    "name": "Cost frontier, ordinal preferences and exact margin calculations",
+    "source": "backend/src/round_robin/reports/insights.py:5",
+    "status": "reviewed_no_new_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-47"
+  },
+  {
+    "name": "Current and legacy saved-report reference/cutoff adaptation",
+    "source": "backend/src/round_robin/reports/read_adapters.py:26",
+    "status": "reviewed_no_new_normal_API_mutation_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-48"
+  },
+  {
+    "name": "Report schemas for issue/assessment provenance, scope and dimensions",
+    "source": "backend/src/round_robin/schemas/runtime.py:126",
+    "status": "reviewed_with_upstream_version_binding_finding",
+    "domain": "evidence",
+    "entry_id": "SA-49"
+  },
+  {
+    "name": "Structured premise/objection/assessment data contracts",
+    "source": "backend/src/round_robin/schemas/contributions.py:22; schemas/discussion.py:11",
+    "status": "reviewed_no_new_shape_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-50"
+  },
+  {
+    "name": "Fair objective queries, source/passages allocation and explicit shortfalls",
+    "source": "backend/src/round_robin/research/service.py:192",
+    "status": "reviewed_no_new_allocation_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-51"
+  },
+  {
+    "name": "Canonical proposal context guard before search and each source commit",
+    "source": "backend/src/round_robin/research/service.py:164",
+    "status": "reviewed_no_new_local_guard_defect_observed",
+    "domain": "evidence",
+    "entry_id": "SA-52"
+  },
+  {
+    "name": "Relevance/exception passage windows, offsets, hashes and omitted coverage",
+    "source": "backend/src/round_robin/research/fetcher.py:307",
+    "status": "reviewed_bounded_heuristic_not_semantic_verification",
+    "domain": "evidence",
+    "entry_id": "SA-53"
+  },
+  {
+    "name": "Markdown/PDF issue and constraint serialization",
+    "source": "backend/src/round_robin/reports/exports.py:40",
+    "status": "SESSION-E03",
+    "domain": "evidence",
+    "entry_id": "SA-54"
+  },
+  {
+    "id": "EVS-01",
+    "name": "Immutable selected-feedback bundle",
+    "source_refs": "visual/feedback.py:30",
+    "review": "Parent pixel/brief hashes, selected full finding content, address/decline choices, locked requirements and digest reach actual provider prompt. Hash mismatch/parent mismatch rejected. O(serialized findings). Ordinary path passes; SESSION-EVAL-01 bounds remain.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-55"
+  },
+  {
+    "id": "EVS-02",
+    "name": "Mandatory regression target derivation",
+    "source_refs": "visual/feedback.py:17",
+    "review": "Prior material/critical observations and hash-identified locked requirements become independent review targets; addressed parent finding excluded. O(findings + requirements); 40 input findings.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-56"
+  },
+  {
+    "id": "EVS-03",
+    "name": "Regression coverage and blocker reduction",
+    "source_refs": "visual/feedback.py:55",
+    "review": "Latest per-provider checks; at least two eligible critics must explicitly resolve each target. Missing/uncertain/declined/persistent/regressed states remain blockers. Distinct from pixel quorum. O(targets * critics).",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-57"
+  },
+  {
+    "id": "EVS-04",
+    "name": "Unresolved ancestor carry-forward",
+    "source_refs": "visual/service.py:160",
+    "review": "Recursively retain unresolved prior obligations across saved versions even without repeated new findings. Bounded ancestry, cycle/scope rejection. SESSION-EVAL-02 exposes cumulative cardinality mismatch.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-58"
+  },
+  {
+    "id": "EVS-05",
+    "name": "Immutable original review and supplements",
+    "source_refs": "visual/service.py:150,348",
+    "review": "Original DesignReview remains unchanged; one append-only supplement per critic; stable provenance IDs; original inference role/counters retained. O(saved session operations + reviews), bounded but full scan.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-59"
+  },
+  {
+    "id": "EVS-06",
+    "name": "Independent critic completion and queueing",
+    "source_refs": "visual/service.py:199,208",
+    "review": "Two distinct configured non-generator providers; original/supplement target union; pending operation deduplication; exhausted logical roles cannot create new allowance. O(reviews + operations).",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-60"
+  },
+  {
+    "id": "EVS-07",
+    "name": "Exact-pixel review provenance",
+    "source_refs": "visual/reviews.py:11,41,69,79",
+    "review": "Server receipt binds SHA256 of bytes/views/transforms/current and comparison parent. No same-round peer reviews in initial packets; scoped previous finding IDs. O(pixel bytes + findings). Receipts prove delivery, not semantic inspection.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-61"
+  },
+  {
+    "id": "EVS-08",
+    "name": "Review and view schema contracts",
+    "source_refs": "visual/schemas.py:71,89; visual/views.py",
+    "review": "20 findings/critic, 60 regression checks, duplicate local finding/target rejection, 500-character finding descriptions; views expose separate pixel coverage/regression completeness/blockers. These per-stage bounds do not ensure cumulative closure.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-62"
+  },
+  {
+    "id": "EVS-09",
+    "name": "Visual admission and command snapshot",
+    "source_refs": "api/visual.py:231,302,342",
+    "review": "Preflight binds revision/hash/configuration/prices/pending work; improvement targets latest immutable version and requires regression review. Selected choices resolve to saved findings. SESSION-EVAL-02 has uncaught domain-limit error.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-63"
+  },
+  {
+    "id": "EVS-10",
+    "name": "Worker packet reconstruction and preauthorization checks",
+    "source_refs": "worker/image_tasks.py:218,288",
+    "review": "Reconstruct exact bundle from scoped saved parent reviews, compare saved bundle, include current/parent pixels for critics, cap metadata at 128KiB. Pure provider preflight before reservation. SESSION-EVAL-01 shows serializer bound is later.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-64"
+  },
+  {
+    "id": "EVS-11",
+    "name": "Image authorization and settlement",
+    "source_refs": "worker/image_tasks.py:115,323,347,362",
+    "review": "Original call/submission ceilings and finish holds shared by supplements. Unknown usage retains conservative reservation. SESSION-EVAL-01 proves a local unsent exception is misclassified unknown.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-65"
+  },
+  {
+    "id": "EVS-12",
+    "name": "Shared substantive case fingerprinting",
+    "source_refs": "experiments/cases.py:19",
+    "review": "Remove display IDs/titles/revisions, map evidence identities by content, sort known unordered options/requirements/cost/snapshots; preserve amount/text and arbitrary sequence order. Reject exact normalized aliases/development overlap; cannot prove paraphrase independence.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-66"
+  },
+  {
+    "id": "EVS-13",
+    "name": "Release and visual case denominator validation",
+    "source_refs": "experiments/release.py:29; experiments/visual_evaluation.py:48",
+    "review": "Reuses normalized case identities including decision-relevant evidence/rubric context. Release exact48 and visual>=12 matched case constraints; no automatic release. Human provenance review required for independence.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-67"
+  },
+  {
+    "id": "EVS-14",
+    "name": "Blinded original review/adjudication binding",
+    "source_refs": "experiments/evaluation.py:117,222,301",
+    "review": "Retained immutable output/configuration/task identities and approved reviewer roster when supplied; originals retained; missing/failed/insufficient reviews stay not useful; adjudication does not erase original critical signals. O(outputs + grades).",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-68"
+  },
+  {
+    "id": "EVS-15",
+    "name": "Funded shared protocol and claim requests",
+    "source_refs": "experiments/study_runner.py:393,452,552,559",
+    "review": "Shared version/hash and next-stage policy, proposal barrier, scoped durable claims, typed material issue reducer, frozen same-round context, conditional revisions, one reserved correction/re-audit. Fixed preconfirmed evidence/journal executor remains explicitly scoped. Existing synthetic traces pass.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-69"
+  },
+  {
+    "id": "EVS-16",
+    "name": "Blinded study citation closure",
+    "source_refs": "experiments/study_runner.py:655",
+    "review": "Peer contribution closure anonymizes stage references and transitive stage dependencies; SESSION-EVAL-03 shows durable claims omitted. Graph work scans output structure/stage IDs until fixed point.",
+    "status": "issues_found",
+    "domain": "evaluation",
+    "entry_id": "SA-70"
+  },
+  {
+    "id": "EVS-17",
+    "name": "Correction finish-pool budget",
+    "source_refs": "experiments/runner.py:308",
+    "review": "One optional correction can reserve synthesis plus independent audit within original 24-call/time/currency ceilings; repeated correction reservation denied. Exact Decimal/resource ledger, unknown exposure retained.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-71"
+  },
+  {
+    "id": "EVS-18",
+    "name": "Paired primary efficacy estimator",
+    "source_refs": "experiments/paired.py:18,33,83",
+    "review": "Planned16 primary tasks remain denominator; paired wins/losses/ties; seeded task-cluster percentile bootstrap; exact McNemar only independent clusters. Bounded1000..20000 resamples; O(resamples*tasks). No automatic phase pass.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-72"
+  },
+  {
+    "id": "EVS-19",
+    "name": "Critical-risk uncertainty and repeated diagnostics",
+    "source_refs": "experiments/paired.py:27,103",
+    "review": "Critical differences withheld until both original review sets complete. Exact one-sided zero-event bound only under independent-case assumption; repeats retained as diagnostics, not independent denominator. Bootstrap precision limited by small/unrepresentative clusters.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-73"
+  },
+  {
+    "id": "EVS-20",
+    "name": "Observed cost and admitted latency denominator",
+    "source_refs": "experiments/paired.py:48; experiments/evaluation.py:398",
+    "review": "Bind trial/workflow/configuration/dataset/status; finite bounded Decimal cost; reported + unknown = conservative exposure; original failed admissions retained in observed timing denominator. Missing planned observations explicitly exposed. First-useful metric conservatively requires completed mandatory work; pre-existing behavior, not raised as fresh regression.",
+    "status": "reviewed_with_stated_limits",
+    "domain": "evaluation",
+    "entry_id": "SA-74"
+  }
+]

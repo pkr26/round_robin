@@ -1,0 +1,56 @@
+Native source coverage: {"lines":{"total":94,"covered":94,"skipped":0,"pct":100},"functions":{"total":24,"covered":23,"skipped":0,"pct":95.83},"statements":{"total":127,"covered":127,"skipped":0,"pct":100},"branches":{"total":103,"covered":103,"skipped":0,"pct":100}}
+(node:30990) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ successful renderer binds pixels, declared actions and all observed results (3.977542ms)
+✔ action failures stay local and distinguish requested assertions (2.389375ms)
+✔ watchdog and library timeouts consistently refuse successful receipts (7.119708ms)
+✔ output, network attempts, parse and input byte limits fail without private diagnostics (11.296209ms)
+✔ invalid native input 0 fails before launching browser (1.995125ms)
+✔ invalid native input 1 fails before launching browser (1.736708ms)
+✔ invalid native input 2 fails before launching browser (1.861416ms)
+✔ invalid native input 3 fails before launching browser (1.866208ms)
+✔ invalid native input 4 fails before launching browser (1.823416ms)
+✔ invalid native input 5 fails before launching browser (1.807375ms)
+✔ invalid native input 6 fails before launching browser (3.027667ms)
+✔ invalid native input 7 fails before launching browser (2.35775ms)
+✔ invalid native input 8 fails before launching browser (2.002916ms)
+✔ invalid native input 9 fails before launching browser (1.987834ms)
+✔ invalid native input 10 fails before launching browser (1.795834ms)
+✔ invalid native input 11 fails before launching browser (2.169792ms)
+✔ invalid native input 12 fails before launching browser (1.895833ms)
+✔ invalid native input 13 fails before launching browser (1.891ms)
+✔ invalid native input 14 fails before launching browser (1.728083ms)
+✔ invalid native input 15 fails before launching browser (1.924834ms)
+✔ invalid native input 16 fails before launching browser (1.790167ms)
+✔ invalid native input 17 fails before launching browser (2.09925ms)
+✔ invalid native input 18 fails before launching browser (2.160875ms)
+✔ invalid native action 0 fails before launching browser (2.085ms)
+✔ invalid native action 1 fails before launching browser (1.91225ms)
+✔ invalid native action 2 fails before launching browser (2.051042ms)
+✔ invalid native action 3 fails before launching browser (1.730834ms)
+✔ invalid native action 4 fails before launching browser (1.838792ms)
+✔ invalid native action 5 fails before launching browser (1.778833ms)
+✔ invalid native action 6 fails before launching browser (2.259917ms)
+✔ invalid native action 7 fails before launching browser (2.27075ms)
+✔ invalid native action 8 fails before launching browser (2.195833ms)
+✔ invalid native action 9 fails before launching browser (1.965792ms)
+✔ invalid native action 10 fails before launching browser (1.804583ms)
+✔ invalid native action 11 fails before launching browser (1.866208ms)
+✔ invalid native action 12 fails before launching browser (1.805833ms)
+✔ invalid native action 13 fails before launching browser (3.016375ms)
+✔ invalid native action 14 fails before launching browser (2.350083ms)
+✔ invalid native action 15 fails before launching browser (2.043417ms)
+✔ invalid native action 16 fails before launching browser (1.703334ms)
+✔ invalid native action 17 fails before launching browser (1.791625ms)
+✔ invalid native action 18 fails before launching browser (2.0025ms)
+✔ invalid native action 19 fails before launching browser (1.996833ms)
+✔ invalid native action 20 fails before launching browser (2.011791ms)
+✔ invalid native action 21 fails before launching browser (2.084834ms)
+ℹ tests 45
+ℹ suites 0
+ℹ pass 45
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 297.574791

@@ -1,0 +1,2 @@
+import base from '/Users/pradeepreddy/Desktop/round_robin/frontend/vitest.config.mts';
+export default { ...base, resolve: { alias: { react: '/Users/pradeepreddy/Desktop/round_robin/frontend/node_modules/react', "react-dom": '/Users/pradeepreddy/Desktop/round_robin/frontend/node_modules/react-dom', "@testing-library/react": '/Users/pradeepreddy/Desktop/round_robin/frontend/node_modules/@testing-library/react' } }, test: { ...base.test, include: ["../docs/evidence/session-audit-2026-11-17/root/frontend-audit.test.tsx"] } };

@@ -1,0 +1,536 @@
+[
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "_evidence_id",
+    "line": 21,
+    "end_line": 22
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "validated_evidence",
+    "line": 25,
+    "end_line": 30
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "resolved_brief",
+    "line": 33,
+    "end_line": 57
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "plan_input_evidence",
+    "line": 60,
+    "end_line": 91
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "prepare_evidence",
+    "line": 94,
+    "end_line": 110
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "_stage_steps",
+    "line": 113,
+    "end_line": 116
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "_ensure_steps",
+    "line": 119,
+    "end_line": 159
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "_reserve_correction",
+    "line": 163,
+    "end_line": 199
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "finalize_run",
+    "line": 203,
+    "end_line": 276
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "advance_run",
+    "line": 279,
+    "end_line": 350
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/controller.py",
+    "name": "append_requirement",
+    "line": 39,
+    "end_line": 49
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/reporting.py",
+    "name": "_display",
+    "line": 18,
+    "end_line": 20
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/reporting.py",
+    "name": "_derived_id",
+    "line": 23,
+    "end_line": 26
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/reporting.py",
+    "name": "comparison_as_of",
+    "line": 29,
+    "end_line": 33
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/reporting.py",
+    "name": "comparison_data",
+    "line": 36,
+    "end_line": 70
+  },
+  {
+    "file": "backend/src/round_robin/orchestration/reporting.py",
+    "name": "build_report",
+    "line": 73,
+    "end_line": 168
+  },
+  {
+    "file": "backend/src/round_robin/providers/base.py",
+    "name": "validate_output",
+    "line": 107,
+    "end_line": 147
+  },
+  {
+    "file": "backend/src/round_robin/providers/base.py",
+    "name": "packet",
+    "line": 59,
+    "end_line": 79
+  },
+  {
+    "file": "backend/src/round_robin/providers/base.py",
+    "name": "__init__",
+    "line": 95,
+    "end_line": 104
+  },
+  {
+    "file": "backend/src/round_robin/reports/measurements.py",
+    "name": "aware",
+    "line": 7,
+    "end_line": 10
+  },
+  {
+    "file": "backend/src/round_robin/reports/measurements.py",
+    "name": "clock_sample",
+    "line": 13,
+    "end_line": 15
+  },
+  {
+    "file": "backend/src/round_robin/reports/measurements.py",
+    "name": "measure_run",
+    "line": 18,
+    "end_line": 53
+  },
+  {
+    "file": "backend/src/round_robin/reports/readiness.py",
+    "name": "derive_readiness",
+    "line": 6,
+    "end_line": 34
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "_label",
+    "line": 21,
+    "end_line": 23
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "_bounded",
+    "line": 43,
+    "end_line": 46
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "evaluate",
+    "line": 49,
+    "end_line": 101
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "lifecycle_total",
+    "line": 104,
+    "end_line": 155
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "break_even",
+    "line": 158,
+    "end_line": 196
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "bounded",
+    "line": 32,
+    "end_line": 35
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "rates",
+    "line": 163,
+    "end_line": 180
+  },
+  {
+    "file": "backend/src/round_robin/research/calculator.py",
+    "name": "visit",
+    "line": 60,
+    "end_line": 95
+  },
+  {
+    "file": "backend/src/round_robin/research/claims.py",
+    "name": "grounded_claim_aliases",
+    "line": 12,
+    "end_line": 38
+  },
+  {
+    "file": "backend/src/round_robin/research/claims.py",
+    "name": "assign_claim_ids",
+    "line": 41,
+    "end_line": 86
+  },
+  {
+    "file": "backend/src/round_robin/research/claims.py",
+    "name": "validate_reuse",
+    "line": 89,
+    "end_line": 99
+  },
+  {
+    "file": "backend/src/round_robin/research/claims.py",
+    "name": "rooted",
+    "line": 23,
+    "end_line": 36
+  },
+  {
+    "file": "backend/src/round_robin/research/claims.py",
+    "name": "rewrite",
+    "line": 60,
+    "end_line": 79
+  },
+  {
+    "file": "backend/src/round_robin/research/currencies.py",
+    "name": "minor_units",
+    "line": 19,
+    "end_line": 23
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "public_addresses",
+    "line": 40,
+    "end_line": 64
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "validate_target",
+    "line": 67,
+    "end_line": 122
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "collect_source",
+    "line": 259,
+    "end_line": 304
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "exact_passages",
+    "line": 307,
+    "end_line": 310
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "resolve",
+    "line": 47,
+    "end_line": 54
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "get",
+    "line": 133,
+    "end_line": 133
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "__init__",
+    "line": 137,
+    "end_line": 138
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "readable",
+    "line": 140,
+    "end_line": 141
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "readinto",
+    "line": 143,
+    "end_line": 148
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "close",
+    "line": 150,
+    "end_line": 154
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "__init__",
+    "line": 158,
+    "end_line": 161
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "sendall",
+    "line": 163,
+    "end_line": 168
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "makefile",
+    "line": 170,
+    "end_line": 174
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "_release_file",
+    "line": 176,
+    "end_line": 179
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "close",
+    "line": 181,
+    "end_line": 184
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "get",
+    "line": 190,
+    "end_line": 215
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "__init__",
+    "line": 219,
+    "end_line": 222
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "handle_starttag",
+    "line": 224,
+    "end_line": 228
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "handle_endtag",
+    "line": 230,
+    "end_line": 232
+  },
+  {
+    "file": "backend/src/round_robin/research/fetcher.py",
+    "name": "handle_data",
+    "line": 234,
+    "end_line": 236
+  },
+  {
+    "file": "backend/src/round_robin/research/queries.py",
+    "name": "render_query",
+    "line": 38,
+    "end_line": 44
+  },
+  {
+    "file": "backend/src/round_robin/research/queries.py",
+    "name": "__post_init__",
+    "line": 25,
+    "end_line": 31
+  },
+  {
+    "file": "backend/src/round_robin/research/queries.py",
+    "name": "fingerprint",
+    "line": 34,
+    "end_line": 35
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "read_claim",
+    "line": 28,
+    "end_line": 39
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "claim_packet",
+    "line": 42,
+    "end_line": 54
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "_support_reference_ids",
+    "line": 57,
+    "end_line": 63
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "persist_claims",
+    "line": 66,
+    "end_line": 107
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "selected_parent_manifest",
+    "line": 110,
+    "end_line": 139
+  },
+  {
+    "file": "backend/src/round_robin/research/reuse.py",
+    "name": "import_parent_items",
+    "line": 142,
+    "end_line": 171
+  },
+  {
+    "file": "backend/src/round_robin/research/search.py",
+    "name": "__init__",
+    "line": 19,
+    "end_line": 22
+  },
+  {
+    "file": "backend/src/round_robin/research/search.py",
+    "name": "search",
+    "line": 24,
+    "end_line": 47
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "scope_for_run",
+    "line": 27,
+    "end_line": 31
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "query_plan",
+    "line": 34,
+    "end_line": 55
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "schedule_research",
+    "line": 58,
+    "end_line": 83
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "reconcile_public_research",
+    "line": 86,
+    "end_line": 107
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "research_seconds_available",
+    "line": 110,
+    "end_line": 112
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "finish_unstarted_research",
+    "line": 115,
+    "end_line": 120
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "execute_research",
+    "line": 123,
+    "end_line": 230
+  },
+  {
+    "file": "backend/src/round_robin/research/service.py",
+    "name": "eligible",
+    "line": 141,
+    "end_line": 145
+  },
+  {
+    "file": "backend/src/round_robin/schemas/briefs.py",
+    "name": "explicit_unknown",
+    "line": 25,
+    "end_line": 30
+  },
+  {
+    "file": "backend/src/round_robin/schemas/briefs.py",
+    "name": "typed_threshold",
+    "line": 51,
+    "end_line": 54
+  },
+  {
+    "file": "backend/src/round_robin/schemas/briefs.py",
+    "name": "approved_search_text",
+    "line": 70,
+    "end_line": 73
+  },
+  {
+    "file": "backend/src/round_robin/schemas/briefs.py",
+    "name": "valid_timezone",
+    "line": 98,
+    "end_line": 103
+  },
+  {
+    "file": "backend/src/round_robin/schemas/briefs.py",
+    "name": "uniqueness_and_scope",
+    "line": 106,
+    "end_line": 121
+  },
+  {
+    "file": "backend/src/round_robin/schemas/contributions.py",
+    "name": "unique_aliases_and_bounded_references",
+    "line": 54,
+    "end_line": 62
+  },
+  {
+    "file": "backend/src/round_robin/schemas/evidence.py",
+    "name": "exact_passage_hash",
+    "line": 29,
+    "end_line": 32
+  },
+  {
+    "file": "backend/src/round_robin/schemas/reports.py",
+    "name": "unknown_total",
+    "line": 32,
+    "end_line": 35
+  },
+  {
+    "file": "backend/src/round_robin/schemas/reports.py",
+    "name": "internally_consistent",
+    "line": 112,
+    "end_line": 138
+  },
+  {
+    "file": "backend/src/round_robin/schemas/runtime.py",
+    "name": "runtime_cost",
+    "line": 14,
+    "end_line": 17
+  },
+  {
+    "file": "backend/src/round_robin/schemas/runtime.py",
+    "name": "uncertainty_is_preserved",
+    "line": 33,
+    "end_line": 42
+  },
+  {
+    "file": "backend/src/round_robin/schemas/runtime.py",
+    "name": "publication_and_reference_gate",
+    "line": 117,
+    "end_line": 192
+  },
+  {
+    "file": "backend/src/round_robin/schemas/views.py",
+    "name": "exact_passage_hash",
+    "line": 141,
+    "end_line": 144
+  }
+]

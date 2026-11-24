@@ -1,0 +1,47 @@
+{
+  "recorded_at_utc": "2026-11-16T14:43:50.910570+00:00",
+  "checks": [
+    {
+      "command": [
+        "uv",
+        "sync",
+        "--frozen",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.012,
+      "output": "Would use project environment at: .venv\nChecked 57 packages in 1ms\nWould make no changes\n"
+    },
+    {
+      "command": [
+        "pnpm",
+        "install",
+        "--frozen-lockfile",
+        "--lockfile-only",
+        "--ignore-scripts",
+        "--offline"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.236,
+      "output": "Scope: all 2 workspace projects\nDone in 200ms using pnpm v9.15.9\n(node:49612) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.\n(Use `node --trace-deprecation ...` to show where the warning was created)\n"
+    },
+    {
+      "command": [
+        "docker",
+        "run",
+        "--rm",
+        "--entrypoint",
+        "sha256sum",
+        "round-robin-native-renderer:local",
+        "/opt/renderer/native-renderer.mjs"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.256,
+      "output": "d557ad417045949c3c2296e5fbe62af7e706e4b72c18e7cb866c1fdd7b613eed  /opt/renderer/native-renderer.mjs\n"
+    }
+  ],
+  "local_native_script_sha256": "d557ad417045949c3c2296e5fbe62af7e706e4b72c18e7cb866c1fdd7b613eed",
+  "image_script_matches_source": true,
+  "all_checks_passed": true,
+  "prior_attempt": "metadata-checks-attempt-1.json retains a failed diagnostic using a nonexistent image path; this attempt uses the path declared in the Dockerfile."
+}

@@ -1,0 +1,99 @@
+{
+  "kind": "fresh-source-review-ledger",
+  "recorded_at_utc": "2026-11-16T16:55:29.100873+00:00",
+  "historical_audits_used": false,
+  "final_acceptance": false,
+  "reviewers": {
+    "visual_frontend": "visual/API/images/native/frontend client/design/live and cross-review",
+    "evidence": "independent complete sample workspace and hosted login fix",
+    "runtime": "independent image worker and common money/capacity boundaries",
+    "root": "independent live UI and final full verification"
+  },
+  "sources": {
+    "backend/src/round_robin/api/visual.py": "b5aa227c30efed2a54d305602331476bb20353915ed095ab6b838228a4bf2550",
+    "backend/src/round_robin/providers/images.py": "3c2a05b320028ac966f439f6890bdf279a2d28ccac1d57dfa71158b35b046d2c",
+    "backend/src/round_robin/visual/__init__.py": "dfe071b907c00bf524a9c394d4d9cae7915d869a9d916bc583560feb2936e00c",
+    "backend/src/round_robin/visual/assets.py": "f9c0c2bbd4c3122c53e1b3a5060afa052357fe082855ff0eafd1ff759463fd81",
+    "backend/src/round_robin/visual/iterations.py": "61b6a99f5a983c8e96db282b617823ae65d4c2ec616bcaad08aa21404a529b7a",
+    "backend/src/round_robin/visual/jobs.py": "b354b6b7657f741c34e85d7300873bcf43e33e75f2873e99b00c51a50f6a8a22",
+    "backend/src/round_robin/visual/renderers/__init__.py": "632cae01ecd02821cb5951b046550451a401eb96134c6332b9873692b84112a1",
+    "backend/src/round_robin/visual/renderers/diagram.py": "0393fe540ddfdfaae5c3b3487a4ecc54cf38cb162048912a8b2ac124bd0bd010",
+    "backend/src/round_robin/visual/renderers/interface.py": "65582304e1b9c8d301e0d8402674e0831ef748b32db9b1109cfa95a7e4e2a50a",
+    "backend/src/round_robin/visual/reviews.py": "f595018e7ddeaccc309bead1782e73a2c129741587e7e984d8316559bc14bbc9",
+    "backend/src/round_robin/visual/schemas.py": "376f5365c558797c24a3b2b11fa9f50f274ebfc255df75d1f7551b6c596bff2a",
+    "backend/src/round_robin/visual/service.py": "9c661a5e3c77996e41ebc3657a605246a793b4dfd7a8d7e63119fd83697ab167",
+    "backend/src/round_robin/visual/views.py": "c61691678abe924b568a00beee5289015d6cf5e80843cc48efbf8ff35fd83f76",
+    "backend/src/round_robin/worker/image_tasks.py": "d255e8cdeba1c61ee8f9f3e6f1e937daeac2b4a9775001febdaf3b17db8ad559",
+    "frontend/app/api-client.ts": "5fd4a808ab40f1128be250467cbd34550cce533165b4f6bf746174dc37181c06",
+    "frontend/app/contracts.ts": "f71347df9c97dd28efa03be58fe9003f9fdc5374008ba24d78e0bd67b6a8b372",
+    "frontend/app/design/page.tsx": "7ab180b816b9c48bf77cd15fea2c017d126b128485507be7937be8ec4e1fd2d8",
+    "frontend/app/design/workspace.tsx": "7677f4c2918f2bada9467f78b502b9bd143b195a670fbde2b0ba5c7f0431220e",
+    "frontend/app/layout.tsx": "e02df16b93423270727d0f905e5fe147980254e59e2ca8a1f92d4b5d0042bf2c",
+    "frontend/app/live/page.tsx": "d97f749f85f6c9ee5f35308ea39aa16a8fbccff51a8c8c5b293aa903cec26c29",
+    "frontend/app/live-workspace.tsx": "b70b6fd4e57806f779c84a6f71573b3e95430eb84d64567b77fba134b6a2c55f",
+    "frontend/app/page.tsx": "fb7ea3aa224a3bfb166105c97d6e56dd1538110e31abad8b86d185a3ba71cd33",
+    "frontend/app/workspace.tsx": "4d61baae42dd4254621d5860acd2d69d7aa2f60cede560b97c64b309425bcf34",
+    "frontend/next.config.ts": "98803ba487c543c990376a607e5e7ad5a41b10d712895d26f7f1224eca2e27e5",
+    "frontend/vitest.config.mts": "7a8522985cdfa7e8927a5391e04ac83868d59c75ab53798473623519fb1b4765",
+    "scripts/frontend_coverage.mjs": "ee814a1a6d27c7de84c87e079470ad0a1ca47bd89e6f5bd59e5cf0b6c63663cc",
+    "scripts/frontend_instrumentation.cjs": "96468bddf223c5e5feae4be119f512b847746f8fb7783140cc7550bf5c33ddfa",
+    "scripts/frontend_istanbul_loader.cjs": "1af2976b75cb51c384b38aebe52dd9729e4c669c858530ce43d6a7c1b5a33c9d",
+    "scripts/frontend_source_coverage.mjs": "686704c04fa90408c3ccd517e74052d94946b9a48fec0787a07a2cb0dfea2985",
+    "scripts/native-renderer.Dockerfile": "efe76427b6989579d043a4f4359b294b164a1fb1f5a54b2ab98f72079cfa9453",
+    "scripts/native-renderer.mjs": "dd0765282285fd5f54131e27e371466ab137543d49f23c965daee10a58b7ef08"
+  },
+  "regressions": {
+    "backend/tests/test_exhaustive_image_worker.py": "e1a94d9f67e3d895962d3347e199cce671cd5fb3c595e310c3eb9b7b268e9fca",
+    "backend/tests/test_exhaustive_visual_provider.py": "8b2c1d2e90c9e46382c026e67d39a89f9bed2e812cfed3c33c52db808b51e3cc",
+    "backend/tests/test_exhaustive_visual_renderer.py": "2c568f56fc17175b7b662da5c76b038dd57410ea69beb9f3cd4524eb8b52227f",
+    "backend/tests/test_exhaustive_visual_routes.py": "8672426bdd78d284b7f8a397e916fd3a11e11bfa262663ca258b1bc3f32031a7",
+    "backend/tests/test_exhaustive_visual_service.py": "a915a02a813ccd889faab5907a8d37384aee31d041878c0a26adc3ca455c8e61",
+    "backend/tests/test_exhaustive_visual_storage.py": "5e4e479b9da948fe98ec2a586d97caf594c62f6c0e4a925ef93ea92ceb862168",
+    "frontend/tests/api-client.test.ts": "9e2c0835d9d14dc3ea2af34f1625a283724b500263563812249d8eb46b701baf",
+    "frontend/tests/design-workspace.test.tsx": "020576d7831f132888f411996c462803d877f6d92fbff0b00e555a0a6f66435d",
+    "frontend/tests/entrypoints.test.tsx": "ee4ece57a41bf928102b6fbe2b5ee1a60c1d30c3ce19289c1aaaafe7299a4605",
+    "frontend/tests/live-workspace.test.tsx": "86a74bc8cb497a572e0ca1f98b0285a336c867fbbd59e2f4ba6327b3213dfed6",
+    "frontend/tests/sample-workspace.test.tsx": "f50ced9689e0d8337e12ca4f5a370fa39e51c909b9c18889f8771dd1b77ec90d",
+    "scripts/native_renderer_coverage.test.mjs": "7d607f30d1f0d603b66d2c17b5da9f2bb526d0f7fc9f302e846a78b4a1644a22",
+    "tests/e2e/fixtures.ts": "d51341776ba657f7934b25ae423660bff201551dd71975279d636fe7eb532cbd",
+    "tests/e2e/fresh_reuse.spec.ts": "fd8d7fb88caa205a9ff95f2e771516f555f2972668a28ce4e0a81e3c5b993599"
+  },
+  "before_replay": ".local/exhaustive-audit/visual/before-replay/results.json",
+  "diagnostic_reports": [
+    ".local/exhaustive-audit/visual/final-diagnostic/coverage.json",
+    ".local/exhaustive-audit/frontend-source/summary.json",
+    ".local/exhaustive-audit/native-source/summary.json"
+  ],
+  "limits": "Diagnostic ledger only; root clean run and final manifest supersede intermediate coverage. No paid/provider-network calls or deployment.",
+  "cross_review_followup": {
+    "fixture_contract_validation": "Current MeetingView and Snapshot accept the generated explicitly simulated fixture.",
+    "mounted_scope_regressions": "Root strengthened parent/run/meeting late-response tests to keep another scope mounted;73tests pass.",
+    "connected_reuse_journey": "Passed in root final-accepted run:29browser tests; run then failed frontendunit stage."
+  },
+  "native_source_ordering": {
+    "finding": "Hydration generation captured at passive-effect start could accept an edit made after candidate selection but before that effect began.",
+    "classification": "Deterministic modeled scheduling reproduction; original test also lacked user-editable preconditions.",
+    "before": "Early-effect test failed:Local edit stays was replaced by Late private content;in-flight case passed.",
+    "fix": "Capture hydration baseline synchronously at candidate selection before editable DOM commit.",
+    "after": "205raw-source frontend tests pass;typecheck passes;rootcleanfinalrerun required."
+  },
+  "audit_runner_cross_review": {
+    "result": "No additional concrete defect after actual-process escalation/early-exit regressions added.",
+    "review_mode": "Read-only independent source/assertion review;runtime owns execution.",
+    "runtime_reported_tests_passed": 49,
+    "source_hashes": {
+      "scripts/audit.py": "9282d63d33b3a8cadc352d8abed63aeab7e85508a4a3d9344f1790335e4c2b20",
+      "backend/tests/test_exhaustive_audit_runner.py": "6af2ac206a248793fdf200e6acccd19e515a38c3feefb2fbed281ffc2a242512"
+    }
+  },
+  "container_cross_review": {
+    "review_mode": "Read-only review of final minimal Dockerfile and actual native image inventory/source-SHA integration assertion;container scan and binary provenance are owned by evidence reviewer.",
+    "source_hashes": {
+      "scripts/native-renderer.Dockerfile": "efe76427b6989579d043a4f4359b294b164a1fb1f5a54b2ab98f72079cfa9453",
+      "backend/tests/integration/test_native_renderer.py": "3b09f2d70cc92de9b8272a955f26cb4cfeeea1d09d135be741e8a33922658e58"
+    },
+    "assessment": "Pinned multistage build retains headless Chromium+Node and required runtime libraries/fonts, excludes npm/unused browsers/media/Pebble, retains dpkg metadata, and defaults to UID/GID10001. Actual inventory test binds in-image renderer bytes to current repository source and verifies the stated inventory boundaries.",
+    "open_findings": "Evidence reviewer records40 remaining unfixed OS package/advisory matches across27CVEs;copied standalone binaries are separately provenance-checked,including current Beta Chrome channel. No vulnerability-free or public-release readiness claim.",
+    "evidence": "docs/evidence/exhaustive-audit/container-security.md"
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "audit_disagreement": {
+    "audit_output_accepted": true,
+    "audit_failure_references": [],
+    "readiness": "no_feasible_option",
+    "published_constraints": [
+      [
+        {
+          "requirement_id": "requirement_manual",
+          "result": "fail",
+          "basis_refs": [
+            "evidence_positive"
+          ],
+          "method": "model",
+          "assessor": "openai synthesis; inspect the cited user/source passage",
+          "reason": "Synthesis and independent audit disagree; inspect saved contributions. Synthesis: Synthetic pass assessment / Audit: Synthetic fail assessment"
+        }
+      ],
+      [
+        {
+          "requirement_id": "requirement_manual",
+          "result": "fail",
+          "basis_refs": [
+            "evidence_positive"
+          ],
+          "method": "model",
+          "assessor": "openai synthesis; inspect the cited user/source passage",
+          "reason": "Synthesis and independent audit disagree; inspect saved contributions. Synthesis: Synthetic pass assessment / Audit: Synthetic fail assessment"
+        }
+      ]
+    ]
+  },
+  "missing_verification_transition": {
+    "ordinary_runtime_evidence_status": "user_supplied",
+    "ordinary_readiness": "conditional",
+    "ordinary_reasons": [
+      "Essential dependency remains unverified: All applicable cost components for a must be supplied and current."
+    ],
+    "after_direct_synthetic_promotion_readiness": "ready_to_choose",
+    "scope": "Static call-site audit separately establishes that the application has no promotion transition."
+  },
+  "dissent_loss": {
+    "dissent_count": 20,
+    "auditor_specific_concerns_survive": false,
+    "generic_unresolved_defect_flag_survives": true,
+    "proposal_critical_defect_in_final_dissent": [],
+    "proposal_critical_defect_flag": false
+  },
+  "support_laundering": {
+    "prior_claim_status": "contradicted",
+    "source_text": "The supplier is NOT certified.",
+    "source_status": "contradicted",
+    "new_claim_status": "supported",
+    "rooted_aliases": [
+      "new_claim_1"
+    ]
+  },
+  "prefix_passages": {
+    "source_characters": 4249,
+    "selected_characters": 4000,
+    "critical_exclusion_selected": false,
+    "scope_notice": "Stored extracted passage; semantic support has not been independently checked"
+  },
+  "counterevidence_starvation": {
+    "queries": [
+      "workshop label systems comparison",
+      "workshop label systems all-inclusive installation maintenance costs",
+      "workshop label systems limitations exclusions reliability"
+    ],
+    "fetched_urls": [
+      "https://example.com/query1/source0",
+      "https://example.com/query1/source1",
+      "https://example.com/query1/source2",
+      "https://example.com/query1/source3",
+      "https://example.com/query1/source4",
+      "https://example.com/query1/source5",
+      "https://example.com/query1/source6",
+      "https://example.com/query1/source7"
+    ],
+    "saved_urls": [
+      "https://example.com/query1/source0",
+      "https://example.com/query1/source1",
+      "https://example.com/query1/source2",
+      "https://example.com/query1/source3",
+      "https://example.com/query1/source4",
+      "https://example.com/query1/source5",
+      "https://example.com/query1/source6",
+      "https://example.com/query1/source7"
+    ],
+    "later_query_sources_fetched": 0,
+    "research_summary": {
+      "status": "retrieved_unverified",
+      "queries": 3,
+      "pages": 8,
+      "source_count": 8,
+      "limitations": []
+    }
+  }
+}

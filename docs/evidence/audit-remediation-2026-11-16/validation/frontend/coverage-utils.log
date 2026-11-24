@@ -1,0 +1,11 @@
+✔ source-map scope excludes framework, dependencies, CSS and namespace escapes (0.578ms)
+✔ a generated wrapper range cannot claim execution of unused source functions (3.3895ms)
+✔ functions without source-map evidence are reported unmapped, not executed (1.038ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 157.418833

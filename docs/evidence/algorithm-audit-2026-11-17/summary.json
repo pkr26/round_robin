@@ -1,0 +1,29 @@
+{
+  "audit_date": "2026-11-17",
+  "timezone": "America/Phoenix",
+  "inventory_entries": 80,
+  "inventory_by_domain": {
+    "root": 14,
+    "runtime": 23,
+    "evidence": 25,
+    "evaluation": 18
+  },
+  "findings": 17,
+  "classifications": {
+    "defect": 11,
+    "capability_gap": 5,
+    "protocol_mismatch": 1
+  },
+  "priorities": {
+    "P1": 4,
+    "P2": 13
+  },
+  "backend_passed": 1971,
+  "backend_skipped": 43,
+  "frontend_passed": 247,
+  "source_manifest_sha256": "ccdd7b3a1c2f88842900828b9e357f09358c0fd1117a6dc450eec32b84907fce",
+  "product_changes": false,
+  "paid_calls": 0,
+  "accuracy_established": false,
+  "scope_note": "Inventory entries are related algorithm/process responsibilities, not 80 unique mathematical algorithms or a claim that every source line was formally verified."
+}

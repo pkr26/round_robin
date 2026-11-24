@@ -1,0 +1,45 @@
+{
+  "browser": "Repository-installed Playwright Chromium 1255 on macOS ARM64",
+  "scope": "Independent read-only review of native SVG font alignment, CSP and historical downloads",
+  "initial_confirmed_defect": {
+    "label": "S repeated60times",
+    "pillow_right": 485,
+    "browser_right": 546.203125,
+    "viewport_width": 500,
+    "embedded_font_loaded": true,
+    "evidence": "geometry.json"
+  },
+  "textLength_patch_verification": {
+    "cases": 104,
+    "font_loaded_all": true,
+    "accumulated_advance_overflow_fixed": true,
+    "whitespace_preserved": true,
+    "fractional_boundary_overhang": [
+      {
+        "character": "/",
+        "overflow_px": 0.05204010009765625
+      },
+      {
+        "character": "Y",
+        "overflow_px": 0.136474609375
+      },
+      {
+        "character": "\\",
+        "overflow_px": 0.05204010009765625
+      }
+    ]
+  },
+  "csp_probe": "Synthetic inline script, network image and network font all blocked with both current policies; no outgoing request beyond intercepted fixture",
+  "history_review": "No confirmed regression: owner/hash-bound bytes remain unchanged; historical v1/v2 JSON remains inert attachment and must revalidate before new rendering",
+  "production_files_changed_by_reviewer": false,
+  "final_patch_verification": {
+    "current_renderer_sha256": "0b15492363edd551b1f34c47b36d45fe88a28836d570e75f64807030bd169618",
+    "supported_label_cases": 104,
+    "zero_and_one_pixel_margin_rejections": 208,
+    "two_pixel_margin_cases_accepted": 104,
+    "geometry_overflows": 0,
+    "unclipped_paint_overflows": 0,
+    "method": "Enlarged SVG viewport/viewBox equally to preserve scale, then measured actual nonwhite label-strip pixels beyond original declared boundary",
+    "remaining_confirmed_regressions": []
+  }
+}

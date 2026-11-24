@@ -1,0 +1,37 @@
+{
+  "recorded_at_utc": "2026-11-16T18:02:18.908873+00:00",
+  "documents": [
+    {
+      "path": "README.md",
+      "sha256": "dc4aed85ab864a6d51d5668d9db1d1ea65e8d0cfc0ddf23ee5a5a6f983b6ab8a"
+    },
+    {
+      "path": "docs/OPERATIONS.md",
+      "sha256": "464b20073d79bdd6f9533e8b0ecb1b5cc56b95c88a26d2ccfeb27047330a00ea"
+    },
+    {
+      "path": "docs/ACCEPTANCE_BLOCKERS.md",
+      "sha256": "fb1e55b0c50a2da284db60c27e171b1587882ecd035226ab9032c9f20550d217"
+    },
+    {
+      "path": "docs/IMPLEMENTATION_PHASES.md",
+      "sha256": "2d84be12d4adc3c87b4fed216cada8a24e7b7cf8ca2d12e73bfd72fbb8a01769"
+    },
+    {
+      "path": "docs/DELIVERY_BACKLOG.md",
+      "sha256": "229e37073277fe62050e2b8a1e61d06d640ba608769ac7645e8bd61a85f73ef4"
+    },
+    {
+      "path": "docs/PRODUCT_AUDIT.md",
+      "sha256": "70024c307a16f4c7f6b866907bc6a75fffc655cd826148064f65f2010343bad4"
+    },
+    {
+      "path": "docs/evidence/implementation-phases.md",
+      "sha256": "a009ca4e7fffe2cb331a0e4e51caae7ddfa159b7a260588996271b840028ebe7"
+    },
+    {
+      "path": "experiments/README.md",
+      "sha256": "01bfb0a0482c655a3a40c586c4428e0284a8b03329ee0822d1bd66c4b0a7d3fa"
+    }
+  ]
+}

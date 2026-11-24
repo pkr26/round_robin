@@ -1,0 +1,232 @@
+RUNTIME ALGORITHM IMPROVEMENT DESIGN
+November 17, 2026 — design only; no product changes or repeated suites
+
+Decision
+
+Use one versioned, deterministic protocol policy shared by the application and study runners. Represent its small bounded dependency graph explicitly, make every resource and retry decision from the same snapshot, and preserve the current transactional executor/outbox architecture. More agents or planning layers do not repair the observed correctness gaps. Add sophistication to the state and evidence contracts before increasing conversation length.
+
+1. A shared finite dependency graph, not a general autonomous planner
+
+The standard protocol remains:
+  intake -> optional one-batch confirmation -> evidence freeze
+  -> {proposal_openai, proposal_anthropic, proposal_google}
+  -> synthesis_0 -> audit_0
+  -> optionally synthesis_1 -> audit_1 -> publication.
+
+The three proposal slots see the same frozen inputs and no current-run peer claims or outputs. Synthesis becomes eligible when all proposals have settled, or an explicit optional-work cutoff retires still-unstarted optional work and at least two distinct proposals succeeded. An in-flight optional proposal can be fenced from publication while its accounting settles independently; this must not create a blind resend or refund uncertainty. Each synthesis/audit node identifies its exact input versions and the auditor differs from the actual synthesizer. Correction never reopens initial proposals or successful intake.
+
+Represent the graph with stable logical node keys: protocol_version, stage, iteration and role_slot. Keep attempt identity separate: node_key, retry_generation, attempt_number. Existing UUID Step/Attempt identities remain persistence identifiers. Different profiles may have explicitly declared extra critique/revision nodes, but the production and experiment runner must execute the same chosen policy artifact; an intentionally shorter comparison arm is an ablation with a distinct policy identity. Do not reuse one protocol label for different graphs.
+
+Pure policy boundary (conceptual signatures, not new product source):
+
+  plan(snapshot: ProtocolSnapshot, now: ClockSnapshot) -> tuple[Decision, ...]
+  eligibility(snapshot, node_key, now) -> Eligible | Blocked(reason, retry_at)
+  schedule_recovery(snapshot, node_key, failure, now) -> RetryAt | Fallback | Settle
+  reserve_requirements(snapshot, proposed_decision) -> ResourceEnvelope
+  admit_context(snapshot, node_key, packet_candidate) -> AdmittedPacket | Blocked
+  completion(snapshot) -> Continue | PublishReady | PublishLimited(reasons)
+
+ProtocolSnapshot includes: immutable protocol/config hashes; owner and run scope;
+logical nodes and attempts; frozen brief/evidence/claim/objection versions; selected
+providers; active time; monetary exposure/holds; request/infrastructure counters;
+provider/global occupied leases; command and execution fences. ClockSnapshot
+contains a single trusted UTC observation plus derived remaining active time;
+existing clock-regression handling remains fail-closed.
+
+Decisions are typed intents such as Enqueue(node, attempt_generation, not_before),
+FenceOptionalNode, ReserveEnvelope, AwaitConfirmation, and Publish(version,
+reasons). The policy itself does no I/O, calls no model, and never mutates durable
+state. Both executors interpret its decisions through their existing durability
+mechanisms: database transaction/outbox or journal commit. They recheck the same
+policy against fresh locked state before authorization. A plan is not a spending
+permit. Every decision records a reason code and exact policy version.
+
+2. Retry is a durable state transition (RUNTIME-02)
+
+Persist not_before on the pending logical attempt (or equivalent durable node
+retry state), along with attempt_generation. Include node ID and generation in
+the outbox message. Under the existing policy/run/step lock, reject stale
+messages and return deferred when now < not_before before incrementing claims,
+reserving money, or calling a provider. Backoff is therefore an execution
+invariant, not a publisher hint. The outbox remains at-least-once.
+
+Generate any default jitter once when the retry decision is saved, then persist
+the sampled not_before; duplicate delivery must not resample or extend it. Honor
+a valid provider Retry-After only if it fits the final-work envelope below.
+Transport retry, schema repair and substantive correction get distinct reason
+and attempt classes for measurement, but share unchanged aggregate run and
+logical-role ceilings. A new category never creates extra funding implicitly.
+
+3. Reserve the remaining mandatory work before waiting (RUNTIME-01)
+
+Current protection at dispatch is too late: a pending optional backoff can spend
+the reserved time before the next request is considered. Compute a conservative
+remaining envelope before scheduling a wait or admitting optional work:
+
+  extra_active_wait + optional_attempt_bound
+  + mandatory_remaining_schedule_bound + persistence_margin
+  <= remaining_active_time.
+
+Do not count a previously reserved part twice. mandatory_remaining_schedule_bound
+is the conservative makespan of unfinished required nodes with provider/global
+capacity constraints, not just a sum of stage constants and not a model's guess.
+For the current sequential synthesis->audit tail, start with a conservative
+serial schedule of admitted mandatory attempt bounds, explicit per-stage
+persistence allowance and unavoidable capacity delay. A bare DAG longest path
+under-reserves when provider/global slots are occupied. The present limits are
+three global slots, two/provider and one active run; image work can still compete.
+A future deterministic feasible schedule simulation may improve utilization, but
+it must honor those capacity constraints and bounded occupied leases. The graph
+is tiny; a general optimizer/MILP is needless. Include fallback/retry allowance
+only when it is expressly in the finishing reservation; otherwise those attempts
+remain contingent on spare resources and cannot be promised. No latency
+percentile is a hard guarantee. Keep configured hard attempt caps as safety
+bounds; measured latency can later choose operating targets within them. This
+protects an opportunity to run the final stages, not successful completion during
+a provider outage or a guarantee that an unknown external call stops on demand.
+
+Also set a durable optional-work cutoff at the latest time that preserves the
+mandatory schedule. Reconciler and worker enforce it even if timers are late or
+messages duplicate. When it arrives, settle unstarted optional proposals with
+an explicit reason; synthesize from two successful distinct proposals, or publish
+an honest limited result if the minimum was not reached. This is not permission
+to present a two-proposal result as completion of all three planned advisers.
+
+Capacity matters: reserving seconds without reserving access to an executor is
+not sufficient. Give ready mandatory final work priority over new optional image,
+research or proposal calls sharing the same provider/global limits. Existing
+in-flight calls cannot be preempted into free capacity. Include their bounded
+lease/remaining execution exposure, or defer optional admission early enough that
+final slots will be available. Retain uncertain monetary exposure after physical
+capacity expires.
+
+Money and calls use the same ResourceEnvelope. Reserve conservative cost bounds
+for admitted mandatory packet envelopes/provider choices, and enough mandatory
+request slots. A permitted fallback must fit the same predeclared envelope or
+be refused explicitly. Transfer the reserved amount atomically into an attempt;
+never charge both hold and attempt. The existing two-call logical-role and
+three-infrastructure-claim caps stay authoritative across correction generations.
+A correction pair receives a new reservation from remaining original allowance,
+never a renewed allowance.
+
+4. One enqueue admission guard for all resumptions (RUNTIME-03)
+
+Factor the queue transition guard shared by Start, clarification, and manual
+retry. Inside the already serialized policy transaction, require both owner and
+global queued-count capacity before setting queued or issuing a new ticket.
+Exclude the same run if it is already queued and return the original command's
+outcome on replay. On capacity failure, keep awaiting_input/terminal-retry state
+unchanged and return a recoverable queue-full result; never consume a ticket or
+renew an expired authorization. The ticket timestamp establishes FIFO position
+once, for that committed transition. Cancellation and deleting work remain
+available even when the queue is full.
+
+5. Context admission is a resource contract (ROOT-01)
+
+Use exact canonical UTF-8 serialized bytes for packet admission; character and
+passage counts are separate constraints, not substitutes. At preflight, validate
+the real initial packets including brief, selected/imported evidence, generated
+cost calculations, allowed-reference IDs and JSON escaping/field overhead.
+Reject oversize requests before intake spend or require explicit narrower scope.
+
+Also derive bounded envelopes for downstream peer outputs, claim records and
+objections. A brief that fits proposals can still crowd out mandatory synthesis.
+Reserve separate sections for frozen requirements, selected source excerpts,
+proposal conclusions, unresolved material objections and current synthesis. If
+all required material cannot fit, reduce a declared optional section, ask for a
+narrower brief, or publish a context-limited outcome. Never silently omit critical
+objections or fabricate citations. If selecting a subset, construct the admitted
+reference closure and reveal coverage/omissions. References must refer to material
+the recipient can inspect in its packet or an explicitly admitted tool retrieval,
+not merely an ID that exists somewhere in storage.
+
+The smallest safe first implementation is conservative rejection of oversized
+mandatory envelopes; a semantic compressor adds another inference component and
+can introduce omissions. Add evaluated retrieval/compaction later with immutable
+provenance and required-objection coverage. Hash the actual admitted packet and
+store it with its authorization. The executor repeats exact-byte validation at
+send time; policy/state drift yields a controlled block, not an unbounded retry.
+
+6. Stopping without uncalibrated expected-value rules
+
+Keep a fixed hard correction maximum of one until paired evaluation justifies
+more. Start correction only when a successful audit identifies a material,
+explicit target (claim, requirement, calculation, objection or unsupported
+recommendation), and the original remaining money/calls/time/context envelope
+can fund a full correction plus independent re-audit. A missing fact requiring
+new user authorization cannot be cured by more debate; record the evidence need
+and publish conditional/no-choice or await an allowed explicit confirmation.
+
+After correction, every material objection must have a scoped disposition and
+basis. The independent re-audit verifies those dispositions against the current
+versions. If a blocker persists, a new blocker appears, or the last audit is
+unavailable, stop with visible unresolved items. Do not equate agreement, lower
+objection count, longer reasoning, or an unchanged recommendation with accuracy.
+Two agents can agree because they share the same error. An unchanged semantic
+claim-set/objection disposition fingerprint can detect an ineffective attempted
+correction, but does not itself establish correctness or justify another call.
+
+This is a transparent stopping contract: evidence sufficient and mandatory checks
+satisfied -> publish the appropriate readiness; unresolved items with no eligible
+funded correction -> limited publication. There is no invented expected utility,
+confidence threshold or automatic numerical trust score. Execution completion,
+audit completion and readiness remain separate reducers.
+
+7. Implementation sequence and acceptance
+
+Phase A — repair invariant holes before architectural expansion.
+  RUNTIME-02: durable not_before/generation guard at authorization.
+  RUNTIME-01: common required-tail envelope plus optional-work cutoff; prioritize
+    finishing capacity without releasing unknown exposure.
+  RUNTIME-03: one transactional queue transition guard.
+  ROOT-01: exact initial UTF-8 packet admission and conservative downstream bound.
+  Keep current interfaces working; add targeted regressions from audit probes.
+
+Phase B — extract the shared pure policy from the repaired behavior.
+  EVAL-02: versioned graph, stage/context contracts and transition policy shared by
+    runtime and study runner. Preserve distinct legitimate ablation profiles.
+  Add explicit obstruction/correction dispositions from the evidence lane;
+    maintain the existing finite maximum and original allowances.
+  Freeze policy hash with preflight and each study manifest. Keep the old v1
+    policy implementation addressable for still-eligible frozen runs/resumptions;
+    new starts opt into v2 explicitly. Never silently migrate old retries to the
+    new graph, counters or resource interpretation. If v1 cannot safely continue,
+    publish a version-incompatible limited result and require a fresh linked
+    preflight instead of changing its authorization. Historical reports remain
+    readable. Route decisions through existing locks/journals/outbox, rather
+    than replacing persistence.
+
+Phase C — measure before enabling extra rounds or roles.
+  Evaluate independent review against full debate on the same substantive cases,
+    with paired human judgments, source-support defects and total resource usage.
+  Add query-aware context selection or specialized critic roles only if their
+    incremental benefit is repeatable within declared budgets. Do not assume
+    more agents, a complex planner or a consensus score improves factual accuracy.
+
+Invariant-based acceptance checks:
+  RUNTIME-02: duplicate old/new messages before and after not_before; retries never
+    send early, never resample delay, and consume at most the allowed attempts.
+  RUNTIME-01: reproduce 500-second optional Retry-After with two valid proposals;
+    reject it early and preserve a complete bounded synthesis/audit opportunity.
+    Test boundary equality, slow final provider, occupied image slots, late timer,
+    cancellation and clock regression; no reserve is spent twice.
+  RUNTIME-03: concurrent Start/clarify/retry at owner=3 and global=20 limits; queued
+    counts never exceed caps; rejected resumption retains original state; replay
+    cannot renew ticket or jump FIFO.
+  ROOT-01: ASCII/CJK/emoji, quotes/backslashes and maximum brief/evidence/claim/peer
+    combinations; any admitted mandatory packet fits its canonical byte limit;
+    blocked input sends zero paid requests. Required objections never disappear.
+  EVAL-02: identical policy snapshot/failure sequence produces identical decisions
+    and stage traces in runtime and study runner. Only adapter-specific effects
+    differ. Every profile has its own frozen policy identity.
+  Termination: no trace exceeds declared node/attempt/correction bounds; successful
+    intake/proposals are never repeated by manual retry; no response after a
+    fence can reopen a node; a negative completed audit is not an execution retry.
+  Preservation: every retired optional/in-flight node has an explicit reason and
+    accounting outcome; late usage can reconcile without publishing late content.
+
+Use deterministic model-based state-machine tests for the pure policy, then a
+small set of real PostgreSQL race/lease tests for the persistence boundary. Do
+not substitute a large number of implementation-mirroring unit tests or high
+coverage percentages for these cross-transition invariants. Existing test suites
+remain regressions to run after actual changes; none were rerun for this design.

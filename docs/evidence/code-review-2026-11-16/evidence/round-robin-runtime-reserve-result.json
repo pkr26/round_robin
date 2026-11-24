@@ -1,0 +1,26 @@
+{
+  "probe": "generation_consumes_critic_time",
+  "initial_failure": {
+    "status": "persisted"
+  },
+  "remaining_seconds_before_retry": 300,
+  "generation_timeout_seconds": 275.0,
+  "simulated_generation_elapsed_seconds": 274,
+  "generation_result": {
+    "status": "persisted"
+  },
+  "critic_results": [
+    {
+      "status": "blocked"
+    },
+    {
+      "status": "blocked"
+    }
+  ],
+  "critic_calls": {
+    "anthropic": 0,
+    "google": 0
+  },
+  "retained_review_hold_usd": "0.20",
+  "real_provider_calls": 0
+}

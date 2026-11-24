@@ -1,0 +1,110 @@
+{
+  "fresh_checks": {
+    "production_build": "passed in disposable copy with isolated API origin",
+    "alembic_upgrade_and_drift_check": "passed in disposable PostgreSQL schema",
+    "connected_playwright": {
+      "passed": 30,
+      "failed": 0,
+      "seconds": 59.0,
+      "services": [
+        "PostgreSQL",
+        "Redis database 14 with unique queue",
+        "FastAPI",
+        "Celery worker",
+        "dispatcher",
+        "production static frontend"
+      ]
+    },
+    "targeted_reproductions": [
+      "Four real React core-workspace probes plus backend semantic checks",
+      "One real React native-action probe",
+      "Two PostgreSQL scheduler/budget probes",
+      "One legal deletion/backup interleaving",
+      "One PostgreSQL/ASGI hosted contention probe",
+      "Full simulated API-to-worker-to-export unsafe-markup probe"
+    ],
+    "source_hash_check": {
+      "source_files": 125,
+      "verification_inputs": 162,
+      "changed": []
+    }
+  },
+  "previous_pass_results_not_rerun": {
+    "backend_default": "1922 passed, 1 failed (RR-017), 31 skipped",
+    "isolated_service_and_fetcher": "23 passed, 8 skipped",
+    "native_and_broker_fault_lane": "8 passed",
+    "frontend_unit": "215 passed",
+    "typecheck_and_contracts": "passed",
+    "production_dependency_scans": "104 JS and 48 Python dependencies; no known advisories reported in that scan"
+  },
+  "isolation": {
+    "existing_development_processes_untouched": {
+      "api_port_8000_pid": 32105,
+      "frontend_port_3000_pid": 32122
+    },
+    "audit_ports": [
+      18000,
+      13000
+    ],
+    "owned_schemas_queues_processes_cleaned": true,
+    "paid_calls": 0
+  },
+  "limitations": [
+    "No real paid provider execution or real hosted identity-provider deployment was tested.",
+    "No new dependency-advisory or container-OS scan in this second pass; earlier scan evidence remains in the first report.",
+    "Targeted deterministic interleavings establish the described bugs, not their production frequency.",
+    "No claim that every remaining issue has been discovered."
+  ],
+  "browser_harness": {
+    "schema": "rr_audit2_531240d0f90c45c9905da4225a0e9e58",
+    "queue": "rr_audit2_73f24bdd0b974c6f89f2810b21abc651",
+    "api_port": 18000,
+    "browser_port": 13000,
+    "paid_provider_calls": 0,
+    "checks": [
+      {
+        "command": [
+          "pnpm",
+          "build"
+        ],
+        "exit_code": 0,
+        "seconds": 7.73,
+        "log": "check-01.log"
+      },
+      {
+        "command": [
+          "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+          "upgrade",
+          "head"
+        ],
+        "exit_code": 0,
+        "seconds": 0.66,
+        "log": "check-02.log"
+      },
+      {
+        "command": [
+          "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/alembic",
+          "check"
+        ],
+        "exit_code": 0,
+        "seconds": 0.55,
+        "log": "check-03.log"
+      },
+      {
+        "command": [
+          "pnpm",
+          "exec",
+          "playwright",
+          "test",
+          "--config",
+          "/tmp/rr-audit2-root/browser/playwright.config.cjs"
+        ],
+        "exit_code": 0,
+        "seconds": 59.71,
+        "log": "check-04.log"
+      }
+    ],
+    "status": "passed",
+    "owned_resources_cleaned": true
+  }
+}

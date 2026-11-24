@@ -1,0 +1,81 @@
+{
+  "attachment_visibility": {
+    "intake_selected_attachment_ids": [
+      "upload_selected"
+    ],
+    "intake_evidence_count": 0,
+    "intake_contains_selected_text": false,
+    "proposal_contains_selected_text": true,
+    "stages": [
+      "intake",
+      "proposal",
+      "proposal",
+      "proposal",
+      "synthesis",
+      "audit"
+    ]
+  },
+  "repair_feedback": {
+    "different_packet_fields": [
+      "repair"
+    ],
+    "retry_repair_flag": true,
+    "rejected_reference_supplied": false,
+    "validation_error_supplied": false,
+    "packet_fields": [
+      "allowed_reference_ids",
+      "brief",
+      "calculations",
+      "claims",
+      "cost_as_of",
+      "evidence",
+      "peer_outputs",
+      "repair",
+      "role",
+      "stage"
+    ]
+  },
+  "unicode_packet_preflight": {
+    "input_packet_error": null,
+    "upload_characters": 40000,
+    "upload_utf8_bytes": 120000,
+    "status": "failed",
+    "stop_reason": "insufficient_independent_proposals",
+    "steps": [
+      {
+        "stage": "intake",
+        "status": "succeeded",
+        "error_code": null,
+        "calls": 1
+      },
+      {
+        "stage": "proposal",
+        "status": "failed",
+        "error_code": "context_limit",
+        "calls": 0
+      },
+      {
+        "stage": "proposal",
+        "status": "failed",
+        "error_code": "context_limit",
+        "calls": 0
+      },
+      {
+        "stage": "proposal",
+        "status": "failed",
+        "error_code": "context_limit",
+        "calls": 0
+      }
+    ],
+    "recommendation": null
+  },
+  "event_snapshot_pagination": {
+    "event_cutoff": 134,
+    "visible_event_count": 100,
+    "last_visible_sequence": 100,
+    "next_event_cursor": 100,
+    "late_concern_visible_in_snapshot": false,
+    "client_consumes_next_event_cursor": false,
+    "client_reads_events_endpoint": false
+  }
+}

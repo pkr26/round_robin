@@ -1,0 +1,188 @@
+...ssssssssssssssssssssssssssssssssssssss............................... [  3%]
+......................./Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/unraisableexception.py:63: PytestUnraisableExceptionWarning: Exception ignored in: <function WeakKeyDictionary.__init__.<locals>.remove at 0x1095abf60>
+
+Traceback (most recent call last):
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/main.py", line 333, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/main.py", line 387, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
+    raise exception
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 829, in pytest_runtestloop
+    return (yield)  # Run all the tests.
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/terminal.py", line 723, in pytest_runtestloop
+    result = yield
+             ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/main.py", line 411, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
+    raise exception
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/warnings.py", line 75, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/assertion/__init__.py", line 212, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/unittest.py", line 610, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/faulthandler.py", line 102, in pytest_runtest_protocol
+    return (yield)
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 118, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 144, in runtestprotocol
+    reports.append(call_and_report(item, "teardown", log, nextitem=nextitem))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 249, in call_and_report
+    call = CallInfo.from_call(
+           ^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 361, in from_call
+    result: TResult | None = func()
+                             ^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 250, in <lambda>
+    lambda: runtest_hook(item=item, **kwds),
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_caller.py", line 197, in __call__
+    return self._hookexec(
+           ^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_manager.py", line 183, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 195, in _multicall
+    raise exception
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/logging.py", line 886, in pytest_runtest_teardown
+    yield
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 167, in _multicall
+    teardown.throw(exception)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/capture.py", line 911, in pytest_runtest_teardown
+    return (yield)
+            ^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/pluggy/_execution.py", line 147, in _multicall
+    res = hook_impl.function(*args)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 199, in pytest_runtest_teardown
+    item.session._setupstate.teardown_exact(nextitem)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/runner.py", line 568, in teardown_exact
+    fin()
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/fixtures.py", line 1235, in finish
+    raise exceptions[0]
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/fixtures.py", line 1225, in finish
+    fin()
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/_pytest/fixtures.py", line 1083, in _teardown_yield_fixture
+    next(it)
+  File "/Users/pradeepreddy/Desktop/round_robin/backend/tests/test_api_adversarial.py", line 24, in client
+    with TestClient(application, raise_server_exceptions=False) as connection:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/starlette/testclient.py", line 584, in __exit__
+    self.exit_stack.close()
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/contextlib.py", line 618, in close
+    self.__exit__(None, None, None)
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/contextlib.py", line 610, in __exit__
+    raise exc_details[1]
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/contextlib.py", line 595, in __exit__
+    if cb(*exc_details):
+       ^^^^^^^^^^^^^^^^
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/anyio/from_thread.py", line 667, in start_blocking_portal
+    thread.join()
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/threading.py", line 1149, in join
+    self._wait_for_tstate_lock()
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/threading.py", line 1169, in _wait_for_tstate_lock
+    if lock.acquire(block, timeout):
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/weakref.py", line 369, in remove
+    def remove(k, selfref=ref(self)):
+    
+KeyboardInterrupt
+
+Enable tracemalloc to get traceback where the object was allocated.
+See https://docs.pytest.org/en/stable/how-to/capture-warnings.html#resource-warnings for more info.
+  warnings.warn(pytest.PytestUnraisableExceptionWarning(msg))
+
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:28: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:32: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:44: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_broker_recovery.py:50: Broker restart faults require the explicit disposable Docker profile
+SKIPPED [1] backend/tests/integration/test_deep_migrations.py:16: Migration rollback requires the explicit disposable PostgreSQL profile
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:16: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:76: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_image_processes.py:119: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_image_processes.py:144: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [2] backend/tests/integration/test_image_total_deadline.py:17: Actual image TLS checks require the explicit loopback-only profile
+SKIPPED [1] backend/tests/integration/test_launcher_ports.py:14: Socket lifecycle check requires the explicit disposable loopback profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:41: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:67: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:80: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:119: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:143: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:180: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:191: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [4] backend/tests/integration/test_native_renderer.py:214: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:56: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:70: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:81: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:93: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:109: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:128: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_restore.py:25: Full PostgreSQL restore requires the explicit disposable loopback test profile
+SKIPPED [1] backend/tests/integration/test_provider_transport.py:30: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [2] backend/tests/integration/test_provider_transport.py:40: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [3] backend/tests/integration/test_review_command_races.py:14: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:106: requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:132: requires explicit disposable PostgreSQL/Redis process profile
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/Users/pradeepreddy/.local/share/uv/python/cpython-3.12.14-macos-aarch64-none/lib/python3.12/threading.py:1169: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+57 passed, 38 skipped, 2 warnings in 5.79s

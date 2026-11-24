@@ -1,0 +1,121 @@
+[
+  {
+    "finding_id": "E-F01",
+    "phase": "A/B",
+    "proposed_change": "Scoped constraint verdicts preserve assessor and basis; disagreement remains unknown until justified",
+    "plan_section": "PLAN.txt:2",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "E-F03",
+    "phase": "A/B",
+    "proposed_change": "Signed proposition-specific assessments with AND required premises and OR complete alternatives",
+    "plan_section": "PLAN.txt:1",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "EVAL-01",
+    "phase": "A",
+    "proposed_change": "Immutable resolved EditBundle reaches actual generator request",
+    "plan_section": "PLAN.txt:6",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "RUNTIME-01",
+    "phase": "A",
+    "proposed_change": "Reserve feasible mandatory completion opportunity before optional waits",
+    "plan_section": "PLAN.txt:4",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "E-F02",
+    "phase": "A/C",
+    "proposed_change": "Objective-specific acquisition reservations and explicit coverage shortfalls",
+    "plan_section": "PLAN.txt:3",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "E-F04",
+    "phase": "A/B",
+    "proposed_change": "Durable objections and dispositions; full storage with critical-first paginated display",
+    "plan_section": "PLAN.txt:2",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "RUNTIME-02",
+    "phase": "A",
+    "proposed_change": "Locked durable not_before and retry-generation enforcement",
+    "plan_section": "PLAN.txt:4",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "RUNTIME-03",
+    "phase": "A",
+    "proposed_change": "Single queue transition guard for start and all resumptions",
+    "plan_section": "PLAN.txt:4",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "ROOT-01",
+    "phase": "A/B",
+    "proposed_change": "Exact UTF-8 initial packets and downstream mandatory context envelopes",
+    "plan_section": "PLAN.txt:3",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "ROOT-02",
+    "phase": "A/B",
+    "proposed_change": "Consume event pages to cutoff, merge by run/sequence and fence stale reads",
+    "plan_section": "PLAN.txt:6",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "EVAL-04",
+    "phase": "A/D",
+    "proposed_change": "Substantive task/evidence identity plus human cluster/provenance review",
+    "plan_section": "PLAN.txt:7",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "EVAL-02",
+    "phase": "B/D",
+    "proposed_change": "Versioned shared pure policy and deterministic response-tape parity",
+    "plan_section": "PLAN.txt:4",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "EVAL-03",
+    "phase": "B",
+    "proposed_change": "Server-owned prior-blocker regression matrix separate from critic quorum",
+    "plan_section": "PLAN.txt:6",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "E-G01",
+    "phase": "B",
+    "proposed_change": "Scoped verification and labeled attestation under explicit acceptable-basis policy",
+    "plan_section": "PLAN.txt:1",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "E-G02",
+    "phase": "C",
+    "proposed_change": "Bounded requirement-aware passage ranking with exceptions and exact locators",
+    "plan_section": "PLAN.txt:3",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "ROOT-G01",
+    "phase": "B",
+    "proposed_change": "Read-only evidence during intake and confirmed typed change proposal",
+    "plan_section": "PLAN.txt:3",
+    "status": "proposed_not_implemented"
+  },
+  {
+    "finding_id": "ROOT-G02",
+    "phase": "B",
+    "proposed_change": "Bounded sanitized validation diagnostics for targeted schema repair",
+    "plan_section": "PLAN.txt:3",
+    "status": "proposed_not_implemented"
+  }
+]

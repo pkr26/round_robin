@@ -1,0 +1,67 @@
+{
+  "synthetic_offline_probes": true,
+  "provider_network_calls": 0,
+  "study_failed_audit": {
+    "reproduced": true,
+    "status": "limited",
+    "stage_counts": {
+      "proposal": 3,
+      "critique": 3,
+      "evidence_review": 1,
+      "revision": 3,
+      "synthesis": 1,
+      "audit": 1
+    },
+    "request_count": 12,
+    "active_seconds": 0.172056,
+    "correction_or_reaudit_executed": false,
+    "note": "Mocked failed final audit stops the study workflow, although the live product has a correction/re-audit transition."
+  },
+  "edit_packet_loses_dispositions": {
+    "reproduced": true,
+    "saved_dispositions": {
+      "finding_fix": "address",
+      "finding_keep": "decline"
+    },
+    "outgoing_packet_metadata": {
+      "kind": "edit",
+      "brief": {
+        "purpose": "Synthetic diagram",
+        "locked_requirements": [
+          "Keep title"
+        ]
+      },
+      "owner_id": "owner_probe",
+      "session_id": "design_probe",
+      "step_id": "edit:version_2",
+      "timeout_seconds": 60,
+      "edit_intent": "Address the selected finding; preserve the declined change."
+    },
+    "missing_selected_findings": true
+  },
+  "missing_regression_dispositions": {
+    "reproduced": true,
+    "prior_findings": [
+      "finding_previous_critical"
+    ],
+    "child_findings": [],
+    "coverage": {
+      "eligible_critic_providers": [
+        "anthropic",
+        "google"
+      ],
+      "complete": true,
+      "generator_provenance": "known",
+      "limitations": []
+    },
+    "note": "Coverage correctly counts reviewers but there is no separate mandatory pending/settled regression matrix."
+  },
+  "aliased_release_cases": {
+    "reproduced": true,
+    "distinct_substantive_cases": 1,
+    "reported_independent_primary_tasks": 48,
+    "useful_primary_tasks": 48,
+    "numerical_usefulness_target": true,
+    "phase_5_passed": false
+  }
+}

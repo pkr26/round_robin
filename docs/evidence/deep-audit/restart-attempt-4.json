@@ -1,0 +1,25 @@
+{
+  "recorded_at_utc": "2026-11-16T14:52:15.171166+00:00",
+  "paid_provider_calls": 0,
+  "supervisor_pid": 51833,
+  "health": {
+    "status_code": 200,
+    "body": {
+      "status": "ok",
+      "mode": "simulated",
+      "paid_access_configured": false,
+      "authorization": "Every paid attempt requires current policy, capacity and budget checks"
+    }
+  },
+  "ready": {
+    "status_code": 200,
+    "body": {
+      "status": "ready",
+      "schema_version": "1"
+    }
+  },
+  "live": {
+    "status_code": 200
+  },
+  "all_checks_passed": true
+}

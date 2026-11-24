@@ -1,0 +1,10 @@
+{
+  "browser_harness_runs": 3,
+  "remaining_owned_schemas": [],
+  "remaining_owned_queue_keys": [],
+  "owned_ports_closed": {
+    "18000": true,
+    "13000": true
+  },
+  "original_development_pids_present": true
+}

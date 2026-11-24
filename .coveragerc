@@ -1,0 +1,29 @@
+[run]
+branch = True
+parallel = True
+relative_files = True
+source =
+    backend/src/round_robin
+    experiments
+    scripts
+    backend/migrations
+data_file = .local/coverage/.coverage
+concurrency =
+    thread
+    multiprocessing
+patch =
+    subprocess
+    fork
+    _exit
+sigterm = True
+
+[report]
+show_missing = True
+skip_empty = False
+precision = 2
+
+[html]
+directory = .local/coverage/html
+
+[json]
+output = .local/coverage/coverage.json

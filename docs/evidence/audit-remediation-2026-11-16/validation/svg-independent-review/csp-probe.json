@@ -1,0 +1,13 @@
+{
+  "scriptExecuted": false,
+  "requests": [
+    "https://fixture.invalid/diagram.svg"
+  ],
+  "blockedMessages": [
+    "Blocked script execution in 'https://fixture.invalid/diagram.svg' because the document's frame is sandboxed and the 'allow-scripts' permission is not set.",
+    "Loading the image 'https://blocked.invalid/pixel.png' violates the following Content Security Policy directive: \"default-src 'none'\". Note that 'img-src' was not explicitly set, so 'default-src' is used as a fallback. The action has been blocked.",
+    "Loading the image 'https://blocked.invalid/pixel.png' violates the following Content Security Policy directive: \"img-src 'self' data:\". The action has been blocked.",
+    "Loading the font 'https://blocked.invalid/font.ttf' violates the following Content Security Policy directive: \"font-src data:\". The action has been blocked.",
+    "Loading the font 'https://blocked.invalid/font.ttf' violates the following Content Security Policy directive: \"font-src data:\". The action has been blocked."
+  ]
+}

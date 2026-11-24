@@ -1,0 +1,5182 @@
+{
+  "schema_version": "1.0",
+  "fictional": true,
+  "brief": {
+    "schema_version": "1.0",
+    "revision": 1,
+    "title": "Choose a workshop label system",
+    "question": "Which label system best fits our small workshop's budget and planning horizon?",
+    "background": "Entirely fictional sample. These values are arithmetic fixtures, not supplier quotes or market estimates.",
+    "goal": "Replace handwritten labels with a repeatable label system for workshop orders.",
+    "currency": "USD",
+    "budget": "2500",
+    "deadline": "2026-12-15",
+    "timezone": "America/Phoenix",
+    "location": "Fictional workshop; no address provided",
+    "horizon_months": 12,
+    "options": [
+      {
+        "id": "option_a",
+        "label": "Option A · lower upfront",
+        "role": "candidate",
+        "provenance": "fictional",
+        "cost_components": [
+          {
+            "id": "cost_a_upfront",
+            "label": "Upfront purchase",
+            "kind": "upfront",
+            "amount": "1000",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "once",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_a",
+            "unit": "item",
+            "quote_valid_until": null
+          },
+          {
+            "id": "cost_a_monthly",
+            "label": "Monthly supplies and service",
+            "kind": "recurring",
+            "amount": "50",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "monthly",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_a",
+            "unit": "item",
+            "quote_valid_until": null
+          },
+          {
+            "id": "cost_a_installation",
+            "label": "Installation (explicitly included)",
+            "kind": "installation",
+            "amount": "0",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "once",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_a",
+            "unit": "item",
+            "quote_valid_until": null
+          }
+        ],
+        "consequences": [
+          "Lower initial commitment; monthly costs accumulate faster."
+        ]
+      },
+      {
+        "id": "option_b",
+        "label": "Option B · lower recurring",
+        "role": "candidate",
+        "provenance": "fictional",
+        "cost_components": [
+          {
+            "id": "cost_b_upfront",
+            "label": "Upfront purchase",
+            "kind": "upfront",
+            "amount": "1600",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "once",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_b",
+            "unit": "item",
+            "quote_valid_until": null
+          },
+          {
+            "id": "cost_b_monthly",
+            "label": "Monthly supplies and service",
+            "kind": "recurring",
+            "amount": "20",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "monthly",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_b",
+            "unit": "item",
+            "quote_valid_until": null
+          },
+          {
+            "id": "cost_b_installation",
+            "label": "Required installation",
+            "kind": "installation",
+            "amount": "0",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "once",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_offer_b",
+            "unit": "item",
+            "quote_valid_until": null
+          }
+        ],
+        "consequences": [
+          "Higher initial commitment; lower recurring cost."
+        ]
+      },
+      {
+        "id": "option_status_quo",
+        "label": "Keep handwritten labels",
+        "role": "status_quo",
+        "provenance": "fictional",
+        "cost_components": [
+          {
+            "id": "cost_status_quo",
+            "label": "New spending (explicit zero)",
+            "kind": "upfront",
+            "amount": "0",
+            "currency": "USD",
+            "quantity": "1",
+            "frequency": "once",
+            "status": "included",
+            "unknown_reason": null,
+            "source_ref": "passage_goal",
+            "unit": "item",
+            "quote_valid_until": null
+          }
+        ],
+        "consequences": [
+          "Reversible and avoids a purchase; does not meet the stated replacement goal."
+        ]
+      }
+    ],
+    "hard_requirements": [
+      {
+        "id": "requirement_budget",
+        "description": "All-in cost must remain within USD 2,500 over the chosen horizon.",
+        "origin": "fictional",
+        "metric": "total_cost",
+        "operator": "lte",
+        "threshold": "2500"
+      },
+      {
+        "id": "requirement_goal",
+        "description": "Replace handwritten labels with a repeatable label system.",
+        "origin": "fictional",
+        "metric": "manual",
+        "operator": "manual",
+        "threshold": null
+      }
+    ],
+    "preferences": [
+      {
+        "id": "preference_cost",
+        "description": "Prefer the lower comparable cost after hard requirements are met.",
+        "rank": 1,
+        "origin": "fictional"
+      },
+      {
+        "id": "preference_reversible",
+        "description": "Prefer a smaller initial commitment when costs are otherwise comparable.",
+        "rank": 2,
+        "origin": "fictional"
+      }
+    ],
+    "user_facts": [
+      "Fictional scenario: both purchased systems meet the stated workflow need.",
+      "Tax, delivery, maintenance and installation are explicitly included at zero additional cost in the complete fictional quotes.",
+      "Keeping the current workflow is feasible but does not achieve the replacement goal."
+    ],
+    "selected_attachment_ids": [],
+    "public_research_terms": []
+  },
+  "evidence": [
+    {
+      "id": "passage_offer_a",
+      "owner_id": "owner_local_fixture",
+      "run_id": "run_fictional_sample",
+      "source_id": "source_offer_a",
+      "source_version": 1,
+      "source_title": "Fictional offer A",
+      "locator": "Offer A, cost lines 1–3",
+      "text": "Option A costs USD 1,000 upfront and USD 50 per month. Installation, delivery, tax and maintenance are included at zero additional cost. It meets the specified replacement workflow.",
+      "sha256": "e4e4d9598b5278b6ef10ad1ba54b0fc90dc2c89cf2927f1b9994c21508d553c9",
+      "verified_at": "2026-11-15T17:00:00Z",
+      "effective_date": "2026-11-15",
+      "origin": "fictional",
+      "verification_status": "fictional",
+      "scope": "Arithmetic and interface demonstration only; no real supplier or independent verification.",
+      "time_sensitive": true,
+      "origin_group": "group_offer_a"
+    },
+    {
+      "id": "passage_offer_b",
+      "owner_id": "owner_local_fixture",
+      "run_id": "run_fictional_sample",
+      "source_id": "source_offer_b",
+      "source_version": 1,
+      "source_title": "Fictional offer B",
+      "locator": "Offer B, cost lines 1–3",
+      "text": "Option B costs USD 1,600 upfront and USD 20 per month. Installation, delivery, tax and maintenance are included at zero additional cost. It meets the specified replacement workflow.",
+      "sha256": "3663aef2715fd69474801a262f75581d5a8143f0bcf502fa79e2d87cb4967a87",
+      "verified_at": "2026-11-15T17:00:00Z",
+      "effective_date": "2026-11-15",
+      "origin": "fictional",
+      "verification_status": "fictional",
+      "scope": "Arithmetic and interface demonstration only; no real supplier or independent verification.",
+      "time_sensitive": true,
+      "origin_group": "group_offer_b"
+    },
+    {
+      "id": "passage_goal",
+      "owner_id": "owner_local_fixture",
+      "run_id": "run_fictional_sample",
+      "source_id": "source_owner_brief",
+      "source_version": 1,
+      "source_title": "Fictional owner brief",
+      "locator": "Confirmed goal and preferences, paragraphs 1–2",
+      "text": "Replace handwritten labels with a repeatable label system. The all-in budget is USD 2,500 over the selected horizon. Prefer the lower comparable cost. The existing handwritten approach requires zero new spending but does not meet this replacement goal.",
+      "sha256": "d2f00a1f6fb697591582c844d1189ad27d0326f49e8f7075ef4b0562f33587b6",
+      "verified_at": "2026-11-15T17:00:00Z",
+      "effective_date": "2026-11-15",
+      "origin": "fictional",
+      "verification_status": "fictional",
+      "scope": "Arithmetic and interface demonstration only; no real supplier or independent verification.",
+      "time_sensitive": true,
+      "origin_group": "group_owner_brief"
+    },
+    {
+      "id": "passage_installation_gap",
+      "owner_id": "owner_local_fixture",
+      "run_id": "run_fictional_sample",
+      "source_id": "source_offer_b_changed",
+      "source_version": 1,
+      "source_title": "Fictional changed offer B",
+      "locator": "Changed-input fixture, omitted installation line",
+      "text": "Changed-input example only: Option B's required installation amount is omitted. USD 1,600 upfront and USD 20 per month are known, but the all-in cost remains unknown until installation is quoted. It continues to meet the specified replacement workflow.",
+      "sha256": "d8973add1bdb0f49afb7fad53deadfd88b90a058a3b13ec4f77f479c3765d1b6",
+      "verified_at": "2026-11-15T17:00:00Z",
+      "effective_date": "2026-11-15",
+      "origin": "fictional",
+      "verification_status": "fictional",
+      "scope": "Arithmetic and interface demonstration only; no real supplier or independent verification.",
+      "time_sensitive": true,
+      "origin_group": "group_offer_b"
+    }
+  ],
+  "contributions": [
+    {
+      "id": "contribution_openai",
+      "provider": "openai",
+      "model": "fictional-openai-fixture",
+      "role": "Solution design",
+      "stage": "proposal",
+      "fictional": true,
+      "summary": "A fits the 12-month plan with the smaller initial commitment.",
+      "public_rationale": "Using only the brief and shared cost snapshot, A costs USD 1,600 over 12 months. It meets the replacement goal in this fictional case. Keep the current approach as a deliberate defer alternative.",
+      "claims": [
+        {
+          "alias": "new_claim_1",
+          "proposition": "A's 12-month total is USD 1,600.",
+          "kind": "calculation",
+          "evidence_status": "fictional",
+          "reference_ids": [
+            "calc_option_a_12"
+          ],
+          "predecessor_id": null,
+          "support_bases": [],
+          "refuting_reference_ids": [],
+          "support_scope": null
+        }
+      ],
+      "alternatives": [],
+      "objections": [],
+      "revision_responses": [],
+      "reference_ids": [
+        "passage_offer_a",
+        "passage_goal"
+      ],
+      "constraint_results": [],
+      "assumptions": [
+        "All specified quote components are complete in the base fixture."
+      ],
+      "open_questions": []
+    },
+    {
+      "id": "contribution_anthropic",
+      "provider": "anthropic",
+      "model": "fictional-claude-fixture",
+      "role": "Cost and delivery",
+      "stage": "proposal",
+      "fictional": true,
+      "summary": "The planning horizon is decisive: B becomes cheaper after month 20.",
+      "public_rationale": "Using the same shared inputs, B's USD 600 higher upfront cost is offset by USD 30 per month in savings. This makes the break-even horizon 20 months. At 12 months, B costs USD 1,840.",
+      "claims": [
+        {
+          "alias": "new_claim_1",
+          "proposition": "The complete A/B costs are equal at 20 months.",
+          "kind": "calculation",
+          "evidence_status": "fictional",
+          "reference_ids": [
+            "calc_break_even"
+          ],
+          "predecessor_id": null,
+          "support_bases": [],
+          "refuting_reference_ids": [],
+          "support_scope": null
+        }
+      ],
+      "alternatives": [],
+      "objections": [],
+      "revision_responses": [],
+      "reference_ids": [
+        "passage_offer_a",
+        "passage_offer_b"
+      ],
+      "constraint_results": [],
+      "assumptions": [],
+      "open_questions": []
+    },
+    {
+      "id": "contribution_google",
+      "provider": "google",
+      "model": "fictional-gemini-fixture",
+      "role": "Risks and missing evidence",
+      "stage": "proposal",
+      "fictional": true,
+      "summary": "Check all-in quotes; an omitted installation charge must remain unknown.",
+      "public_rationale": "Both purchases meet the fictional workflow requirement. Their price ordering depends on the horizon and complete charges. Keeping handwritten labels avoids new spending but fails the replacement goal. Agreement among these manually authored fixtures does not verify real supplier facts.",
+      "claims": [],
+      "alternatives": [],
+      "objections": [],
+      "revision_responses": [],
+      "reference_ids": [
+        "passage_goal",
+        "passage_offer_b"
+      ],
+      "constraint_results": [],
+      "assumptions": [],
+      "open_questions": [
+        "Will real quotes preserve the complete-cost assumptions?"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "base12",
+      "label": "12-month comparison",
+      "description": "Complete fictional costs favor A over the 12-month planning horizon.",
+      "brief": {
+        "schema_version": "1.0",
+        "revision": 1,
+        "title": "Choose a workshop label system",
+        "question": "Which label system best fits our small workshop's budget and planning horizon?",
+        "background": "Entirely fictional sample. These values are arithmetic fixtures, not supplier quotes or market estimates.",
+        "goal": "Replace handwritten labels with a repeatable label system for workshop orders.",
+        "currency": "USD",
+        "budget": "2500",
+        "deadline": "2026-12-15",
+        "timezone": "America/Phoenix",
+        "location": "Fictional workshop; no address provided",
+        "horizon_months": 12,
+        "options": [
+          {
+            "id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_a_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1000",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "50",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_installation",
+                "label": "Installation (explicitly included)",
+                "kind": "installation",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Lower initial commitment; monthly costs accumulate faster."
+            ]
+          },
+          {
+            "id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_b_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1600",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "20",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_installation",
+                "label": "Required installation",
+                "kind": "installation",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Higher initial commitment; lower recurring cost."
+            ]
+          },
+          {
+            "id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_status_quo",
+                "label": "New spending (explicit zero)",
+                "kind": "upfront",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_goal",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Reversible and avoids a purchase; does not meet the stated replacement goal."
+            ]
+          }
+        ],
+        "hard_requirements": [
+          {
+            "id": "requirement_budget",
+            "description": "All-in cost must remain within USD 2,500 over the chosen horizon.",
+            "origin": "fictional",
+            "metric": "total_cost",
+            "operator": "lte",
+            "threshold": "2500"
+          },
+          {
+            "id": "requirement_goal",
+            "description": "Replace handwritten labels with a repeatable label system.",
+            "origin": "fictional",
+            "metric": "manual",
+            "operator": "manual",
+            "threshold": null
+          }
+        ],
+        "preferences": [
+          {
+            "id": "preference_cost",
+            "description": "Prefer the lower comparable cost after hard requirements are met.",
+            "rank": 1,
+            "origin": "fictional"
+          },
+          {
+            "id": "preference_reversible",
+            "description": "Prefer a smaller initial commitment when costs are otherwise comparable.",
+            "rank": 2,
+            "origin": "fictional"
+          }
+        ],
+        "user_facts": [
+          "Fictional scenario: both purchased systems meet the stated workflow need.",
+          "Tax, delivery, maintenance and installation are explicitly included at zero additional cost in the complete fictional quotes.",
+          "Keeping the current workflow is feasible but does not achieve the replacement goal."
+        ],
+        "selected_attachment_ids": [],
+        "public_research_terms": []
+      },
+      "report": {
+        "schema_version": "1.0",
+        "id": "report_base12",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": null,
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 9,
+        "execution_status": "completed",
+        "recommendation": {
+          "option_id": "option_a",
+          "summary": "Choose Option A for the 12-month horizon.",
+          "conditions": [
+            "Within this fictional brief and its explicit complete cost assumptions."
+          ]
+        },
+        "readiness": "ready_to_choose",
+        "readiness_reasons": [
+          "The selected option passes applicable requirements under the stated evidence or owner-attestation scope, with accepted dependencies and a distinct audit. This does not certify real-world truth."
+        ],
+        "readiness_unavailable_reason": null,
+        "main_reasons": [
+          "At 12 months, A totals USD 1,600 and B totals USD 1,840.",
+          "The status quo is considered but fails the stated replacement goal.",
+          "A/B costs are equal at 20 months when both quotes are complete."
+        ],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "1600.00",
+            "known_subtotal": "1600.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1600.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "1840.00",
+            "known_subtotal": "1840.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1840.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_12",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 12 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_12",
+            "label": "Option A · lower upfront: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 12 months + 0 × 1",
+            "output": "1600.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1600.00"
+          },
+          {
+            "id": "calc_option_b_12",
+            "label": "Option B · lower recurring: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 12 months + 0 × 1",
+            "output": "1840.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1840.00"
+          },
+          {
+            "id": "calc_option_status_quo_12",
+            "label": "Keep handwritten labels: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design; synthesis",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "simulated",
+            "notes": "Manually authored distinct-auditor fixture; no model quality claim."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": "openai",
+          "auditor": "google",
+          "synthesis_valid": true,
+          "audit_succeeded": true,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "fictional_fixture_complete",
+        "change_summary": []
+      },
+      "preflight": {
+        "id": "preflight_revision_1",
+        "fictional": true,
+        "draft_revision": 1,
+        "input_manifest": {
+          "items": [],
+          "content_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "draft_hash": "45fcf8053eb3c1a33cbe9aee299109277338bbf8abc9801968a4d9268e8da932",
+        "configuration_hash": "1f2a3085b5e36bd21fb08dd1e6f33526d694f80f742fd74428c7102ded5932b4",
+        "fingerprint": "5f2bb2980a4a4d475cc407ff2d81197bb00279ade40539c472c3767496af055f",
+        "recipients": [
+          "openai",
+          "anthropic",
+          "google"
+        ],
+        "approved_public_terms": [],
+        "query_templates": [],
+        "protocol": "independent_review_provisional",
+        "models": {
+          "openai": "fictional-openai-fixture",
+          "anthropic": "fictional-claude-fixture",
+          "google": "fictional-gemini-fixture"
+        },
+        "prompt_version": "fictional-prompts-v1",
+        "schema_version": "1.0",
+        "pricing_version": "simulated-no-prices-v1",
+        "limits": {
+          "max_requests": 24,
+          "max_calls_per_step": 2,
+          "active_seconds": 600,
+          "per_run_usd": "2",
+          "owner_daily_usd": "10",
+          "owner_monthly_usd": "50"
+        },
+        "finish_policy": {
+          "reserved_requests": 2,
+          "reserved_usd": "0.40",
+          "reserved_active_seconds": 190,
+          "version": "fictional-finish-v1"
+        },
+        "created_at": "2026-11-15T17:00:00Z",
+        "expires_at": "2026-11-15T17:10:00Z",
+        "initial_admission_window_minutes": 30,
+        "consumed_by_run_id": null,
+        "paid_access_enabled": false,
+        "blockers": [
+          "Paid access is disabled in the Phase 0 prototype."
+        ],
+        "warnings": [
+          "Static fictional preflight. No Start command, provider request, public search or monetary authorization exists.",
+          "The protocol and USD 2 ceiling are provisional and unvalidated."
+        ]
+      },
+      "partial_report": {
+        "schema_version": "1.0",
+        "id": "report_base12_partial",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": null,
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "completed_with_limitations",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "No valid synthesis exists; recommendation and readiness are unavailable."
+        ],
+        "readiness_unavailable_reason": "No valid synthesis exists; recommendation and readiness are unavailable.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "1600.00",
+            "known_subtotal": "1600.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1600.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "1840.00",
+            "known_subtotal": "1840.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1840.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_12",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 12 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_12",
+            "label": "Option A · lower upfront: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 12 months + 0 × 1",
+            "output": "1600.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1600.00"
+          },
+          {
+            "id": "calc_option_b_12",
+            "label": "Option B · lower recurring: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 12 months + 0 × 1",
+            "output": "1840.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1840.00"
+          },
+          {
+            "id": "calc_option_status_quo_12",
+            "label": "Keep handwritten labels: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "synthesis_unavailable",
+        "change_summary": []
+      },
+      "cancelled_report": {
+        "schema_version": "1.0",
+        "id": "report_base12_cancelled",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": null,
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "cancelled",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "The fictional run was stopped before synthesis; no recommendation or readiness assessment exists."
+        ],
+        "readiness_unavailable_reason": "Cancelled before synthesis; committed comparison work is preserved.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "1600.00",
+            "known_subtotal": "1600.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1600.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "1840.00",
+            "known_subtotal": "1840.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 1840.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_12",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 12,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_12"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_12",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 12 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_12",
+            "label": "Option A · lower upfront: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 12 months + 0 × 1",
+            "output": "1600.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1600.00"
+          },
+          {
+            "id": "calc_option_b_12",
+            "label": "Option B · lower recurring: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 12 months + 0 × 1",
+            "output": "1840.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "1840.00"
+          },
+          {
+            "id": "calc_option_status_quo_12",
+            "label": "Keep handwritten labels: 12-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 12,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "user_cancellation_fixture",
+        "change_summary": []
+      }
+    },
+    {
+      "id": "horizon24",
+      "label": "Follow-up: 24 months",
+      "description": "Changing only the planning horizon reverses the cost ordering after month 20.",
+      "brief": {
+        "schema_version": "1.0",
+        "revision": 2,
+        "title": "Choose a workshop label system",
+        "question": "Which label system best fits our small workshop's budget and planning horizon?",
+        "background": "Entirely fictional sample. These values are arithmetic fixtures, not supplier quotes or market estimates.",
+        "goal": "Replace handwritten labels with a repeatable label system for workshop orders.",
+        "currency": "USD",
+        "budget": "2500",
+        "deadline": "2026-12-15",
+        "timezone": "America/Phoenix",
+        "location": "Fictional workshop; no address provided",
+        "horizon_months": 24,
+        "options": [
+          {
+            "id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_a_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1000",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "50",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_installation",
+                "label": "Installation (explicitly included)",
+                "kind": "installation",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Lower initial commitment; monthly costs accumulate faster."
+            ]
+          },
+          {
+            "id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_b_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1600",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "20",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_installation",
+                "label": "Required installation",
+                "kind": "installation",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_b",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Higher initial commitment; lower recurring cost."
+            ]
+          },
+          {
+            "id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_status_quo",
+                "label": "New spending (explicit zero)",
+                "kind": "upfront",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_goal",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Reversible and avoids a purchase; does not meet the stated replacement goal."
+            ]
+          }
+        ],
+        "hard_requirements": [
+          {
+            "id": "requirement_budget",
+            "description": "All-in cost must remain within USD 2,500 over the chosen horizon.",
+            "origin": "fictional",
+            "metric": "total_cost",
+            "operator": "lte",
+            "threshold": "2500"
+          },
+          {
+            "id": "requirement_goal",
+            "description": "Replace handwritten labels with a repeatable label system.",
+            "origin": "fictional",
+            "metric": "manual",
+            "operator": "manual",
+            "threshold": null
+          }
+        ],
+        "preferences": [
+          {
+            "id": "preference_cost",
+            "description": "Prefer the lower comparable cost after hard requirements are met.",
+            "rank": 1,
+            "origin": "fictional"
+          },
+          {
+            "id": "preference_reversible",
+            "description": "Prefer a smaller initial commitment when costs are otherwise comparable.",
+            "rank": 2,
+            "origin": "fictional"
+          }
+        ],
+        "user_facts": [
+          "Fictional scenario: both purchased systems meet the stated workflow need.",
+          "Tax, delivery, maintenance and installation are explicitly included at zero additional cost in the complete fictional quotes.",
+          "Keeping the current workflow is feasible but does not achieve the replacement goal."
+        ],
+        "selected_attachment_ids": [],
+        "public_research_terms": []
+      },
+      "report": {
+        "schema_version": "1.0",
+        "id": "report_horizon24",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 9,
+        "execution_status": "completed",
+        "recommendation": {
+          "option_id": "option_b",
+          "summary": "Choose Option B for the 24-month horizon.",
+          "conditions": [
+            "Within this fictional brief and its explicit complete cost assumptions."
+          ]
+        },
+        "readiness": "ready_to_choose",
+        "readiness_reasons": [
+          "The selected option passes applicable requirements under the stated evidence or owner-attestation scope, with accepted dependencies and a distinct audit. This does not certify real-world truth."
+        ],
+        "readiness_unavailable_reason": null,
+        "main_reasons": [
+          "At 24 months, B totals USD 2,080 and A totals USD 2,200.",
+          "The status quo is considered but fails the stated replacement goal.",
+          "A/B costs are equal at 20 months when both quotes are complete."
+        ],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "2080.00",
+            "known_subtotal": "2080.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2080.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months + 0 × 1",
+            "output": "2080.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design; synthesis",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "simulated",
+            "notes": "Manually authored distinct-auditor fixture; no model quality claim."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": "openai",
+          "auditor": "google",
+          "synthesis_valid": true,
+          "audit_succeeded": true,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "fictional_fixture_complete",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "Recommendation changes from A to B because the cost ordering reverses after month 20."
+        ]
+      },
+      "preflight": {
+        "id": "preflight_revision_2",
+        "fictional": true,
+        "draft_revision": 2,
+        "input_manifest": {
+          "items": [],
+          "content_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "draft_hash": "35546ee3554d7a55976039ece183012b682f830c61cd2e29d7e53d7492f02d16",
+        "configuration_hash": "1f2a3085b5e36bd21fb08dd1e6f33526d694f80f742fd74428c7102ded5932b4",
+        "fingerprint": "bea1aef6d257bd6fc8a33ed312fd75cd7eed635c2074124fe5cf8673d9a27f76",
+        "recipients": [
+          "openai",
+          "anthropic",
+          "google"
+        ],
+        "approved_public_terms": [],
+        "query_templates": [],
+        "protocol": "independent_review_provisional",
+        "models": {
+          "openai": "fictional-openai-fixture",
+          "anthropic": "fictional-claude-fixture",
+          "google": "fictional-gemini-fixture"
+        },
+        "prompt_version": "fictional-prompts-v1",
+        "schema_version": "1.0",
+        "pricing_version": "simulated-no-prices-v1",
+        "limits": {
+          "max_requests": 24,
+          "max_calls_per_step": 2,
+          "active_seconds": 600,
+          "per_run_usd": "2",
+          "owner_daily_usd": "10",
+          "owner_monthly_usd": "50"
+        },
+        "finish_policy": {
+          "reserved_requests": 2,
+          "reserved_usd": "0.40",
+          "reserved_active_seconds": 190,
+          "version": "fictional-finish-v1"
+        },
+        "created_at": "2026-11-15T17:00:00Z",
+        "expires_at": "2026-11-15T17:10:00Z",
+        "initial_admission_window_minutes": 30,
+        "consumed_by_run_id": null,
+        "paid_access_enabled": false,
+        "blockers": [
+          "Paid access is disabled in the Phase 0 prototype."
+        ],
+        "warnings": [
+          "Static fictional preflight. No Start command, provider request, public search or monetary authorization exists.",
+          "The protocol and USD 2 ceiling are provisional and unvalidated."
+        ]
+      },
+      "partial_report": {
+        "schema_version": "1.0",
+        "id": "report_horizon24_partial",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "completed_with_limitations",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "No valid synthesis exists; recommendation and readiness are unavailable."
+        ],
+        "readiness_unavailable_reason": "No valid synthesis exists; recommendation and readiness are unavailable.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "2080.00",
+            "known_subtotal": "2080.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2080.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months + 0 × 1",
+            "output": "2080.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "synthesis_unavailable",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "Recommendation changes from A to B because the cost ordering reverses after month 20."
+        ]
+      },
+      "cancelled_report": {
+        "schema_version": "1.0",
+        "id": "report_horizon24_cancelled",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "cancelled",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "The fictional run was stopped before synthesis; no recommendation or readiness assessment exists."
+        ],
+        "readiness_unavailable_reason": "Cancelled before synthesis; committed comparison work is preserved.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": "2080.00",
+            "known_subtotal": "2080.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2080.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_offer_b"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "Do the real written quotes include all required charges?",
+            "affected_conclusion": "The option cost comparison and budget pass results.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months + 0 × 1",
+            "output": "2080.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          },
+          {
+            "id": "calc_break_even",
+            "label": "A/B break-even horizon",
+            "operation": "break_even",
+            "inputs": [
+              {
+                "label": "Option A · lower upfront: Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option A · lower upfront: Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Option B · lower recurring: Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD/month",
+                "source_ref": "passage_offer_b"
+              },
+              {
+                "label": "Option B · lower recurring: Required installation",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_b"
+              }
+            ],
+            "formula": "(1600 − 1000) ÷ (50 − 20)",
+            "output": "20",
+            "unit": "months",
+            "currency": null,
+            "horizon_months": null,
+            "rounding": "Decimal precision 64; division flags retained",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": null
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "user_cancellation_fixture",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "Recommendation changes from A to B because the cost ordering reverses after month 20."
+        ]
+      }
+    },
+    {
+      "id": "missing_installation",
+      "label": "Missing installation quote",
+      "description": "B's 24-month known subtotal is USD 2,080; its all-in total and budget result are unknown.",
+      "brief": {
+        "schema_version": "1.0",
+        "revision": 3,
+        "title": "Choose a workshop label system",
+        "question": "Which label system best fits our small workshop's budget and planning horizon?",
+        "background": "Entirely fictional sample. These values are arithmetic fixtures, not supplier quotes or market estimates.",
+        "goal": "Replace handwritten labels with a repeatable label system for workshop orders.",
+        "currency": "USD",
+        "budget": "2500",
+        "deadline": "2026-12-15",
+        "timezone": "America/Phoenix",
+        "location": "Fictional workshop; no address provided",
+        "horizon_months": 24,
+        "options": [
+          {
+            "id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_a_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1000",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "50",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_a_installation",
+                "label": "Installation (explicitly included)",
+                "kind": "installation",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_offer_a",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Lower initial commitment; monthly costs accumulate faster."
+            ]
+          },
+          {
+            "id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_b_upfront",
+                "label": "Upfront purchase",
+                "kind": "upfront",
+                "amount": "1600",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_installation_gap",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_monthly",
+                "label": "Monthly supplies and service",
+                "kind": "recurring",
+                "amount": "20",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "monthly",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_installation_gap",
+                "unit": "item",
+                "quote_valid_until": null
+              },
+              {
+                "id": "cost_b_installation",
+                "label": "Required installation",
+                "kind": "installation",
+                "amount": null,
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": "Installation is omitted from the supplied quote.",
+                "source_ref": "passage_installation_gap",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Higher initial commitment; lower recurring cost."
+            ]
+          },
+          {
+            "id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "provenance": "fictional",
+            "cost_components": [
+              {
+                "id": "cost_status_quo",
+                "label": "New spending (explicit zero)",
+                "kind": "upfront",
+                "amount": "0",
+                "currency": "USD",
+                "quantity": "1",
+                "frequency": "once",
+                "status": "included",
+                "unknown_reason": null,
+                "source_ref": "passage_goal",
+                "unit": "item",
+                "quote_valid_until": null
+              }
+            ],
+            "consequences": [
+              "Reversible and avoids a purchase; does not meet the stated replacement goal."
+            ]
+          }
+        ],
+        "hard_requirements": [
+          {
+            "id": "requirement_budget",
+            "description": "All-in cost must remain within USD 2,500 over the chosen horizon.",
+            "origin": "fictional",
+            "metric": "total_cost",
+            "operator": "lte",
+            "threshold": "2500"
+          },
+          {
+            "id": "requirement_goal",
+            "description": "Replace handwritten labels with a repeatable label system.",
+            "origin": "fictional",
+            "metric": "manual",
+            "operator": "manual",
+            "threshold": null
+          }
+        ],
+        "preferences": [
+          {
+            "id": "preference_cost",
+            "description": "Prefer the lower comparable cost after hard requirements are met.",
+            "rank": 1,
+            "origin": "fictional"
+          },
+          {
+            "id": "preference_reversible",
+            "description": "Prefer a smaller initial commitment when costs are otherwise comparable.",
+            "rank": 2,
+            "origin": "fictional"
+          }
+        ],
+        "user_facts": [
+          "Fictional scenario: both purchased systems meet the stated workflow need.",
+          "Tax, delivery and maintenance are explicitly included at zero additional cost; B installation remains unknown in the changed quote.",
+          "Keeping the current workflow is feasible but does not achieve the replacement goal."
+        ],
+        "selected_attachment_ids": [],
+        "public_research_terms": []
+      },
+      "report": {
+        "schema_version": "1.0",
+        "id": "report_missing_installation",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 9,
+        "execution_status": "completed",
+        "recommendation": {
+          "option_id": "option_a",
+          "summary": "Option A is a provisional fallback; a cheapest all-in choice is not established.",
+          "conditions": [
+            "Confirm Option B's missing installation cost before claiming the cheapest all-in choice."
+          ]
+        },
+        "readiness": "conditional",
+        "readiness_reasons": [
+          "Essential dependency remains unverified: The supplied costs include every required component over a common horizon."
+        ],
+        "readiness_unavailable_reason": null,
+        "main_reasons": [
+          "At 24 months, A totals USD 2,200; B has USD 2,080 in known costs.",
+          "The status quo is considered but fails the stated replacement goal.",
+          "Unknown installation prevents a complete all-in comparison."
+        ],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "Option B's required installation amount is missing.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Request Option B's installation quote and confirm its all-in cost.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": null,
+            "known_subtotal": "2080.00",
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "unknown",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "All-in cost is unknown because a required component is missing.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Known subtotal only; installation is unknown, not zero."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "unverified",
+            "accepted_scoped_support": false,
+            "reference_ids": [
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "What is the complete installation cost for B?",
+            "affected_conclusion": "Whether B has the lower all-in cost at 24 months.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months",
+            "output": null,
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design; synthesis",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "simulated",
+            "notes": "Manually authored distinct-auditor fixture; no model quality claim."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": "openai",
+          "auditor": "google",
+          "synthesis_valid": true,
+          "audit_succeeded": true,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "fictional_fixture_complete",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "B's installation input changed from explicit zero to unknown; no cheapest all-in claim is published."
+        ]
+      },
+      "preflight": {
+        "id": "preflight_revision_3",
+        "fictional": true,
+        "draft_revision": 3,
+        "input_manifest": {
+          "items": [],
+          "content_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+        },
+        "draft_hash": "86e95cd221a5ee45dd3dae402749ebd6232accaca21d9606a70fadda5f7e0cf5",
+        "configuration_hash": "1f2a3085b5e36bd21fb08dd1e6f33526d694f80f742fd74428c7102ded5932b4",
+        "fingerprint": "eaf1851709993f0d9b377492a4c225d3f732e1efd03dc442d03e259b1b7fb92e",
+        "recipients": [
+          "openai",
+          "anthropic",
+          "google"
+        ],
+        "approved_public_terms": [],
+        "query_templates": [],
+        "protocol": "independent_review_provisional",
+        "models": {
+          "openai": "fictional-openai-fixture",
+          "anthropic": "fictional-claude-fixture",
+          "google": "fictional-gemini-fixture"
+        },
+        "prompt_version": "fictional-prompts-v1",
+        "schema_version": "1.0",
+        "pricing_version": "simulated-no-prices-v1",
+        "limits": {
+          "max_requests": 24,
+          "max_calls_per_step": 2,
+          "active_seconds": 600,
+          "per_run_usd": "2",
+          "owner_daily_usd": "10",
+          "owner_monthly_usd": "50"
+        },
+        "finish_policy": {
+          "reserved_requests": 2,
+          "reserved_usd": "0.40",
+          "reserved_active_seconds": 190,
+          "version": "fictional-finish-v1"
+        },
+        "created_at": "2026-11-15T17:00:00Z",
+        "expires_at": "2026-11-15T17:10:00Z",
+        "initial_admission_window_minutes": 30,
+        "consumed_by_run_id": null,
+        "paid_access_enabled": false,
+        "blockers": [
+          "Paid access is disabled in the Phase 0 prototype."
+        ],
+        "warnings": [
+          "Static fictional preflight. No Start command, provider request, public search or monetary authorization exists.",
+          "The protocol and USD 2 ceiling are provisional and unvalidated."
+        ]
+      },
+      "partial_report": {
+        "schema_version": "1.0",
+        "id": "report_missing_installation_partial",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "completed_with_limitations",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "No valid synthesis exists; recommendation and readiness are unavailable."
+        ],
+        "readiness_unavailable_reason": "No valid synthesis exists; recommendation and readiness are unavailable.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "Option B's required installation amount is missing.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Request Option B's installation quote and confirm its all-in cost.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": null,
+            "known_subtotal": "2080.00",
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "unknown",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "All-in cost is unknown because a required component is missing.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Known subtotal only; installation is unknown, not zero."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "unverified",
+            "accepted_scoped_support": false,
+            "reference_ids": [
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "What is the complete installation cost for B?",
+            "affected_conclusion": "Whether B has the lower all-in cost at 24 months.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months",
+            "output": null,
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "synthesis_unavailable",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "B's installation input changed from explicit zero to unknown; no cheapest all-in claim is published."
+        ]
+      },
+      "cancelled_report": {
+        "schema_version": "1.0",
+        "id": "report_missing_installation_cancelled",
+        "run_id": "run_fictional_sample",
+        "parent_report_id": "report_base12",
+        "fictional": true,
+        "version": 1,
+        "event_cutoff": 5,
+        "execution_status": "cancelled",
+        "recommendation": null,
+        "readiness": null,
+        "readiness_reasons": [
+          "The fictional run was stopped before synthesis; no recommendation or readiness assessment exists."
+        ],
+        "readiness_unavailable_reason": "Cancelled before synthesis; committed comparison work is preserved.",
+        "main_reasons": [],
+        "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+        "largest_uncertainty": "Option B's required installation amount is missing.",
+        "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+        "next_action": "Request Option B's installation quote and confirm its all-in cost.",
+        "comparison": [
+          {
+            "option_id": "option_a",
+            "label": "Option A · lower upfront",
+            "role": "candidate",
+            "total": "2200.00",
+            "known_subtotal": "2200.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_a_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 2200.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_a_24",
+            "caveat": "Fictional complete cost inputs; no real quote verification."
+          },
+          {
+            "option_id": "option_b",
+            "label": "Option B · lower recurring",
+            "role": "candidate",
+            "total": null,
+            "known_subtotal": "2080.00",
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "unknown",
+                "basis_refs": [
+                  "calc_option_b_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "All-in cost is unknown because a required component is missing.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "pass",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "The fictional task explicitly states this system meets the workflow need.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_b_24",
+            "caveat": "Known subtotal only; installation is unknown, not zero."
+          },
+          {
+            "option_id": "option_status_quo",
+            "label": "Keep handwritten labels",
+            "role": "status_quo",
+            "total": "0.00",
+            "known_subtotal": "0.00",
+            "missing_components": [],
+            "currency": "USD",
+            "horizon_months": 24,
+            "constraint_results": [
+              {
+                "requirement_id": "requirement_budget",
+                "result": "pass",
+                "basis_refs": [
+                  "calc_option_status_quo_24"
+                ],
+                "method": "deterministic_calculation",
+                "assessor": "offline fixture",
+                "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              },
+              {
+                "requirement_id": "requirement_goal",
+                "result": "fail",
+                "basis_refs": [
+                  "passage_goal"
+                ],
+                "method": "fixture_assessment",
+                "assessor": "offline fixture",
+                "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+                "counter_basis_refs": [],
+                "assessment_scope": null,
+                "disputed": false
+              }
+            ],
+            "calculation_id": "calc_option_status_quo_24",
+            "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+          }
+        ],
+        "hard_requirement_ids": [
+          "requirement_budget",
+          "requirement_goal"
+        ],
+        "essential_dependencies": [
+          {
+            "id": "dependency_comparable_costs",
+            "description": "The supplied costs include every required component over a common horizon.",
+            "status": "unverified",
+            "accepted_scoped_support": false,
+            "reference_ids": [
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          },
+          {
+            "id": "dependency_goal",
+            "description": "Both purchase options meet the owner-confirmed replacement goal.",
+            "status": "supported",
+            "accepted_scoped_support": true,
+            "reference_ids": [
+              "passage_goal",
+              "passage_offer_a",
+              "passage_installation_gap"
+            ],
+            "origin": "fictional"
+          }
+        ],
+        "dissent": [
+          "A lower initial payment and a lower long-term total favor different options.",
+          "Keeping the current system remains available if replacement is deferred."
+        ],
+        "next_evidence": [
+          {
+            "id": "next_quote",
+            "question": "What is the complete installation cost for B?",
+            "affected_conclusion": "Whether B has the lower all-in cost at 24 months.",
+            "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+            "request_text": "Please quote a label system over 24 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+            "responsible_person": null,
+            "revisit_date": null
+          }
+        ],
+        "calculations": [
+          {
+            "id": "calc_option_a_24",
+            "label": "Option A · lower upfront: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1000",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "50",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              },
+              {
+                "label": "Installation (explicitly included)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_offer_a"
+              }
+            ],
+            "formula": "1000 × 1 + 50 × 1 × 24 months + 0 × 1",
+            "output": "2200.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "2200.00"
+          },
+          {
+            "id": "calc_option_b_24",
+            "label": "Option B · lower recurring: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "Upfront purchase",
+                "amount": "1600",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              },
+              {
+                "label": "Monthly supplies and service",
+                "amount": "20",
+                "unit": "USD",
+                "source_ref": "passage_installation_gap"
+              }
+            ],
+            "formula": "1600 × 1 + 20 × 1 × 24 months",
+            "output": null,
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [
+              "Required installation: Installation is omitted from the supplied quote."
+            ],
+            "known_subtotal": "2080.00"
+          },
+          {
+            "id": "calc_option_status_quo_24",
+            "label": "Keep handwritten labels: 24-month cost",
+            "operation": "lifecycle_total",
+            "inputs": [
+              {
+                "label": "New spending (explicit zero)",
+                "amount": "0",
+                "unit": "USD",
+                "source_ref": "passage_goal"
+              }
+            ],
+            "formula": "0 × 1",
+            "output": "0.00",
+            "unit": "USD",
+            "currency": "USD",
+            "horizon_months": 24,
+            "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+            "decimal_precision": 64,
+            "flags": [],
+            "missing_components": [],
+            "known_subtotal": "0.00"
+          }
+        ],
+        "coverage": [
+          {
+            "provider": "openai",
+            "role": "Solution design",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "anthropic",
+            "role": "Cost and delivery",
+            "status": "simulated",
+            "notes": "Manually authored fixture, not a provider response."
+          },
+          {
+            "provider": "google",
+            "role": "Risk review; final audit",
+            "status": "missing",
+            "notes": "Audit and synthesis are unavailable in this partial fixture."
+          }
+        ],
+        "assessment": {
+          "proposal_providers": [
+            "openai",
+            "anthropic",
+            "google"
+          ],
+          "synthesizer": null,
+          "auditor": null,
+          "synthesis_valid": false,
+          "audit_succeeded": false,
+          "unresolved_critical_defect": false
+        },
+        "usage": {
+          "status": "fictional_no_spend",
+          "actual_cost": "0",
+          "currency": "USD",
+          "request_count": 0,
+          "simulated": true
+        },
+        "stop_reason": "user_cancellation_fixture",
+        "change_summary": [
+          "Planning horizon changed from 12 to 24 months.",
+          "Earlier report remains unchanged.",
+          "B's installation input changed from explicit zero to unknown; no cheapest all-in claim is published."
+        ]
+      }
+    }
+  ],
+  "partial_report": {
+    "schema_version": "1.0",
+    "id": "report_base12_partial",
+    "run_id": "run_fictional_sample",
+    "parent_report_id": null,
+    "fictional": true,
+    "version": 1,
+    "event_cutoff": 5,
+    "execution_status": "completed_with_limitations",
+    "recommendation": null,
+    "readiness": null,
+    "readiness_reasons": [
+      "No valid synthesis exists; recommendation and readiness are unavailable."
+    ],
+    "readiness_unavailable_reason": "No valid synthesis exists; recommendation and readiness are unavailable.",
+    "main_reasons": [],
+    "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+    "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+    "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+    "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+    "comparison": [
+      {
+        "option_id": "option_a",
+        "label": "Option A · lower upfront",
+        "role": "candidate",
+        "total": "1600.00",
+        "known_subtotal": "1600.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_a_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 1600.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "pass",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "The fictional task explicitly states this system meets the workflow need.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_a_12",
+        "caveat": "Fictional complete cost inputs; no real quote verification."
+      },
+      {
+        "option_id": "option_b",
+        "label": "Option B · lower recurring",
+        "role": "candidate",
+        "total": "1840.00",
+        "known_subtotal": "1840.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_b_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 1840.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "pass",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "The fictional task explicitly states this system meets the workflow need.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_b_12",
+        "caveat": "Fictional complete cost inputs; no real quote verification."
+      },
+      {
+        "option_id": "option_status_quo",
+        "label": "Keep handwritten labels",
+        "role": "status_quo",
+        "total": "0.00",
+        "known_subtotal": "0.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_status_quo_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "fail",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_status_quo_12",
+        "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+      }
+    ],
+    "hard_requirement_ids": [
+      "requirement_budget",
+      "requirement_goal"
+    ],
+    "essential_dependencies": [
+      {
+        "id": "dependency_comparable_costs",
+        "description": "The supplied costs include every required component over a common horizon.",
+        "status": "supported",
+        "accepted_scoped_support": true,
+        "reference_ids": [
+          "passage_offer_a",
+          "passage_offer_b"
+        ],
+        "origin": "fictional"
+      },
+      {
+        "id": "dependency_goal",
+        "description": "Both purchase options meet the owner-confirmed replacement goal.",
+        "status": "supported",
+        "accepted_scoped_support": true,
+        "reference_ids": [
+          "passage_goal",
+          "passage_offer_a",
+          "passage_offer_b"
+        ],
+        "origin": "fictional"
+      }
+    ],
+    "dissent": [
+      "A lower initial payment and a lower long-term total favor different options.",
+      "Keeping the current system remains available if replacement is deferred."
+    ],
+    "next_evidence": [
+      {
+        "id": "next_quote",
+        "question": "Do the real written quotes include all required charges?",
+        "affected_conclusion": "The option cost comparison and budget pass results.",
+        "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+        "request_text": "Please quote a label system over 12 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+        "responsible_person": null,
+        "revisit_date": null
+      }
+    ],
+    "calculations": [
+      {
+        "id": "calc_option_a_12",
+        "label": "Option A · lower upfront: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "Upfront purchase",
+            "amount": "1000",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Monthly supplies and service",
+            "amount": "50",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Installation (explicitly included)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          }
+        ],
+        "formula": "1000 × 1 + 50 × 1 × 12 months + 0 × 1",
+        "output": "1600.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "1600.00"
+      },
+      {
+        "id": "calc_option_b_12",
+        "label": "Option B · lower recurring: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "Upfront purchase",
+            "amount": "1600",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Monthly supplies and service",
+            "amount": "20",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Required installation",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          }
+        ],
+        "formula": "1600 × 1 + 20 × 1 × 12 months + 0 × 1",
+        "output": "1840.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "1840.00"
+      },
+      {
+        "id": "calc_option_status_quo_12",
+        "label": "Keep handwritten labels: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "New spending (explicit zero)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_goal"
+          }
+        ],
+        "formula": "0 × 1",
+        "output": "0.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "0.00"
+      },
+      {
+        "id": "calc_break_even",
+        "label": "A/B break-even horizon",
+        "operation": "break_even",
+        "inputs": [
+          {
+            "label": "Option A · lower upfront: Upfront purchase",
+            "amount": "1000",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option A · lower upfront: Monthly supplies and service",
+            "amount": "50",
+            "unit": "USD/month",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option A · lower upfront: Installation (explicitly included)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option B · lower recurring: Upfront purchase",
+            "amount": "1600",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Option B · lower recurring: Monthly supplies and service",
+            "amount": "20",
+            "unit": "USD/month",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Option B · lower recurring: Required installation",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          }
+        ],
+        "formula": "(1600 − 1000) ÷ (50 − 20)",
+        "output": "20",
+        "unit": "months",
+        "currency": null,
+        "horizon_months": null,
+        "rounding": "Decimal precision 64; division flags retained",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": null
+      }
+    ],
+    "coverage": [
+      {
+        "provider": "openai",
+        "role": "Solution design",
+        "status": "simulated",
+        "notes": "Manually authored fixture, not a provider response."
+      },
+      {
+        "provider": "anthropic",
+        "role": "Cost and delivery",
+        "status": "simulated",
+        "notes": "Manually authored fixture, not a provider response."
+      },
+      {
+        "provider": "google",
+        "role": "Risk review; final audit",
+        "status": "missing",
+        "notes": "Audit and synthesis are unavailable in this partial fixture."
+      }
+    ],
+    "assessment": {
+      "proposal_providers": [
+        "openai",
+        "anthropic",
+        "google"
+      ],
+      "synthesizer": null,
+      "auditor": null,
+      "synthesis_valid": false,
+      "audit_succeeded": false,
+      "unresolved_critical_defect": false
+    },
+    "usage": {
+      "status": "fictional_no_spend",
+      "actual_cost": "0",
+      "currency": "USD",
+      "request_count": 0,
+      "simulated": true
+    },
+    "stop_reason": "synthesis_unavailable",
+    "change_summary": []
+  },
+  "cancelled_report": {
+    "schema_version": "1.0",
+    "id": "report_cancelled_sample",
+    "run_id": "run_fictional_sample",
+    "parent_report_id": null,
+    "fictional": true,
+    "version": 1,
+    "event_cutoff": 5,
+    "execution_status": "cancelled",
+    "recommendation": null,
+    "readiness": null,
+    "readiness_reasons": [
+      "The fictional run was stopped before synthesis; no recommendation or readiness assessment exists."
+    ],
+    "readiness_unavailable_reason": "Cancelled before synthesis; committed comparison work is preserved.",
+    "main_reasons": [],
+    "tradeoff": "A uses USD 600 less upfront but costs USD 30 more each month.",
+    "largest_uncertainty": "These fictional quote assumptions must be replaced with current, complete real quotes.",
+    "what_would_change_answer": "A planning horizon longer than 20 months favors B on complete costs; shorter than 20 months favors A. At 20 months they tie.",
+    "next_action": "Obtain written, all-inclusive quotes and confirm the planning horizon before choosing.",
+    "comparison": [
+      {
+        "option_id": "option_a",
+        "label": "Option A · lower upfront",
+        "role": "candidate",
+        "total": "1600.00",
+        "known_subtotal": "1600.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_a_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 1600.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "pass",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "The fictional task explicitly states this system meets the workflow need.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_a_12",
+        "caveat": "Fictional complete cost inputs; no real quote verification."
+      },
+      {
+        "option_id": "option_b",
+        "label": "Option B · lower recurring",
+        "role": "candidate",
+        "total": "1840.00",
+        "known_subtotal": "1840.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_b_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 1840.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "pass",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "The fictional task explicitly states this system meets the workflow need.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_b_12",
+        "caveat": "Fictional complete cost inputs; no real quote verification."
+      },
+      {
+        "option_id": "option_status_quo",
+        "label": "Keep handwritten labels",
+        "role": "status_quo",
+        "total": "0.00",
+        "known_subtotal": "0.00",
+        "missing_components": [],
+        "currency": "USD",
+        "horizon_months": 12,
+        "constraint_results": [
+          {
+            "requirement_id": "requirement_budget",
+            "result": "pass",
+            "basis_refs": [
+              "calc_option_status_quo_12"
+            ],
+            "method": "deterministic_calculation",
+            "assessor": "offline fixture",
+            "reason": "Calculated all-in cost is 0.00 USD against a 2500 USD limit.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          },
+          {
+            "requirement_id": "requirement_goal",
+            "result": "fail",
+            "basis_refs": [
+              "passage_goal"
+            ],
+            "method": "fixture_assessment",
+            "assessor": "offline fixture",
+            "reason": "Keeping handwritten labels does not meet the stated replacement goal.",
+            "counter_basis_refs": [],
+            "assessment_scope": null,
+            "disputed": false
+          }
+        ],
+        "calculation_id": "calc_option_status_quo_12",
+        "caveat": "Explicit zero new spending; leaves the replacement goal unmet."
+      }
+    ],
+    "hard_requirement_ids": [
+      "requirement_budget",
+      "requirement_goal"
+    ],
+    "essential_dependencies": [
+      {
+        "id": "dependency_comparable_costs",
+        "description": "The supplied costs include every required component over a common horizon.",
+        "status": "supported",
+        "accepted_scoped_support": true,
+        "reference_ids": [
+          "passage_offer_a",
+          "passage_offer_b"
+        ],
+        "origin": "fictional"
+      },
+      {
+        "id": "dependency_goal",
+        "description": "Both purchase options meet the owner-confirmed replacement goal.",
+        "status": "supported",
+        "accepted_scoped_support": true,
+        "reference_ids": [
+          "passage_goal",
+          "passage_offer_a",
+          "passage_offer_b"
+        ],
+        "origin": "fictional"
+      }
+    ],
+    "dissent": [
+      "A lower initial payment and a lower long-term total favor different options.",
+      "Keeping the current system remains available if replacement is deferred."
+    ],
+    "next_evidence": [
+      {
+        "id": "next_quote",
+        "question": "Do the real written quotes include all required charges?",
+        "affected_conclusion": "The option cost comparison and budget pass results.",
+        "verification_method": "Request a dated itemized written quote and confirm all exclusions.",
+        "request_text": "Please quote a label system over 12 months, listing upfront, installation, recurring supplies, maintenance, delivery and tax. Explicitly state any zero, exclusion, validity date and workflow limitation. The planning budget is USD 2,500.",
+        "responsible_person": null,
+        "revisit_date": null
+      }
+    ],
+    "calculations": [
+      {
+        "id": "calc_option_a_12",
+        "label": "Option A · lower upfront: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "Upfront purchase",
+            "amount": "1000",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Monthly supplies and service",
+            "amount": "50",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Installation (explicitly included)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          }
+        ],
+        "formula": "1000 × 1 + 50 × 1 × 12 months + 0 × 1",
+        "output": "1600.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "1600.00"
+      },
+      {
+        "id": "calc_option_b_12",
+        "label": "Option B · lower recurring: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "Upfront purchase",
+            "amount": "1600",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Monthly supplies and service",
+            "amount": "20",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Required installation",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          }
+        ],
+        "formula": "1600 × 1 + 20 × 1 × 12 months + 0 × 1",
+        "output": "1840.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "1840.00"
+      },
+      {
+        "id": "calc_option_status_quo_12",
+        "label": "Keep handwritten labels: 12-month cost",
+        "operation": "lifecycle_total",
+        "inputs": [
+          {
+            "label": "New spending (explicit zero)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_goal"
+          }
+        ],
+        "formula": "0 × 1",
+        "output": "0.00",
+        "unit": "USD",
+        "currency": "USD",
+        "horizon_months": 12,
+        "rounding": "USD minor unit (2 decimal places), ROUND_HALF_EVEN (after exact component arithmetic)",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": "0.00"
+      },
+      {
+        "id": "calc_break_even",
+        "label": "A/B break-even horizon",
+        "operation": "break_even",
+        "inputs": [
+          {
+            "label": "Option A · lower upfront: Upfront purchase",
+            "amount": "1000",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option A · lower upfront: Monthly supplies and service",
+            "amount": "50",
+            "unit": "USD/month",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option A · lower upfront: Installation (explicitly included)",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_a"
+          },
+          {
+            "label": "Option B · lower recurring: Upfront purchase",
+            "amount": "1600",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Option B · lower recurring: Monthly supplies and service",
+            "amount": "20",
+            "unit": "USD/month",
+            "source_ref": "passage_offer_b"
+          },
+          {
+            "label": "Option B · lower recurring: Required installation",
+            "amount": "0",
+            "unit": "USD",
+            "source_ref": "passage_offer_b"
+          }
+        ],
+        "formula": "(1600 − 1000) ÷ (50 − 20)",
+        "output": "20",
+        "unit": "months",
+        "currency": null,
+        "horizon_months": null,
+        "rounding": "Decimal precision 64; division flags retained",
+        "decimal_precision": 64,
+        "flags": [],
+        "missing_components": [],
+        "known_subtotal": null
+      }
+    ],
+    "coverage": [
+      {
+        "provider": "openai",
+        "role": "Solution design",
+        "status": "simulated",
+        "notes": "Manually authored fixture, not a provider response."
+      },
+      {
+        "provider": "anthropic",
+        "role": "Cost and delivery",
+        "status": "simulated",
+        "notes": "Manually authored fixture, not a provider response."
+      },
+      {
+        "provider": "google",
+        "role": "Risk review; final audit",
+        "status": "missing",
+        "notes": "Audit and synthesis are unavailable in this partial fixture."
+      }
+    ],
+    "assessment": {
+      "proposal_providers": [
+        "openai",
+        "anthropic",
+        "google"
+      ],
+      "synthesizer": null,
+      "auditor": null,
+      "synthesis_valid": false,
+      "audit_succeeded": false,
+      "unresolved_critical_defect": false
+    },
+    "usage": {
+      "status": "fictional_no_spend",
+      "actual_cost": "0",
+      "currency": "USD",
+      "request_count": 0,
+      "simulated": true
+    },
+    "stop_reason": "user_cancellation_fixture",
+    "change_summary": []
+  },
+  "activity": [
+    {
+      "id": "activity_brief",
+      "stage": "Intake",
+      "title": "Fictional brief saved",
+      "description": "An editable typed brief and common cost horizon were prepared without inference.",
+      "status": "saved",
+      "provider": null,
+      "reference_ids": [
+        "passage_goal"
+      ]
+    },
+    {
+      "id": "activity_proposals",
+      "stage": "Independent proposals",
+      "title": "Three manually authored proposals",
+      "description": "Each fixture uses the same brief and evidence. These are independent perspective examples, not actual model responses.",
+      "status": "simulated",
+      "provider": null,
+      "reference_ids": [
+        "contribution_openai",
+        "contribution_anthropic",
+        "contribution_google"
+      ]
+    },
+    {
+      "id": "activity_calculations",
+      "stage": "Cost check",
+      "title": "Decimal totals checked",
+      "description": "Exact component arithmetic yields A 1,600 and B 1,840 at 12 months; equality is 20 months.",
+      "status": "saved",
+      "provider": null,
+      "reference_ids": [
+        "calc_option_a_12",
+        "calc_option_b_12",
+        "calc_break_even"
+      ]
+    },
+    {
+      "id": "activity_report",
+      "stage": "Publication",
+      "title": "Version 1 fixture report",
+      "description": "Readiness is computed by application rules from fixture assessments and distinct audit coverage. No real review occurred.",
+      "status": "simulated",
+      "provider": null,
+      "reference_ids": [
+        "report_base12"
+      ]
+    },
+    {
+      "id": "activity_follow_up",
+      "stage": "Follow-up",
+      "title": "Changed inputs preserve history",
+      "description": "The 24-month and missing-installation examples are separate saved fictional reports.",
+      "status": "saved",
+      "provider": null,
+      "reference_ids": [
+        "report_horizon24",
+        "report_missing_installation"
+      ]
+    }
+  ]
+}

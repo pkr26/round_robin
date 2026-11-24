@@ -1,0 +1,139 @@
+ROUND ROBIN — SECOND DEEP CODE AUDIT
+Reviewed: November 16, 2026 (America/Phoenix)
+
+10 NEW CONFIRMED FINDINGS: 2 P1/high, 8 P2/medium.
+27 COMBINED CONFIRMED FINDINGS: 7 P1/high, 20 P2/medium.
+The earlier 17 are retained separately and are not counted as new.
+All 125 production files (17,977 lines) and 162 verification/configuration inputs match the first audit hashes.
+No production source changes, paid provider calls, or changes to existing application data/services.
+
+METHOD AND NEW VALIDATION
+
+Parallel review covered runtime transactions/admission/retries, frontend state and contracts, evidence/reporting/calculations, experiments/evaluation, hosted identity, storage and operations. Candidate findings were challenged against the first report, valid-input contracts, source policy and actual reproductions. Root backup/auth findings also received independent review.
+A fresh production build, Alembic migration and schema-drift check, and all 30 connected Chromium journeys passed on an owned PostgreSQL schema, unique Redis queue, API, worker, dispatcher and static frontend. The existing development API and frontend remained running on their original ports and process IDs. Targeted failure probes uncovered the findings below despite the passing browser suite.
+Full backend/unit/dependency scans from the first pass are not represented as newly rerun. See verification.json for fresh and inherited results, isolation details and limitations.
+
+NEW FINDINGS
+
+RR-018 [P1] Waiting runs multiply scheduler records and saturate dispatch
+Location: backend/src/round_robin/orchestration/controller.py:279-281
+Trigger: Keep a queued run waiting for admission, for example during a normal deployment drain or while another run is running, and run the normal reconciler and dispatcher loops.
+Finding: Whenever admission waits, advance_run unconditionally inserts a new advance Outbox record. The one-second reconciler invokes this path independently, and a delivered advance invokes it again. Meanwhile, the previously delivered record remains published as long as the run is queued, so reconcile_once republishes it after 15 seconds. A successfully consumed timer therefore leaves behind both a replayable predecessor and a successor. One valid queued run under supported operator draining produced 2,781 outbox rows and 2,689 successful advance deliveries in 90 seconds, with 2,031 still pending; no message loss occurred. By 60 seconds duplicate advance deliveries saturated the default 50-record dispatch batch. This wastes database transactions, repeatedly takes the global deployment-policy lock, grows the persistent scheduler table, and delays useful work sharing the dispatcher and worker queues. The same insertion branch is used when another run occupies the single admission slot.
+Evidence: {"script": "probes/concurrency-probe_queued_advance_growth.py", "command": "PYTHONPATH=backend/src:. .venv/bin/python probes/concurrency-probe_queued_advance_growth.py", "result": "evidence/concurrency-queued_advance_growth_result.json", "setup": "Disposable PostgreSQL schema, schema-valid sample brief and normal simulated run configuration from the existing orchestration seed helper. A supported draining policy keeps admission closed. A synchronous fake broker executes and commits every delivered advance; no Redis or provider network request is made. The clock advances in one-second increments and each tick calls the production reconcile_once and dispatch_once functions with their normal batch limit.", "observed": [{"seconds": 15, "outbox_rows": 40, "successful_deliveries": 23}, {"seconds": 45, "outbox_rows": 517, "successful_deliveries": 470}, {"seconds": 60, "outbox_rows": 1251, "successful_deliveries": 1189}, {"seconds": 90, "outbox_rows": 2781, "successful_deliveries": 2689, "pending_rows": 2031}], "cleanup": "The random PostgreSQL schema was dropped. No application source was changed."}
+Fix direction: Use a unique active advance intention per run/generation, and reschedule or upsert that intention when admission waits. Make consumption/recovery distinguish the already-handled intention from a genuinely lost delivery so predecessor and successor records cannot both be replayed. Keep the same invariant for reconcile-triggered and broker-triggered advancement.
+Limits: The exact growth rate was measured with deterministic time and a synchronous successful sender; real broker throughput changes the rate. Queue amplification and batch saturation are directly observed. Delay to a separate real user request is an operational implication, not a separately measured latency result.
+
+RR-019 [P1] Concurrent deletion can fail a normal backup and close all writes and dispatch
+Location: backend/src/round_robin/operations/recovery.py:168-172
+Trigger: Delete and purge a comparison after backup has captured its database rows but before it reads the export file.
+Finding: The database snapshot is closed before referenced files are copied, with no shared lifecycle lock or retained-file lease. A normal meeting deletion followed by cleanup can therefore remove an export that the snapshot still marks ready. The backup then raises FileNotFoundError, deletes the unpublished temporary backup, and intentionally records backup_failed, persistently closing writes and dispatch across the deployment. The defect is the uncoordinated database/filesystem snapshot; the fail-closed durability response is intentional. Daily backup instructions do not require stopping services.
+Evidence: {"probe": "probes/backup_race.py", "result": "evidence/backup-race-result.json", "observed": {"ready_before_backup": 200, "export_exists_before_backup": true, "delete_status": 200, "cleanup": {"expired_uploads": 0, "expired_exports": 0, "interrupted_exports": 0, "orphaned_export_files": 0, "deletion_records_reapplied": 1, "provider_requests": 0}, "export_exists_after_cleanup": false, "backup_outcome": "FileNotFoundError", "ready_after_backup": 503, "readiness_reason": {"status": "not_ready", "reason": "durability_compromised"}, "backup_published": false}, "method": "Real ready export API; deterministic legal DELETE + maintenance interleaved after the database snapshot; temporary SQLite/artifact storage only."}
+Fix direction: Coordinate artifact snapshotting with deletion/retention, for example using a shared lifecycle lock, immutable retained references, or a snapshot/purge protocol. Reconcile legitimately deleted records consistently before publishing a backup; do not merely suppress missing-file errors or weaken the durability gate.
+Limits: No corrupted published backup, data resurrection, or lost original report was demonstrated. The broad impact is the observed persistent write/dispatch gate after the race.
+
+RR-020 [P2] An older autosave can overwrite the newly opened linked follow-up brief
+Location: frontend/app/live-workspace.tsx:361-363
+Trigger: Edit the current meeting draft and let its 700ms autosave PATCH begin. Before the reply, click its saved review in Review history, then Create a linked follow-up. Allow the older PATCH to complete.
+Finding: followUp replaces the draft with snapshot.brief but does not increment editGeneration. History/follow-up remain enabled during autosave. Its late handler sees the same meeting and generation, replaces the follow-up with the older working draft, and marks it clean. The next Save linked follow-up submits that wrong brief with the selected parent_run_id. Follow-up creation silently uses facts from a different draft instead of the frozen reviewed input, and can persist that substituted content.
+Evidence: {"observed": "The real component showed Frozen reviewed brief before the deferred response, Edited working draft afterwards, no Unsaved changes indicator, then posted parent run_e841230d629649bbb4119a6b88401d39 with brief.title Edited working draft and expected_draft_revision 2.", "probe": "probes/client-live-component-probes.cjs", "result": "evidence/client-live-component-results.json#/autosave_overwrites_followup"}
+Fix direction: Advance the edit/scope generation when entering follow-up or clarification, and fence existing autosave completions to the editor mode they originated from.
+Limits: Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted.
+
+RR-021 [P2] Editing any requirements line erases existing typed constraints
+Location: frontend/app/live-workspace.tsx:306-309
+Trigger: Open a valid saved draft containing a numeric requirement whose id is not the UI-reserved requirement_budget or requirement_deadline, then add an unrelated line in Hard requirements and save.
+Finding: The textarea serializes all its rows to new requirement_manual_N ids with metric manual, operator manual and threshold null. The original numeric requirement is not preserved even if its displayed text was untouched. An ordinary edit silently removes deterministic enforcement and changes requirement identities used by the saved decision evidence; live model assessments can now replace a previously mandatory arithmetic check.
+Evidence: {"observed": "A total_cost/gte/1200 constraint minimum_project_spend became requirement_manual_1/manual/manual/null. Both payloads pass real contracts. Production comparison_data changed its pass/pass/fail results into unknown/unknown/unknown for the same option totals.", "probe": "probes/client-live-component-probes.cjs", "result": "evidence/client-contract-semantic-results.json#/typed_requirement_after", "supporting_probe": "probes/client-contract-semantic-probes.py"}
+Fix direction: Preserve each existing requirement's identity/type/operator/threshold when editing unrelated text; represent typed constraints explicitly or keep them out of the lossy manual textarea.
+Limits: Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted.
+
+RR-022 [P2] Entering a price can leave it excluded from every cost calculation
+Location: frontend/app/live-workspace.tsx:293-294
+Trigger: Open a contract-valid draft with a not_applicable cost component, enter a real price in its ordinary USD amount input, and save.
+Finding: editCost changes amount and unknown_reason but preserves the hidden status. No UI label or control reveals not_applicable/excluded state. A new amount remains not_applicable and is skipped by the calculator (excluded similarly stays an unresolved charge). Users can believe they supplied a missing or newly applicable cost while the application omits that value from budget checks and comparisons.
+Evidence: {"observed": "The real component accepted and saved 9000 in Upfront purchase (USD), retaining status not_applicable. The backend validates this payload. Production lifecycle_total ignored the 9000 entirely and returned 600.00 from the monthly and installation lines.", "probe": "probes/client-live-component-probes.cjs", "result": "evidence/client-contract-semantic-results.json#/entered_9000_upfront", "supporting_probe": "probes/client-contract-semantic-probes.py"}
+Fix direction: Expose inclusion status alongside every editable amount and require an explicit status transition when supplying a cost; do not present skipped values as ordinary included price fields.
+Limits: Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted.
+
+RR-023 [P2] Review-history navigation reuses another run's unsaved choice and notes
+Location: frontend/app/live-workspace.tsx:502-502
+Trigger: Select an approach and type its reason on one report, then use Review history to open another report with a replaced option id and click Save my choice.
+Finding: History changes runId and snapshot but leaves choiceOption, choiceNote and outcomeNote intact. The new select has no matching option so displays its empty placeholder, while Save remains enabled because the stale state is nonempty. outcomePayload posts to the new run using the old note and classifies the absent option as modified with a Decision deferred reason. User choice/outcome records become attached to the wrong saved decision, including contradictory classification and reason.
+Evidence: {"observed": "With two valid backend-validated snapshots, the selector displayed an empty value yet Save was enabled. It submitted run_other_history, choice modified, reason Decision deferred. The first report has the best quote. The same stale outcome textarea can be saved to the new run.", "probe": "probes/client-live-component-probes.cjs", "result": "evidence/client-live-component-results.json#/stale_outcome"}
+Fix direction: Reset or key the outcome editor by run/report identity and validate that the chosen id belongs to the currently displayed comparison before enabling or submitting.
+Limits: Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted.
+
+RR-024 [P2] Saving a native interface clears its browser actions and assertions
+Location: frontend/app/design/workspace.tsx:112-112
+Trigger: Enter native HTML plus declared browser actions/assertions, render V1 successfully, change only the HTML and render the next version.
+Finding: renderNative invokes open(result), which unconditionally sets actions to []. The HTML is rehydrated but the interaction plan is not. Saved provenance only contains action type, hashed selectors and result statuses, so reopening cannot reconstruct the lost plan either. Declared functional checks disappear after every successful save and are silently omitted from subsequent candidate renders; an interaction regression is no longer exercised unless the user manually reconstructs the plan.
+Evidence: {"observed": "The actual React component's first submission included a click #submit with assertion #result text Saved. Immediately after success its actions field was []. The second render of HTML with the click handler removed submitted actions: [].", "probe": "probes/client-native-component-probe.cjs", "result": "evidence/client-native-component-results.json"}
+Fix direction: Preserve actions while rendering another revision of the same design, and retain the exact private interaction plan with the version if reopen is intended to restore editable native input.
+Limits: Actual React component with controlled transport responses; applicable payloads also checked with real contracts and backend calculation policy. No production account or provider was contacted.
+
+RR-025 [P2] Expired terminal retries retain unused finish funds and block new runs
+Location: backend/src/round_robin/dispatcher/service.py:74-76
+Trigger: A final-stage failure leaves a terminal, manually retryable run with unused finish funds; the user leaves it alone until the frozen provider configuration expires or becomes permanently unusable.
+Finding: A retry-eligible synthesis failure intentionally retains the unused finish hold, but terminal runs are excluded from the ordinary reconciliation scan. The separate terminal scan only handles unfinished authorized attempts, so it never revisits an unused hold after the frozen provider configuration expires. Retry eligibility itself checks frozen active time and call counters, not configuration validity; terminal active time no longer decreases. The hold consequently remains charged against current owner and deployment windows even though the old run can no longer authorize work. In a real API-created live run with fake adapters, synthesis worker loss left a $.38 hold plus a $.02 unknown attempt. Two days later, the old configuration correctly failed with frozen_configuration_expired, but three reconciliation passes retained the $.38 hold. A terminal cancel did not release it. A new explicitly accepted run under a fresh valid configuration then failed owner_daily_budget_exhausted against a $.60 owner ceiling, although retaining only the legitimately unknown $.02 attempt and reserving the new $.40 finish pool would require $.42.
+Evidence: {"script": "probes/concurrency-probe_retained_hold.py", "command": "PYTHONPATH=backend/src:. .venv/bin/python probes/concurrency-probe_retained_hold.py", "result": "evidence/concurrency-retained_hold_result.json", "setup": "Disposable PostgreSQL schema and real create/preflight/start/cancel endpoints with a Pydantic-valid live provider configuration. Fake adapters complete intake and proposals, then simulate process death after committed synthesis authorization. Deterministic time expires the worker lease and later the frozen configuration. No upstream request occurs.", "observed": {"after_worker_loss_status": "completed_with_limitations", "retryable_stages": ["synthesis"], "unused_finish_hold_usd": "0.38", "expiry_denial": "frozen_configuration_expired", "current_daily_exposure_after_two_days": "0.40", "terminal_cancel_status": "completed_with_limitations", "fresh_run_stop_reason": "owner_daily_budget_exhausted", "owner_daily_ceiling_usd": "0.60", "expected_new_exposure_after_releasing_only_unused_hold_usd": "0.42"}, "cleanup": "The random PostgreSQL schema was dropped. Provider configuration and artifact directories were temporary. No application source was changed."}
+Fix direction: Include terminal runs with held finish reservations in reconciliation, and release only unused hold money once frozen authorization or retry eligibility has permanently expired. Preserve unknown attempt exposure. A terminal retry-retention policy should have an explicit bounded lifetime or revalidate configuration authority; cancel should also provide a way to abandon retained retry funds without deleting the meeting.
+Limits: The expiry path and owner-budget denial are directly reproduced. Deployment ceilings use the same exposure collection, so accumulated unused holds can also block deployment-wide budget. Deleting the old meeting or attempting a now-doomed retry can eventually release the hold, but neither happens automatically.
+
+RR-026 [P2] Anonymous sign-in blocks the ASGI event loop during database contention
+Location: backend/src/round_robin/security/hosted.py:123-127
+Trigger: An ordinary competing transaction holds the deployment policy row when a hosted login starts.
+Finding: OpaqueLoginState performs synchronous SQLAlchemy transactions and deployment-policy row locking directly inside its async ASGI entry point. An anonymous /auth/login request waiting for that normal shared database lock blocks the event loop, including otherwise unrelated requests and SSE timers handled by the same worker. The response-save callback also performs synchronous database work.
+Evidence: {"probe": "probes/hosted_event_loop.py", "result": "evidence/hosted-event-loop-result.json", "observed": {"provider_calls": 0, "lock_hold_seconds": 1.0, "baseline_health": 200, "twenty_ms_heartbeat_seconds": 1.027, "concurrent_health": 200, "login_status": 307, "schema_cleaned": true}, "method": "Actual PostgreSQL row contention in a random owned schema, ASGI HTTP client, and local fake OIDC redirect. A 20ms heartbeat took 1.027 seconds while another thread held the lock for one second."}
+Fix direction: Move complete blocking transaction phases off the event loop, or use an asynchronous database implementation. Preserve atomic quota reservation and login-state fencing. Apply the same discipline to the response-save callback.
+Limits: This proves blocking of the affected ASGI worker during database waits. It does not establish an attacker-controlled indefinite deadlock, typical production latency, or an outage across multiple independent workers.
+
+RR-027 [P2] Markdown export turns untrusted evidence into active image/HTML markup
+Location: backend/src/round_robin/reports/exports.py:74-75
+Trigger: Export a saved report containing Markdown images or raw HTML in source text, title, option label or generated summary.
+Finding: report_markdown places exact uploaded/retrieved source text directly in a Markdown blockquote without escaping Markdown syntax or HTML. Prefixing a line with '> ' does not disable images or HTML. A supplier attachment containing ![supplier tracking pixel](https://tracking.invalid/supplier-pixel) and <img src="https://tracking.invalid/raw-html-pixel"> passes upload, preflight, the full simulated worker pipeline, saved-report validation, and export; the downloaded ready Markdown retains both as active markup. Titles, option labels and model summaries have the same interpolation problem. An image-capable Markdown preview can therefore fetch an attacker-selected remote image merely when the exported report is viewed; HTML-capable viewers additionally receive raw HTML. This is an export rendering-policy defect, not a claim that the application itself executed the image or script.
+Evidence: {"command": "PYTHONPATH=backend/src:backend/tests:. .venv/bin/python probes/data-probe_exports_and_readiness.py", "probe": "probes/data-probe_exports_and_readiness.py", "results": "evidence/data-probe-results.json", "artifact": "evidence/data-export-unsafe-markup.txt", "observed": "HTTP meeting create 201; text upload ready; preflight blockers []; start 202; real simulated worker drain completed; Markdown export ready; download 200; four raw external image expressions retained, including two from uploaded supplier evidence.", "network_scope": "No external request or paid call was made. tracking.invalid is a synthetic inert destination."}
+Fix direction: Escape untrusted text into inert Markdown literals (or render it with a consistent allowlisted policy), preserve exact bytes separately if needed, and prohibit remote images/raw HTML in report rendering.
+Limits: The ready downloaded export preserved active markup; remote fetching depends on the downstream Markdown viewer. No external image was requested during this audit.
+
+CAPABILITY LIMITATION — NOT COUNTED AS A CONFIRMED DEFECT
+
+No production path currently makes cost evidence supported, so real ready_to_choose is unreachable
+Every original cost component source_ref is rewritten to newly created structured evidence with verification_status=user_supplied. The cost dependency accepts only supported sources. The probe exercises real evidence preparation and real supported-claim persistence, then ideal positive distinct-provider review records: positive included costs and explicit included zero costs both pass all hard requirements yet remain conditional solely due to the unverified cost dependency. Excluded and not-applicable-only cases also remain conditional with their expected additional cost gaps. All four probes accept a supported fact claim without promoting source verification. No runtime evidence-verification mutation route was found.
+Repository documentation consistently says entered costs are not independently verified and readiness requires accepted scoped support; it does not clearly promise that current functionality must let a user promote those sources. Treat this as a product capability limitation until an explicit supported-evidence acceptance workflow is required, rather than weakening the conservative readiness gate.
+
+PRIOR FINDINGS RETAINED
+
+RR-001 [P1] Mandatory Anthropic image critic sends a schema the provider rejects — backend/src/round_robin/providers/images.py:293
+RR-002 [P1] Generation timeout spends the protected time for mandatory reviews — backend/src/round_robin/worker/image_tasks.py:169
+RR-003 [P1] Raster dimension validation can permanently break visual history — backend/src/round_robin/visual/assets.py:45
+RR-004 [P1] Reloaded uncommitted private commands have no recovery path — frontend/app/api-client.ts:243
+RR-005 [P1] Definitive4xx on retry never releases pending command — frontend/app/api-client.ts:220
+RR-006 [P2] Research reserve rejection stalls proposals until the active-time cutoff — backend/src/round_robin/research/service.py:116
+RR-007 [P2] Preflight accepts selected files that cannot fit the evidence packet — backend/src/round_robin/api/preflight.py:44
+RR-008 [P2] Accepted JPEGs can normalize into permanently unreviewable images — backend/src/round_robin/visual/reviews.py:33
+RR-009 [P2] Image and vision requests can run beyond their total deadlines — backend/src/round_robin/providers/images.py:201
+RR-010 [P2] Expired visual sessions retain finish holds and unserviceable queued work — backend/src/round_robin/worker/image_tasks.py:387
+RR-011 [P2] Currency rounding can falsely mark an over-budget option affordable — backend/src/round_robin/research/calculator.py:147
+RR-012 [P2] Saved nonUSD amounts are presented as USD during editing — frontend/app/live-workspace.tsx:487
+RR-013 [P2] Switching drafts retains stale public-term browser validation error — frontend/app/live-workspace.tsx:489
+RR-014 [P2] Native diagrams ignore frozen output dimensions — backend/src/round_robin/api/visual.py:449
+RR-015 [P2] Diagram edge labels can be clipped despite successful required-text validation — backend/src/round_robin/visual/renderers/diagram.py:113
+RR-016 [P2] Every maintenance cycle re-purges the complete permanent deletion history — backend/src/round_robin/operations/maintenance.py:56
+RR-017 [P2] The expiry regression uses UTC yesterday against a Phoenix comparison date — backend/tests/test_evidence_regressions.py:225
+
+See ../code-review-2026-11-16/REVIEW.txt for the full original descriptions/proofs, and combined-findings.json for all 27 findings.
+
+REPRODUCTION
+
+Run from the repository root using existing local dependencies. Probe outputs use /tmp paths and create only disposable state. Create /tmp/rr-audit2-client, /tmp/rr-audit2-data and /tmp/rr-audit2-concurrency before rerunning the archived probes.
+node docs/evidence/code-review-second-pass-2026-11-16/probes/client-live-component-probes.cjs
+PYTHONPATH=backend/src:. .venv/bin/python docs/evidence/code-review-second-pass-2026-11-16/probes/client-contract-semantic-probes.py
+node docs/evidence/code-review-second-pass-2026-11-16/probes/client-native-component-probe.cjs
+PYTHONPATH=backend/src:backend/tests:. .venv/bin/python docs/evidence/code-review-second-pass-2026-11-16/probes/data-probe_exports_and_readiness.py
+PYTHONPATH=backend/src:. .venv/bin/python docs/evidence/code-review-second-pass-2026-11-16/probes/backup_race.py
+The concurrency probes and hosted_event_loop.py require the repository's local PostgreSQL round_robin_test database. browser_harness.py additionally requires the local Redis service and free ports 18000/13000. It builds a disposable copy and removes its owned schema, queue and processes.
+Archived raw agent records preserve original /tmp evidence paths; normalized findings.json uses paths relative to this report directory. Source-line locations refer to the unchanged audited source.
+
+LIMITS
+
+This is a substantive second pass with reproducible new failures, not proof that no other issue remains. Real provider behavior, deployed hosted identity/proxy behavior and operating-system/container advisories require their own environment-specific validation. No fixes were made in this audit.

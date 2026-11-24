@@ -1,0 +1,107 @@
+...ssssssssssssssssssssssssssssssssssssss............................... [  3%]
+........................................................................ [  7%]
+........................................................................ [ 10%]
+........................................................................ [ 14%]
+........................................................................ [ 17%]
+........................................................................ [ 21%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 32%]
+........................................................................ [ 35%]
+........................................................................ [ 39%]
+........................................................................ [ 42%]
+........................................................................ [ 46%]
+........................................................................ [ 50%]
+........................................................................ [ 53%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 67%]
+........................................................................ [ 71%]
+........................................................................ [ 75%]
+........................................................................ [ 78%]
+........................................................................ [ 82%]
+...sssss................................................................ [ 85%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+........................................................................ [ 96%]
+......................................................................   [100%]
+=============================== warnings summary ===============================
+.venv/lib/python3.12/site-packages/fastapi/testclient.py:1
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5
+  /Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+    from ._compat import httpx2
+
+backend/tests/test_exhaustive_audit_runner.py::test_audit_cli_refuses_preexisting_output_without_subprocesses
+  <frozen runpy>:128: RuntimeWarning: 'scripts.audit' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.audit'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_coverage_gate.py::test_manifest_cli_entrypoint_binds_actual_source_and_verification_inputs
+  <frozen runpy>:128: RuntimeWarning: 'scripts.coverage_gate' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.coverage_gate'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_journal_budget.py::test_runner_cli_safe_failure_and_module_entry_do_not_touch_providers
+  <frozen runpy>:128: RuntimeWarning: 'experiments.runner' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.runner'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_runtime_workers.py::test_dispatcher_module_entrypoint_handles_immediate_stop_without_connecting
+  <frozen runpy>:128: RuntimeWarning: 'round_robin.dispatcher.service' found in sys.modules after import of package 'round_robin.dispatcher', but prior to execution of 'round_robin.dispatcher.service'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags0]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags1]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.evaluation-flags2]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags3]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.release-flags4]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.release' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.release'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags5]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags6]
+backend/tests/test_exhaustive_study_records.py::test_study_cli_entrypoints_emit_prospective_outputs_only[experiments.visual_evaluation-flags7]
+  <frozen runpy>:128: RuntimeWarning: 'experiments.visual_evaluation' found in sys.modules after import of package 'experiments', but prior to execution of 'experiments.visual_evaluation'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_scenario_cli_preserves_pending_obligations_in_saved_and_console_summary
+  <frozen runpy>:128: RuntimeWarning: 'scripts.scenario_summary' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.scenario_summary'; this may result in unpredictable behaviour
+
+backend/tests/test_exhaustive_tooling.py::test_development_cli_sanitizes_failed_setup_without_restarting_or_resetting
+  <frozen runpy>:128: RuntimeWarning: 'scripts.dev' found in sys.modules after import of package 'scripts', but prior to execution of 'scripts.dev'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:28: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:32: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_audit_runtime_postgres.py:44: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_broker_recovery.py:50: Broker restart faults require the explicit disposable Docker profile
+SKIPPED [1] backend/tests/integration/test_deep_migrations.py:16: Migration rollback requires the explicit disposable PostgreSQL profile
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:16: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_exhaustive_postgres.py:76: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_image_processes.py:119: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_image_processes.py:144: Requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [2] backend/tests/integration/test_image_total_deadline.py:17: Actual image TLS checks require the explicit loopback-only profile
+SKIPPED [1] backend/tests/integration/test_launcher_ports.py:14: Socket lifecycle check requires the explicit disposable loopback profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:41: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:67: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:80: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:119: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:143: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:180: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_native_renderer.py:191: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [4] backend/tests/integration/test_native_renderer.py:214: Actual native browser execution requires an explicitly enabled Docker test profile
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:56: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:70: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:81: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:93: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:109: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_api.py:128: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_postgres_restore.py:25: Full PostgreSQL restore requires the explicit disposable loopback test profile
+SKIPPED [1] backend/tests/integration/test_provider_transport.py:30: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [2] backend/tests/integration/test_provider_transport.py:40: Actual provider TLS checks require the explicit loopback-only profile
+SKIPPED [3] backend/tests/integration/test_review_command_races.py:14: Real PostgreSQL checks require ROUND_ROBIN_TEST_DATABASE_URL and explicit loopback permission
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:106: requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/integration/test_worker_processes.py:132: requires explicit disposable PostgreSQL/Redis process profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:138: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [2] backend/tests/test_fetcher_transport.py:151: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:164: Real TLS transport checks require the explicit loopback-only test profile
+SKIPPED [1] backend/tests/test_fetcher_transport.py:173: Real TLS transport checks require the explicit loopback-only test profile
+1971 passed, 43 skipped, 16 warnings in 154.42s (0:02:34)

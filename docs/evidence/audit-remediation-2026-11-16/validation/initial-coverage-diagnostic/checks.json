@@ -1,0 +1,129 @@
+{
+  "started_at": "2026-11-17T04:30:09.601665+00:00",
+  "paid_provider_calls": 0,
+  "checks": [
+    {
+      "name": "manifest",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "scripts/coverage_gate.py",
+        "--manifest",
+        "/tmp/rr-fix-validation/coverage-python/source-manifest.json",
+        "--capture"
+      ],
+      "exit_code": 0,
+      "seconds": 0.176,
+      "log": "manifest.log"
+    },
+    {
+      "name": "pytest-all",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "-m",
+        "pytest",
+        "-q",
+        "--junitxml=/tmp/rr-fix-validation/coverage-python/pytest-all.xml"
+      ],
+      "exit_code": 1,
+      "seconds": 263.003,
+      "log": "pytest-all.log"
+    },
+    {
+      "name": "evaluation-validate",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "-m",
+        "experiments.evaluation",
+        "validate"
+      ],
+      "exit_code": 0,
+      "seconds": 0.157,
+      "log": "evaluation-validate.log"
+    },
+    {
+      "name": "scenario-summary",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "scripts/scenario_summary.py",
+        "--check"
+      ],
+      "exit_code": 0,
+      "seconds": 1.073,
+      "log": "scenario-summary.log"
+    },
+    {
+      "name": "simulation-first",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "/tmp/rr-fix-validation/coverage-python/isolated-state/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "seconds": 0.112,
+      "log": "simulation-first.log"
+    },
+    {
+      "name": "simulation-repeat",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "run",
+        "-m",
+        "experiments.runner",
+        "--journal-dir",
+        "/tmp/rr-fix-validation/coverage-python/isolated-state/journal",
+        "--batch-id",
+        "verification-001",
+        "--simulate"
+      ],
+      "exit_code": 0,
+      "seconds": 0.1,
+      "log": "simulation-repeat.log"
+    },
+    {
+      "name": "combine",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "combine",
+        "--keep"
+      ],
+      "exit_code": 0,
+      "seconds": 0.13,
+      "log": "combine.log"
+    },
+    {
+      "name": "json",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "json",
+        "--keep-combined",
+        "-o",
+        "/tmp/rr-fix-validation/coverage-python/python-coverage.json"
+      ],
+      "exit_code": 0,
+      "seconds": 0.752,
+      "log": "json.log"
+    },
+    {
+      "name": "report",
+      "command": [
+        "/Users/pradeepreddy/Desktop/round_robin/.venv/bin/coverage",
+        "report"
+      ],
+      "exit_code": 0,
+      "seconds": 0.523,
+      "log": "report.log"
+    }
+  ],
+  "status": "failed",
+  "finished_at": "2026-11-17T04:34:35.643084+00:00"
+}

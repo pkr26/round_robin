@@ -1,0 +1,7 @@
+{
+  "configured_owner_queued_limit": 3,
+  "queued_before": 3,
+  "clarification_status": "queued",
+  "queued_after": 4,
+  "resumption_ticket_issued": true
+}

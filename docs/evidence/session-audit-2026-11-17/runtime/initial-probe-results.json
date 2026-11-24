@@ -1,0 +1,13 @@
+{
+  "preflight_context": {
+    "input_packet_error": null,
+    "canonical_packet_bytes": 32325,
+    "configured_window": 32768,
+    "provider_admission": "context_limit"
+  },
+  "cross_modal_priority": {
+    "text_stage": "synthesis",
+    "optional_text_capacity": false,
+    "optional_image_capacity": true
+  }
+}

@@ -1,0 +1,8 @@
+
+> round-robin-workspace@0.1.0 contracts:check /Users/pradeepreddy/Desktop/round_robin
+> PYTHONPATH=backend/src uv run python -m round_robin.export_contracts --check && node scripts/check_client.mjs
+
+/Users/pradeepreddy/Desktop/round_robin/.venv/lib/python3.12/site-packages/authlib/integrations/httpx_client/assertion_client.py:5: AuthlibDeprecationWarning: The httpx module is deprecated; please use httpx2 instead.
+  from ._compat import httpx2
+Authoritative fixture contracts match committed outputs.
+Generated TypeScript contract matches.

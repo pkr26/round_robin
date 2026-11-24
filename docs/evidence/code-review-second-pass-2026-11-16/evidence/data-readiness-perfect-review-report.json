@@ -1,0 +1,221 @@
+{
+  "schema_version": "1.0",
+  "id": "report_ready_probe",
+  "run_id": "run_one",
+  "parent_report_id": null,
+  "version": 1,
+  "event_cutoff": 2,
+  "fictional": false,
+  "simulated": false,
+  "execution_status": "completed",
+  "recommendation": {
+    "option_id": "option_0",
+    "summary": "Choose the fully itemized supplier.",
+    "conditions": [
+      "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+    ]
+  },
+  "readiness": "conditional",
+  "readiness_reasons": [
+    "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current."
+  ],
+  "readiness_unavailable_reason": null,
+  "main_reasons": [
+    "Comparable cost uses bounded Decimal calculations from this run's supplied inputs."
+  ],
+  "tradeoff": "Consider upfront commitment, ongoing costs and the hard requirements; lowest known subtotal alone cannot establish the best choice.",
+  "largest_uncertainty": "Essential dependency remains unverified: All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+  "what_would_change_answer": "Correct a decisive cost or requirement in a linked follow-up and recompute the comparison.",
+  "next_action": "Inspect the cited supporting evidence and principal caveats before recording your choice.",
+  "comparison": [
+    {
+      "option_id": "option_0",
+      "label": "Fully itemized supplier 0",
+      "role": "candidate",
+      "total": "100.00",
+      "known_subtotal": "100.00",
+      "missing_components": [],
+      "currency": "USD",
+      "horizon_months": 12,
+      "constraint_results": [
+        {
+          "requirement_id": "requirement_server_budget",
+          "result": "pass",
+          "basis_refs": [
+            "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084"
+          ],
+          "method": "deterministic_calculation",
+          "assessor": "offline fixture",
+          "reason": "Checked 12-month cost 100.00 USD lte 1000 USD."
+        }
+      ],
+      "calculation_id": "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+      "caveat": "Entered costs are arithmetic inputs, not independently verified supplier facts."
+    },
+    {
+      "option_id": "option_1",
+      "label": "Fully itemized supplier 1",
+      "role": "candidate",
+      "total": "100.00",
+      "known_subtotal": "100.00",
+      "missing_components": [],
+      "currency": "USD",
+      "horizon_months": 12,
+      "constraint_results": [
+        {
+          "requirement_id": "requirement_server_budget",
+          "result": "pass",
+          "basis_refs": [
+            "calc_5da285454d479b3339e162d036a5e4d0f53048e8cb387f95734a0bff5588c54d"
+          ],
+          "method": "deterministic_calculation",
+          "assessor": "offline fixture",
+          "reason": "Checked 12-month cost 100.00 USD lte 1000 USD."
+        }
+      ],
+      "calculation_id": "calc_5da285454d479b3339e162d036a5e4d0f53048e8cb387f95734a0bff5588c54d",
+      "caveat": "Entered costs are arithmetic inputs, not independently verified supplier facts."
+    }
+  ],
+  "calculations": [
+    {
+      "id": "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+      "label": "Fully itemized supplier 0: 12-month cost",
+      "operation": "lifecycle_total",
+      "inputs": [
+        {
+          "label": "upfront",
+          "amount": "100",
+          "unit": "USD",
+          "source_ref": "evidence_e6b1a27b79b2af2ce24d70b55eea8b2c3ed3818e"
+        }
+      ],
+      "formula": "100 \u00d7 1",
+      "output": "100.00",
+      "unit": "USD",
+      "currency": "USD",
+      "horizon_months": 12,
+      "rounding": "USD cents, ROUND_HALF_EVEN (after exact component arithmetic)",
+      "decimal_precision": 64,
+      "flags": [],
+      "missing_components": [],
+      "known_subtotal": "100.00"
+    },
+    {
+      "id": "calc_5da285454d479b3339e162d036a5e4d0f53048e8cb387f95734a0bff5588c54d",
+      "label": "Fully itemized supplier 1: 12-month cost",
+      "operation": "lifecycle_total",
+      "inputs": [
+        {
+          "label": "upfront",
+          "amount": "100",
+          "unit": "USD",
+          "source_ref": "evidence_d5a9376e9afb8ad8875888e73986b2644051e0f4"
+        }
+      ],
+      "formula": "100 \u00d7 1",
+      "output": "100.00",
+      "unit": "USD",
+      "currency": "USD",
+      "horizon_months": 12,
+      "rounding": "USD cents, ROUND_HALF_EVEN (after exact component arithmetic)",
+      "decimal_precision": 64,
+      "flags": [],
+      "missing_components": [],
+      "known_subtotal": "100.00"
+    }
+  ],
+  "hard_requirement_ids": [
+    "requirement_server_budget"
+  ],
+  "evidence_ids": [
+    "evidence_d5a9376e9afb8ad8875888e73986b2644051e0f4",
+    "evidence_e6b1a27b79b2af2ce24d70b55eea8b2c3ed3818e"
+  ],
+  "contribution_ids": [
+    "step_0",
+    "step_1",
+    "step_2",
+    "step_3",
+    "step_4"
+  ],
+  "claim_ids": [],
+  "essential_dependencies": [
+    {
+      "id": "dependency_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+      "description": "All applicable cost components for Fully itemized supplier 0 must be supplied and current.",
+      "status": "unverified",
+      "accepted_scoped_support": false,
+      "reference_ids": [
+        "calc_aaf4be1b730495a07f0dd33efa6bba1777729bc5b7e46f493b21a0d46bc36084",
+        "evidence_e6b1a27b79b2af2ce24d70b55eea8b2c3ed3818e"
+      ],
+      "origin": "user_supplied"
+    }
+  ],
+  "dissent": [],
+  "next_evidence": [],
+  "coverage": [
+    {
+      "provider": "openai",
+      "role": "proposal",
+      "status": "succeeded",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "anthropic",
+      "role": "proposal",
+      "status": "succeeded",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "google",
+      "role": "proposal",
+      "status": "succeeded",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "openai",
+      "role": "synthesis",
+      "status": "succeeded",
+      "notes": "Actual saved stage coverage."
+    },
+    {
+      "provider": "google",
+      "role": "audit",
+      "status": "succeeded",
+      "notes": "Actual saved stage coverage."
+    }
+  ],
+  "assessment": {
+    "proposal_providers": [
+      "anthropic",
+      "openai",
+      "google"
+    ],
+    "synthesizer": "openai",
+    "auditor": "google",
+    "synthesis_valid": true,
+    "audit_succeeded": true,
+    "unresolved_critical_defect": false
+  },
+  "usage": {
+    "simulated": false,
+    "status": "reported",
+    "actual_cost": "0",
+    "conservative_exposure_usd": "0",
+    "unknown_operation_ids": [],
+    "request_count": 5,
+    "currency": "USD"
+  },
+  "stop_reason": "all_stages_completed",
+  "change_summary": [],
+  "research_summary": {
+    "status": "not_requested",
+    "queries": 0,
+    "pages": 0,
+    "source_count": null,
+    "reason": null,
+    "limitations": []
+  }
+}

@@ -1,0 +1,122 @@
+ROUND ROBIN — PROPOSED ALGORITHM IMPROVEMENTS
+November 17, 2026. Design and fresh recheck; implementation remains pending.
+
+Recommendation
+
+Build a versioned protocol in which every material conclusion has a scoped evidence assessment, every material objection has a recorded disposition, and every additional model call has a specific unresolved target. Preserve the working transactional execution, funding and cancellation controls. Start by fixing the four P1 audit findings, then add the contracts that prevent those classes of error from recurring.
+
+Define best for this product as independently measured useful and defensible decisions, with a declared limit on critical defects, within the user's existing spending and latency limits. Report usefulness, factual support, serious errors, abstention/coverage, cost and latency separately. A fluent final answer, agreement between agents, an intricate algorithm or a high test count cannot establish this objective. There is no evidence yet that one protocol is universally best.
+
+Fresh recheck
+
+All 116 source/dependency files match the previous audit manifest. Fresh runs of the evidence probes (six cases), runtime probes (two cases), and visual transport cross-check reproduced the earlier problems. The visual check used three mocked HTTP requests and verified both generator feedback loss and missing child regression dispositions. No product code, original audit evidence or provider funding was changed. The earlier 1,971 backend / 247 frontend test totals are historical results; they were not rerun for this design. See recheck/ for new scripts, logs and results.
+
+The proposed flow
+
+  Canonical selected inputs available to intake
+    -> confirmed, frozen brief and evidence versions
+    -> independent proposals
+    -> deterministic calculations + scoped claim/constraint assessments
+    -> targeted challenges for material unresolved issues when admitted
+    -> synthesis with an explicit objection-resolution map
+    -> independent audit of that exact synthesis and support
+    -> at most one funded correction/re-audit
+    -> decision, conditions, unresolved items and next evidence to obtain.
+
+The target protocol is a new version. The current independent-review graph remains an explicit comparison arm. A target using extra challenge nodes must identify those nodes and limits at preflight; the existing shorter workflow must not silently expand into debate. Keep initial proposals blind to current-run peer outputs. Keep the first production correction maximum at one until evaluation justifies any increase.
+
+1. Make claim support and refutation explicit
+
+Current graph traversal establishes that a claim can reach a source ID; it ignores whether the cited material supports or contradicts that proposition. Introduce immutable assessment records joining a specific claim version to an exact source span or calculation version. Suggested fields: target_claim_version, basis_version, relation (supports/refutes/qualifies), locator, scope, method, assessor, assessed_at, valid_through, policy_version and supersedes_assessment.
+
+Agents propose assessments. The application checks identity, hash, scope, freshness, applicable method and consistency; acceptance follows an explicit verification policy. Arithmetic and typed constraints can use deterministic checks. Semantic support remains a review judgment with provenance; the graph does not prove truth. Preserve both supporting and refuting assessments. An opposite proposition can legitimately cite a refutation, so a contradicted source must not be globally banned.
+
+Use separate fields for source integrity, verification method, support status and review coverage. A hash proves unchanged bytes. Multiple advisers repeating the same source do not create independent corroboration. Retain source-family provenance and do not turn raw adviser count into a confidence probability. For derived claims, encode AND across required premises and OR across complete alternative support bases: one valid price citation cannot also establish an unsupported delivery or compatibility premise.
+
+For a given current claim: no accepted applicable assessments -> unknown; accepted support only -> supported under its stated scope; accepted refutation only -> contradicted; both -> disputed. Expired, revoked or unresolved support cannot quietly promote a claim. On a new claim/evidence version, recompute affected dependent nodes and invalidate stale resolutions. Cycle detection and dependency propagation remain O(V+E) on the bounded graph.
+
+Files: research/claims.py, research/reuse.py, schemas/contributions.py, providers/base.py, new assessment schema/storage and migrations. Addresses E-F03 and E-G01. The verification transition must be scoped to the actual proposition or cost input, not a blanket promotion of an entire document to trustworthy.
+
+2. Preserve disagreement through synthesis, correction and publication
+
+Add durable Objection and Resolution records. Each objection identifies its target version, requirement, severity, evidence and origin. A resolution records accepted/qualified/rejected/unresolved, the correcting claim/assessment versions and the basis. Rejection requires an explanation that the auditor can inspect; the synthesizer cannot clear an issue by omitting it. Deduplication must preserve provenance and every original issue ID.
+
+Give proposal and challenge roles concrete obligations: cover the considered options and hard requirements, locate decisive evidence gaps, and identify exclusions or counterexamples. Role names alone are not a quality mechanism. Rank optional review targets by criticality, decision dependency, conflicting/missing support and age using a declared deterministic order. Do not invent an expected-accuracy gain from uncalibrated model confidence.
+
+Derive requirement outcomes conservatively. A scoped, applicable verified failure can eliminate an option. Conflicting judgments without an accepted resolution remain disputed/unknown. Preserve each assessor and that assessor's evidence; never attach the synthesizer's positive citation to an unsupported auditor failure. Check all considered options before publishing no_feasible_option.
+
+Require the final audit to inspect the exact current synthesis, assessment versions and every material objection. Persist the complete issue set; show a bounded summary with critical items first and explicit pagination for the rest. Omitted display text is never interpreted as resolution. Execution completion, completed audit, evidence sufficiency and readiness are separate outputs.
+
+Files: providers/base.py, schemas/contributions.py, orchestration/reporting.py, reports/readiness.py, runtime schemas, saved-report readers/exports and UI. Addresses E-F01 and E-F04. Add stage-specific Proposal/Challenge/Revision/Synthesis/Audit output contracts instead of requiring every stage to improvise the meaning of one generic response schema.
+
+3. Improve the evidence and context supplied to agents
+
+Allocate retrieval across decision-relevant query classes before fetching. With the existing eight-page ceiling, a development configuration could reserve two pages each for comparison, costs and counterevidence, leaving two adaptive slots; this allocation is a tunable proposal, not a proven optimum. Enforce global limits and stop authorizing search once no result can be used. Record exhausted, denied and uninspected coverage explicitly.
+
+Split retrieved documents at useful boundaries, rank exact passages against frozen requirements and approved terms, and include nearby exceptions, dates, tables and negations. Preserve locators/hashes. Group duplicated origins and reserve counterevidence coverage. Start with a bounded inspectable retrieval policy; compare ranking alternatives on seeded long-document cases before adding a learned reranker. Reading the first 4,000 characters is not a relevance algorithm. Private brief content must still never enter public queries without authorization.
+
+Make a validated read-only selected-evidence view available to intake. Intake may propose a typed change set with provenance; user confirmation freezes any change to options, requirements or assumptions. Preserve attachment/public-search scope restrictions. For schema repair, send bounded validation diagnostics and permitted IDs, with rejected model text treated as untrusted data.
+
+At preflight, measure the exact canonical UTF-8 JSON bytes, including escaped characters, calculated fields and reference IDs. Reserve downstream packet space for mandatory claims, material objections and synthesis. If required content cannot fit, reject/narrow scope explicitly; do not silently omit a blocker. Record which context was delivered to each attempt.
+
+Addresses E-F02, E-G02, ROOT-01, ROOT-G01 and ROOT-G02. See runtime/DESIGN.txt for packet admission contracts and evidence/DESIGN.txt for retrieval details.
+
+4. Share one bounded protocol and resource policy
+
+Extract pure functions for plan, eligibility, recovery, required resource envelope, context admission and completion. Production and evaluation execute the same frozen policy through their existing database/outbox or journal adapters. Include policy, prompt, schema, model/configuration and evidence-selection hashes in each run/study identity. A plan does not grant spending authority: execution rechecks current locked state.
+
+Persist retry not_before and attempt generation. Check them under the same lock used to authorize calls; a broker duplicate must not skip the waiting period, consume a new claim or resample jitter. Apply one queue transition guard to Start, clarification and manual retry, retaining FIFO tickets and original expiry.
+
+Before optional work or backoff, require:
+
+  optional waiting + optional attempt bound + feasible mandatory finishing bound
+    + persistence/capacity margin <= remaining active allowance.
+
+The finishing bound must respect provider/global capacity and occupied leases. Start with a conservative serial bound for the required synthesis/audit tail. A bare DAG longest path or average latency is insufficient when capacity is occupied. Protect required final work from new optional calls and preserve uncertain financial exposure after a call is fenced. Include fallback allowance only when explicitly reserved; completion during provider outage is never guaranteed.
+
+Correction requires a specific material target plus room for both correction and independent re-audit. Stop when the correction limit is reached, no admissible evidence/action can resolve the blocker, or the required envelope does not fit. Publish the remaining uncertainty and decisive next input. Agreement, repetition or an unchanged recommendation is not a success criterion.
+
+Maintain old policy identities for frozen runs. Do not silently migrate eligible v1 resumptions to v2 rules. If old execution cannot safely continue, publish an explicit limited result and use a new linked preflight. Addresses RUNTIME-01/02/03 and EVAL-02. Detailed interfaces and invariants are in runtime/DESIGN.txt.
+
+5. Make option ranking inspectable
+
+Preserve exact Decimal calculations and explicit unknowns. Separate input-dependent arithmetic conclusions from verified real-world feasibility. Compare options on actual supported criteria, identify dominated alternatives and show how missing costs or schedules could reverse the preference. With only two to four candidates, an O(options^2 * criteria) pairwise comparison is inexpensive.
+
+The current preference ranks are ordinal. Do not convert them into invented cardinal weights. Use the declared ordering or obtain explicit tradeoff information when alternatives remain incomparable. Sensitivity analysis should use supplied bounds and disclose assumptions. It should return a specific missing fact when the preference cannot be established, rather than a precise-looking unsupported score. Additional learned weighting or calibration requires appropriate held-out labels first.
+
+6. Close the visual critique/edit loop and the user-visible history
+
+Create a server-resolved EditBundle containing parent image hash/version, selected finding IDs, actual observations/regions, requested changes, declines, locked requirements and user intent. Hash and send that exact bundle to both the editor and subsequent reviewers. Add a server-owned regression matrix for previous material blockers and locked requirements. Missing child dispositions stay pending; reviewer quorum cannot clear them.
+
+Expose pixel-review coverage, regression completeness and unresolved blockers separately. Preserve prior versions and allow selection of a better earlier candidate. Deterministically test native requirements where possible; aesthetic/legibility judgments remain evaluated observations. Addresses EVAL-01 and EVAL-03.
+
+Consume event pages through the snapshot cutoff, merge by run and sequence, and fence late reads when switching runs. A completed discussion with over 100 events must remain inspectable. Addresses ROOT-02.
+
+7. Prove which version performs best on this task population
+
+Repair evaluation aliases by hashing substantive case content/evidence while excluding cosmetic titles and identifiers. Preserve decision-relevant ordering, scope, amounts and preference priorities; only normalize order known to be immaterial. Human-review semantic duplicates and shared-source/template clusters. A renamed case or repeated execution is not an independent trial. Addresses EVAL-04.
+
+Compare a strong single-provider self-check baseline, independent multi-provider review, and the proposed targeted-review protocol on the same frozen cases, output rules and resource ceilings. On development cases, ablate provider diversity, independent resampling, targeted challenges, correction and typed evidence handling separately. Freeze the chosen candidate before final held-out testing. Use the actual shared production policy, with deliberate omissions labeled as separate experimental profiles.
+
+Use competent independent human reviewers blinded to model/arm; record initial ratings and adjudication. Keep unsuccessful trials and adverse repeats. Report paired task outcomes, critical and unsupported assertions, useful abstention, costs and latency, with uncertainty that respects repeated/shared case clusters. Predeclare minimum useful improvement and acceptable defect/latency/cost bounds. Forty-eight cases are a useful initial comparison, not proof of a rare-error guarantee. Under independent representative Bernoulli assumptions, zero critical errors on 48 cases still leaves a one-sided 95% upper defect-rate bound of approximately 6.05%.
+
+No trained reliability weighting, adaptive bandit, large agent roster or deeper debate should be promoted based on its sophistication alone. Add such a component only after its incremental benefit can be measured against the stronger simpler baseline. Detailed experiment design, visual comparisons and statistical limitations are in evaluation/DESIGN.txt.
+
+Implementation sequence and acceptance
+
+A. Repair the four P1 behaviors first: no unsupported infeasibility, no unsupported status upgrade through a contradicted claim, mandatory finish-time protection, and complete visual finding transmission. Convert the audit counterexamples to tests that assert corrected behavior. Repair the other demonstrated defects alongside their touched boundaries.
+B. Add versioned assessment/objection/edit-bundle contracts, explicit verification transitions, shared protocol policy and complete UI/export representations. Migrate additively, retain historical reader compatibility and pin old run behavior. Evaluate the report reducer against saved traces before switching new runs to v2.
+C. Add targeted review and improved passage selection behind explicit versioned configuration. Retain the original budgets and one substantive correction. Run seeded false-consensus, copied-source, hidden-exclusion, minority-objection, malformed-output, late-delivery and unavailable-provider tests.
+D. Run the paired held-out quality study after code/protocol freezing. Select the policy only when its measured quality and operating bounds justify it. Funded real-model and human evaluations remain future work; this design makes no improvement percentage claim.
+
+Required acceptance properties: (1) unsupported opposition cannot become demonstrated failure; (2) supported/refuted judgments retain their own citations and versions; (3) every material issue has a disposition or stays visibly unresolved; (4) repeated sources/advisers do not multiply corroboration; (5) proposals remain independent; (6) relevant late exclusions can be retrieved with exact context; (7) duplicate messages do not bypass due times or count caps; (8) optional waits cannot consume reserved finishing opportunity; (9) all queue transitions respect capacity; (10) admitted packets fit byte/context envelopes or fail before spend; (11) application and evaluator agree on policy traces; (12) visual edit intent survives actual wire serialization; (13) prior blockers require child dispositions; (14) aliases do not inflate sample size; (15) every event page remains accessible; (16) known limitations and uncertain costs survive every summary/export.
+
+Research used to challenge the design
+
+Choi, Zhu and Li, NeurIPS 2025, 'Debate or Vote: Which Yields Better Decisions in Multi-Agent Large Language Models?': across the tested benchmarks, independent voting explained much of the observed multi-agent gain. Its theoretical result depends on a modeled debate process and is not a universal impossibility theorem. Design implication: include independent aggregation and matched-compute baselines. https://proceedings.neurips.cc/paper_files/paper/2025/file/934252acd87f254d5d4672fbde283bd2-Paper-Conference.pdf
+
+Kaesberg et al., ACL Findings 2025, 'Voting or Consensus? Decision-Making in Multi-Agent Debate': controlled comparisons show that protocol choice and task type matter, and more pre-vote discussion rounds reduced performance in their experiments. Design implication: evaluate routing and stopping rules instead of assuming depth creates accuracy. https://arxiv.org/abs/2502.19130
+
+Bertalanič and Fortuna, 2026, 'The Cost of Consensus': their study of homogeneous 7–8B-class teams on two difficult benchmarks found isolated self-correction more favorable than unguided peer debate. That scope does not establish outcomes for this application's heterogeneous providers or supplier decisions. Design implication: retain self-correction as a serious baseline. https://arxiv.org/abs/2605.00914
+
+These are reasons to test the proposed architecture, not evidence that the proposed architecture has already won. The architecture and acceptance plan above are engineering recommendations derived from this repository's reproduced failures.

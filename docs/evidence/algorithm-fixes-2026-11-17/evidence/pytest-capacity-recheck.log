@@ -1,0 +1,213 @@
+F..                                                                      [100%]
+=================================== FAILURES ===================================
+_ test_research_cannot_overfill_saved_evidence_or_duplicate_existing_passage[0] _
+
+self = <sqlalchemy.engine.base.Connection object at 0x10b7e3d10>
+dialect = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10b641ee0>
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x10b865820>
+statement = <sqlalchemy.dialects.sqlite.base.SQLiteCompiler object at 0x10b831880>
+parameters = [('run_local', 201, 0)]
+
+    def _exec_single_context(
+        self,
+        dialect: Dialect,
+        context: ExecutionContext,
+        statement: Union[str, Compiled],
+        parameters: Optional[_AnyMultiExecuteParams],
+    ) -> CursorResult[Unpack[TupleAny]]:
+        """continue the _execute_context() method for a single DBAPI
+        cursor.execute() or cursor.executemany() call.
+    
+        """
+        if dialect.bind_typing is BindTyping.SETINPUTSIZES:
+            generic_setinputsizes = context._prepare_set_input_sizes()
+    
+            if generic_setinputsizes:
+                try:
+                    dialect.do_set_input_sizes(
+                        context.cursor, generic_setinputsizes, context
+                    )
+                except BaseException as e:
+                    self._handle_dbapi_exception(
+                        e, str(statement), parameters, None, context
+                    )
+    
+        cursor, str_statement, parameters = (
+            context.cursor,
+            context.statement,
+            context.parameters,
+        )
+    
+        effective_parameters: Optional[_AnyExecuteParams]
+    
+        if not context.executemany:
+            effective_parameters = parameters[0]
+        else:
+            effective_parameters = parameters
+    
+        evt_handled: bool = False
+        try:
+            if self._has_events or self.engine._has_events:
+                for fn in self.dispatch.before_cursor_execute:
+                    str_statement, effective_parameters = fn(
+                        self,
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                        context.executemany,
+                    )
+    
+            if self._echo:
+                self._log_info(str_statement)
+    
+                stats = context._get_cache_stats()
+    
+                self._log_parameters(
+                    effective_parameters, stats, ismulti=context.executemany
+                )
+    
+            if context.execute_style is ExecuteStyle.EXECUTEMANY:
+                effective_parameters = cast(
+                    "_CoreMultiExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_executemany:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_executemany(
+                        cursor,
+                        str_statement,
+                        effective_parameters,
+                        context,
+                    )
+            elif not effective_parameters and context.no_parameters:
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute_no_params:
+                        if fn(cursor, str_statement, context):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+                    self.dialect.do_execute_no_params(
+                        cursor, str_statement, context
+                    )
+            else:
+                effective_parameters = cast(
+                    "_CoreSingleExecuteParams", effective_parameters
+                )
+                if self.dialect._has_events:
+                    for fn in self.dialect.dispatch.do_execute:
+                        if fn(
+                            cursor,
+                            str_statement,
+                            effective_parameters,
+                            context,
+                        ):
+                            evt_handled = True
+                            break
+                if not evt_handled:
+>                   self.dialect.do_execute(
+                        cursor, str_statement, effective_parameters, context
+                    )
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1977: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10b641ee0>
+cursor = <sqlite3.Cursor object at 0x10b88dbc0>
+statement = 'SELECT claim_versions.id, claim_versions.version, claim_versions.run_id, claim_versions.meeting_id, claim_versions.ow...run_id = ? AND claim_versions.step_id IS NULL ORDER BY claim_versions.created_at, claim_versions.id\n LIMIT ? OFFSET ?'
+parameters = ('run_local', 201, 0)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x10b865820>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlite3.OperationalError: no such table: claim_versions
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:1192: OperationalError
+
+The above exception was the direct cause of the following exception:
+
+research_run = sessionmaker(class_='Session', bind=Engine(sqlite:////private/var/folders/yy/8vxx571s72vbb5jg4zt6v2fm0000gn/T/pytest-of-pradeepreddy/pytest-1030/test_research_cannot_overfill_0/research.sqlite), autoflush=True, expire_on_commit=False)
+capacity = 0
+
+    @pytest.mark.parametrize("capacity",[0,1,24])
+    def test_research_cannot_overfill_saved_evidence_or_duplicate_existing_passage(research_run,capacity):
+        schedule(research_run)
+        text="Synthetic source"
+        digest=hashlib.sha256(text.encode()).hexdigest()
+        expected="evidence_"+hashlib.sha256("run_local:https://example.com/quote:extracted_text[0:16]".encode()).hexdigest()[:40]
+        with research_run.begin() as session:
+            run=session.get(Run,"run_local")
+            for index in range(capacity):
+                identity=expected if index==0 else f"evidence_existing_{index}"
+                content={"id":identity,"run_id":run.id,"owner_id":run.owner_id,"source_title":"Synthetic source",
+                    "text":text,"sha256":digest,"origin":"user_supplied","verification_status":"user_supplied",
+                    "verified_at":utcnow().isoformat(),"time_sensitive":True,"origin_group":"origin_fixture",
+                    "locator":"extracted_text[0:16]","scope":"Synthetic supplied evidence for capacity and deduplication"}
+                session.add(EvidenceRecord(id=identity,run_id=run.id,meeting_id=run.meeting_id,owner_id=run.owner_id,sha256=digest,content=content))
+        transport=SimpleNamespace(get=lambda *a,**kw:FetchResponse(200,{"content-type":"text/plain"},text.encode()))
+>       assert execute(research_run,SearchFixture(),transport)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+backend/tests/test_exhaustive_evidence_research.py:157: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+backend/tests/test_exhaustive_evidence_research.py:26: in execute
+    return service.execute_research("run_local",session_factory=factory,search=search or SearchFixture(),
+backend/src/round_robin/research/service.py:169: in execute_research
+    has_context_room = proposal_packet_bytes(session, run, initial_passages) + 512 < MAX_INITIAL_PACKET_BYTES
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/src/round_robin/research/service.py:38: in proposal_packet_bytes
+    claims = claim_packet(session, run, imported_only=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend/src/round_robin/research/reuse.py:52: in claim_packet
+    records = list(session.scalars(query.limit(201)))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2676: in scalars
+    return self._execute_internal(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/session.py:2445: in _execute_internal
+    compile_state_cls.orm_execute_statement(
+.venv/lib/python3.12/site-packages/sqlalchemy/orm/context.py:322: in orm_execute_statement
+    result = conn.execute(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1494: in execute
+    return meth(
+.venv/lib/python3.12/site-packages/sqlalchemy/sql/elements.py:534: in _execute_on_connection
+    return connection._execute_clauseelement(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1714: in _execute_clauseelement
+    ret = self._execute_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1868: in _execute_context
+    return self._exec_single_context(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1996: in _exec_single_context
+    self._handle_dbapi_exception(
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:2351: in _handle_dbapi_exception
+    raise sqlalchemy_exception.with_traceback(exc_info[2]) from e
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/base.py:1977: in _exec_single_context
+    self.dialect.do_execute(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <sqlalchemy.dialects.sqlite.pysqlite.SQLiteDialect_pysqlite object at 0x10b641ee0>
+cursor = <sqlite3.Cursor object at 0x10b88dbc0>
+statement = 'SELECT claim_versions.id, claim_versions.version, claim_versions.run_id, claim_versions.meeting_id, claim_versions.ow...run_id = ? AND claim_versions.step_id IS NULL ORDER BY claim_versions.created_at, claim_versions.id\n LIMIT ? OFFSET ?'
+parameters = ('run_local', 201, 0)
+context = <sqlalchemy.dialects.sqlite.base.SQLiteExecutionContext object at 0x10b865820>
+
+    def do_execute(self, cursor, statement, parameters, context=None):
+>       cursor.execute(statement, parameters)
+E       sqlalchemy.exc.OperationalError: (sqlite3.OperationalError) no such table: claim_versions
+E       [SQL: SELECT claim_versions.id, claim_versions.version, claim_versions.run_id, claim_versions.meeting_id, claim_versions.owner_id, claim_versions.step_id, claim_versions.alias, claim_versions.sha256, claim_versions.content, claim_versions.created_at 
+E       FROM claim_versions 
+E       WHERE claim_versions.run_id = ? AND claim_versions.step_id IS NULL ORDER BY claim_versions.created_at, claim_versions.id
+E        LIMIT ? OFFSET ?]
+E       [parameters: ('run_local', 201, 0)]
+E       (Background on this error at: https://sqlalche.me/e/21/e3q8)
+
+.venv/lib/python3.12/site-packages/sqlalchemy/engine/default.py:1192: OperationalError
+=========================== short test summary info ============================
+FAILED backend/tests/test_exhaustive_evidence_research.py::test_research_cannot_overfill_saved_evidence_or_duplicate_existing_passage[0]
+1 failed, 2 passed in 0.83s

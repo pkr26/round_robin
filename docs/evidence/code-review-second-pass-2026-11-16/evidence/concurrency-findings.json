@@ -1,0 +1,112 @@
+{
+  "audit": "second deep audit: backend transactions, orchestration and concurrency",
+  "date": "2026-11-16",
+  "source_modified": false,
+  "external_provider_calls": 0,
+  "production_services_touched": false,
+  "database": "Only random disposable schemas in round_robin_test; both successful probe schemas were dropped in finally blocks",
+  "findings": [
+    {
+      "id": "AUDIT2-CONCURRENCY-001",
+      "priority": "P1",
+      "confidence": "confirmed",
+      "title": "Deduplicate advance intentions while a run waits for admission",
+      "primary_location": {
+        "path": "backend/src/round_robin/orchestration/controller.py",
+        "absolute_path": "/Users/pradeepreddy/Desktop/round_robin/backend/src/round_robin/orchestration/controller.py",
+        "start_line": 279,
+        "end_line": 281
+      },
+      "related_locations": [
+        {"path": "backend/src/round_robin/dispatcher/service.py", "start_line": 129, "end_line": 131},
+        {"path": "backend/src/round_robin/dispatcher/service.py", "start_line": 135, "end_line": 150},
+        {"path": "backend/src/round_robin/orchestration/admission.py", "start_line": 50, "end_line": 62}
+      ],
+      "body": "Whenever admission waits, advance_run unconditionally inserts a new advance Outbox record. The one-second reconciler invokes this path independently, and a delivered advance invokes it again. Meanwhile, the previously delivered record remains published as long as the run is queued, so reconcile_once republishes it after 15 seconds. A successfully consumed timer therefore leaves behind both a replayable predecessor and a successor. One valid queued run under supported operator draining produced 2,781 outbox rows and 2,689 successful advance deliveries in 90 seconds, with 2,031 still pending; no message loss occurred. By 60 seconds duplicate advance deliveries saturated the default 50-record dispatch batch. This wastes database transactions, repeatedly takes the global deployment-policy lock, grows the persistent scheduler table, and delays useful work sharing the dispatcher and worker queues. The same insertion branch is used when another run occupies the single admission slot.",
+      "trigger": "Keep a queued run waiting for admission, for example during a normal deployment drain or while another run is running, and run the normal reconciler and dispatcher loops.",
+      "reproduction": {
+        "script": "/tmp/rr-audit2-concurrency/probe_queued_advance_growth.py",
+        "command": "PYTHONPATH=backend/src:. .venv/bin/python /tmp/rr-audit2-concurrency/probe_queued_advance_growth.py",
+        "result": "/tmp/rr-audit2-concurrency/queued_advance_growth_result.json",
+        "setup": "Disposable PostgreSQL schema, schema-valid sample brief and normal simulated run configuration from the existing orchestration seed helper. A supported draining policy keeps admission closed. A synchronous fake broker executes and commits every delivered advance; no Redis or provider network request is made. The clock advances in one-second increments and each tick calls the production reconcile_once and dispatch_once functions with their normal batch limit.",
+        "observed": [
+          {"seconds": 15, "outbox_rows": 40, "successful_deliveries": 23},
+          {"seconds": 45, "outbox_rows": 517, "successful_deliveries": 470},
+          {"seconds": 60, "outbox_rows": 1251, "successful_deliveries": 1189},
+          {"seconds": 90, "outbox_rows": 2781, "successful_deliveries": 2689, "pending_rows": 2031}
+        ],
+        "cleanup": "The random PostgreSQL schema was dropped. No application source was changed."
+      },
+      "fix_direction": "Use a unique active advance intention per run/generation, and reschedule or upsert that intention when admission waits. Make consumption/recovery distinguish the already-handled intention from a genuinely lost delivery so predecessor and successor records cannot both be replayed. Keep the same invariant for reconcile-triggered and broker-triggered advancement.",
+      "limits": "The exact growth rate was measured with deterministic time and a synchronous successful sender; real broker throughput changes the rate. Queue amplification and batch saturation are directly observed. Delay to a separate real user request is an operational implication, not a separately measured latency result.",
+      "deduplication": "Not among the prior 17 findings; this concerns text scheduler record multiplication, not permanent deletion-manifest replay."
+    },
+    {
+      "id": "AUDIT2-CONCURRENCY-002",
+      "priority": "P2",
+      "confidence": "confirmed",
+      "title": "Release a terminal run's unused finish hold when its frozen configuration expires",
+      "primary_location": {
+        "path": "backend/src/round_robin/dispatcher/service.py",
+        "absolute_path": "/Users/pradeepreddy/Desktop/round_robin/backend/src/round_robin/dispatcher/service.py",
+        "start_line": 74,
+        "end_line": 76
+      },
+      "related_locations": [
+        {"path": "backend/src/round_robin/orchestration/controller.py", "start_line": 237, "end_line": 242},
+        {"path": "backend/src/round_robin/orchestration/policies.py", "start_line": 13, "end_line": 21},
+        {"path": "backend/src/round_robin/orchestration/budget.py", "start_line": 74, "end_line": 86},
+        {"path": "backend/src/round_robin/api/events.py", "start_line": 199, "end_line": 208}
+      ],
+      "body": "A retry-eligible synthesis failure intentionally retains the unused finish hold, but terminal runs are excluded from the ordinary reconciliation scan. The separate terminal scan only handles unfinished authorized attempts, so it never revisits an unused hold after the frozen provider configuration expires. Retry eligibility itself checks frozen active time and call counters, not configuration validity; terminal active time no longer decreases. The hold consequently remains charged against current owner and deployment windows even though the old run can no longer authorize work. In a real API-created live run with fake adapters, synthesis worker loss left a $.38 hold plus a $.02 unknown attempt. Two days later, the old configuration correctly failed with frozen_configuration_expired, but three reconciliation passes retained the $.38 hold. A terminal cancel did not release it. A new explicitly accepted run under a fresh valid configuration then failed owner_daily_budget_exhausted against a $.60 owner ceiling, although retaining only the legitimately unknown $.02 attempt and reserving the new $.40 finish pool would require $.42.",
+      "trigger": "A final-stage failure leaves a terminal, manually retryable run with unused finish funds; the user leaves it alone until the frozen provider configuration expires or becomes permanently unusable.",
+      "reproduction": {
+        "script": "/tmp/rr-audit2-concurrency/probe_retained_hold.py",
+        "command": "PYTHONPATH=backend/src:. .venv/bin/python /tmp/rr-audit2-concurrency/probe_retained_hold.py",
+        "result": "/tmp/rr-audit2-concurrency/retained_hold_result.json",
+        "setup": "Disposable PostgreSQL schema and real create/preflight/start/cancel endpoints with a Pydantic-valid live provider configuration. Fake adapters complete intake and proposals, then simulate process death after committed synthesis authorization. Deterministic time expires the worker lease and later the frozen configuration. No upstream request occurs.",
+        "observed": {
+          "after_worker_loss_status": "completed_with_limitations",
+          "retryable_stages": ["synthesis"],
+          "unused_finish_hold_usd": "0.38",
+          "expiry_denial": "frozen_configuration_expired",
+          "current_daily_exposure_after_two_days": "0.40",
+          "terminal_cancel_status": "completed_with_limitations",
+          "fresh_run_stop_reason": "owner_daily_budget_exhausted",
+          "owner_daily_ceiling_usd": "0.60",
+          "expected_new_exposure_after_releasing_only_unused_hold_usd": "0.42"
+        },
+        "cleanup": "The random PostgreSQL schema was dropped. Provider configuration and artifact directories were temporary. No application source was changed."
+      },
+      "fix_direction": "Include terminal runs with held finish reservations in reconciliation, and release only unused hold money once frozen authorization or retry eligibility has permanently expired. Preserve unknown attempt exposure. A terminal retry-retention policy should have an explicit bounded lifetime or revalidate configuration authority; cancel should also provide a way to abandon retained retry funds without deleting the meeting.",
+      "limits": "The expiry path and owner-budget denial are directly reproduced. Deployment ceilings use the same exposure collection, so accumulated unused holds can also block deployment-wide budget. Deleting the old meeting or attempting a now-doomed retry can eventually release the hold, but neither happens automatically.",
+      "deduplication": "Distinct from prior finding 10: that finding covers visual-session deadline cleanup; this is text-run terminal retry retention after provider-configuration expiry, using different reconciliation and budget-retention paths."
+    }
+  ],
+  "reviewed_scope": [
+    "backend/src/round_robin/api/commands.py",
+    "backend/src/round_robin/api/preflight.py",
+    "backend/src/round_robin/api/events.py",
+    "backend/src/round_robin/api/lineage.py",
+    "backend/src/round_robin/api/auth.py",
+    "backend/src/round_robin/orchestration/admission.py",
+    "backend/src/round_robin/orchestration/budget.py",
+    "backend/src/round_robin/orchestration/controller.py",
+    "backend/src/round_robin/orchestration/configuration.py",
+    "backend/src/round_robin/orchestration/policies.py",
+    "backend/src/round_robin/orchestration/circuits.py",
+    "backend/src/round_robin/worker/tasks.py",
+    "backend/src/round_robin/dispatcher/service.py",
+    "backend/src/round_robin/database/services.py",
+    "backend/src/round_robin/worker/image_tasks.py (persistence, dispatch and reconciliation portions)",
+    "backend/src/round_robin/visual/service.py (storage, immutable publication and review scheduling portions)",
+    "backend/src/round_robin/schemas/provider_configuration.py",
+    "Relevant orchestration, runtime audit, API, provider configuration tests and runtime specifications"
+  ],
+  "unconfirmed_hypotheses_excluded": [
+    "Manual retry / clarification queue-quota bypass was not tested and is not a finding in this report.",
+    "Potential policy-pause effects on late provider-result publication were not established as a defect.",
+    "Correction-iteration retry restrictions were not established as an API-reachable defect."
+  ],
+  "verification_scope": "Two new focused PostgreSQL reproductions only; no additional broad test suite and no paid/external calls. Earlier 17 findings were not repeated or counted as new."
+}

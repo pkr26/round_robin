@@ -1,0 +1,27 @@
+{
+  "schema": "audit2_hold_a4cf0b81e02446529f277d6cbe4906dd",
+  "no_external_calls": true,
+  "after_worker_loss": {
+    "status": "completed_with_limitations",
+    "hold_status": "held",
+    "hold_usd": "0.38",
+    "retry_stages": [
+      "synthesis"
+    ],
+    "active_started_at": "None"
+  },
+  "expired_run_denial": "frozen_configuration_expired",
+  "after_expiry": {
+    "hold_status": "held",
+    "hold_usd": "0.38",
+    "daily_exposure": "0.40"
+  },
+  "cancel_on_terminal_status": "completed_with_limitations",
+  "new_run": {
+    "status": "failed",
+    "stop_reason": "owner_daily_budget_exhausted"
+  },
+  "expected_new_run_exposure_if_unused_hold_released": "0.42",
+  "owner_daily_ceiling": "0.60",
+  "schema_dropped": true
+}

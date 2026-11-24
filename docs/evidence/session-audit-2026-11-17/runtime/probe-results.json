@@ -1,0 +1,49 @@
+{
+  "preflight_context": {
+    "valid_brief": true,
+    "input_packet_error": null,
+    "canonical_intake_packet_bytes": 32325,
+    "initial_packet_limit": 48000,
+    "configured_verified_context_window": 32768,
+    "actual_adapter_pre_send_admission": "context_limit",
+    "network_calls": 0
+  },
+  "cross_modal_priority": {
+    "running_text_stage": "synthesis",
+    "optional_text_call_allowed": false,
+    "optional_image_generation_allowed": true,
+    "network_calls": 0
+  },
+  "fallback_order": {
+    "declared_fallbacks": [
+      "openai",
+      "anthropic",
+      "google"
+    ],
+    "pre_send_admission_sequence": [
+      "openai",
+      "anthropic",
+      "openai"
+    ],
+    "healthy_google_generate_calls": 0,
+    "step_status": "failed",
+    "step_calls": 0,
+    "infrastructure_claims": 3,
+    "run_status": "failed",
+    "execute_results": [
+      {
+        "status": "provider_blocked",
+        "code": "provider_configuration_invalid"
+      },
+      {
+        "status": "provider_blocked",
+        "code": "provider_configuration_invalid"
+      },
+      {
+        "status": "provider_blocked",
+        "code": "provider_configuration_invalid"
+      }
+    ],
+    "network_calls": 0
+  }
+}

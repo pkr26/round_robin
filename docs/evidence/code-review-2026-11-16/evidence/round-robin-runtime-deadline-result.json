@@ -1,0 +1,8 @@
+{
+  "probe": "image_total_deadline",
+  "declared_timeout_seconds": 0.1,
+  "elapsed_seconds": 0.3679,
+  "error": "response_limit",
+  "confirmed_overrun": true,
+  "network_scope": "loopback only"
+}
