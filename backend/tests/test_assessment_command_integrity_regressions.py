@@ -1,10 +1,12 @@
 """Owner attestation commands must stay scoped and atomic without inference."""
 from copy import deepcopy
 from datetime import timedelta
+from io import BytesIO
 from uuid import uuid4
 
 import pytest
 from fastapi.testclient import TestClient
+from pypdf import PdfReader
 from round_robin.api.auth import require_owner
 from round_robin.app import create_app
 from round_robin.database.models import (
@@ -16,6 +18,8 @@ from round_robin.database.models import (
     utcnow,
 )
 from sqlalchemy import func, select
+from round_robin.reports.exports import render_saved_report
+from round_robin.reports.read_adapters import UnreadableReport, read_runtime_report
 
 from backend.tests.test_evidence_regressions import complete_brief
 from backend.tests.test_orchestration import drain, seed
@@ -106,3 +110,82 @@ def test_manual_requirement_attestation_and_replay_are_scoped_without_new_provid
     after = snapshot(db_factory, run_id)
     assert after[0] == before[0] + 1 and after[1] == before[1] + 1
     assert after[5:] == before[5:]
+
+
+def test_requirement_can_be_reassessed_with_a_current_source_after_a_quote_expires(attestation):
+    db_factory, run_id, client = attestation
+    with db_factory.begin() as session:
+        run = session.get(Run, run_id)
+        brief = deepcopy(run.configuration["resolved_brief"])
+        line = brief["options"][0]["cost_components"][0]
+        line["quote_valid_until"] = (utcnow().date() - timedelta(days=2)).isoformat()
+        expired_ref = line["source_ref"]
+        run.configuration = {**run.configuration, "resolved_brief": brief}
+    body = payload(client, run_id, "requirement")
+    assert expired_ref not in body["reference_ids"]
+    invalid = {**body, "command_id": str(uuid4()), "reference_ids": [expired_ref]}
+    path = f"/api/runs/{run_id}/assessments"
+    assert client.post(path, json=invalid).json()["error"]["code"] == "assessment_quote_expired"
+    response = client.post(path, json={**body, "reference_ids": body["reference_ids"][:1]})
+    assert response.status_code == 201, response.text
+    assert response.json()["current_items"][0]["result"] == "pass"
+    report = client.get(f"/api/runs/{run_id}/report").json()
+    assert report["version"] == 2 and report["recommendation"] is None
+
+
+def test_only_selected_passages_propagate_to_receipt_requirement_and_exports(attestation):
+    db_factory, run_id, client = attestation
+    path = f"/api/runs/{run_id}"
+    body = payload(client, run_id, "requirement")
+    all_refs = body["reference_ids"]
+    assert len(all_refs) > 2
+    selected = [all_refs[-1], all_refs[0]]
+    remaining = set(all_refs) - set(selected)
+    sources = {item["id"]: item for item in client.get(path + "/snapshot").json()["evidence"]}
+    hashes = {ref: sources[ref]["sha256"] for ref in selected}
+    assert all(sources[ref]["text"] and sources[ref]["source_title"] and sources[ref]["verified_at"] for ref in selected)
+    response = client.post(path + "/assessments", json={**body, "reference_ids": selected})
+    assert response.status_code == 201, response.text
+    receipt = response.json()["current_items"][0]
+    assert receipt["reference_ids"] == selected and receipt["evidence_hashes"] == hashes
+    report = client.get(path + "/report").json()
+    assert report["evidence_assessments"] == [receipt]
+    option = next(item for item in report["comparison"] if item["option_id"] == body["option_id"])
+    verdict = next(item for item in option["constraint_results"] if item["requirement_id"] == body["requirement_id"])
+    assert verdict["method"] == "human" and verdict["basis_refs"] == selected
+    for format in ("markdown", "pdf"):
+        content, _ = render_saved_report(report, format, title="Selected evidence", sources=list(sources.values()))
+        text = content.decode().replace("\\", "") if format == "markdown" else "\n".join(page.extract_text() for page in PdfReader(BytesIO(content)).pages)
+        section = text.split("Cited passages", 1)[1].split("Exact supplied inputs", 1)[0]
+        assert all(ref in section and digest in "".join(section.split()) for ref, digest in hashes.items())
+        assert not any(ref in section for ref in remaining)
+    # A rewritten report cannot attribute a different, otherwise eligible
+    # run-scoped citation to the owner's original command.
+    with db_factory.begin() as session:
+        row = session.get(ReportVersion, report["id"])
+        forged = deepcopy(row.content)
+        forged_receipt = forged["evidence_assessments"][0]
+        forged_receipt["reference_ids"] = [all_refs[1]]
+        forged_receipt["evidence_hashes"] = {all_refs[1]: sources[all_refs[1]]["sha256"]}
+        for item in forged["comparison"]:
+            for result in item["constraint_results"]:
+                if result["method"] == "human":
+                    result["basis_refs"] = [all_refs[1]]
+        row.content = forged
+        with pytest.raises(UnreadableReport):
+            read_runtime_report(session, row)
+
+
+def test_cost_attestation_accepts_corroborating_passages_only_with_all_required_sources(attestation):
+    _, run_id, client = attestation
+    cost = payload(client, run_id)
+    other = next(ref for ref in payload(client, run_id, "requirement")["reference_ids"] if ref not in cost["reference_ids"])
+    path = f"/api/runs/{run_id}/assessments"
+    incomplete = {**cost, "command_id": str(uuid4()), "reference_ids": [*cost["reference_ids"][1:], other]}
+    response = client.post(path, json=incomplete)
+    assert response.status_code == 409
+    assert response.json()["error"]["code"] == "assessment_cost_incomplete"
+    cost["reference_ids"].append(other)
+    response = client.post(path, json=cost)
+    assert response.status_code == 201, response.text
+    assert response.json()["current_items"][0]["reference_ids"] == cost["reference_ids"]

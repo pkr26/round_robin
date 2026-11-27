@@ -84,7 +84,10 @@ def test_unknown_expired_components_stay_within_the_per_component_gap_bound():
 def test_simulator_uses_the_accepted_date_after_the_quote_expires_on_the_clock():
     request = packet()
     accepted_date = date(2000, 1, 1)
-    request = replace(request, brief=complete_brief(valid_until=accepted_date).model_dump(mode="json"), cost_as_of=accepted_date.isoformat())
+    brief = complete_brief(valid_until=accepted_date)
+    brief.hard_requirements = [item for item in brief.hard_requirements if item.metric == "total_cost"]
+    brief.deadline = None
+    request = replace(request, brief=brief.model_dump(mode="json"), cost_as_of=accepted_date.isoformat())
     result = SimulatedProvider("openai").generate(request)
     assert result.output.recommendation_option_id is not None
     assert request.packet()["cost_as_of"] == accepted_date.isoformat()
@@ -94,7 +97,10 @@ def test_saved_run_keeps_one_comparison_date_when_the_clock_crosses_midnight(fac
     from round_robin.research import calculator
 
     accepted = utcnow()
-    run_id = seed(factory, brief=complete_brief(valid_until=accepted.date()))
+    brief = complete_brief(valid_until=accepted.date())
+    brief.hard_requirements = [item for item in brief.hard_requirements if item.metric == "total_cost"]
+    brief.deadline = None
+    run_id = seed(factory, brief=brief)
     with factory.begin() as session:
         session.get(Run, run_id).created_at = accepted
 
@@ -261,7 +267,8 @@ def test_live_workers_publish_expired_costs_as_unknown_and_unrooted_claims_as_un
         claim_response = client.get(f"/api/runs/{run_id}/claims")
         assert report_response.status_code == claim_response.status_code == 200
         report = report_response.json()
-        assert report["simulated"] is False and report["readiness"] == "conditional"
+        assert report["simulated"] is False and report["readiness"] == "insufficient_evidence"
+        assert report["recommendation"] is None
         assert report["comparison"][0]["total"] is None
         assert report["comparison"][0]["known_subtotal"] == "1600.00"
         assert report["comparison"][0]["constraint_results"][0]["result"] == "unknown"

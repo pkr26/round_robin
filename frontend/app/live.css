@@ -89,12 +89,17 @@
 .live-app tbody td:nth-child(2) { font-weight: 600; white-space: nowrap; }
 .live-requirement { display: block; font-size: 11px; margin-bottom: 7px; }
 .live-check { padding: 13px 0; border-top: 1px solid #e3e8dd; font-size: 13px; }
+.live-basis, .live-basis button { overflow-wrap: anywhere; }
+.live-basis button { max-width: 100%; }
 .live-card > label { display: flex; flex-direction: column; gap: 7px; font-size: 12px; margin: 18px 0 10px; }
 .live-card .live-two > label { display: flex; flex-direction: column; gap: 7px; font-size: 12px; }
 .live-evidence { border-top: 1px solid #e2e8dc; padding: 20px 0; }
 .live-evidence > div { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .live-evidence small { color: var(--live-muted); display: block; font-size: 11px; }
 .live-evidence p { white-space: pre-wrap; overflow-wrap: anywhere; }
+.live-passage-choice { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 9px; padding: 12px 0; border-top: 1px solid #e2e8dc; cursor: pointer; }
+.live-passage-choice span { grid-column: 2; overflow-wrap: anywhere; }
+.live-passage-text { white-space: pre-wrap; }
 .live-timeline { margin: 25px 0; padding-left: 20px; }
 .live-timeline li { padding: 0 0 23px 16px; border-left: 1px solid #cfddc6; position: relative; list-style: none; }
 .live-timeline li::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #67905b; position: absolute; left: -4px; top: 5px; }

@@ -1390,6 +1390,12 @@ export interface components {
         };
         /** DecisionInsights */
         DecisionInsights: {
+            /** Failed Option Ids */
+            failed_option_ids: string[];
+            /** Cost Comparison Blocker */
+            cost_comparison_blocker: ("unresolved_options" | "different_applicability" | "different_cost_basis" | "all_options_failed") | null;
+            /** Tied Lowest Cost Option Ids */
+            tied_lowest_cost_option_ids: string[];
             /** Cost Frontier Option Ids */
             cost_frontier_option_ids: string[];
             /** Dominated Option Ids */
@@ -2989,6 +2995,12 @@ export interface components {
             parent_report_id: string | null;
             /** Version */
             version: number;
+            /** Valuation Date */
+            valuation_date: string | null;
+            /** Valuation Timezone */
+            valuation_timezone: string | null;
+            /** Evidence Valid Through */
+            evidence_valid_through: string | null;
             /** Event Cutoff */
             event_cutoff: number;
             /** Fictional */
@@ -3011,6 +3023,8 @@ export interface components {
             main_reasons: string[];
             /** Tradeoff */
             tradeoff: string;
+            /** Tradeoff Basis Refs */
+            tradeoff_basis_refs?: string[];
             /** Largest Uncertainty */
             largest_uncertainty: string;
             /** What Would Change Answer */
@@ -3035,6 +3049,8 @@ export interface components {
             dissent: string[];
             /** Next Evidence */
             next_evidence: components["schemas"]["RuntimeNextEvidence"][];
+            /** Next Evidence Count */
+            next_evidence_count?: number | null;
             /** Coverage */
             coverage: components["schemas"]["RuntimeCoverage"][];
             assessment: components["schemas"]["ReviewCoverage"];
@@ -3069,6 +3085,8 @@ export interface components {
             question: string;
             /** Affected Conclusion */
             affected_conclusion: string;
+            /** Basis Refs */
+            basis_refs?: string[];
             /** Verification Method */
             verification_method: string;
             /** Request Text */
@@ -3110,6 +3128,8 @@ export interface components {
         RuntimeRecommendation: {
             /** Option Id */
             option_id: string;
+            /** Option Label */
+            option_label: string | null;
             /** Summary */
             summary: string;
             /** Conditions */

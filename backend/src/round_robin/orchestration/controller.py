@@ -12,7 +12,7 @@ from round_robin.database.models import Attempt, BudgetOperation, EvidenceRecord
 from round_robin.database.services import append_event, enqueue, new_id
 from round_robin.providers.base import PROVIDERS
 from round_robin.reports.read_adapters import read_stored_evidence
-from round_robin.schemas.briefs import DraftBrief
+from round_robin.schemas.briefs import DraftBrief, deadline_requirement_description
 from .admission import TERMINAL, admit_run, capacity_delay_seconds, check_eligible
 from .budget import BudgetDenied, _exact_money, _policy_checks, amount, aware, checked_finish_hold, freeze_active, validate_run_ledger, operations_exposure, release_unused_finish, remaining_active
 from .reporting import build_invalid_brief_report, build_report
@@ -112,9 +112,10 @@ def resolved_brief(snapshot):
     if budget is not None and not any(item["metric"] == "total_cost" and item["operator"] == "lte" and item.get("threshold") is not None and Decimal(item["threshold"]) <= Decimal(budget) for item in requirements):
         append_requirement("requirement_server_budget", f"Total cost must not exceed the explicitly supplied budget of {budget} {brief['currency']} over the confirmed horizon.", "total_cost", "lte", budget)
     deadline = brief.get("deadline")
-    deadline_description = f"Complete by {deadline}; obtain a committed applicable supplier or project schedule."
-    if deadline and not any(item["metric"] == "manual" and item["operator"] == "manual" and item["description"] == deadline_description for item in requirements):
-        append_requirement("requirement_server_deadline", deadline_description, "manual", "manual")
+    if deadline:
+        description = deadline_requirement_description(deadline)
+        if not any(item["metric"] == "manual" and item["operator"] == "manual" and item["description"] == description for item in requirements):
+            append_requirement("requirement_server_deadline", description, "manual", "manual")
     return DraftBrief.model_validate(brief).model_dump(mode="json"), added
 
 
@@ -437,11 +438,12 @@ def finalize_run(session, run, *, reason=None, status=None):
             run.stop_reason = "evidence_integrity_failed"
             status = "completed_with_limitations" if substantive and not invalid_saved else "failed"
             run.status = status
+    published_at = utcnow()
     if invalid_saved:
-        report = build_invalid_brief_report(run, steps, status=status, stop_reason=run.stop_reason, report_id=report_id, version=version, usage=usage, evidence=evidence, parent_report=parent_report, parent_report_id=parent_report_id, parent_report_unavailable=parent_report_unavailable, parent_brief_unavailable=parent_brief_unavailable, invalid_brief=invalid_brief, invalid_discussion=invalid_discussion)
+        report = build_invalid_brief_report(run, steps, status=status, stop_reason=run.stop_reason, report_id=report_id, version=version, usage=usage, evidence=evidence, parent_report=parent_report, parent_report_id=parent_report_id, parent_report_unavailable=parent_report_unavailable, parent_brief_unavailable=parent_brief_unavailable, invalid_brief=invalid_brief, invalid_discussion=invalid_discussion, published_at=published_at)
     else:
-        report = build_report(run, steps, status=status, stop_reason=run.stop_reason, report_id=report_id, version=version, usage=usage, evidence=evidence, claims=claims, parent_report=parent_report, parent_report_id=parent_report_id, parent_brief=parent_brief, parent_report_unavailable=parent_report_unavailable, parent_brief_unavailable=parent_brief_unavailable)
-    session.add(ReportVersion(id=report_id, run_id=run.id, version=version, event_cutoff=run.event_sequence + 1, content=report))
+        report = build_report(run, steps, status=status, stop_reason=run.stop_reason, report_id=report_id, version=version, usage=usage, evidence=evidence, claims=claims, parent_report=parent_report, parent_report_id=parent_report_id, parent_brief=parent_brief, parent_report_unavailable=parent_report_unavailable, parent_brief_unavailable=parent_brief_unavailable, published_at=published_at)
+    session.add(ReportVersion(id=report_id, run_id=run.id, version=version, event_cutoff=run.event_sequence + 1, content=report, created_at=published_at))
     run.report_version = version
     synthesis = next((step for step in reversed(steps) if step.stage == "synthesis" and step.status == "succeeded"), None)
     audit = next((step for step in reversed(steps) if step.stage == "audit" and step.status == "succeeded"), None)

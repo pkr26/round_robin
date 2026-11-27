@@ -4,7 +4,7 @@ from datetime import date
 from decimal import Decimal
 import time
 
-from round_robin.research.calculator import CalculationError, lifecycle_total
+from round_robin.reports.insights import comparable_cost_leaders
 from round_robin.schemas.briefs import DraftBrief
 
 from .base import ProviderFailure, ProviderOutput, ProviderRequest, ProviderResult, validate_output
@@ -40,16 +40,21 @@ class SimulatedProvider:
                 questions.append("Confirm a common comparison horizon from 1 to 120 months.")
             if not brief.hard_requirements:
                 questions.append("Confirm the hard requirements, or explicitly accept a cost-only comparison with other feasibility unknown.")
-        candidates = []
+        leaders = []
         if brief.horizon_months:
             from round_robin.orchestration.reporting import comparison_data
             comparisons, _ = comparison_data(brief, as_of=date.fromisoformat(request.cost_as_of) if request.cost_as_of else None)
-            if comparisons and all(item["total"] is not None for item in comparisons):
-                candidates = [(Decimal(item["total"]), item["option_id"]) for item in comparisons if not any(result["result"] == "fail" for result in item["constraint_results"])]
-        selected = min(candidates)[1] if candidates else None
+            leaders = comparable_cost_leaders({item.id for item in brief.hard_requirements}, comparisons)
+        selected = leaders[0] if len(leaders) == 1 else None
+        if selected:
+            summary = "One option has the lowest comparable cost under the assessed requirements."
+        elif leaders:
+            summary = "Multiple options share the lowest comparable cost. The supplied costs establish no single preferred option."
+        else:
+            summary = "The supplied costs and hard-requirement results do not establish a preferred option."
         # The independent simulated audit checks references/format, not truth.
         output = ProviderOutput(
-            summary=(f"Simulated {request.stage} for ‘{brief.title}’. " + ("A common-horizon cost comparison is available; practical feasibility still requires checking." if candidates else "No complete comparable cost is established from the supplied inputs.")),
+            summary=f"Simulated {request.stage} for ‘{brief.title}’. {summary}",
             recommendation_option_id=selected if request.stage != "intake" else None,
             reference_ids=sorted(request.allowed_reference_ids)[:40], questions=questions[:3],
             assumptions=["Deterministic simulation; no provider independently reviewed the facts or recommendation."],

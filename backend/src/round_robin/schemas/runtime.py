@@ -1,8 +1,10 @@
 """Authoritative saved-runtime report contract, separate from labeled samples."""
 
+from datetime import date
 from decimal import Decimal
 import re
 from typing import Annotated, Literal, Self
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from pydantic import BeforeValidator, Field, ValidationInfo, model_validator
 
@@ -52,6 +54,7 @@ class RuntimeCoverage(Contract):
 
 class RuntimeRecommendation(Contract):
     option_id: Id
+    option_label: ShortText | None = None
     summary: str = Field(min_length=1, max_length=4000)
     conditions: list[str] = Field(max_length=64)
 
@@ -60,6 +63,7 @@ class RuntimeNextEvidence(Contract):
     id: Id
     question: str = Field(min_length=1, max_length=2000)
     affected_conclusion: ShortText
+    basis_refs: list[Id] = Field(default_factory=list, max_length=64, exclude_if=lambda refs: not refs)
     verification_method: ShortText
     request_text: str = Field(min_length=1, max_length=4000)
     responsible_person: ShortText | None = None
@@ -86,6 +90,9 @@ class RuntimeDecisionReport(Contract):
     run_id: Id
     parent_report_id: Id | None = None
     version: int = Field(ge=1, strict=True)
+    valuation_date: date | None = None
+    valuation_timezone: str | None = Field(default=None, min_length=1, max_length=64)
+    evidence_valid_through: date | None = None
     event_cutoff: int = Field(ge=0, strict=True)
     fictional: bool
     simulated: bool
@@ -96,11 +103,14 @@ class RuntimeDecisionReport(Contract):
     readiness_unavailable_reason: str | None = Field(default=None, max_length=2000)
     main_reasons: list[str] = Field(max_length=20)
     tradeoff: str = Field(min_length=1, max_length=4000)
+    tradeoff_basis_refs: list[Id] = Field(default_factory=list, max_length=64, exclude_if=lambda refs: not refs)
     largest_uncertainty: str = Field(min_length=1, max_length=2000)
     what_would_change_answer: str = Field(min_length=1, max_length=2000)
     next_action: str = Field(min_length=1, max_length=2000)
     comparison: list[RuntimeOptionComparison] = Field(max_length=5)
-    calculations: list[Calculation] = Field(max_length=10)
+    # Five offers at the chosen horizon and at each side of a crossover
+    # (before, at, after), plus the break-even calculation itself.
+    calculations: list[Calculation] = Field(max_length=21)
     hard_requirement_ids: list[Id] = Field(max_length=20)
     evidence_ids: list[Id] = Field(max_length=24)
     contribution_ids: list[Id] = Field(max_length=24)
@@ -108,6 +118,7 @@ class RuntimeDecisionReport(Contract):
     essential_dependencies: list[EssentialDependency] = Field(max_length=30)
     dissent: list[str] = Field(max_length=20)
     next_evidence: list[RuntimeNextEvidence] = Field(max_length=20)
+    next_evidence_count: int | None = Field(default=None, ge=0, strict=True, exclude_if=lambda count: count is None)
     coverage: list[RuntimeCoverage] = Field(max_length=24)
     assessment: ReviewCoverage
     usage: RuntimeUsage
@@ -123,6 +134,16 @@ class RuntimeDecisionReport(Contract):
 
     @model_validator(mode="after")
     def publication_and_reference_gate(self, info: ValidationInfo) -> Self:
+        if (self.valuation_date is None) != (self.valuation_timezone is None):
+            raise ValueError("Valuation date and timezone must be recorded together")
+        if self.valuation_timezone is not None:
+            try:
+                ZoneInfo(self.valuation_timezone)
+            except ZoneInfoNotFoundError as exc:
+                raise ValueError("Valuation requires a valid IANA timezone") from exc
+        if self.evidence_valid_through is not None and (self.valuation_date is None or
+                self.readiness == "ready_to_choose" and self.evidence_valid_through < self.valuation_date):
+            raise ValueError("Ready decisions require evidence current on the saved valuation date")
         for values in (self.hard_requirement_ids, self.evidence_ids, self.contribution_ids, self.claim_ids):
             if len(set(values)) != len(values):
                 raise ValueError("Authoritative scoped identities must be unique")
@@ -147,11 +168,19 @@ class RuntimeDecisionReport(Contract):
                 raise ValueError("Discussion option or requirement is outside the report scope")
             if any(event.step_id not in self.contribution_ids or not set(event.reference_ids) <= references for event in issue.events):
                 raise ValueError("Discussion resolution provenance is outside the report scope")
+        requirement_receipts = {}
         for assessment in self.evidence_assessments:
             if assessment.run_id != self.run_id or assessment.option_id not in option_ids or not set(assessment.reference_ids) <= set(self.evidence_ids) or set(assessment.reference_ids) != set(assessment.evidence_hashes):
                 raise ValueError("Scoped assessment does not match the report run/evidence scope")
+            if len(assessment.reference_ids) != len(assessment.evidence_hashes):
+                raise ValueError("Scoped assessments require unique passage identities")
             if assessment.target_type == "requirement" and assessment.requirement_id not in self.hard_requirement_ids or assessment.target_type == "option_costs" and assessment.requirement_id is not None:
                 raise ValueError("Scoped assessment target is not valid for this report")
+            if assessment.target_type == "requirement":
+                target = (assessment.option_id, assessment.requirement_id)
+                if target in requirement_receipts:
+                    raise ValueError("A requirement can publish only one current assessment")
+                requirement_receipts[target] = assessment
         if set(self.evidence_ids) & calculation_ids or set(self.evidence_ids) & set(self.contribution_ids) or calculation_ids & set(self.contribution_ids):
             raise ValueError("Source, calculation and contribution identities cannot overlap")
         context = info.context or {}
@@ -191,6 +220,10 @@ class RuntimeDecisionReport(Contract):
             for result in option.constraint_results:
                 if result.requirement_id not in self.hard_requirement_ids or not (set(result.basis_refs) | set(result.counter_basis_refs)) <= references:
                     raise ValueError("Constraint result refers outside this report's frozen scope")
+                if result.method == "human" and self.algorithm_policy_version != "legacy_v1":
+                    receipt = requirement_receipts.get((option.option_id, result.requirement_id))
+                    if receipt is None or result.basis_refs != receipt.reference_ids or result.result != ("unknown" if result.disputed else receipt.result):
+                        raise ValueError("A human requirement verdict must retain its owner's exact selected passages and result")
         if any(not set(item.reference_ids) <= references for item in self.essential_dependencies):
             raise ValueError("Essential dependencies must resolve within this report")
         if self.recommendation and self.recommendation.option_id not in option_ids:
@@ -219,6 +252,23 @@ class RuntimeDecisionReport(Contract):
                 self.readiness_dimensions.scoped_cost_support, self.readiness_dimensions.requirements_assessed,
                 self.readiness_dimensions.distinct_review, self.readiness_dimensions.material_objections_resolved)):
                 raise ValueError("Published readiness dimensions do not establish a ready decision")
+        if self.recommendation and self.recommendation.option_label is not None:
+            selected = next(option for option in self.comparison if option.option_id == self.recommendation.option_id)
+            if selected.label != self.recommendation.option_label:
+                raise ValueError("Recommendation label must match the selected option")
+        insights = self.decision_insights
+        if insights.tied_lowest_cost_option_ids or insights.failed_option_ids or insights.cost_comparison_blocker or self.algorithm_policy_version == "comparable_cost_choices_v2":
+            from round_robin.reports.insights import cost_comparison
+            ranking = cost_comparison(set(self.hard_requirement_ids), [item.model_dump(mode="json") for item in self.comparison])
+            if any(getattr(insights, key) != value for key, value in ranking.items()):
+                raise ValueError("Reported cost comparison must match its options, hard requirements and supporting evidence")
+            if self.simulated and self.recommendation and (insights.cost_comparison_blocker or insights.cost_frontier_option_ids != [self.recommendation.option_id]):
+                raise ValueError("A simulated choice requires a unique, comparable lowest-cost option")
+        if self.next_evidence_count is not None and self.next_evidence_count < len(self.next_evidence):
+            raise ValueError("Outstanding question count must cover every saved question")
+        for basis in [self.tradeoff_basis_refs, *(item.basis_refs for item in self.next_evidence)]:
+            if len(set(basis)) != len(basis) or not set(basis) <= references:
+                raise ValueError("Tradeoff and question citations must resolve uniquely within this report")
         return self
 
 

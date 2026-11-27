@@ -155,12 +155,11 @@ def lifecycle_total(option: Option, horizon_months: int, currency: str, *, calcu
     return Calculation(id=calculation_id, label=f"{_label(option.label, 470)}: {horizon_months}-month cost", operation="lifecycle_total", inputs=inputs, formula=" ".join(terms).lstrip("+ ") or "No included cost amounts", output=None if missing else known, unit=currency, currency=currency, horizon_months=horizon_months, rounding=f"{currency} minor unit ({places} decimal places), ROUND_HALF_EVEN (after exact component arithmetic)", flags=flags, missing_components=missing, known_subtotal=known)
 
 
-def break_even(first: Option, second: Option, currency: str, *, as_of: date | None = None) -> Calculation:
-    as_of = as_of if as_of is not None else datetime.now(timezone.utc).date()
+def cost_schedule(option: Option, currency: str, *, as_of: date) -> tuple[Decimal, Decimal]:
+    """Net one-time and monthly charges under the supplied, current terms."""
     if type(as_of) is not date:
         raise CalculationError("Quote freshness requires an explicit calendar date")
-
-    def rates(option: Option) -> tuple[Decimal, Decimal]:
+    with localcontext(Context(prec=64, rounding=ROUND_HALF_EVEN)):
         if not any(component.status == "included" for component in option.cost_components) or any(component.status == "excluded" for component in option.cost_components):
             raise CalculationError("Break-even requires explicit complete costs in both options")
         upfront, monthly = Decimal(0), Decimal(0)
@@ -179,9 +178,12 @@ def break_even(first: Option, second: Option, currency: str, *, as_of: date | No
                 upfront += amount
         return upfront, monthly
 
+
+def break_even(first: Option, second: Option, currency: str, *, as_of: date | None = None) -> Calculation:
+    as_of = as_of if as_of is not None else datetime.now(timezone.utc).date()
     with localcontext(Context(prec=64, rounding=ROUND_HALF_EVEN)) as context:
-        a_upfront, a_monthly = rates(first)
-        b_upfront, b_monthly = rates(second)
+        a_upfront, a_monthly = cost_schedule(first, currency, as_of=as_of)
+        b_upfront, b_monthly = cost_schedule(second, currency, as_of=as_of)
         divisor = a_monthly - b_monthly
         if divisor == 0:
             raise CalculationError("No unique break-even month exists for equal recurring costs")

@@ -70,11 +70,16 @@ def _support_reference_ids(session, run, allowed_reference_ids=None):
     return _support_reference_data(session, run, allowed_reference_ids)[0]
 
 
-def _support_reference_data(session, run, allowed_reference_ids=None):
+def _support_reference_data(session, run, allowed_reference_ids=None, *, as_of=None):
     from round_robin.orchestration.reporting import comparison_as_of, comparison_data
     from round_robin.schemas.briefs import DraftBrief
+    from .discussion import expired_quote_refs
     statuses = _reference_statuses(session, run, allowed_reference_ids)
-    _, calculations = comparison_data(DraftBrief.model_validate(run.configuration.get("resolved_brief", run.input_snapshot)), as_of=comparison_as_of(run))
+    brief = run.configuration.get("resolved_brief", run.input_snapshot)
+    if as_of is not None:
+        for ref in statuses.keys() & expired_quote_refs(brief, as_of):
+            statuses[ref] = "not_checked"
+    _, calculations = comparison_data(DraftBrief.model_validate(brief), as_of=as_of or comparison_as_of(run))
     roots = set(statuses) | {item["id"] for item in calculations if item.get("output") is not None}
     return (roots if allowed_reference_ids is None else roots & allowed_reference_ids), statuses
 
@@ -100,7 +105,7 @@ def _reference_statuses(session, run, referenced_ids=None):
         raise ClaimRejected("Claim evidence failed immutable identity, hash or owner scope") from None
 
 
-def persist_claims(session, run, step, output: dict, allowed_reference_ids: set[str]) -> dict:
+def persist_claims(session, run, step, output: dict, allowed_reference_ids: set[str], *, as_of=None) -> dict:
     """Caller holds current run/step authority; insert with its output transaction."""
     if step.run_id != run.id:
         raise ClaimRejected("Claim step is outside the current run")
@@ -126,7 +131,7 @@ def persist_claims(session, run, step, output: dict, allowed_reference_ids: set[
     except (ValueError, RecursionError):
         raise ClaimRejected("Stored claim failed immutable identity, hash or owner scope") from None
     references = _claim_references([*claims, *prior_claims])
-    roots, statuses = _support_reference_data(session, run, allowed_reference_ids & references)
+    roots, statuses = _support_reference_data(session, run, allowed_reference_ids & references, as_of=as_of)
     grounded = grounded_claim_aliases(claims, support_reference_ids=roots, prior_claims=prior_claims, reference_statuses=statuses)
     now = utcnow().isoformat()
     pending = []

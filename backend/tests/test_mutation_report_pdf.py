@@ -27,7 +27,7 @@ def test_pdf_retains_recommendation_unknown_cost_and_saved_provenance():
 
     assert compact(f"Report {report['id']} | version {report['version']} | event cutoff {report['event_cutoff']}") in text
     assert compact("SIMULATED OUTPUT: no provider calls") in text
-    assert compact(f"Execution: {report['execution_status']} | Readiness: {report['readiness']}") in text
+    assert compact(f"Execution: {report['execution_status']} | Readiness at assessment: {report['readiness']}") in text
     assert compact(report["recommendation"]["summary"]) in text
     assert compact(report["recommendation"]["conditions"][0]) in text
     assert compact("Unknown USD 12 months Known subtotal 123.45 USD Missing: 1 component; see details below") in text
@@ -68,7 +68,7 @@ def test_pdf_partial_report_preserves_unavailable_reason_and_unknown_calculation
     document = PdfReader(BytesIO(report_pdf(report, title="Partial decision", sources=[])))
     text = compact("\n".join(page.extract_text() for page in document.pages))
 
-    assert compact("Readiness: unavailable") in text
+    assert compact("Readiness at assessment: unavailable") in text
     assert compact(report["readiness_unavailable_reason"]) in text
     assert compact("Pending quote plus installation = Unknown USD") in text
     assert compact("Assessment: supported. Basis: passage_offer_a, passage_offer_b.") in text

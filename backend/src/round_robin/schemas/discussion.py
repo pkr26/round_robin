@@ -104,6 +104,9 @@ class CostSensitivity(Contract):
 
 
 class DecisionInsights(Contract):
+    failed_option_ids: list[Id] = Field(default_factory=list, max_length=5)
+    cost_comparison_blocker: Literal["unresolved_options", "different_applicability", "different_cost_basis", "all_options_failed"] | None = None
+    tied_lowest_cost_option_ids: list[Id] = Field(default_factory=list, max_length=5)
     cost_frontier_option_ids: list[Id] = Field(default_factory=list, max_length=5)
     dominated_option_ids: list[Id] = Field(default_factory=list, max_length=5)
     unresolved_option_ids: list[Id] = Field(default_factory=list, max_length=5)

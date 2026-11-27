@@ -7,6 +7,11 @@ from pydantic import Field, field_validator, model_validator
 from .common import Contract, Currency, Id, Money, Quantity, ShortText
 
 
+def deadline_requirement_description(deadline: date | str) -> str:
+    """The explicit dated requirement preserved in resolved briefs."""
+    return f"Complete by {deadline}; obtain a committed applicable supplier or project schedule."
+
+
 class CostComponent(Contract):
     id: Id
     label: ShortText

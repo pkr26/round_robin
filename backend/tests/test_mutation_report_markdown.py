@@ -68,7 +68,7 @@ def test_markdown_does_not_invent_recommendation_for_partial_report():
 
     text = literal_markdown(report_markdown(report, title="Partial decision", sources=[]))
 
-    assert "Decision readiness: unavailable" in text
+    assert "Decision readiness at assessment: unavailable" in text
     assert report["readiness_unavailable_reason"] in text
     assert "No valid synthesis exists" in text
     assert f"{report['calculations'][0]['formula']} = Unknown USD" in text

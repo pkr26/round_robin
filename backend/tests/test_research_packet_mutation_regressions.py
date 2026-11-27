@@ -1,7 +1,7 @@
 """Research admission measures the real downstream proposal packet."""
 
 import json
-from datetime import date
+from datetime import UTC, date, datetime
 from types import SimpleNamespace
 
 import pytest
@@ -15,8 +15,7 @@ from sqlalchemy import func, select
 pytest_plugins = ("test_research_service",)
 
 
-@pytest.mark.parametrize("as_of", [date(2025, 4, 5), None])
-def test_proposal_size_counts_resolved_brief_and_scoped_packet_components(monkeypatch, as_of):
+def test_proposal_size_counts_resolved_brief_and_scoped_packet_components(monkeypatch):
     initial = sample_bundle().brief.model_dump(mode="json")
     resolved = {**initial, "background": "resolved café context"}
     run = SimpleNamespace(id="run_synthetic", input_snapshot=initial, configuration={"resolved_brief": resolved})
@@ -35,12 +34,14 @@ def test_proposal_size_counts_resolved_brief_and_scoped_packet_components(monkey
         assert actual_session is session and actual_run is run and imported_only is True
         return imported_claims
 
-    def scoped_assessments(actual_run, evidence):
+    def scoped_assessments(actual_run, evidence, *, now):
+        assert now == instant
         assert actual_run is run and evidence == {"evidence_one": passages[0]}
         return assessments
 
-    expected_date = as_of
-    monkeypatch.setattr(reporting, "comparison_as_of", lambda actual_run: expected_date)
+    instant = datetime(2025, 4, 6, 1, tzinfo=UTC)
+    expected_date = date(2025, 4, 5)
+    monkeypatch.setattr(service, "utcnow", lambda: instant)
     monkeypatch.setattr(reporting, "comparison_data", compare)
     monkeypatch.setattr(reuse, "claim_packet", claims)
     monkeypatch.setattr(discussion, "current_assessments", scoped_assessments)
@@ -49,7 +50,7 @@ def test_proposal_size_counts_resolved_brief_and_scoped_packet_components(monkey
         "evidence": passages, "peer_outputs": [],
         "allowed_reference_ids": ["calc_one", "claim_one", "evidence_one"],
         "calculations": calculations, "claims": imported_claims,
-        "cost_as_of": as_of.isoformat() if as_of else None,
+        "cost_as_of": expected_date.isoformat(),
         "repair": False, "repair_diagnostics": [], "open_objections": [], "assessments": assessments,
     }
     expected_size = len(json.dumps(expected_packet, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode())

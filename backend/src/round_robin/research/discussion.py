@@ -307,9 +307,37 @@ def assessment_target(run, target_type, option_id, requirement_id=None):
     return canonical_hash(target)
 
 
-def assessment_packet(session, run):
-    evidence = {row.id: read_stored_evidence(row, run_id=run.id, owner_id=run.owner_id, meeting_id=run.meeting_id) for row in session.scalars(select(EvidenceRecord).where(EvidenceRecord.run_id == run.id))}
-    return current_assessments(run, evidence)
+def assessment_expiry(brief, target_type, option_id, reference_ids, valid_until):
+    """Earliest inclusive date on the attestation or the quote terms it relies on."""
+    expiries = [valid_until] if valid_until else []
+    refs = set(reference_ids)
+    for option in brief.get("options", []):
+        covers_option = target_type == "option_costs" and option["id"] == option_id
+        for component in option.get("cost_components", []):
+            if covers_option or component["source_ref"] in refs:
+                if expiry := component.get("quote_valid_until"):
+                    expiries.append(expiry)
+    return min(expiries, default=None)
+
+
+def expired_quote_refs(brief, as_of):
+    today = as_of.isoformat()
+    return {component["source_ref"] for option in brief.get("options", []) for component in option.get("cost_components", [])
+            if component.get("quote_valid_until") and component["quote_valid_until"] < today}
+
+
+def current_packet_sources(brief, evidence, calculations, claims, as_of):
+    """Keep historical quote passages inspectable; withhold claims with expired support."""
+    from .claims import grounded_claim_aliases
+    expired = expired_quote_refs(brief, as_of)
+    if not expired:
+        return evidence, claims
+    evidence = [{**item, "verification_status": "not_checked"} if item["id"] in expired else item for item in evidence]
+    statuses = {item["id"]: item.get("verification_status", "not_checked") for item in evidence}
+    roots = set(statuses) | {item["id"] for item in calculations if item.get("output") is not None}
+    grounded = grounded_claim_aliases([{**item, "alias": item["id"]} for item in claims], support_reference_ids=roots, reference_statuses=statuses)
+    claims = [item for item in claims if item["evidence_status"] != "supported" or item["kind"] not in {"fact", "calculation"} or item["id"] in grounded]
+    return evidence, claims
 
 
 def current_assessments(run, evidence, *, now=None):
@@ -331,7 +359,8 @@ def current_assessments(run, evidence, *, now=None):
             target = assessment_target(run, record["target_type"], record["option_id"], record["requirement_id"])
         except ClaimRejected:
             continue
-        if target != record["target_hash"] or record.get("valid_until") and record["valid_until"] < today.isoformat():
+        expires = assessment_expiry(brief, record["target_type"], record["option_id"], record["reference_ids"], record["valid_until"])
+        if target != record["target_hash"] or expires and expires < today.isoformat():
             continue
         if any(ref not in evidence or evidence[ref]["sha256"] != digest for ref, digest in record["evidence_hashes"].items()):
             continue

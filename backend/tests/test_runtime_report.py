@@ -62,7 +62,8 @@ def test_runtime_rejects_foreign_calculation_and_dependency_references(runtime_b
 @pytest.mark.parametrize("status", ["failed", "cancelled", "completed_with_limitations"])
 def test_empty_partial_report_has_explicit_unavailable_assessment(runtime_body, status):
     body = deepcopy(runtime_body)
-    body.update(execution_status=status, comparison=[], calculations=[], recommendation=None, readiness=None, readiness_reasons=["No useful synthesis survived."], readiness_unavailable_reason="No useful synthesis survived.", essential_dependencies=[], next_evidence=[])
+    body.update(execution_status=status, comparison=[], calculations=[], recommendation=None, readiness=None, readiness_reasons=["No useful synthesis survived."], readiness_unavailable_reason="No useful synthesis survived.", essential_dependencies=[], next_evidence=[], next_evidence_count=None, tradeoff_basis_refs=[])
+    body["decision_insights"] = {}
     body["assessment"].update(synthesis_valid=False, audit_succeeded=False, synthesizer=None, auditor=None)
     assert RuntimeDecisionReport.model_validate(body).readiness is None
     body["execution_status"] = "completed"

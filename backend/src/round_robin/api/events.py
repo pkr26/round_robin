@@ -1,6 +1,7 @@
 import asyncio
 from datetime import timedelta
 import json
+from zoneinfo import ZoneInfo
 
 from fastapi import APIRouter, Depends, Header, Request
 from fastapi.responses import StreamingResponse
@@ -65,7 +66,12 @@ def run_view(session: Session, run: Run, *, accounting=None):
     readiness = None
     if report is not None:
         try:
-            readiness = read_runtime_report(session, report)["readiness"]
+            saved = read_runtime_report(session, report)
+            readiness = saved["readiness"]
+            if readiness in {"ready_to_choose", "no_feasible_option"}:
+                zone, expiry = saved.get("valuation_timezone"), saved.get("evidence_valid_through")
+                if not zone or expiry and expiry < utcnow().astimezone(ZoneInfo(zone)).date().isoformat():
+                    readiness = None
         except UnreadableReport:
             # Keep run state and Stop inspectable, but never certify damaged
             # saved support using the report's unchecked readiness field.

@@ -4,6 +4,7 @@ from collections import Counter, defaultdict
 from copy import deepcopy
 
 from round_robin.database.models import Attempt, Event, EvidenceRecord, Run, Step
+from round_robin.schemas.discussion import ScopedAssessment
 from round_robin.schemas.runtime import RuntimeDecisionReport
 from round_robin.schemas.views import StoredEvidence
 from sqlalchemy import select
@@ -51,7 +52,7 @@ def verify_report_journal(session, row, run, content, committed):
         and content.get("recommendation") is None and not content.get("comparison")
         and content.get("execution_status") in {"failed", "cancelled"}
         and content.get("readiness_dimensions") is None
-        and not any(content.get("decision_insights", {}).get(key) for key in ("cost_frontier_option_ids", "dominated_option_ids", "unresolved_option_ids", "sensitivity", "preference_order"))
+        and not any(content.get("decision_insights", {}).get(key) for key in ("tied_lowest_cost_option_ids", "failed_option_ids", "cost_comparison_blocker", "cost_frontier_option_ids", "dominated_option_ids", "unresolved_option_ids", "sensitivity", "preference_order"))
         and not content.get("calculations") and not content.get("claim_ids")
         and not content.get("essential_dependencies") and not content.get("evidence_assessments")
         and content.get("assessment", {}).get("synthesis_valid") is False
@@ -221,6 +222,19 @@ def read_runtime_report(session, row) -> dict:
         for identity in content["claim_ids"]:
             read_claim(claim_records[identity], run=run)
         verify_report_journal(session, row, run, content, committed)
-        return RuntimeDecisionReport.model_validate(content, context={"run_id": row.run_id, "allowed_evidence_ids": content["evidence_ids"], "allowed_contribution_ids": content["contribution_ids"], "allowed_claim_ids": content["claim_ids"]}).model_dump(mode="json")
+        report = RuntimeDecisionReport.model_validate(content, context={"run_id": row.run_id, "allowed_evidence_ids": content["evidence_ids"], "allowed_contribution_ids": content["contribution_ids"], "allowed_claim_ids": content["claim_ids"]})
+        if report.evidence_assessments:
+            receipts = {}
+            for payload in session.scalars(select(Event.payload).where(Event.run_id == row.run_id,
+                    Event.sequence <= row.event_cutoff, Event.event_type == "evidence.attestation_recorded")):
+                receipt = ScopedAssessment.model_validate(payload["assessment"])
+                if receipt.id in receipts:
+                    raise ValueError
+                receipts[receipt.id] = receipt
+            for assessment in report.evidence_assessments:
+                if (assessment.actor_id != run.owner_id or receipts.get(assessment.id) != assessment
+                        or any(scoped_records[ref].sha256 != digest for ref, digest in assessment.evidence_hashes.items())):
+                    raise ValueError
+        return report.model_dump(mode="json")
     except (ValueError, TypeError, KeyError, AttributeError, RecursionError):
         raise UnreadableReport("Saved report could not be safely read at its original version and cutoff") from None

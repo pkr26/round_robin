@@ -1,6 +1,6 @@
 """Adversarial evidence and discussion invariants, using only local synthetic data."""
 from copy import deepcopy
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 import hashlib
 from types import SimpleNamespace
 from uuid import uuid4
@@ -24,8 +24,8 @@ from round_robin.research.search import SearchHit
 from round_robin.research.service import execute_research, schedule_research
 
 
-def live_report(*, audit_result="pass", audit_refs=None, verbose=False, proposal_critical=False, with_attestations=False):
-    brief = complete_brief().model_dump(mode="json")
+def live_report(*, audit_result="pass", audit_refs=None, synthesis_result="pass", synthesis_refs=None, verbose=False, proposal_critical=False, with_attestations=False, quote_valid_until=None, published_at=None):
+    brief = complete_brief(valid_until=quote_valid_until).model_dump(mode="json")
     brief["options"] = brief["options"][:2]
     brief["hard_requirements"] = [{"id": "requirement_feature", "description": "Required feature", "metric": "manual", "operator": "manual", "origin": "user_supplied"}]
     for option in brief["options"]:
@@ -42,7 +42,7 @@ def live_report(*, audit_result="pass", audit_refs=None, verbose=False, proposal
         return SimpleNamespace(id=identity, status="succeeded", stage=stage, provider=provider, error_code=None, result_json={"output": value})
     steps = [step("proposal_one", "proposal", "openai", output(dissent=[f"Earlier minor concern {i}" for i in range(12)] if verbose else [], critical_defects=["Unresolved proposal blocker"] if proposal_critical else [])),
         step("proposal_two", "proposal", "google", output(dissent=[f"Other minor concern {i}" for i in range(12)] if verbose else [])),
-        step("synthesis_one", "synthesis", "openai", output()),
+        step("synthesis_one", "synthesis", "openai", output(synthesis_result, synthesis_refs)),
         step("audit_one", "audit", "anthropic", output(audit_result, audit_refs, critical_defects=["Final auditor critical issue"] if verbose else []))]
     usage = {"simulated": False, "status": "reported", "actual_cost": "0", "conservative_exposure_usd": "0", "unknown_operation_ids": [], "request_count": 4}
     evidence = [{"id": "evidence_cost", "verification_status": "user_supplied", "sha256": "a" * 64}, {"id": "evidence_positive", "verification_status": "not_checked", "sha256": "b" * 64}]
@@ -56,7 +56,7 @@ def live_report(*, audit_result="pass", audit_refs=None, verbose=False, proposal
                     attestation="I attest the exact supplied scope and source passages in this synthetic fixture.", actor_id=run.owner_id,
                     run_id=run.id, recorded_at=datetime.now(timezone.utc)).model_dump(mode="json"))
         run.configuration["evidence_assessments"] = receipts
-    report = build_report(run, steps, status="completed", stop_reason="test", report_id="report_probe", version=1, usage=usage, evidence=evidence)
+    report = build_report(run, steps, status="completed", stop_reason="test", report_id="report_probe", version=1, usage=usage, evidence=evidence, published_at=published_at)
     return report
 
 
@@ -68,6 +68,35 @@ def test_scoped_explicit_attestations_enable_qualified_readiness_without_source_
     disputed = live_report(with_attestations=True, audit_result="fail", audit_refs=["evidence_positive"])
     assert disputed["readiness"] == "conditional"
     assert all(item["constraint_results"][0]["disputed"] for item in disputed["comparison"])
+
+
+def test_new_publications_expire_cost_support_at_local_midnight():
+    expiry = date(2026, 11, 27)
+    def publish(hour, minute):
+        return live_report(with_attestations=True, quote_valid_until=expiry,
+                           published_at=datetime(2026, 11, 28, hour, minute, tzinfo=timezone.utc))
+
+    fresh = publish(6, 59)
+    stale = publish(7, 0)
+    assert fresh["valuation_timezone"] == stale["valuation_timezone"] == "America/Phoenix"
+    assert fresh["evidence_valid_through"] == stale["evidence_valid_through"] == expiry.isoformat()
+    assert fresh["valuation_date"] == expiry.isoformat() and fresh["readiness"] == "ready_to_choose"
+    assert stale["valuation_date"] == "2026-11-28" and stale["readiness"] != "ready_to_choose"
+    assert fresh["comparison"][0]["total"] == stale["comparison"][0]["known_subtotal"] == "1600.00"
+    assert stale["comparison"][0]["total"] is None
+    assert stale["recommendation"] is None
+    assert {item["target_type"] for item in stale["evidence_assessments"]} == {"requirement"}
+
+
+def test_expired_model_citations_cannot_establish_or_dispute_manual_failures():
+    fields = dict(quote_valid_until=date(2026, 11, 27), published_at=datetime(2026, 11, 28, 7, tzinfo=timezone.utc),
+                  audit_result="fail", audit_refs=["evidence_cost"])
+    expired = live_report(synthesis_result="fail", synthesis_refs=["evidence_cost"], **fields)
+    assert expired["readiness"] == "insufficient_evidence"
+    assert all(item["constraint_results"][0]["result"] == "unknown" for item in expired["comparison"])
+    current = live_report(synthesis_result="pass", synthesis_refs=["evidence_positive"], **fields)
+    assert all(item["constraint_results"][0]["result"] == "pass" and not item["constraint_results"][0]["disputed"]
+               for item in current["comparison"])
 
 
 def test_unsupported_audit_disagreement_does_not_manufacture_infeasibility():

@@ -30,16 +30,18 @@ def proposal_packet_bytes(session, run, passages):
     from round_robin.orchestration.reporting import comparison_as_of, comparison_data
     from round_robin.providers.base import ProviderRequest
     from round_robin.schemas.briefs import DraftBrief
-    from .discussion import current_assessments
+    from .discussion import current_assessments, current_packet_sources
     from .reuse import claim_packet
     brief = run.configuration.get("resolved_brief", run.input_snapshot)
-    as_of = comparison_as_of(run)
+    measured_at = utcnow()
+    as_of = comparison_as_of(run, at=measured_at)
     _, calculations = comparison_data(DraftBrief.model_validate(brief), as_of=as_of)
     claims = claim_packet(session, run, imported_only=True)
+    passages, claims = current_packet_sources(brief, passages, calculations, claims, as_of)
     references = {item["id"] for item in [*passages, *calculations, *claims]}
     packet = ProviderRequest(run.id, "step_research_fit", "proposal", "anthropic", brief, passages, [], frozenset(references), 3072, 90,
-        calculations=tuple(calculations), claims=tuple(claims), cost_as_of=as_of.isoformat() if as_of else None,
-        assessments=tuple(current_assessments(run, {item["id"]: item for item in passages}))).packet()
+        calculations=tuple(calculations), claims=tuple(claims), cost_as_of=as_of.isoformat(),
+        assessments=tuple(current_assessments(run, {item["id"]: item for item in passages}, now=measured_at))).packet()
     return len(json.dumps(packet, ensure_ascii=False, separators=(",", ":"), allow_nan=False).encode())
 
 

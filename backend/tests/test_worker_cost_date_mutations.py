@@ -1,4 +1,4 @@
-"""Provider calculations use the accepted local date for quote freshness."""
+"""Provider calculations use the dispatch local date for quote freshness."""
 
 import socket
 from datetime import UTC, date, datetime
@@ -27,14 +27,14 @@ def no_network(monkeypatch):
 
 
 @pytest.mark.parametrize(
-    ("accepted_utc", "expected_date", "expected_output"),
+    ("dispatch_utc", "expected_date", "expected_output"),
     [
         (datetime(2026, 11, 17, 1, tzinfo=UTC), "2026-11-16", "1600.00"),
         (datetime(2026, 11, 18, 1, tzinfo=UTC), "2026-11-17", None),
     ],
 )
-def test_provider_cost_packet_uses_accepted_local_date_not_later_clock(
-    factory, monkeypatch, accepted_utc, expected_date, expected_output
+def test_provider_cost_packet_uses_dispatch_local_date(
+    factory, monkeypatch, dispatch_utc, expected_date, expected_output
 ):
     class LaterClock(datetime):
         @classmethod
@@ -42,13 +42,14 @@ def test_provider_cost_packet_uses_accepted_local_date_not_later_clock(
             return cls(2030, 1, 1, tzinfo=UTC).astimezone(tz) if tz else cls(2030, 1, 1)
 
     monkeypatch.setattr(calculator, "datetime", LaterClock)
+    monkeypatch.setattr("round_robin.worker.tasks.utcnow", lambda: dispatch_utc)
     run_id = seed(
         factory,
         brief=complete_brief(valid_until=date(2026, 11, 16)),
         suffix="cost_date",
     )
     with factory.begin() as session:
-        session.get(Run, run_id).created_at = accepted_utc
+        session.get(Run, run_id).created_at = datetime(2026, 11, 15, 1, tzinfo=UTC)
     stage = SimpleNamespace(
         id="request_step",
         stage="proposal",

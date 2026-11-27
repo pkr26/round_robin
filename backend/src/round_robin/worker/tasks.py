@@ -1,7 +1,7 @@
 """One upstream call per task, with immutable authorization committed first."""
 
 from copy import deepcopy
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 import hashlib
 import json
 import threading
@@ -54,19 +54,21 @@ def build_request(session, run, step):
         peers = [{"id": prior.id, "provider": prior.provider, "stage": prior.stage, "output": prior.result_json["output"]} for prior in selected]
     from round_robin.orchestration.reporting import comparison_as_of, comparison_data
     from round_robin.schemas.briefs import DraftBrief
-    cost_as_of = comparison_as_of(run)
+    dispatched_at = utcnow()
+    cost_as_of = comparison_as_of(run, at=dispatched_at)
     _, calculations = comparison_data(DraftBrief.model_validate(brief), as_of=cost_as_of)
+    from round_robin.research.discussion import current_assessments, current_packet_sources, open_objection_packet
+    evidence, claims = current_packet_sources(brief, evidence, calculations, claims, cost_as_of)
     references = {record["id"] for record in evidence} | {calculation["id"] for calculation in calculations} | {peer["id"] for peer in peers} | {claim["id"] for claim in claims}
     from round_robin.orchestration.protocol import mandatory_tail_seconds
     finish_time = mandatory_tail_seconds(step.stage, run.configuration.get("finish_policy", {}).get("reserved_active_seconds", 190))
     timeout = min(90.0, remaining_active(run) - finish_time - 25)
     if timeout <= 0:
         raise BudgetDenied("finish_time_reserve")
-    from round_robin.research.discussion import assessment_packet, open_objection_packet
     issues = [] if step.stage in {"proposal", "intake"} else open_objection_packet(session, run)
-    return ProviderRequest(run.id, step.id, step.stage, step.role_slot_id, brief, evidence, peers, frozenset(references), OUTPUT_TOKENS.get(step.stage, 2048), timeout, step.calls > 0 and step.error_code in {"schema_invalid", "malformed_response", "invalid_reference"}, tuple(calculations), tuple(claims), cost_as_of=cost_as_of.isoformat() if cost_as_of else None,
+    return ProviderRequest(run.id, step.id, step.stage, step.role_slot_id, brief, evidence, peers, frozenset(references), OUTPUT_TOKENS.get(step.stage, 2048), timeout, step.calls > 0 and step.error_code in {"schema_invalid", "malformed_response", "invalid_reference"}, tuple(calculations), tuple(claims), cost_as_of=cost_as_of.isoformat(),
         repair_diagnostics=tuple(run.configuration.get("step_dispatch", {}).get(step.id, {}).get("repair_diagnostics", [])),
-        open_objections=tuple(issues), assessments=tuple(assessment_packet(session, run)))
+        open_objections=tuple(issues), assessments=tuple(current_assessments(run, {item["id"]: item for item in evidence}, now=dispatched_at)))
 
 
 def _settle_failure(session, run, step, failure):
@@ -350,7 +352,7 @@ def execute_step(step_id: str, *, session_factory=SessionLocal, adapter_registry
                                 # Claims and discussion obligations are one contribution.
                                 # A rejected obligation cannot leave orphan claim rows.
                                 with session.begin_nested():
-                                    committed_output = persist_claims(session, run, step, result.output.model_dump(mode="json"), allowed_reference_ids=set(request.allowed_reference_ids))
+                                    committed_output = persist_claims(session, run, step, result.output.model_dump(mode="json"), allowed_reference_ids=set(request.allowed_reference_ids), as_of=date.fromisoformat(request.cost_as_of))
                                     from round_robin.research.discussion import persist_discussion
                                     committed_output = persist_discussion(session, run, step, committed_output, allowed_reference_ids=set(request.allowed_reference_ids))
                             except ClaimRejected:

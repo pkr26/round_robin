@@ -16,6 +16,7 @@ from reportlab.lib.units import inch
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import HRFlowable, LongTable, Paragraph, SimpleDocTemplate, Spacer, TableStyle
+from .insights import comparison_blocker_note
 
 MAX_EXPORT_BYTES = 10 * 1024 * 1024
 _FONT_LOCK = threading.Lock()
@@ -46,6 +47,19 @@ def describe(value) -> str:
     if isinstance(value, list):
         return "\n".join(describe(item) for item in value)
     if isinstance(value, dict):
+        if "attestation" in value and "evidence_hashes" in value:
+            target = f"{value['option_id']} / {value['requirement_id']}" if value.get("requirement_id") else value["option_id"]
+            lines = [f"{target} — {value['result']}. {value['attestation']}",
+                     f"Owner {value['actor_id']} recorded this assessment on {value['recorded_at']}.",
+                     "Cited passages"]
+            lines.extend(f"{ref} | SHA-256 {value['evidence_hashes'][ref]}" for ref in value["reference_ids"])
+            lines.extend([value["scope"], f"Receipt {value['id']} | Run {value['run_id']} | Method {value['method']}",
+                          f"Target {value['target_type']} | SHA-256 {value['target_hash']}"])
+            if value.get("valid_until"):
+                lines.append(f"Attestation valid through {value['valid_until']}.")
+            if value.get("supersedes_id"):
+                lines.append(f"Supersedes {value['supersedes_id']}.")
+            return "\n".join(lines)
         if "concern" in value:
             scope = "; ".join(
                 f"{key}: {', '.join(plain(item) for item in value[key]) if isinstance(value[key], list) else plain(value[key])}"
@@ -66,7 +80,7 @@ def describe(value) -> str:
             history.extend(plain(value[key]) for key in ("responses", "resolutions") if key in value)
             return f"{value.get('severity', 'material')}: {value['concern']}\nStatus: {value.get('status', 'unresolved')}. Issue: {value.get('id', 'unavailable')}.\n" + (scope + "\n" if scope else "") + ("\n".join(history) if history else plain([]))
         if "question" in value:
-            return "\n".join(part for part in [value.get("question"), f"Affects: {value['affected_conclusion']}" if value.get("affected_conclusion") else None, f"Check: {value['verification_method']}" if value.get("verification_method") else None, value.get("request_text"), f"Responsible: {value['responsible_person']}" if value.get("responsible_person") else None, f"Revisit: {value['revisit_date']}" if value.get("revisit_date") else None] if part)
+            return "\n".join(part for part in [value.get("question"), f"Affects: {value['affected_conclusion']}" if value.get("affected_conclusion") else None, f"Check: {value['verification_method']}" if value.get("verification_method") else None, value.get("request_text"), f"Basis: {', '.join(value['basis_refs'])}" if value.get("basis_refs") else None, f"Responsible: {value['responsible_person']}" if value.get("responsible_person") else None, f"Revisit: {value['revisit_date']}" if value.get("revisit_date") else None] if part)
         if "description" in value:
             return f"{value['description']}\nAssessment: {value.get('status', 'not assessed')}. Basis: {', '.join(value.get('reference_ids', [])) or 'no supporting record supplied'}."
         if "provider" in value:
@@ -102,15 +116,56 @@ def describe_constraint(item: dict, *, include_provenance: bool = True, referenc
     return result
 
 
+def valuation_note(report: dict) -> str:
+    day = report.get("valuation_date")
+    if not day:
+        return "Historical assessment. The valuation date was not recorded."
+    note = f"Assessed as of {day} ({report['valuation_timezone']})."
+    if report.get("evidence_valid_through"):
+        note += f" Earliest evidence expiry: {report['evidence_valid_through']}. Recheck dated evidence after this date."
+    return note
+
+
+def outstanding_questions(report: dict) -> str:
+    count = report["next_evidence_count"]
+    shown = len(report["next_evidence"])
+    label = "question" if count == 1 else "questions"
+    note = f"{count} outstanding {label}."
+    return f"{note} Showing the first {shown}." if shown < count else note
+
+
+def recommendation_lines(report, cost_note):
+    recommendation = report.get("recommendation")
+    options = {item["option_id"]: item.get("label") or item["option_id"] for item in report.get("comparison", [])}
+    lines = []
+    if isinstance(recommendation, dict):
+        identity = recommendation.get("option_id")
+        if identity:
+            lines.append(f"Preferred option: {recommendation.get('option_label') or options.get(identity, identity)} ({identity}).")
+        if recommendation.get("summary"):
+            lines.append(recommendation["summary"])
+    elif recommendation:
+        lines.append(recommendation)
+    tied = report.get("decision_insights", {}).get("tied_lowest_cost_option_ids", [])
+    if tied:
+        names = [f"{options[identity]} ({identity})" for identity in sorted(tied, key=options.get)]
+        lines.append("Tied for lowest comparable cost: " + ", ".join(names) + ".")
+    if cost_note and not recommendation:
+        lines.append(cost_note)
+    if not lines or not recommendation and report.get("readiness_unavailable_reason"):
+        lines.append(report.get("readiness_unavailable_reason") or "No recommendation established.")
+    return lines
+
+
 def report_markdown(report: dict, *, title: str, sources: list[dict]) -> str:
     # Report structure is ours; every interpolated value remains literal text.
     # A blockquote alone does not neutralize Markdown images or raw HTML.
+    cost_note = comparison_blocker_note(report.get("decision_insights", {}), report.get("comparison", []))
     report = _markdown_values(report)
     sources = _markdown_values(sources)
     title = markdown_literal(title)
     recommendation = report.get("recommendation")
-    summary = recommendation.get("summary") if isinstance(recommendation, dict) else recommendation
-    lines = [f"# {title}", "", f"Saved report {report.get('id', 'unknown')} | version {report.get('version')} | event cutoff {report.get('event_cutoff')}", "", "SIMULATED: no provider calls or independently validated conclusions." if report.get("simulated") or report.get("fictional") else "Provider-supported decision brief; scope and caveats remain applicable.", "", f"Execution: {report.get('execution_status', 'unknown')}", f"Decision readiness: {report.get('readiness') or 'unavailable'}", "", "## Recommendation", plain(summary or report.get("readiness_unavailable_reason") or "No recommendation established."), ""]
+    lines = [f"# {title}", "", f"Saved report {report.get('id', 'unknown')} | version {report.get('version')} | event cutoff {report.get('event_cutoff')}", "", "SIMULATED: no provider calls or independently validated conclusions." if report.get("simulated") or report.get("fictional") else "Provider-supported decision brief; scope and caveats remain applicable.", "", f"Execution: {report.get('execution_status', 'unknown')}", f"Decision readiness at assessment: {report.get('readiness') or 'unavailable'}", valuation_note(report), "", "## Recommendation", *recommendation_lines(report, markdown_literal(cost_note) if cost_note else None), ""]
     if isinstance(recommendation, dict) and recommendation.get("conditions"):
         lines += ["Conditions:", *[f"- {condition}" for condition in recommendation["conditions"]], ""]
     for key, heading in [("readiness_reasons", "Readiness basis"), ("main_reasons", "Reasons"), ("essential_dependencies", "Essential dependencies"), ("dissent", "Dissent and unresolved objections"), ("issues", "Complete objection and resolution ledger"), ("evidence_assessments", "Scoped evidence assessments"), ("change_summary", "Changes from the parent version")]:
@@ -122,14 +177,21 @@ def report_markdown(report: dict, *, title: str, sources: list[dict]) -> str:
             lines += [f"## {heading}", describe(report[key]), ""]
     lines += ["## Option comparison"]
     for option in report.get("comparison", []):
-        lines += [f"### {option.get('label', option.get('option_id'))}", f"All-in total: {cost_amount(option.get('total'), option.get('currency', ''))} over {option.get('horizon_months')} months.", f"Known subtotal: {cost_amount(option.get('known_subtotal'), option.get('currency', ''))}. Missing: {', '.join(option.get('missing_components', [])) or 'none recorded'}.", *[f"- {describe_constraint(item)}" for item in option.get("constraint_results", [])], plain(option.get("caveat", "")), ""]
+        label = option.get("label", option.get("option_id"))
+        if isinstance(recommendation, dict) and option.get("option_id") == recommendation.get("option_id"):
+            label += " (preferred option)"
+        lines += [f"### {label}", f"All-in total: {cost_amount(option.get('total'), option.get('currency', ''))} over {option.get('horizon_months')} months.", f"Known subtotal: {cost_amount(option.get('known_subtotal'), option.get('currency', ''))}. Missing: {', '.join(option.get('missing_components', [])) or 'none recorded'}.", *[f"- {describe_constraint(item)}" for item in option.get("constraint_results", [])], plain(option.get("caveat", "")), ""]
     for key, heading in [("tradeoff", "Decisive tradeoff"), ("largest_uncertainty", "Largest uncertainty"), ("what_would_change_answer", "What would change the answer"), ("next_action", "Next action")]:
         lines += [f"## {heading}", describe(report.get(key)), ""]
+        if key == "tradeoff" and report.get("tradeoff_basis_refs"):
+            lines += [f"Basis: {', '.join(report['tradeoff_basis_refs'])}", ""]
+    if report.get("next_evidence_count") is not None:
+        lines += [outstanding_questions(report), ""]
     for item in report.get("next_evidence", []):
         lines += [f"### {item.get('question', 'Next evidence')}", describe(item), ""]
     lines += ["## Calculations"]
     for calculation in report.get("calculations", []):
-        lines += [f"### {calculation.get('label', calculation.get('id'))}", f"{calculation.get('formula')} = {calculation.get('output') if calculation.get('output') is not None else 'Unknown'} {calculation.get('unit', '')}", f"Rounding: {calculation.get('rounding')}", *[f"- {item.get('label')}: {item.get('amount')} {item.get('unit')} (reference {item.get('source_ref')})" for item in calculation.get("inputs", [])], ""]
+        lines += [f"### {calculation.get('label', calculation.get('id'))}", f"Calculation {calculation.get('id')}", f"{calculation.get('formula')} = {calculation.get('output') if calculation.get('output') is not None else 'Unknown'} {calculation.get('unit', '')}", f"Rounding: {calculation.get('rounding')}", *[f"- {item.get('label')}: {item.get('amount')} {item.get('unit')} (reference {item.get('source_ref')})" for item in calculation.get("inputs", [])], ""]
     lines += ["## Exact stored evidence"]
     for source in sources:
         metadata = f"Origin: {source.get('origin', 'user_supplied')}. Status: {source.get('verification_status', 'not_checked')}. Recorded: {source.get('verified_at', 'unknown')}"
@@ -159,7 +221,10 @@ def _markdown_values(value):
     if isinstance(value, list):
         return [_markdown_values(item) for item in value]
     if isinstance(value, dict):
-        return {key: _markdown_values(item) for key, item in value.items()}
+        result = {key: _markdown_values(item) for key, item in value.items()}
+        if isinstance(result.get("evidence_hashes"), dict):
+            result["evidence_hashes"] = {markdown_literal(ref): digest for ref, digest in result["evidence_hashes"].items()}
+        return result
     return value
 
 
@@ -196,9 +261,12 @@ def report_pdf(report: dict, *, title: str, sources: list[dict]) -> bytes:
     story = [paragraph("ROUND ROBIN / SAVED DECISION BRIEF", styles["RRSmall"]), Spacer(1, 10), paragraph(title, styles["RRTitle"]), paragraph(f"Report {report.get('id')} | version {report.get('version')} | event cutoff {report.get('event_cutoff')}", styles["RRSmall"]), HRFlowable(width="100%", thickness=1, color=colors.HexColor("#cbd7c4")), Spacer(1, 12)]
     if report.get("simulated") or report.get("fictional"):
         story.append(paragraph("SIMULATED OUTPUT: no provider calls or independent real-world verification.", styles["RRSmall"]))
-    story.append(paragraph(f"Execution: {report.get('execution_status')} | Readiness: {report.get('readiness') or 'unavailable'}"))
+    story.append(paragraph(f"Execution: {report.get('execution_status')} | Readiness at assessment: {report.get('readiness') or 'unavailable'}"))
+    story.append(paragraph(valuation_note(report)))
     recommendation = report.get("recommendation")
-    story += [paragraph("Recommendation", styles["RRHeading"]), paragraph(recommendation.get("summary") if isinstance(recommendation, dict) else recommendation or report.get("readiness_unavailable_reason") or "No recommendation established.")]
+    story.append(paragraph("Recommendation", styles["RRHeading"]))
+    cost_note = comparison_blocker_note(report.get("decision_insights", {}), report.get("comparison", []))
+    story.extend(paragraph(line) for line in recommendation_lines(report, cost_note))
     if isinstance(recommendation, dict):
         story.extend(paragraph("Condition: " + value) for value in recommendation.get("conditions", []))
     for value in report.get("readiness_reasons", []):
@@ -212,7 +280,10 @@ def report_pdf(report: dict, *, title: str, sources: list[dict]) -> bytes:
         missing = option.get("missing_components", [])
         missing_summary = f"{len(missing)} component{'s' if len(missing) != 1 else ''}; see details below" if missing else "none recorded"
         detail = "\n".join(describe_constraint(item, include_provenance=False) for item in option.get("constraint_results", []))
-        rows.append([paragraph(option.get("label", option.get("option_id"))), paragraph(f"{amount}\n{option.get('horizon_months')} months\nKnown subtotal {subtotal}\nMissing: {missing_summary}"), paragraph(detail)])
+        label = option.get("label", option.get("option_id"))
+        if isinstance(recommendation, dict) and option.get("option_id") == recommendation.get("option_id"):
+            label += "\nPreferred option"
+        rows.append([paragraph(label), paragraph(f"{amount}\n{option.get('horizon_months')} months\nKnown subtotal {subtotal}\nMissing: {missing_summary}"), paragraph(detail)])
     if len(rows) > 1:
         table = LongTable(rows, colWidths=[1.65 * inch, 1.35 * inch, 3.65 * inch], repeatRows=1, hAlign="LEFT", splitByRow=1, splitInRow=1)
         table.setStyle(TableStyle([("VALIGN", (0, 0), (-1, -1), "TOP"), ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#eaf0e6")), ("LINEBELOW", (0, 0), (-1, -1), .4, colors.HexColor("#dfe5dc")), ("TOPPADDING", (0, 0), (-1, -1), 9), ("BOTTOMPADDING", (0, 0), (-1, -1), 9)]))
@@ -237,8 +308,12 @@ def report_pdf(report: dict, *, title: str, sources: list[dict]) -> bytes:
         if value:
             story.append(paragraph(label, styles["RRHeading"]))
             story.extend(paragraph(describe(item)) for item in value) if isinstance(value, list) else story.append(paragraph(describe(value)))
+        if field == "tradeoff" and report.get("tradeoff_basis_refs"):
+            story.append(paragraph(f"Basis: {', '.join(report['tradeoff_basis_refs'])}", styles["RRSmall"]))
+        if field == "next_action" and report.get("next_evidence_count") is not None:
+            story.append(paragraph(outstanding_questions(report)))
     for calculation in report.get("calculations", []):
-        story += [paragraph(calculation.get("label", "Calculation"), styles["RRHeading"]), paragraph(f"{calculation.get('formula')} = {calculation.get('output') if calculation.get('output') is not None else 'Unknown'} {calculation.get('unit', '')}"), paragraph(calculation.get("rounding"), styles["RRSmall"])]
+        story += [paragraph(calculation.get("label", "Calculation"), styles["RRHeading"]), paragraph(f"Calculation {calculation.get('id')}", styles["RRSmall"]), paragraph(f"{calculation.get('formula')} = {calculation.get('output') if calculation.get('output') is not None else 'Unknown'} {calculation.get('unit', '')}"), paragraph(calculation.get("rounding"), styles["RRSmall"])]
         story.extend(paragraph(f"{item.get('label')}: {item.get('amount')} {item.get('unit')} | reference {item.get('source_ref')}", styles["RRSmall"]) for item in calculation.get("inputs", []))
     for source in sources:
         metadata = f"Origin {source.get('origin', 'user_supplied')} | {source.get('verification_status', 'not_checked')} | Recorded: {source.get('verified_at', 'unknown')} | SHA-256 {source.get('sha256')}"

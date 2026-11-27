@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, type FormEvent } from "react";
+import { RequirementPassages } from "./requirement-passages";
 import type { Calculation } from "./contracts";
 import { validateDraft } from "./contracts";
 import {
@@ -18,6 +19,7 @@ type AssessmentTarget = { target_type: "option_costs" | "requirement"; option_id
 const TERMINAL = new Set(["completed", "completed_with_limitations", "cancelled", "failed", "limited", "admission_expired"]);
 const PROVIDERS: Record<string, string> = { openai: "OpenAI", anthropic: "Anthropic Claude", google: "Google Gemini" };
 const READINESS: Record<string, string> = { ready_to_choose: "Ready within the stated scope", conditional: "Conditional decision", no_feasible_option: "No feasible option", insufficient_evidence: "More evidence needed" };
+const EMPTY_PASSAGES: EvidencePassage[] = [];
 const CURRENT_KEY = "round-robin:current-local-comparison:v1";
 const clone = <T,>(value: T): T => structuredClone(value);
 const words = (value: string | null | undefined) => (value ?? "unavailable").replaceAll("_", " ");
@@ -111,6 +113,9 @@ export default function LiveWorkspace() {
   const [reuseDirty, setReuseDirty] = useState(false);
   const [assessmentTargets, setAssessmentTargets] = useState<AssessmentTarget[]>([]);
   const [assessmentTarget, setAssessmentTarget] = useState("");
+  const [selectedPassages, setSelectedPassages] = useState<string[]>([]);
+  const selectedTarget = assessmentTargets.find((_, index) => String(index) === assessmentTarget);
+  const assessmentRefs = selectedTarget?.target_type === "option_costs" ? selectedTarget.reference_ids : selectedPassages.filter(id => selectedTarget?.reference_ids.includes(id));
   const [attestation, setAttestation] = useState("");
   const [assessmentResult, setAssessmentResult] = useState("pass");
   const [assessmentUntil, setAssessmentUntil] = useState("");
@@ -146,7 +151,7 @@ export default function LiveWorkspace() {
     setDirty(false); setEditor(true); setParentRunId(null); setClarifying(false); setAutosaveStatus("idle");
     setParentCandidates([]); setSelectedParentItems([]); setParentSourceCursor(null); setReuseDirty(false);
     setSignInRequired(true); setConnected(false);
-    setAssessmentTargets([]); setAssessmentTarget(""); setAttestation(""); setAssessmentUntil("");
+    setAssessmentTargets([]); setAssessmentTarget(""); setSelectedPassages([]); setAssessmentResult("pass"); setAttestation(""); setAssessmentUntil("");
   }), []);
 
   useEffect(() => {
@@ -169,7 +174,7 @@ export default function LiveWorkspace() {
 
   useEffect(() => {
     let cancelled = false;
-    setAssessmentTargets([]); setAssessmentTarget(""); setAttestation(""); setAssessmentUntil("");
+    setAssessmentTargets([]); setAssessmentTarget(""); setSelectedPassages([]); setAssessmentResult("pass"); setAttestation(""); setAssessmentUntil("");
     if (runId && report && !report.simulated && currentRun && TERMINAL.has(currentRun.status)) {
       void readApi<{ targets: AssessmentTarget[] }>(`/api/runs/${runId}/assessments`).then(result => {
         if (!cancelled && Array.isArray(result.targets)) setAssessmentTargets(result.targets);
@@ -521,17 +526,85 @@ export default function LiveWorkspace() {
   }
 
   function reportPanel(saved: DecisionReport) {
+    const crossovers = saved.calculations.filter(item => item.operation === "break_even");
+    const tradeoffRefs = new Set(saved.tradeoff_basis_refs);
+    for (const calculation of crossovers) {
+      tradeoffRefs.delete(calculation.id); // The result and its inspector are shown directly.
+      for (const input of calculation.inputs) tradeoffRefs.add(input.source_ref);
+    }
+    function supportingRecords(refs?: string[], inputs: Calculation["inputs"] = []) {
+      if (!refs?.length) return null;
+      return <details className="live-basis"><summary>Supporting records ({refs.length})</summary><ul>{refs.map(id => {
+        const calculation = saved.calculations.find(item => item.id === id);
+        if (calculation) return <li key={id}><button type="button" className="live-link"
+          onClick={() => void inspect("calculation", id, saved.id)}>{calculation.label} ({id})</button></li>;
+        if (saved.evidence_ids.includes(id)) {
+          const amounts = inputs.filter(input => input.source_ref === id)
+            .map(input => `${input.label} · ${input.amount} ${input.unit}`);
+          const label = amounts.join(", ") || snapshot?.evidence?.find(item => item.id === id)?.source_title || "Saved passage";
+          return <li key={id}><button type="button" className="live-link" onClick={() => void inspect("passage", id)}>{label} ({id})</button></li>;
+        }
+        return <li key={id}>{id}</li>;
+      })}</ul></details>;
+    }
+    const recommended = saved.comparison.find(option => option.option_id === saved.recommendation?.option_id);
+    const tiedIds = saved.decision_insights?.tied_lowest_cost_option_ids ?? [];
+    const tiedLabels = saved.comparison.filter(option => tiedIds.includes(option.option_id)).map(option => option.label).sort();
+    const failedOptions = saved.comparison.filter(option => option.constraint_results.some(result =>
+      result.result === "fail" && !result.disputed && result.basis_refs.length));
+    const unresolvedLabels = saved.comparison.filter(option => !failedOptions.includes(option)
+      && saved.decision_insights?.unresolved_option_ids.includes(option.option_id)).map(option => option.label).sort();
+    const comparisonBlocker = saved.decision_insights?.cost_comparison_blocker;
+    const decisionHeading = recommended ? `Saved recommendation: ${recommended.label}`
+      : tiedLabels.length > 1 ? `Tied for lowest cost: ${tiedLabels.join(" / ")}` : "A choice is not established yet.";
+    const assessmentDay = saved.valuation_date;
+    const zone = saved.valuation_timezone;
+    let localDay: string | null = null;
+    if (assessmentDay && zone) {
+      try {
+        localDay = new Intl.DateTimeFormat("sv-SE", {
+          timeZone: zone, year: "numeric", month: "2-digit", day: "2-digit",
+        }).format(now);
+      } catch { /* An unsupported saved zone leaves present-day validity unknown. */ }
+    }
+    const expiredEvidence = !!(localDay && saved.evidence_valid_through && localDay > saved.evidence_valid_through);
+    const readinessLabel = saved.readiness ? READINESS[saved.readiness] ?? words(saved.readiness) : "Readiness unavailable";
+    const historical = expiredEvidence || !localDay;
+    const conclusive = saved.readiness === "ready_to_choose" || saved.readiness === "no_feasible_option";
     return <>
       <section className="live-decision" aria-labelledby="decision-heading">
-        <div><span className="live-eyebrow">The decision brief · version {saved.version}</span><h2 id="decision-heading">{saved.recommendation?.summary ?? "A choice is not established yet."}</h2></div>
-        <span className={`live-pill ${saved.readiness === "ready_to_choose" ? "positive" : "caution"}`}>{saved.readiness ? READINESS[saved.readiness] ?? words(saved.readiness) : "Readiness unavailable"}</span>
+        <div><span className="live-eyebrow">The decision brief · version {saved.version}</span><h2 id="decision-heading">{decisionHeading}</h2></div>
+        {saved.recommendation && <p>{saved.recommendation.summary}</p>}
+        {!recommended && !tiedLabels.length && unresolvedLabels.length > 0 && <p>Unresolved options: {unresolvedLabels.join(", ")}.</p>}
+        {!recommended && comparisonBlocker === "different_applicability" && <p>The remaining options have different applicable requirements. Their totals alone cannot establish a preferred option.</p>}
+        {!recommended && comparisonBlocker === "different_cost_basis" && <p>The remaining totals use different currencies or planning horizons. They need a common cost basis.</p>}
+        {!recommended && failedOptions.length > 0 && <p>Failed a hard requirement: {failedOptions.map(option => option.label).sort().join(", ")}.</p>}
+        {!!saved.recommendation?.conditions?.length && <div><strong>Conditions of the recommendation</strong><ul>{saved.recommendation.conditions.map((condition, index) => <li key={index}>{condition}</li>)}</ul></div>}
+        <span className={`live-pill ${saved.readiness === "ready_to_choose" && !historical ? "positive" : "caution"}`}>{expiredEvidence ? "Evidence needs renewal" : historical && conclusive ? "Historical readiness" : readinessLabel}</span>
+        <p>{assessmentDay && zone ? `Assessed as of ${assessmentDay} (${zone}).` : "Assessment date unavailable for this saved version."}
+          {saved.evidence_valid_through && ` Earliest evidence expiry: ${saved.evidence_valid_through}.`}
+          {(expiredEvidence || historical && conclusive) && ` Saved assessment: ${readinessLabel}.`}
+          {expiredEvidence && " Recheck the dated evidence in a follow-up before using this decision."}
+        </p>
         <p>{saved.readiness_reasons.join(" ")}</p>
         {saved.main_reasons.length > 0 && <ul>{saved.main_reasons.map(reason => <li key={reason}>{reason}</li>)}</ul>}
       </section>
       <section className="live-card"><h3>{saved.simulated ? "Simulated work and review coverage" : "Provider spending and review coverage"}</h3><p>{saved.simulated ? "No external provider spending. " : ""}{saved.usage.actual_cost === null ? "Final provider cost is unconfirmed. " : `Saved provider cost: ${money(saved.usage.actual_cost)}. `}Conservatively counted exposure: {money(saved.usage.conservative_exposure_usd)}. {saved.usage.request_count} counted {saved.simulated ? "simulated requests" : "inference requests"}.</p>{saved.usage.status === "unknown" && <p className="live-alert">Unresolved charges remain counted. A new review or retry does not make them free.</p>}{saved.research_summary.status !== "not_requested" && <p>Public research: {words(saved.research_summary.status)}. {saved.research_summary.reason ?? "Retrieved passages still require a support check."}</p>}</section>
-      <div className="live-two"><section className="live-card"><span className="live-eyebrow">The decisive tradeoff</span><p>{saved.tradeoff}</p></section><section className="live-card live-caveat"><span className="live-eyebrow">The largest uncertainty</span><p>{saved.largest_uncertainty}</p></section></div>
-      <section className="live-card"><h3>Compare the approaches</h3><p>One common horizon. Missing components remain unknown.</p><div className="live-table-scroll"><table><caption className="visually-hidden">Cost and hard-requirement comparison over the saved planning horizon</caption><thead><tr><th>Approach</th><th>All-in total</th><th>Hard requirements</th><th>Basis</th></tr></thead><tbody>{saved.comparison.map(item => <tr key={item.option_id}><th scope="row">{item.label}<small>{item.horizon_months} months · {words(item.role)}</small></th><td>{money(item.total, item.currency)}{item.total === null && <small>{money(item.known_subtotal, item.currency)} known subtotal</small>}</td><td>{item.constraint_results.length ? item.constraint_results.map(result => <span className="live-requirement" key={result.requirement_id}>{words(result.result)} · {result.reason}</span>) : "No assessment supplied"}</td><td><button type="button" className="live-link" onClick={() => void inspect("calculation", item.calculation_id, saved.id)}>Inspect {item.label} calculation</button><small>{item.caveat}</small></td></tr>)}</tbody></table></div></section>
-      <div className="live-two"><section className="live-card"><h3>Your next action</h3><p>{saved.next_action}</p>{saved.next_evidence.map(item => <div className="live-check" key={item.id}><strong>{item.question}</strong><p>{item.verification_method}</p><button type="button" className="live-link" onClick={() => setInspection({ title: "Quote or site-check request", text: item.request_text })}>Open copyable request</button></div>)}</section><section className="live-card"><h3>What would change the answer?</h3><p>{saved.what_would_change_answer}</p>{saved.change_summary.map(line => <p key={line}>{line}</p>)}<button className="live-secondary" type="button" disabled={blocked || !snapshot?.brief} onClick={followUp}>Create a linked follow-up</button></section></div>
+      <div className="live-two"><section className="live-card">
+        <span className="live-eyebrow">The decisive tradeoff</span><p>{saved.tradeoff}</p>
+        {crossovers.map(item => <p key={item.id}>{item.label} · <strong>{item.output ?? "Unknown"} {item.unit}</strong><br/>
+          <button type="button" className="live-link" onClick={() => void inspect("calculation", item.id, saved.id)}>Inspect {item.id}</button></p>)}
+        {supportingRecords([...tradeoffRefs], crossovers.flatMap(item => item.inputs))}
+      </section><section className="live-card live-caveat"><span className="live-eyebrow">The largest uncertainty</span><p>{saved.largest_uncertainty}</p></section></div>
+      <section className="live-card"><h3>Compare the approaches</h3><p>One common horizon. Missing components remain unknown.</p><div className="live-table-scroll"><table><caption className="visually-hidden">Cost and hard-requirement comparison over the saved planning horizon</caption><thead><tr><th>Approach</th><th>All-in total</th><th>Hard requirements</th><th>Basis</th></tr></thead><tbody>{saved.comparison.map(item => <tr key={item.option_id}><th scope="row">{item.label}{item.option_id === recommended?.option_id && <small>Recommended in this version</small>}{tiedIds.includes(item.option_id) && <small>Tied for lowest cost</small>}<small>{item.horizon_months} months · {words(item.role)}</small></th><td>{money(item.total, item.currency)}{item.total === null && <small>{money(item.known_subtotal, item.currency)} known subtotal</small>}</td><td>{item.constraint_results.length ? item.constraint_results.map(result => <span className="live-requirement" key={result.requirement_id}>{words(result.result)} · {result.reason}</span>) : "No assessment supplied"}</td><td><button type="button" className="live-link" onClick={() => void inspect("calculation", item.calculation_id, saved.id)}>Inspect {item.label} calculation</button><small>{item.caveat}</small></td></tr>)}</tbody></table></div></section>
+      <div className="live-two"><section className="live-card"><h3>Your next action</h3><p>{saved.next_action}</p>
+        {saved.next_evidence_count != null && <p>{saved.next_evidence_count} outstanding {saved.next_evidence_count === 1 ? "question" : "questions"}.
+          {saved.next_evidence.length < saved.next_evidence_count && ` Showing the first ${saved.next_evidence.length}.`}</p>}
+        {saved.next_evidence.map(item => <div className="live-check" key={item.id}>
+          <strong>{item.question}</strong><p>{item.affected_conclusion}</p><p>{item.verification_method}</p>
+          {supportingRecords(item.basis_refs)}
+          <button type="button" className="live-link" onClick={() => setInspection({ title: "Quote or site-check request", text: item.request_text })}>Open copyable request</button>
+        </div>)}</section><section className="live-card"><h3>What would change the answer?</h3><p>{saved.what_would_change_answer}</p>{saved.change_summary.map(line => <p key={line}>{line}</p>)}<button className="live-secondary" type="button" disabled={blocked || !snapshot?.brief} onClick={followUp}>Create a linked follow-up</button></section></div>
       {saved.dissent.length > 0 && <section className="live-card"><h3>Alternatives and unresolved disagreement</h3><ul>{saved.dissent.map(line => <li key={line}>{line}</li>)}</ul></section>}
       {!!saved.issues?.length && <section className="live-card"><h3>Objections and recorded resolutions</h3><p>Every material concern remains in the saved record until an explicit response and review address it.</p>{saved.issues.map(issue => <details key={issue.id} open={issue.severity === "critical" && issue.status !== "resolved" && issue.status !== "withdrawn"}><summary>{issue.severity} · {words(issue.status)} · {issue.concern}</summary><p>{PROVIDERS[issue.source_provider] ?? issue.source_provider} · {words(issue.source_stage)}</p>{issue.events.map(event => <p key={event.id}>{words(event.disposition)}: {event.response} · {PROVIDERS[event.provider] ?? event.provider}</p>)}</details>)}</section>}
       {saved.readiness_dimensions && <section className="live-card"><h3>Scope of the decision checks</h3><p>{saved.readiness_dimensions.basis_scope}</p><ul><li>Comparable inputs: {saved.readiness_dimensions.complete_comparison ? "complete" : "incomplete"}</li><li>Scoped cost evidence: {saved.readiness_dimensions.scoped_cost_support ? "accepted within its recorded scope" : "still needs checking"}</li><li>Distinct review: {saved.readiness_dimensions.distinct_review ? "complete" : "incomplete"}</li><li>Material objections: {saved.readiness_dimensions.material_objections_resolved ? "addressed" : "remain unresolved"}</li></ul></section>}
@@ -548,12 +621,12 @@ export default function LiveWorkspace() {
     });
   }
   async function saveAssessment() {
-    const target = assessmentTargets.find((_, index) => String(index) === assessmentTarget);
-    if (!target || !runId || !currentRun || !report || attestation.trim().length < 20) return;
+    const target = selectedTarget;
+    if (!target || !assessmentRefs.length || !runId || !currentRun || !report || attestation.trim().length < 20) return;
     await act("Saving your scoped evidence attestation", async () => {
       await sendCommand(`assessment:${runId}:${target.target_hash}:${currentRun.version}`, `/api/runs/${runId}/assessments`, {
         expected_run_version: currentRun.version, target_type: target.target_type, option_id: target.option_id,
-        requirement_id: target.requirement_id, target_hash: target.target_hash, reference_ids: target.reference_ids,
+        requirement_id: target.requirement_id, target_hash: target.target_hash, reference_ids: assessmentRefs,
         result: target.target_type === "option_costs" ? "supported" : assessmentResult,
         attestation: attestation.trim(), valid_until: assessmentUntil || null,
       });
@@ -612,7 +685,17 @@ export default function LiveWorkspace() {
           {tab === "overview" && (report ? reportPanel(report) : ledgerUnavailable || savedStateUnavailable ? null : <section className="live-card"><h2>{running ? "The review is in progress." : "The saved report is being prepared."}</h2><p>{running ? "Independent proposals, checked calculations and review are recorded as they commit. You can leave and reopen this saved review." : "No recommendation is displayed until a report has been saved."}</p><button type="button" className="live-link" onClick={() => setTab("activity")}>Inspect committed activity</button></section>)}
           {tab === "evidence" && <section className="live-card"><h2>Follow each fact back to its basis.</h2><p>Supplied facts are labeled separately from calculated arithmetic. A calculation cannot establish that a supplier quote is true.</p>{snapshot?.evidence === null ? <p>{ledgerUnavailable || savedStateUnavailable ? "Stored evidence could not be validated. The original records are preserved for review." : "Stored evidence is unavailable in this report because it could not be validated when the report was created. The original records are preserved for review."}</p> : snapshot?.evidence?.length ? snapshot.evidence.map(item => <article className="live-evidence" key={item.id}><div><strong>{item.source_title}</strong><span className="live-pill">{words(item.verification_status)}</span></div><p>{item.text}</p>{item.source_text_length != null && <p>Selected excerpt from {item.source_text_length.toLocaleString()} source characters. {item.uninspected_characters?.toLocaleString() ?? "Unknown"} characters remain outside the selected excerpts.</p>}<small>{item.scope} · {when(item.verified_at)}</small><button type="button" className="live-link" onClick={() => void inspect("passage", item.id)}>Open exact passage & provenance</button></article>) : <p>No evidence passages have been committed yet.</p>}{report?.essential_dependencies.map(item => <article className="live-evidence" key={item.id}><strong>{item.description}</strong><p>{words(item.status)}</p></article>)}</section>}
           {tab === "activity" && <section className="live-card"><h2>The saved review, as it happened.</h2><p>Only committed events appear here. Reconnecting reads this same history.</p><ol className="live-timeline">{snapshot?.events.map((item, index) => <li key={item.sequence ?? index}><span className="live-eyebrow">{item.sequence ?? index + 1} · {item.timestamp ? when(item.timestamp) : "Saved event"}</span><strong>{words(item.event_type ?? "progress")}</strong>{item.payload && <p>{String(item.payload.message ?? item.payload.stage ?? item.payload.reason ?? item.payload.status ?? "Committed to the saved review.")}</p>}</li>)}</ol>{report?.coverage.map(item => <p key={`${item.provider}:${item.role}`}><strong>{PROVIDERS[item.provider] ?? item.provider}</strong> · {item.role} · {words(item.status)}<small>{item.notes}</small></p>)}</section>}
-          {tab === "evidence" && report && assessmentTargets.length > 0 && <section className="live-card"><h2>Record your evidence check</h2><p>Your attestation applies only to the selected costs or requirement and the cited passages. It remains labeled as your assessment. Recording it creates a new report version.</p><label>Scope of your check<select value={assessmentTarget} disabled={blocked} onChange={event => setAssessmentTarget(event.target.value)}><option value="">Select the exact scope</option>{assessmentTargets.map((target, index) => <option key={target.target_hash} value={index}>{target.label}</option>)}</select></label>{assessmentTargets.find((_, index) => String(index) === assessmentTarget)?.target_type === "requirement" && <label>Requirement result<select value={assessmentResult} onChange={event => setAssessmentResult(event.target.value)}><option value="pass">Pass</option><option value="fail">Fail</option><option value="unknown">Unknown</option><option value="not_applicable">Not applicable</option></select></label>}<label>What you checked and its limits<textarea maxLength={2000} value={attestation} disabled={blocked} onChange={event => setAttestation(event.target.value)} placeholder="Identify what you checked in the saved evidence, its source and any limits." /></label><label>Valid through<input type="date" value={assessmentUntil} disabled={blocked} onChange={event => setAssessmentUntil(event.target.value)} /></label><button type="button" className="live-secondary" disabled={blocked || !assessmentTarget || attestation.trim().length < 20} onClick={() => void saveAssessment()}>Save my scoped attestation</button></section>}
+          {tab === "evidence" && !!report?.evidence_assessments?.length && <section className="live-card">
+            <h2>Evidence checks in this report</h2>
+            {report.evidence_assessments.map(receipt => <article key={receipt.id} className="live-evidence">
+              <strong>{report.comparison.find(row => row.option_id === receipt.option_id)?.label ?? receipt.option_id} · {snapshot?.brief?.hard_requirements.find(row => row.id === receipt.requirement_id)?.description ?? (receipt.target_type === "option_costs" ? "Complete cost inputs" : receipt.requirement_id)}</strong>
+              <p>{words(receipt.result)} · {receipt.attestation}</p>
+              <ul>{receipt.reference_ids.map(id => <li key={id}><button type="button" className="live-link" onClick={() => void inspect("passage", id)}>
+                {snapshot?.evidence?.find(source => source.id === id)?.source_title ?? id}
+              </button></li>)}</ul>
+            </article>)}
+          </section>}
+          {tab === "evidence" && report && assessmentTargets.length > 0 && <section className="live-card"><h2>Record your evidence check</h2><p>Your attestation applies only to the selected costs or requirement and the cited passages. It remains labeled as your assessment. Recording it creates a new report version.</p><label>Scope of your check<select value={assessmentTarget} disabled={blocked} onChange={event => { setAssessmentTarget(event.target.value); setSelectedPassages([]); setAssessmentResult("pass"); setAssessmentUntil(""); setAttestation(""); }}><option value="">Select the exact scope</option>{assessmentTargets.map((target, index) => <option key={target.target_hash} value={index}>{target.label}</option>)}</select></label>{selectedTarget?.target_type === "requirement" && runId && <><RequirementPassages key={`${runId}:${report.id}:${selectedTarget.target_hash}`} runId={runId} references={selectedTarget.reference_ids} initial={snapshot?.evidence ?? EMPTY_PASSAGES} brief={snapshot?.brief ?? null} selected={selectedPassages} disabled={blocked} onChange={setSelectedPassages} /><label>Requirement result<select value={assessmentResult} onChange={event => setAssessmentResult(event.target.value)}><option value="pass">Pass</option><option value="fail">Fail</option><option value="unknown">Unknown</option><option value="not_applicable">Not applicable</option></select></label></>}<label>What you checked and its limits<textarea maxLength={2000} value={attestation} disabled={blocked} onChange={event => setAttestation(event.target.value)} placeholder="Identify what you checked in the saved evidence, its source and any limits." /></label><label>Valid through<input type="date" value={assessmentUntil} disabled={blocked} onChange={event => setAssessmentUntil(event.target.value)} /></label><button type="button" className="live-secondary" disabled={blocked || !assessmentRefs.length || attestation.trim().length < 20} onClick={() => void saveAssessment()}>Save my scoped attestation</button></section>}
         </section>
       </>}
       {meeting && meeting.runs.length > 0 && <section className="live-history"><h2>Review history</h2><div>{meeting.runs.map(item => <button type="button" className="live-secondary" disabled={blocked} key={item.id} onClick={() => { editorScopeGeneration.current += 1; setAutosaveStatus("idle"); setChoiceOption(""); setChoiceNote(""); setOutcomeNote(""); setRunId(item.id); setReadEpoch(value => value + 1); setEditor(false); setPreflight(null); setSnapshot(null); setTab("overview"); sessionStorage.setItem(CURRENT_KEY, JSON.stringify({ meetingId: meeting.id, runId: item.id })); }}><strong>{when(item.created_at)}</strong><small>{words(item.status)}{item.parent_run_id ? " · linked follow-up" : ""}</small></button>)}</div>{meeting.next_run_cursor && <button type="button" className="live-link" disabled={blocked} onClick={() => void loadOlderRuns()}>Load earlier reviews</button>}</section>}

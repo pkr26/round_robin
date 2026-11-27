@@ -5,9 +5,12 @@ from decimal import Decimal
 import hashlib
 from zoneinfo import ZoneInfo
 
+from round_robin.database.models import utcnow
 from round_robin.reports.readiness import derive_readiness
-from round_robin.reports.insights import decision_insights
-from round_robin.research.discussion import current_assessments, discussion_issues
+from round_robin.reports.insights import comparison_blocker_note, decision_insights
+from round_robin.reports.questions import STANDARD_COST_KINDS, rank_question_worklist
+from round_robin.reports.tradeoffs import explain_tradeoff
+from round_robin.research.discussion import current_assessments, discussion_issues, expired_quote_refs
 from round_robin.research.calculator import CalculationError, lifecycle_total
 from round_robin.schemas.briefs import DraftBrief
 from round_robin.schemas.contributions import ConstraintResult
@@ -28,11 +31,13 @@ def _derived_id(prefix, original):
     return prefix + hashlib.sha256(original.encode()).hexdigest()
 
 
-def comparison_as_of(run):
-    if run.created_at is None:
+def comparison_as_of(run, *, at=None):
+    """Resolve an explicit observation time or the historical run creation time."""
+    instant = at if at is not None else run.created_at
+    if instant is None:
         return None
     brief = run.configuration.get("resolved_brief", run.input_snapshot)
-    return aware(run.created_at).astimezone(ZoneInfo(brief.get("timezone", "America/Phoenix"))).date()
+    return aware(instant).astimezone(ZoneInfo(brief.get("timezone", "America/Phoenix"))).date()
 
 
 def comparison_data(brief: DraftBrief, *, as_of: date | None = None):
@@ -45,8 +50,9 @@ def comparison_data(brief: DraftBrief, *, as_of: date | None = None):
             missing = list(calculation.missing_components)
             # Summing entered lines cannot prove omitted applicable charges zero.
             categories = {component.kind for component in option.cost_components}
-            for category in {"upfront", "installation", "recurring", "maintenance", "tax_delivery"} - categories:
-                missing.append(f"Confirm whether {category.replace('_', ' ')} applies; no explicit component or not-applicable entry exists.")
+            for category in STANDARD_COST_KINDS:
+                if category not in categories:
+                    missing.append(f"Confirm whether {category.replace('_', ' ')} applies; no explicit component or not-applicable entry exists.")
             if missing:
                 calculation = calculation.model_copy(update={"output": None, "missing_components": missing})
         except (CalculationError, ValueError):
@@ -72,9 +78,11 @@ def comparison_data(brief: DraftBrief, *, as_of: date | None = None):
     return comparisons, calculations
 
 
-def build_invalid_brief_report(run, steps, *, status, stop_reason, report_id, version, usage, evidence, parent_report=None, parent_report_id=None, parent_report_unavailable=False, parent_brief_unavailable=False, invalid_brief=True, invalid_discussion=False):
+def build_invalid_brief_report(run, steps, *, status, stop_reason, report_id, version, usage, evidence, parent_report=None, parent_report_id=None, parent_report_unavailable=False, parent_brief_unavailable=False, invalid_brief=True, invalid_discussion=False, published_at=None):
     """Publish a partial record without interpreting corrupt saved inputs or obligations."""
     simulated = usage["simulated"]
+    # Use UTC for a partial report whose underlying brief cannot be interpreted.
+    zone = "UTC" if invalid_brief else DraftBrief.model_validate(run.configuration.get("resolved_brief", run.input_snapshot)).timezone
     succeeded = [step for step in steps if step.status == "succeeded" and step.result_json]
     saved_issues = run.configuration.get("discussion_issues", [])
     if isinstance(saved_issues, dict):
@@ -95,6 +103,7 @@ def build_invalid_brief_report(run, steps, *, status, stop_reason, report_id, ve
         main_reasons.append("Stored evidence could not be validated and is unavailable in this report.")
     body = {
         "id": report_id, "run_id": run.id, "version": version, "event_cutoff": run.event_sequence + 1,
+        "valuation_date": (published_at or utcnow()).astimezone(ZoneInfo(zone)).date(), "valuation_timezone": zone,
         "fictional": simulated, "simulated": simulated, "parent_report_id": parent_report_id or (parent_report.get("id") if parent_report else None),
         "execution_status": status, "recommendation": None, "readiness": None,
         "readiness_reasons": [reason], "readiness_unavailable_reason": reason,
@@ -116,9 +125,11 @@ def build_invalid_brief_report(run, steps, *, status, stop_reason, report_id, ve
         "parent_report_id": body["parent_report_id"]}).model_dump(mode="json")
 
 
-def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, version: int, usage: dict, evidence=None, claims=None, parent_report=None, parent_report_id=None, parent_brief=None, parent_report_unavailable=False, parent_brief_unavailable=False):
-    brief = DraftBrief.model_validate(run.configuration.get("resolved_brief", run.input_snapshot))
-    as_of = comparison_as_of(run)
+def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, version: int, usage: dict, evidence=None, claims=None, parent_report=None, parent_report_id=None, parent_brief=None, parent_report_unavailable=False, parent_brief_unavailable=False, published_at=None):
+    saved_brief = run.configuration.get("resolved_brief", run.input_snapshot)
+    brief = DraftBrief.model_validate(saved_brief)
+    published_at = published_at or utcnow()
+    as_of = published_at.astimezone(ZoneInfo(brief.timezone)).date()
     comparisons, calculations = comparison_data(brief, as_of=as_of) if run.configuration.get("evidence_prepared") and not run.configuration.get("comparison_unavailable_reason") else ([], [])
     succeeded = [step for step in steps if step.status == "succeeded" and step.result_json]
     syntheses = [step for step in succeeded if step.stage == "synthesis"]
@@ -129,7 +140,12 @@ def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, v
     assessment = ReviewCoverage(proposal_providers=list({step.provider for step in proposals}), synthesizer=synthesis.provider if synthesis else None, auditor=audit.provider if audit else None, synthesis_valid=synthesis is not None, audit_succeeded=bool(audit and audit.result_json["output"].get("audit_passed") is True), unresolved_critical_defect=bool(audit and audit.result_json["output"].get("critical_defects")))
     simulated = run.configuration.get("mode", "simulated") == "simulated"
     scoped_evidence = {item["id"]: item for item in (evidence or [])}
-    accepted_assessments = current_assessments(run, scoped_evidence) if run.configuration.get("evidence_assessments") else []
+    expired_refs = expired_quote_refs(saved_brief, as_of)
+    current_refs = scoped_evidence.keys() - expired_refs
+    accepted_assessments = current_assessments(run, scoped_evidence, now=published_at) if run.configuration.get("evidence_assessments") else []
+    evidence_expiries = [component.quote_valid_until for option in brief.options for component in option.cost_components
+                         if component.quote_valid_until is not None]
+    evidence_expiries.extend(date.fromisoformat(receipt["valid_until"]) for receipt in accepted_assessments if receipt["valid_until"])
     issues = discussion_issues(run, succeeded)
     unresolved = [item for item in issues if item["status"] in {"open", "answered_pending_review"} and item["severity"] in {"material", "critical"}]
     assessment.unresolved_critical_defect = assessment.unresolved_critical_defect or bool(unresolved)
@@ -144,7 +160,11 @@ def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, v
                 key = (option["option_id"], result["requirement_id"])
                 proposed = synthesis_assessments.get(key)
                 checked = audit_assessments.get(key)
-                if proposed and proposed.get("basis_refs") and set(proposed["basis_refs"]) <= set(scoped_evidence):
+                # A mixed set of premises cannot establish a verdict once one
+                # of its quoted terms expires. Keep the original in its step.
+                if checked and expired_refs.intersection(checked.get("basis_refs", [])):
+                    checked = None
+                if proposed and proposed.get("basis_refs") and set(proposed["basis_refs"]) <= current_refs:
                     replacement = {**proposed, "method": "model", "assessor": f"{synthesis.provider} synthesis; inspect the cited user/source passage"}
                     replacement.pop("option_id", None)
                     if checked and checked["result"] != proposed["result"]:
@@ -155,7 +175,7 @@ def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, v
                         replacement["reason"] = "Synthesis and independent audit disagree; inspect saved contributions. Synthesis: " + _display(proposed["reason"], 200) + " / Audit: " + _display(checked["reason"], 200)
                     replacement["assessment_scope"] = "Attributed model assessment of cited supplied passages; not independent fact certification."
                     option["constraint_results"][index] = ConstraintResult.model_validate(replacement).model_dump(mode="json")
-                elif checked and checked["result"] == "fail" and checked.get("basis_refs") and set(checked["basis_refs"]) <= set(scoped_evidence):
+                elif checked and checked["result"] == "fail" and checked.get("basis_refs") and set(checked["basis_refs"]) <= current_refs:
                     # A missing synthesis assessment cannot erase a supported
                     # hard-requirement failure found by the independent audit.
                     replacement = {**checked, "method": "model", "assessor": f"{audit.provider} independent audit; inspect the cited user/source passage"}
@@ -200,25 +220,30 @@ def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, v
     if simulated:
         dependencies.append(EssentialDependency(id="dependency_actual_review", description="Simulated advisers provide no independent provider review or verification.", status="unverified", accepted_scoped_support=False, reference_ids=[], origin="user_supplied"))
     chosen = synthesis.result_json["output"].get("recommendation_option_id") if synthesis else None
+    insights = decision_insights(brief, comparisons)
+    if simulated and chosen:
+        if insights["cost_comparison_blocker"] or insights["cost_frontier_option_ids"] != [chosen]:
+            chosen = None
     # Reject any proposed choice with a demonstrably failed hard requirement.
     selected = next((item for item in comparisons if item["option_id"] == chosen), None)
-    if selected is None or any(result["result"] == "fail" for result in selected["constraint_results"]):
+    if expired_refs or selected is None or any(result["result"] == "fail" for result in selected["constraint_results"]):
         chosen = None
     readiness, reasons = derive_readiness(selected_option_id=chosen, comparison=[RuntimeOptionComparison.model_validate(item) for item in comparisons], dependencies=dependencies, coverage=assessment, required_requirement_ids={requirement.id for requirement in brief.hard_requirements}) if comparisons else (None, ["A common horizon, faithfully bounded saved evidence, or sufficient confirmed options is unavailable."])
-    recommendation = {"option_id": chosen, "summary": synthesis.result_json["output"]["summary"], "conditions": reasons if readiness != "ready_to_choose" else []} if synthesis and chosen else None
+    if synthesis and simulated and insights["tied_lowest_cost_option_ids"]:
+        reasons = ["Multiple feasible options share the lowest comparable total. The simulation has no basis for choosing between them."]
+    recommendation = {"option_id": chosen, "option_label": selected["label"], "summary": synthesis.result_json["output"]["summary"], "conditions": reasons if readiness != "ready_to_choose" else []} if synthesis and chosen else None
     dissent = [item["concern"] for item in issues if item["status"] in {"open", "answered_pending_review"} and item["severity"] in {"critical", "material"}]
     for step in reversed(succeeded):
         dissent.extend(step.result_json["output"].get("critical_defects", []))
         dissent.extend(step.result_json["output"].get("dissent", []))
     dissent = list(dict.fromkeys(dissent))
-    next_evidence = []
-    for item in relevant:
-        for missing in item["missing_components"]:
-            next_evidence.append({"id": f"next_evidence_{len(next_evidence) + 1}", "question": f"For {item['label']}: {missing}", "affected_conclusion": "Comparable all-in cost and budget feasibility may change.", "verification_method": "Obtain a current itemized quote; enter the amount or an explicit justified not-applicable component.", "request_text": f"Please confirm the complete {brief.horizon_months}-month cost for {item['label']} in {brief.currency}. {missing} Include installation, recurring charges, tax/delivery and maintenance, with the quote's valid-through date."})
-        for result in item["constraint_results"]:
-            if result["result"] == "unknown":
-                requirement = next((requirement for requirement in brief.hard_requirements if requirement.id == result["requirement_id"]), None)
-                next_evidence.append({"id": f"next_evidence_{len(next_evidence) + 1}", "question": f"Does {item['label']} satisfy: {requirement.description if requirement else result['requirement_id']}?", "affected_conclusion": "A hard requirement remains unresolved, so feasibility is conditional.", "verification_method": "Ask the supplier or responsible person for a dated, inspectable statement or exact supporting passage.", "request_text": f"Please provide dated evidence that {item['label']} satisfies this requirement: {requirement.description if requirement else result['requirement_id']}. Identify the exact scope, limits and any exceptions."})
+    worklist = rank_question_worklist(brief, comparisons, insights, as_of=as_of, chosen=chosen)
+    narrative, scenario_calculations = explain_tradeoff(
+        brief, comparisons, insights, as_of=as_of, chosen=chosen,
+        question=worklist.lead_question, lead_option_id=worklist.lead_option_id,
+        lead_cost_gap=worklist.lead_cost_gap, lead_peer_id=worklist.lead_peer_id,
+        viable_cost_ranges=worklist.viable_cost_ranges, quoted_cost_ranges=worklist.quoted_cost_ranges,
+    )
     changes = []
     if parent_brief is not None:
         for key, label in (("budget", "Budget"), ("deadline", "Deadline"), ("horizon_months", "Comparison horizon"), ("options", "Options and quoted cost inputs"), ("hard_requirements", "Hard requirements"), ("user_facts", "User-supplied facts"), ("selected_attachment_ids", "Selected evidence")):
@@ -235,28 +260,37 @@ def build_report(run, steps, *, status: str, stop_reason: str, report_id: str, v
         changes.append("The prior report is unavailable; its recommendation and readiness were not compared.")
     if parent_brief_unavailable:
         changes.append("The prior decision inputs are unavailable; input changes were not compared.")
+    main_reasons = ["Comparable cost uses bounded Decimal calculations from this run's supplied inputs." if calculations
+                    else "Comparable cost remains unavailable until the missing confirmed inputs can be represented faithfully."]
+    if insights["tied_lowest_cost_option_ids"]:
+        labels = sorted(item["label"] for item in comparisons if item["option_id"] in insights["tied_lowest_cost_option_ids"])
+        main_reasons.append("Tied for the lowest comparable total: " + ", ".join(labels) + ".")
+    if note := comparison_blocker_note(insights, comparisons):
+        main_reasons.append(note)
+    if run.configuration.get("comparison_unavailable_reason") == "evidence_integrity_failed":
+        main_reasons.append("Stored evidence could not be validated and is unavailable in this report.")
     body = {
         "schema_version": "1.0", "id": report_id, "run_id": run.id, "version": version,
+        "valuation_date": as_of, "valuation_timezone": brief.timezone, "evidence_valid_through": min(evidence_expiries, default=None),
         "event_cutoff": run.event_sequence + 1, "fictional": simulated, "simulated": simulated, "parent_report_id": parent_report_id or (parent_report.get("id") if parent_report else None),
         "execution_status": status, "recommendation": recommendation, "readiness": readiness,
         "readiness_reasons": reasons, "readiness_unavailable_reason": reasons[0] if readiness is None else None,
-        "main_reasons": ["Comparable cost uses bounded Decimal calculations from this run's supplied inputs." if calculations else "Comparable cost remains unavailable until the missing confirmed inputs can be represented faithfully."] + (["Stored evidence could not be validated and is unavailable in this report."] if run.configuration.get("comparison_unavailable_reason") == "evidence_integrity_failed" else []),
-        "tradeoff": "Consider upfront commitment, ongoing costs and the hard requirements; lowest known subtotal alone cannot establish the best choice.",
-        "largest_uncertainty": reasons[0], "what_would_change_answer": "Correct a decisive cost or requirement in a linked follow-up and recompute the comparison.",
-        "next_action": next_evidence[0]["question"] if next_evidence else "Inspect the cited supporting evidence and principal caveats before recording your choice.",
-        "comparison": comparisons, "calculations": calculations, "hard_requirement_ids": [requirement.id for requirement in brief.hard_requirements],
+        "main_reasons": main_reasons,
+        **narrative, "largest_uncertainty": reasons[0],
+        "comparison": comparisons, "calculations": calculations + scenario_calculations, "hard_requirement_ids": [requirement.id for requirement in brief.hard_requirements],
         "evidence_ids": sorted(scoped_evidence), "contribution_ids": [step.id for step in succeeded], "claim_ids": sorted(claim["id"] for claim in (claims or [])),
         "essential_dependencies": [dependency.model_dump(mode="json") for dependency in dependencies],
         "dissent": dissent[:20], "dissent_overflow_count": max(0, len(dissent) - 20), "issues": issues,
-        "evidence_assessments": accepted_assessments, "algorithm_policy_version": "scoped_evidence_obligations_v1",
+        "evidence_assessments": accepted_assessments, "algorithm_policy_version": "comparable_cost_choices_v2",
         "readiness_dimensions": {"complete_comparison": bool(comparisons) and all(item["total"] is not None and not item["missing_components"] for item in comparisons),
             "checked_arithmetic": bool(calculations) and all(item["output"] is not None for item in calculations),
             "scoped_cost_support": bool(comparisons) and all(item.accepted_scoped_support for item in dependencies if item.id in {_derived_id("dependency_", option["option_id"]) for option in comparisons}),
             "requirements_assessed": bool(selected) and {item["requirement_id"] for item in selected["constraint_results"] if item["result"] in {"pass", "not_applicable"} and not item.get("disputed")} == {item.id for item in brief.hard_requirements} and all(item.accepted_scoped_support for item in dependencies if item.id not in {_derived_id("dependency_", option["option_id"]) for option in comparisons} | {"dependency_actual_review"}),
             "distinct_review": assessment.audit_succeeded and bool(assessment.auditor and assessment.synthesizer and assessment.auditor != assessment.synthesizer),
             "material_objections_resolved": not unresolved, "basis_scope": "Exact supplied inputs and explicit owner attestations; model review is attributed and is not independent factual certification."},
-        "decision_insights": decision_insights(brief, comparisons),
-        "next_evidence": next_evidence[:20], "coverage": [{"provider": step.provider, "role": step.stage, "status": "simulated" if simulated and step.status == "succeeded" else step.status, "notes": step.error_code or "Actual saved stage coverage."} for step in steps],
+        "decision_insights": insights,
+        "next_evidence_count": len(worklist.requests) if comparisons else None,
+        "next_evidence": worklist.requests[:20], "coverage": [{"provider": step.provider, "role": step.stage, "status": "simulated" if simulated and step.status == "succeeded" else step.status, "notes": step.error_code or "Actual saved stage coverage."} for step in steps],
         "assessment": assessment.model_dump(mode="json"), "usage": usage, "stop_reason": stop_reason, "change_summary": changes[:20],
         "research_summary": run.configuration.get("research_summary", {"status": "not_requested", "queries": 0, "pages": 0}),
     }

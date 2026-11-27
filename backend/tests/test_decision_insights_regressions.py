@@ -20,7 +20,7 @@ def comparison(identity, total, results, missing=()):
 
 
 def result(identity, status, disputed=False):
-    return {"requirement_id": identity, "result": status, "disputed": disputed}
+    return {"requirement_id": identity, "result": status, "disputed": disputed, "basis_refs": ["source_test"]}
 
 
 def test_frontier_only_compares_matching_applicability_and_retains_ties():
@@ -32,6 +32,8 @@ def test_frontier_only_compares_matching_applicability_and_retains_ties():
     assert insights["cost_frontier_option_ids"] == ["cheap", "different", "tied"]
     assert insights["dominated_option_ids"] == ["expensive"]
     assert insights["unresolved_option_ids"] == []
+    assert insights["cost_comparison_blocker"] == "different_applicability"
+    assert insights["tied_lowest_cost_option_ids"] == []
 
 
 def test_incomplete_unknown_failed_and_disputed_options_are_not_ranked():
@@ -41,7 +43,8 @@ def test_incomplete_unknown_failed_and_disputed_options_are_not_ranked():
         insights = decision_insights(policy, invalid[start:start + 3] + [comparison("valid", "1.00", [result("req1", "pass")])])
         assert insights["cost_frontier_option_ids"] == ["valid"]
         assert insights["dominated_option_ids"] == []
-        assert insights["unresolved_option_ids"] == sorted(item["option_id"] for item in invalid[start:start + 3])
+        assert insights["unresolved_option_ids"] == sorted(item["option_id"] for item in invalid[start:start + 3] if item["option_id"] != "failed")
+        assert insights["failed_option_ids"] == (["failed"] if start == 3 else [])
 
 
 def test_zero_requirements_and_no_comparisons_do_not_invent_rankings():

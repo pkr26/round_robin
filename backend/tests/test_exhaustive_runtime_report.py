@@ -108,6 +108,8 @@ def test_actual_ready_requires_complete_checked_cost_even_with_all_positive_revi
         RuntimeDecisionReport.model_validate(body)
     selected['missing_components']=calc['missing_components']=[]
     selected['total']=calc['output']=selected['known_subtotal']
+    from round_robin.reports.insights import cost_comparison
+    body['decision_insights'].update(cost_comparison(set(body['hard_requirement_ids']), body['comparison']))
     assert RuntimeDecisionReport.model_validate(body).readiness=='ready_to_choose'
     body['fictional']=body['simulated']=body['usage']['simulated']=True
     with pytest.raises(ValidationError,match='simulated runtime'):

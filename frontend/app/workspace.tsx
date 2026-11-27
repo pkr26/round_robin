@@ -143,6 +143,7 @@ function downloadReport(
   format: "json" | "md",
   brief: DraftBrief,
 ) {
+  const recommended = report.comparison.find(option => option.option_id === report.recommendation?.option_id);
   const text =
     format === "json"
       ? JSON.stringify(report, null, 2)
@@ -154,6 +155,7 @@ function downloadReport(
           `Report: ${report.id}, version ${report.version}, event cutoff ${report.event_cutoff}`,
           `Execution: ${report.execution_status}. Readiness: ${report.readiness ?? "unavailable"}.`,
           "",
+          ...(recommended ? [`Recommended approach: ${recommended.label}`] : []),
           report.recommendation?.summary ??
             report.readiness_unavailable_reason ??
             "No recommendation established.",

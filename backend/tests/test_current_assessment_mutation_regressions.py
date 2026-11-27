@@ -33,7 +33,7 @@ def attestation(run, evidence, identity, option_id, valid_until):
 def test_assessment_page_keeps_history_but_only_current_exact_attestations(artifacts, monkeypatch, case, expected):
     app, client, _, run_id, _ = artifacts
     # 02:00 UTC on Nov 18 is still Nov 17 in the frozen Phoenix timezone.
-    monkeypatch.setattr(discussion, "utcnow", lambda: datetime(2026, 11, 18, 2, tzinfo=UTC))
+    monkeypatch.setattr("round_robin.api.assessments.utcnow", lambda: datetime(2026, 11, 18, 2, tzinfo=UTC))
     with app.state.session_factory.begin() as session:
         run = session.get(Run, run_id)
         evidence = session.scalar(select(EvidenceRecord).where(EvidenceRecord.run_id == run_id).order_by(EvidenceRecord.id))

@@ -1,0 +1,785 @@
+{
+  "audit_date": "2026-11-27",
+  "timezone": "America/Phoenix",
+  "scope": "Fresh checks on an isolated copy of the supplied local workspace. No paid providers, production data, hosted sign-in or user studies.",
+  "source_identity": {
+    "algorithm": "SHA-256 over sorted compact JSON of repo-relative file paths mapped to SHA-256 of file bytes. Each current mapped file was independently checked against the supplied workspace.",
+    "sources": {
+      "count": 134,
+      "sha256": "e05b5ae33abbe2c018075a1895a7bfd3d0be9318fd84656f4e99bcb197e921c5",
+      "changed_from_2026_11_16": 63,
+      "added_from_2026_11_16": 16,
+      "removed_from_2026_11_16": 0
+    },
+    "verification_inputs": {
+      "count": 611,
+      "sha256": "244c3ca33ac511544dd3d77da39ef218981f97448a584165464ded8882cc2dfe",
+      "changed_from_2026_11_16": 39,
+      "added_from_2026_11_16": 456,
+      "removed_from_2026_11_16": 0
+    }
+  },
+  "verification": {
+    "entry_point": "pnpm audit:full",
+    "official_run_passed": false,
+    "environment": {
+      "python": "3.12.14",
+      "platform": "Darwin",
+      "machine": "arm64"
+    },
+    "profiles": {
+      "service_profile": true,
+      "native_profile": true,
+      "docker_broker_fault_profile": true
+    },
+    "provider_calls": 0,
+    "commands_reached_in_service_verifier": [
+      {
+        "command": [
+          "uv",
+          "run",
+          "pytest",
+          "-q"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 464.44,
+        "test_summary": [
+          "4696 passed, 33 skipped, 30 warnings in 451.26s (0:07:31)"
+        ]
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "round_robin.export_contracts",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 2.32
+      },
+      {
+        "command": [
+          "node",
+          "scripts/check_client.mjs"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.807
+      },
+      {
+        "command": [
+          "node",
+          "--test",
+          "scripts/frontend_coverage.test.mjs"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.129
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "experiments.evaluation",
+          "validate"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.076
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "scripts/scenario_summary.py",
+          "--check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.844
+      },
+      {
+        "command": [
+          "pnpm",
+          "typecheck"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.791
+      },
+      {
+        "command": [
+          "pnpm",
+          "build"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 8.245
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "experiments.runner",
+          "--journal-dir",
+          "<disposable-verification-directory>/journal",
+          "--batch-id",
+          "verification-001",
+          "--simulate"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.082
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "python",
+          "-m",
+          "experiments.runner",
+          "--journal-dir",
+          "<disposable-verification-directory>/journal",
+          "--batch-id",
+          "verification-001",
+          "--simulate"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.076
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "pytest",
+          "backend/tests/integration",
+          "-q"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 39.752,
+        "test_summary": [
+          "28 passed, 11 skipped, 2 warnings in 39.21s"
+        ]
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "pytest",
+          "backend/tests/test_fetcher_transport.py",
+          "-q"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 1.28,
+        "test_summary": [
+          "5 passed in 1.06s"
+        ]
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "alembic",
+          "upgrade",
+          "head"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.679
+      },
+      {
+        "command": [
+          "uv",
+          "run",
+          "alembic",
+          "check"
+        ],
+        "exit_code": 0,
+        "elapsed_seconds": 0.526
+      },
+      {
+        "command": [
+          "pnpm",
+          "test:e2e"
+        ],
+        "exit_code": 1,
+        "elapsed_seconds": 72.409,
+        "test_summary": [
+          "6 failed",
+          "27 passed (1.2m)"
+        ]
+      }
+    ],
+    "official_browser": {
+      "passed": 27,
+      "failed": 6,
+      "suite": "tests/e2e/deep_visual.spec.ts",
+      "first_failed_assertion": "shared mockWorkspace setup at line 58",
+      "missing_fixture_fields": [
+        "review_supplements",
+        "regression_review"
+      ],
+      "corrected_temp_fixture_passed": 6,
+      "changed_application_code": false
+    },
+    "independent_checks": {
+      "frontend_components_passed": 295,
+      "native_renderer_node_tests_passed": 45,
+      "real_native_container_pytests_passed": 11,
+      "repeat_counts_overlap": true,
+      "migrations": "upgrade head and Alembic drift check passed on disposable PostgreSQL",
+      "fixture_validation": "16 draft fictional cases; 26 trials per arm; 78 planned; no funded trials",
+      "scenario_register": {
+        "partial": 99,
+        "pending": 1,
+        "pending_id": "EVD-07",
+        "pending_obligation": "Common false evidence / incorrect consensus, with human source support review"
+      }
+    },
+    "supplemental_coverage": {
+      "scope": "Offline and service backend, standalone native integration, successful unmodified browser tests, frontend component and native units; source and verification input manifest matched. Official runner stopped at browser stage.",
+      "threshold": "strictly greater than 95 percent lines and branches per service",
+      "source_manifest_verified": true,
+      "verification_inputs_verified": true,
+      "groups": {
+        "migrations": {
+          "lines": {
+            "covered": 170,
+            "total": 170,
+            "percent": 100.0
+          },
+          "branches": {
+            "covered": 10,
+            "total": 10,
+            "percent": 100.0
+          }
+        },
+        "application": {
+          "lines": {
+            "covered": 573,
+            "total": 579,
+            "percent": 98.9637
+          },
+          "branches": {
+            "covered": 170,
+            "total": 174,
+            "percent": 97.7011
+          }
+        },
+        "api": {
+          "lines": {
+            "covered": 1787,
+            "total": 1816,
+            "percent": 98.4031
+          },
+          "branches": {
+            "covered": 530,
+            "total": 550,
+            "percent": 96.3636
+          }
+        },
+        "database": {
+          "lines": {
+            "covered": 418,
+            "total": 421,
+            "percent": 99.2874
+          },
+          "branches": {
+            "covered": 30,
+            "total": 32,
+            "percent": 93.75
+          }
+        },
+        "dispatcher": {
+          "lines": {
+            "covered": 222,
+            "total": 232,
+            "percent": 95.6897
+          },
+          "branches": {
+            "covered": 92,
+            "total": 98,
+            "percent": 93.8776
+          }
+        },
+        "operations": {
+          "lines": {
+            "covered": 746,
+            "total": 751,
+            "percent": 99.3342
+          },
+          "branches": {
+            "covered": 266,
+            "total": 270,
+            "percent": 98.5185
+          }
+        },
+        "orchestration": {
+          "lines": {
+            "covered": 1335,
+            "total": 1367,
+            "percent": 97.6591
+          },
+          "branches": {
+            "covered": 578,
+            "total": 596,
+            "percent": 96.9799
+          }
+        },
+        "providers": {
+          "lines": {
+            "covered": 879,
+            "total": 888,
+            "percent": 98.9865
+          },
+          "branches": {
+            "covered": 303,
+            "total": 312,
+            "percent": 97.1154
+          }
+        },
+        "reports": {
+          "lines": {
+            "covered": 573,
+            "total": 579,
+            "percent": 98.9637
+          },
+          "branches": {
+            "covered": 295,
+            "total": 304,
+            "percent": 97.0395
+          }
+        },
+        "research": {
+          "lines": {
+            "covered": 1426,
+            "total": 1457,
+            "percent": 97.8723
+          },
+          "branches": {
+            "covered": 568,
+            "total": 600,
+            "percent": 94.6667
+          }
+        },
+        "schemas": {
+          "lines": {
+            "covered": 1069,
+            "total": 1078,
+            "percent": 99.1651
+          },
+          "branches": {
+            "covered": 205,
+            "total": 214,
+            "percent": 95.7944
+          }
+        },
+        "security": {
+          "lines": {
+            "covered": 156,
+            "total": 156,
+            "percent": 100.0
+          },
+          "branches": {
+            "covered": 50,
+            "total": 50,
+            "percent": 100.0
+          }
+        },
+        "visual": {
+          "lines": {
+            "covered": 1609,
+            "total": 1628,
+            "percent": 98.8329
+          },
+          "branches": {
+            "covered": 522,
+            "total": 546,
+            "percent": 95.6044
+          }
+        },
+        "worker": {
+          "lines": {
+            "covered": 896,
+            "total": 919,
+            "percent": 97.4973
+          },
+          "branches": {
+            "covered": 310,
+            "total": 330,
+            "percent": 93.9394
+          }
+        },
+        "experiments": {
+          "lines": {
+            "covered": 1996,
+            "total": 2045,
+            "percent": 97.6039
+          },
+          "branches": {
+            "covered": 834,
+            "total": 876,
+            "percent": 95.2055
+          }
+        },
+        "tooling": {
+          "lines": {
+            "covered": 690,
+            "total": 693,
+            "percent": 99.5671
+          },
+          "branches": {
+            "covered": 253,
+            "total": 256,
+            "percent": 98.8281
+          }
+        },
+        "frontend": {
+          "lines": {
+            "covered": 1040,
+            "total": 1051,
+            "percent": 98.9534
+          },
+          "branches": {
+            "covered": 1530,
+            "total": 1611,
+            "percent": 94.9721
+          }
+        },
+        "native_renderer": {
+          "lines": {
+            "covered": 94,
+            "total": 94,
+            "percent": 100.0
+          },
+          "branches": {
+            "covered": 103,
+            "total": 103,
+            "percent": 100.0
+          }
+        }
+      },
+      "missed_before_fixture_diagnostic": [
+        "database branches must exceed 95% (30/32)",
+        "dispatcher branches must exceed 95% (92/98)",
+        "research branches must exceed 95% (568/600)",
+        "worker branches must exceed 95% (310/330)",
+        "frontend branches must exceed 95% (1530/1611)"
+      ],
+      "frontend_branch_percent_with_six_diagnostic_tests": 95.0341,
+      "missed_after_fixture_diagnostic": [
+        "database branches must exceed 95% (30/32)",
+        "dispatcher branches must exceed 95% (92/98)",
+        "research branches must exceed 95% (568/600)",
+        "worker branches must exceed 95% (310/330)"
+      ]
+    }
+  },
+  "ordinary_flow_probes": {
+    "decision_quality": {
+      "freshness": {
+        "run_local_date": "2026-11-27",
+        "quote_valid_until": "2026-11-27",
+        "assessment_clock_local_date": "2026-11-29",
+        "new_report_readiness": "ready_to_choose",
+        "saved_totals": [
+          "1600.00",
+          "1840.00"
+        ],
+        "current_valuation_totals": [
+          null,
+          null
+        ]
+      },
+      "equal_cost": [
+        {
+          "green_id": "option_alpha",
+          "blue_id": "option_beta",
+          "totals": [
+            "100.00",
+            "100.00"
+          ],
+          "chosen": "Green printer",
+          "readiness": "conditional",
+          "frontier": [
+            "option_alpha",
+            "option_beta"
+          ],
+          "recommendation_first_line": {
+            "markdown": "Simulated synthesis for ‘Choose a printer’\\. A common\\-horizon cost comparison is available; practical feasibility still requires checking\\.",
+            "pdf": "Simulated synthesis for ‘Choose a printer’. A common-horizon cost comparison is available; practical feasibility"
+          }
+        },
+        {
+          "green_id": "option_omega",
+          "blue_id": "option_beta",
+          "totals": [
+            "100.00",
+            "100.00"
+          ],
+          "chosen": "Blue printer",
+          "readiness": "conditional",
+          "frontier": [
+            "option_beta",
+            "option_omega"
+          ],
+          "recommendation_first_line": {
+            "markdown": "Simulated synthesis for ‘Choose a printer’\\. A common\\-horizon cost comparison is available; practical feasibility still requires checking\\.",
+            "pdf": "Simulated synthesis for ‘Choose a printer’. A common-horizon cost comparison is available; practical feasibility"
+          }
+        }
+      ]
+    },
+    "history_and_readiness": {
+      "setup": "fresh local SQLite, TestClient, synthetic deterministic providers, one completed run per meeting, default 20-item GET /api/meetings; attached SQLAlchemy before_cursor_execute",
+      "ready_without_workers_started_for_this_database": {
+        "status": "ready",
+        "schema_version": "1"
+      },
+      "meetings": [
+        {
+          "count": 1,
+          "statements": 12,
+          "response_bytes": 4849
+        },
+        {
+          "count": 5,
+          "statements": 52,
+          "response_bytes": 24125
+        },
+        {
+          "count": 10,
+          "statements": 102,
+          "response_bytes": 48218
+        },
+        {
+          "count": 20,
+          "statements": 202,
+          "response_bytes": 96408
+        }
+      ],
+      "one_run_report": {
+        "statements": 10,
+        "response_bytes": 24458
+      },
+      "one_run_snapshot": {
+        "statements": 18,
+        "response_bytes": 41600
+      }
+    },
+    "upload_and_preflight": {
+      "text_bytes": 51200,
+      "upload_http": 201,
+      "upload_state": "ready",
+      "preflight_blocker": "24-passage limit",
+      "deselect_http": 200,
+      "sixth_upload_http": 429,
+      "sixth_upload_error": "quota_exceeded",
+      "default_cost_line_count": 5,
+      "option_label_character_counts": [
+        8,
+        38,
+        79
+      ],
+      "resulting_structured_source_chars": [
+        1729,
+        1879,
+        2084
+      ],
+      "structured_source_limit_chars": 2000
+    },
+    "frontend_chromium_159": {
+      "mobileOnboarding": {
+        "viewport": 390,
+        "width": 390,
+        "height": 844,
+        "formHeight": 4935,
+        "controlCount": 46,
+        "firstInvalid": "The decision you need to make",
+        "saveTop": 5282,
+        "posts": 0
+      },
+      "offlineAfterReconnect": {
+        "showsConnected": true,
+        "retryButtons": 0,
+        "errorText": "The action needs attention.\n\nThe service is unavailable. Your last confirmed state is still shown.",
+        "requests": [
+          "GET /auth/session",
+          "GET /auth/session"
+        ]
+      },
+      "olderIncompleteDraft": {
+        "unhandledErrors": [
+          "Cannot read properties of undefined (reading 'role')"
+        ],
+        "newCandidateCount": 0,
+        "body": "This page couldn’t load\n\nReload to try again, or go back.\n\nReload\nBack"
+      },
+      "report": {
+        "errors": [],
+        "tableLabels": [
+          "unknown · This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "unknown · This requirement needs supplied evidence or human verification; simulation cannot establish it.",
+          "unknown · This requirement needs supplied evidence or human verification; simulation cannot establish it."
+        ],
+        "sourceLinksInCalculation": [
+          "Close"
+        ]
+      }
+    },
+    "modern_live_javascript": {
+      "script_count": 8,
+      "raw_bytes": 985257,
+      "local_gzip_bytes": 231703,
+      "shared_chunk_with_sample_raw_bytes": 164022,
+      "scope": "modern route scripts from independent noninstrumented production build; legacy nomodule script excluded, no mobile network timing assumption"
+    },
+    "webkit": {
+      "engine": "Playwright WebKit",
+      "version": "27.2",
+      "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15",
+      "viewport": {
+        "width": 390,
+        "scroll": 390
+      },
+      "checks": [
+        "Sample heading and simulation notice are visible.",
+        "Keyboard Enter opens the saved calculation, 1600.00 is shown, Escape closes it, and focus returns to the opener.",
+        "ArrowRight on Overview moves focus to Evidence and exposes saved passages.",
+        "Blank editor connects to fixture service at 390px with no page-level horizontal overflow; typing a title marks it unsaved and Tab moves to the question."
+      ],
+      "errors": [],
+      "requests": [
+        "GET /auth/session",
+        "GET /health",
+        "GET /api/meetings"
+      ]
+    },
+    "provider_fixtures": {
+      "transport": "mock, no external provider requests",
+      "returned_model_identity_ignored": [
+        "openai",
+        "anthropic",
+        "google"
+      ],
+      "gemini_cache_pricing": {
+        "input_price_per_million_usd": "2",
+        "output_price_per_million_usd": "10",
+        "input_tokens": 6000,
+        "output_tokens": 100,
+        "cached_tokens_cases": [
+          0,
+          5000
+        ],
+        "estimated_costs_saved_usd": [
+          "0.013",
+          "0.013"
+        ]
+      }
+    },
+    "study_tools": {
+      "release_fixture": {
+        "useful_count": 48,
+        "distinct_placeholder_output_identities": 1,
+        "phase_5_passed": false
+      },
+      "paired_fixture": {
+        "human_grades_in_two_compared_arms": 0,
+        "reviewer_pairs_reported": 26,
+        "reported_interval": [
+          0,
+          0
+        ],
+        "graded_arm": "excluded third arm"
+      }
+    }
+  },
+  "advisory_feeds": {
+    "as_of": "2026-11-27",
+    "node": {
+      "tool": "pnpm audit --json",
+      "packages_reported": 275,
+      "counts": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 0,
+        "critical": 0
+      }
+    },
+    "python": {
+      "tool": "pip-audit on frozen exported runtime requirements, current platform",
+      "packages_reported": 48,
+      "skipped": [],
+      "advisory_matches": 0
+    },
+    "native_image": {
+      "tool": "Trivy image, OS packages only, fresh locally built arm64 runtime",
+      "scanned_at": "2026-11-27T13:14:45.222153606Z",
+      "trivy_image_config_id": "sha256:a7bd8b518cdd0f5b3e5b7f4e370789d04545ca7fb700a9a603a7fc7fff6b3247",
+      "os": {
+        "Family": "ubuntu",
+        "Name": "26.04"
+      },
+      "matched_package_advisory_pairs": 76,
+      "distinct_advisories": 48,
+      "severities": {
+        "LOW": 7,
+        "MEDIUM": 69
+      },
+      "matches_with_reported_fixed_version": 0,
+      "advisory_ids": [
+        "CVE-2017-7475",
+        "CVE-2018-18064",
+        "CVE-2023-37769",
+        "CVE-2024-56433",
+        "CVE-2025-59529",
+        "CVE-2025-66382",
+        "CVE-2026-102473",
+        "CVE-2026-102474",
+        "CVE-2026-105712",
+        "CVE-2026-107493",
+        "CVE-2026-119371",
+        "CVE-2026-119372",
+        "CVE-2026-119373",
+        "CVE-2026-119374",
+        "CVE-2026-119375",
+        "CVE-2026-119376",
+        "CVE-2026-119377",
+        "CVE-2026-119378",
+        "CVE-2026-119379",
+        "CVE-2026-119591",
+        "CVE-2026-121876",
+        "CVE-2026-13757",
+        "CVE-2026-18477",
+        "CVE-2026-18508",
+        "CVE-2026-18938",
+        "CVE-2026-35370",
+        "CVE-2026-35371",
+        "CVE-2026-40228",
+        "CVE-2026-48959",
+        "CVE-2026-48962",
+        "CVE-2026-55480",
+        "CVE-2026-61702",
+        "CVE-2026-67693",
+        "CVE-2026-76642",
+        "CVE-2026-78408",
+        "CVE-2026-78410",
+        "CVE-2026-86469",
+        "CVE-2026-87875",
+        "CVE-2026-88647",
+        "CVE-2026-88648",
+        "CVE-2026-93541",
+        "CVE-2026-93544",
+        "CVE-2026-93545",
+        "CVE-2026-94281",
+        "CVE-2026-94282",
+        "CVE-2026-95184",
+        "CVE-2026-95210",
+        "CVE-2026-9538"
+      ]
+    }
+  },
+  "limits": [
+    "Test lanes overlap. Mock responses establish application handling, not provider accuracy or invoices. Local query counts are not deployment latency. Native advisory counts apply only to the scanned package class and image. No manual assistive-technology or customer study was performed."
+  ]
+}

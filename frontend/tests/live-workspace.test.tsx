@@ -106,6 +106,30 @@ test('late event pages are fenced when the workspace unmounts', async () => {
   expect(screen.queryByText('Late private activity')).not.toBeInTheDocument();
 });
 
+test.each([
+  ['2027-02-10T09:59:59Z', 'ready_to_choose', 'Ready within the stated scope', false],
+  ['2027-02-10T10:00:00Z', 'ready_to_choose', 'Evidence needs renewal', true],
+  ['2027-02-10T10:00:00Z', 'no_feasible_option', 'Evidence needs renewal', true],
+  ['2027-02-10T10:00:00Z', 'conditional', 'Evidence needs renewal', true],
+] as const)('reopens the %s edition of a %s assessment with the locally applicable label', async (instant, readiness, label, historical) => {
+  vi.spyOn(Date, 'now').mockReturnValue(Date.parse(instant));
+  Object.assign(model.snapshot.report, {
+    readiness, valuation_date: '2027-02-09', valuation_timezone: 'Pacific/Kiritimati', evidence_valid_through: '2027-02-10',
+  });
+  await mount();
+  expect(screen.getByText(label, {selector: '.live-pill'})).toHaveClass(historical ? 'caution' : 'positive');
+  const note = screen.getByText(/Assessed as of 2027-02-09/);
+  expect(note).toHaveTextContent('Earliest evidence expiry: 2027-02-10');
+  if (historical) expect(note).toHaveTextContent('Saved assessment:');
+});
+
+test.each(['ready_to_choose', 'no_feasible_option'])('qualifies an undated historical %s assessment', async readiness => {
+  model.snapshot.report.readiness = readiness;
+  await mount();
+  expect(screen.getByText('Historical readiness')).toHaveClass('caution');
+  expect(screen.getByText(/Assessment date unavailable/)).toHaveTextContent('Saved assessment:');
+});
+
 test('scoped attestation submits exact saved target and remains separate from inference', async () => {
   model.snapshot.report.simulated = false;
   const target = { target_type: 'option_costs', option_id: 'option_a', requirement_id: null, target_hash: 'a'.repeat(64), label: 'Option A complete cost scope', reference_ids: ['evidence_quote_a'] };
@@ -122,6 +146,44 @@ test('scoped attestation submits exact saved target and remains separate from in
     reference_ids: target.reference_ids, result: 'supported', valid_until: '2027-01-01',
     expected_run_version: model.snapshot.run.version,
   }));
+});
+
+test('a requirement starts without citations and submits exactly the supplier passage the owner checked', async () => {
+  model.snapshot.report.simulated = false;
+  const [first, second] = model.snapshot.evidence;
+  Object.assign(first, { source_title: 'Competitor quote', text: 'Price applies at collection only.' });
+  Object.assign(second, { source_title: 'Delivery confirmation', text: 'Delivery promised within fourteen days.',
+    original_alias: null, id: 'evidence_supplier_email', url: 'https://supplier.example/terms', verified_at: '2027-02-10T01:00:00+14:00' });
+  model.snapshot.evidence = [first];
+  model.snapshot.report.evidence_assessments = [{ id: 'receipt_delivery', option_id: 'option_a', target_type: 'requirement',
+    requirement_id: 'delivery', result: 'pass', attestation: 'I checked the delivery confirmation.', reference_ids: [second.id] }];
+  const target = { target_type: 'requirement', option_id: 'option_a', requirement_id: 'delivery', target_hash: 'a'.repeat(64),
+    label: 'Delivery by deadline', reference_ids: [first.id, second.id] };
+  readOverride = path => path.endsWith('/assessments') ? { targets: [target, { ...target, label: 'Other supplier', target_hash: 'b'.repeat(64) }] }
+    : path.endsWith('/' + second.id) ? second : undefined;
+  await mount();
+  fireEvent.click(screen.getByRole('tab', { name: 'Evidence' }));
+  await screen.findByText('Record your evidence check');
+  const receipt = screen.getByRole('heading', { name: 'Evidence checks in this report' }).parentElement!;
+  expect(within(receipt).getAllByRole('button')).toHaveLength(1);
+  expect(within(receipt).getByRole('button', {name: second.id})).toBeInTheDocument();
+  edit('Scope of your check', '0');
+  const delivery = await screen.findByRole('checkbox', { name: /Delivery confirmation.*Delivery promised within fourteen days/ });
+  expect(delivery).toHaveAccessibleName(/Supplier was not recorded.*supplier.example.*Recorded 2027-02-09 UTC/);
+  const competitor = screen.getByRole('checkbox', { name: /Competitor quote/ });
+  expect(delivery).not.toBeChecked();
+  expect(competitor).not.toBeChecked();
+  edit('What you checked and its limits', 'The supplier confirmed this exact delivery window in writing.');
+  expect(screen.getByRole('button', { name: 'Save my scoped attestation' })).toBeDisabled();
+  fireEvent.click(delivery);
+  edit('Scope of your check', '1');
+  expect(await screen.findByRole('checkbox', {name: /Delivery confirmation/})).not.toBeChecked();
+  edit('Scope of your check', '0');
+  fireEvent.click(await screen.findByRole('checkbox', {name: /Delivery confirmation/}));
+  edit('What you checked and its limits', 'The supplier confirmed this exact delivery window in writing.');
+  await click('Save my scoped attestation');
+  expect(api.sendCommand).toHaveBeenCalledWith(expect.stringContaining('assessment:'), expect.stringMatching(/\/assessments$/),
+    expect.objectContaining({ requirement_id: 'delivery', reference_ids: [second.id] }));
 });
 
 test('unavailable and revoked initialization show recoverable state without submitting actions', async () => {
@@ -282,8 +344,37 @@ test.each(['ready_to_choose', 'conditional', 'no_feasible_option', 'insufficient
   model.snapshot.report.recommendation = { option_id: 'option_a', summary: 'Synthetic preferred approach' };
   model.snapshot.report.usage.actual_cost = '0.125000'; model.snapshot.run.execution_mode = 'live';
   model.snapshot.report.research_summary = { status: 'complete', reason: 'Saved retrieval reason' };
-  await mount(); expect(screen.getByRole('heading', { name: 'Synthetic preferred approach' })).toBeInTheDocument();
+  await mount(); expect(screen.getByRole('heading', {name: 'Saved recommendation: Option A · lower upfront'})).toBeInTheDocument();
+  expect(screen.getByText('Synthetic preferred approach')).toBeInTheDocument();
+  expect(within(screen.getByRole('row', {name: /Option A · lower upfront/})).getByText('Recommended in this version')).toBeInTheDocument();
   expect(screen.getByText(/Saved retrieval reason/)).toBeInTheDocument();
+});
+
+test.each([false, true])('names both lowest-cost suppliers with reversed rows and reassigned identifiers: %s', async reverse => {
+  const report = model.snapshot.report;
+  const [north, south] = report.comparison;
+  Object.assign(north, {option_id: reverse ? 'z' : 'a', label: 'Northline', total: '1600.00'});
+  Object.assign(south, {option_id: reverse ? 'a' : 'z', label: 'Southline', total: '1600.00'});
+  report.comparison = reverse ? [south, north] : [north, south];
+  report.decision_insights = {tied_lowest_cost_option_ids: ['a', 'z'], unresolved_option_ids: [], sensitivity: [], limitations: []};
+  report.recommendation = null;
+  await mount();
+  expect(screen.getByRole('heading', {name: 'Tied for lowest cost: Northline / Southline'})).toBeInTheDocument();
+  expect(screen.getAllByText('Tied for lowest cost')).toHaveLength(2);
+  expect(screen.queryByText('Recommended in this version')).not.toBeInTheDocument();
+});
+
+test('distinguishes a failed hard requirement from an unresolved option and explains different applicable requirements', async () => {
+  const report = model.snapshot.report;
+  const first = report.comparison[0];
+  first.constraint_results = [{requirement_id: 'budget', result: 'fail', reason: 'Above the ceiling.', basis_refs: ['known_total']}];
+  report.recommendation = null;
+  report.decision_insights = {cost_comparison_blocker: 'different_applicability', unresolved_option_ids: [first.option_id],
+    sensitivity: [], limitations: []};
+  await mount();
+  expect(screen.getByText(`Failed a hard requirement: ${first.label}.`)).toBeInTheDocument();
+  expect(screen.queryByText(/Unresolved options:/)).not.toBeInTheDocument();
+  expect(screen.getByText(/different applicable requirements/)).toBeInTheDocument();
 });
 
 test.each(['accepted', 'modified', 'deferred'])('choice and later outcome are distinct immutable actions: %s', async choice => {
@@ -311,6 +402,54 @@ test('exact evidence, null calculations, source copy failure and focus return st
   vi.mocked(navigator.clipboard.writeText).mockRejectedValueOnce(new Error('clipboard denied')); await click('Copy request');
   await screen.findByText('Select the request text to copy it.');
 });
+
+test('saved tradeoff, crossover, and ranked requests resolve their cited records', async () => {
+  const report = model.snapshot.report;
+  const passage = model.snapshot.evidence[0];
+  const crossover = {
+    ...report.calculations[0], id: 'calc_crossing', label: 'Press A / Press B break-even',
+    operation: 'break_even', formula: '(1600 - 1000) / (50 - 20)', output: '20', unit: 'months',
+    inputs: [{ label: 'Press A monthly fee', amount: '50', unit: 'USD/month', source_ref: passage.id }],
+    missing_components: [], known_subtotal: null,
+  };
+  report.calculations.push(crossover);
+  report.tradeoff = 'Press A costs less at 12 months.';
+  report.tradeoff_basis_refs = [crossover.id, report.calculations[0].id];
+  report.what_would_change_answer = 'Running the press past month 20 favors Press B.';
+  report.next_action = 'Verify the installation date for Press A.';
+  report.next_evidence_count = 23;
+  report.next_evidence = Array.from({ length: 20 }, (_, index) => ({
+    ...report.next_evidence[0], id: `request_${index}`, question: `Delivery check ${index + 1}`,
+    basis_refs: [passage.id], affected_conclusion: `Feasibility at site ${index + 1}.`,
+  }));
+  readOverride = path => path.includes('/calculations/calc_crossing?') ? crossover : undefined;
+  await mount();
+  expect(screen.getByText(report.tradeoff)).toBeVisible();
+  expect(screen.getByText(report.what_would_change_answer)).toBeVisible();
+  expect(screen.getByText(report.next_action)).toBeVisible();
+  expect(screen.getByText('20 months')).toBeVisible();
+  expect(screen.getByText('23 outstanding questions. Showing the first 20.')).toBeVisible();
+  await click('Inspect calc_crossing');
+  expect(api.readApi).toHaveBeenCalledWith(`/api/runs/${report.run_id}/calculations/calc_crossing?report_id=${report.id}`);
+  expect(screen.getByRole('dialog')).toHaveTextContent(crossover.formula);
+  await click('Close');
+  const question = screen.getByText('Delivery check 1').parentElement!;
+  expect(within(question).getByText('Feasibility at site 1.')).toBeVisible();
+  fireEvent.click(within(question).getByText('Supporting records (1)'));
+  fireEvent.click(within(question).getByRole('button', { name: `${passage.source_title} (${passage.id})` }));
+  expect(await screen.findByRole('dialog')).toHaveTextContent(passage.text);
+  expect(api.readApi).toHaveBeenCalledWith(`/api/runs/${report.run_id}/sources/${passage.id}`);
+});
+
+test.each([[0, '0 outstanding questions.'], [null, null], [undefined, null]])(
+  'reports the saved count %s without treating a historical unknown as zero', async (count, expected) => {
+    model.snapshot.report.next_evidence_count = count;
+    model.snapshot.report.next_evidence = [];
+    await mount();
+    if (expected) expect(screen.getByText(String(expected))).toBeVisible();
+    else expect(screen.queryByText(/outstanding questions/)).toBeNull();
+  },
+);
 
 test('resolved calculation does not fabricate unknown components and exports bind saved version', async () => {
   model.snapshot.report.calculations[0].output = '2500'; model.snapshot.report.calculations[0].known_subtotal = null; model.snapshot.report.calculations[0].missing_components = [];
@@ -562,10 +701,10 @@ test('out-of-order polls cannot downgrade a newer committed snapshot', async () 
   model.snapshot.run.version--; model.snapshot.report.recommendation.summary = 'Obsolete answer';
   await act(async () => { await vi.advanceTimersByTimeAsync(701); });
   expect(vi.mocked(api.readApi).mock.calls.filter(([path]) => path.includes('/snapshot')).length).toBeGreaterThan(1);
-  expect(screen.getByRole('heading', { name: 'Newest committed answer' })).toBeInTheDocument();
+  expect(screen.getByText('Newest committed answer')).toBeInTheDocument();
   model.snapshot.run.version += 2; model.snapshot.event_cutoff = 0;
   await act(async () => { await vi.advanceTimersByTimeAsync(701); });
-  expect(screen.queryByRole('heading', { name: 'Obsolete answer' })).not.toBeInTheDocument();
+  expect(screen.queryByText('Obsolete answer')).not.toBeInTheDocument();
 });
 
 test.each([new api.ApiError('Revoked during action', 401), new api.ApiError('Forbidden during action', 403), new Error('Action failed'), 'unknown'])('action failure never claims success: %s', async failure => {
@@ -646,10 +785,10 @@ test.each(['resolve', 'reject'])('late snapshot %s cannot replace another mounte
   render(<LiveWorkspace />); await screen.findByRole('tab', { name: 'Overview' });
   const history = screen.getByRole('heading', { name: 'Review history' }).parentElement!;
   fireEvent.click(within(history).getAllByRole('button')[1]);
-  await screen.findByRole('heading', { name: 'Current saved answer' });
+  await screen.findByText('Current saved answer');
   await act(async () => { if (settlement === 'resolve') waiting.resolve(oldSnapshot); else waiting.reject(new Error('Access changed')); });
-  expect(screen.getByRole('heading', { name: 'Current saved answer' })).toBeInTheDocument();
-  expect(screen.queryByRole('heading', { name: 'Stale private answer sentinel' })).not.toBeInTheDocument();
+  expect(screen.getByText('Current saved answer')).toBeInTheDocument();
+  expect(screen.queryByText('Stale private answer sentinel')).not.toBeInTheDocument();
   expect(screen.queryByText(/Connection interrupted/)).not.toBeInTheDocument();
 });
 
